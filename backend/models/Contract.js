@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const contractSchema = new mongoose.Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     // file: [mongoose.Schema.Types.Mixed], // Assuming mixed types in the array
-    files: [{ path: String, name: String, size: String }], // Un tableau d'objets contenant des informations de fichier
+    file: [{ path: String, name: String, size: String }], // Un tableau d'objets contenant des informations de fichier
     trash: Boolean,
     date_cde: Date,
     // customer: mongoose.Schema.Types.ObjectId,

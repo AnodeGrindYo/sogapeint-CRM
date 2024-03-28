@@ -4,6 +4,7 @@ import { ContractService } from '../../core/services/contract.service';
 import { UserProfileService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/core/models/auth.models';
 import { Router } from '@angular/router';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class OrderDetailComponent implements OnInit {
   contact: any;
   currentUser: User;
   files: File[] = [];
+  files_to_upload: File[] = [];
   benefit_name: string = '';
   
 
@@ -66,8 +68,10 @@ export class OrderDetailComponent implements OnInit {
     this.contractService.getContractById(contractId).subscribe({
       next: (data) => {
         this.contract = data;
+        // this.files = this.contract.file;
         console.log('Détails de la commande chargés', this.contract);
-        // si on a réussi à charger le contrat, on va chercher les détails du client, du co-traitant, du contact sogapeint et du sous-traitant
+        // si on a réussi à charger le contrat, on va chercher les détails 
+        // du client, du co-traitant, du contact sogapeint et du sous-traitant
         if (this.contract) {
           this.loadUserDetails();
         }
@@ -75,7 +79,7 @@ export class OrderDetailComponent implements OnInit {
       error: (error) => console.error('Erreur lors du chargement des détails de la commande', error)
     }).add(() => {
       // Récupération de la liste des fichiers associés à la commande
-      this.files = this.contract.files;
+      this.files = this.contract.file;
       console.log('Fichiers associés à la commande', this.files);
     });
   }
@@ -212,5 +216,34 @@ export class OrderDetailComponent implements OnInit {
       },
       error: (error) => console.error('Erreur lors du téléchargement du fichier', error)
     });
+  }
+
+  onSelect(event) {
+    console.log(event);
+    // this.files.push(...event.addedFiles);
+    this.files_to_upload.push(...event.addedFiles)
+    this.uploadFile(this.files_to_upload);
+    this.files_to_upload = [];
+  }
+
+  uploadFile(files: File[]) {
+    console.log('Fichier à télécharger', files);
+
+    this.contractService.uploadFiles(this.contractId, files).subscribe(
+      event => {
+        // Traite les événements de la réponse
+        if (event.type === HttpEventType.UploadProgress) {
+          // suivi de la progression
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          console.log(`Progression de l'upload: ${percentDone}%`);
+        } else if (event instanceof HttpResponse) {
+          console.log('Fichiers complètement uploadés!', event.body);
+          this.files = event.body.files;
+        }
+      },
+      error => {
+        console.error("Erreur lors de l'upload des fichiers", error);
+      }
+    );
   }
 }

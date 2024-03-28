@@ -12,6 +12,7 @@ const { sendEmail } = require('../services/emailService');
 const crypto = require('crypto');
 const upload = require('../middlewares/uploadMiddleware');
 const multer = require('multer');
+const fs = require('fs');
 
 // Le middleware multer pour gérer le téléversement
 const uploadMiddleware = upload.array('files'); // 'files' est le nom du champ dans le formulaire
@@ -1228,66 +1229,98 @@ exports.resetPasswordFromAdmin = async (req, res) => {
             
             // Fonction pour uploader des fichiers
             exports.uploadFiles = async (req, res) => {
+              console.log("Tentative de téléversement de fichiers");
+              console.log("Corps de la requête:", req.body);
+              console.log("contractId", req.body.contractId);
+              console.log("Fichiers:", req.files);
+            
+              if (!req.files || req.files.length === 0) {
+                return res.status(400).send("Aucun fichier n'a été téléversé.");
+              }
+            
+              // Convertir contractId en ObjectId pour garantir la compatibilité avec MongoDB
+              const contractId = req.body.contractId;
+            
+              // Préparer les chemins des fichiers pour être enregistrés dans la base de données
+              const filesPaths = req.files.map((file) => ({
+                path: file.path,
+                name: file.originalname,
+                size: file.size,
+              }));
+            
               try {
-                uploadMiddleware(req, res, async function (err) {
-                  if (err instanceof multer.MulterError) {
-                    return res.status(500).json(err);
-                  } else if (err) {
-                    return res.status(500).json(err);
-                  }
-                  
-                  if (!req.files) {
-                    return res.status(400).send('Aucun fichier n\'a été téléversé.');
-                  }
-                  
-                  const contractId = req.body.contractId;
-                  const filesPaths = req.files.map(file => ({ path: file.path, name: file.originalname, size: file.size}));
-                  
-                  const contract = await ContractModel.findByIdAndUpdate(
-                    contractId,
-                    { $push: { files: { $each: filesPaths } } },
-                    { new: true, useFindAndModify: false }
-                    );
-                    
-                    if (!contract) {
-                      return res.status(404).send('Contrat non trouvé.');
-                    }
-                    
-                    return res.status(200).send({ message: 'Fichiers téléversés et enregistrés avec succès.', contract: contract });
-                  });
-                } catch (error) {
-                  return res.status(500).send(error);
+                const contract = await ContractModel.findByIdAndUpdate(
+                  contractId,
+                  { $push: { file: { $each: filesPaths } } }, // Assurez-vous que 'files' correspond au champ dans votre modèle
+                  { new: true, useFindAndModify: false }
+                );
+            
+                if (!contract) {
+                  console.log("Contrat non trouvé. id: " + contractId);
+                  return res.status(404).send("Contrat non trouvé. id: " + contractId);
                 }
-              };
+            
+                console.log("Fichiers téléversés et enregistrés avec succès.");
+                res.status(200).send({
+                  message: "Fichiers téléversés et enregistrés avec succès.",
+                  files: contract.file,
+                });
+              } catch (error) {
+                console.error("Erreur lors de l'enregistrement des fichiers:", error);
+                res.status(500).send(error);
+              }
+            };
               
               // Fonction pour envoyer un fichier au client
               exports.downloadFile = async (req, res) => {
                 try {
-                  console.log(req.query);
                   const { contractId, fileId } = req.query;
-                  console.log('contractId:', contractId);
-                  console.log('fileId:', fileId);
-                  const contract = await ContractModel
-                  .findById(contractId)
-                  .select('files');
-                  
+              
+                  if (!mongoose.Types.ObjectId.isValid(contractId)) {
+                    return res.status(400).send('ID de contrat invalide.');
+                  }
+              
+                  if (!mongoose.Types.ObjectId.isValid(fileId)) {
+                    return res.status(400).send('ID de fichier invalide.');
+                  }
+              
+                  const contract = await ContractModel.findById(contractId, 'file');
                   if (!contract) {
                     return res.status(404).send('Contrat non trouvé.');
                   }
-                  
-                  const file = contract.files.id(fileId);
+              
+                  const file = contract.file.id(fileId);
                   if (!file) {
                     return res.status(404).send('Fichier non trouvé.');
                   }
-                  
-                  // Envoi du fichier au client
-                  return res.download(file.path, file.name); // à tester
-                  // res.download(file.path, file.name);
+              
+                  // Vérification de l'existence du fichier dans le système de fichiers
+                  fs.access(file.path, fs.constants.R_OK, (err) => {
+                    if (err) {
+                      console.error('Le fichier n\'est pas accessible:', err);
+                      return res.status(404).send('Fichier non trouvé sur le serveur.');
+                    }
+                    // Envoi du fichier au client
+                    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // HTTP 1.1.
+                    res.setHeader('Pragma', 'no-cache'); // HTTP 1.0.
+                    res.setHeader('cache', 'no-cache'); // Proxies.
+                    res.setHeader('Expires', '0'); // Proxies.
+
+                    res.download(file.path, file.name, (downloadErr) => {
+                      if (downloadErr) {
+                        console.error('Erreur lors de l\'envoi du fichier:', downloadErr);
+                        // Si l'erreur est autre que l'annulation du téléchargement par l'utilisateur
+                        if (downloadErr.code !== 'ECONNABORTED' && downloadErr.code !== 'ECONNRESET') {
+                          res.status(500).send('Erreur lors du téléchargement du fichier.');
+                        }
+                      }
+                    });
+                  });
+                } catch (error) {
+                  console.error('Erreur lors de la tentative de téléchargement du fichier:', error);
+                  res.status(500).send(error);
                 }
-                catch (error) {
-                  return res.status(500).send(error);
-                }
-              }
+              };
               
               // Fonction pour avoir le nom d'une prestation par son _id
               exports.getBenefitNameById = async (req, res) => {
