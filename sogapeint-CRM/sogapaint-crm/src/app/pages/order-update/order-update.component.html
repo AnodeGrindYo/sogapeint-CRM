@@ -255,15 +255,12 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <div class="card">
             <div class="card-header">Documents</div>
             <div class="card-body">
                 
                 <div class="mb-3">
-                    <!-- <label for="ged" class="form-label">Fichiers à lier à la commande</label> -->
-                    
-                    <!-- <textarea class="form-control" id="ged" rows="3" formControlName="ged"></textarea> -->
                     <ngx-dropzone (change)="onSelect($event)">
                         <ngx-dropzone-label>
                             <div>
@@ -329,7 +326,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <div class="row mb-3">
@@ -367,18 +364,6 @@
         </div>
     </div>
     
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Communication</div>
-            <div class="card-body">
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="mail_sended" formControlName="mail_sended">
-                    
-                    <label for="mail_sended" class="form-check-label">Mail Envoyé</label>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="row mb-3">
@@ -412,13 +397,30 @@
 
 
 </div>
-
 <div class="col-md-6">
-        <div class="mb-3">
+    <div class="card">
+        <div class="card-header">Communication</div>
+        <div class="card-body">
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="mail_sended" formControlName="mail_sended">
+                
+                <label for="mail_sended" class="form-check-label">Mail Envoyé</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+        <div class="col-md-6">
             <div class="card">
                 <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']"></app-contract-activity>
             </div>
         </div>
+        <div class="col-md-6">
+            <app-order-files-management [contractId]="contractId"></app-order-files-management>
+        </div>
+            
+
 </div>
 </div>
 

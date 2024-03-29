@@ -31,8 +31,6 @@ export class OrderDetailComponent implements OnInit {
   subcontractor: any;
   contact: any;
   currentUser: User;
-  files: File[] = [];
-  files_to_upload: File[] = [];
   benefit_name: string = '';
   
 
@@ -77,11 +75,7 @@ export class OrderDetailComponent implements OnInit {
         }
       },
       error: (error) => console.error('Erreur lors du chargement des détails de la commande', error)
-    }).add(() => {
-      // Récupération de la liste des fichiers associés à la commande
-      this.files = this.contract.file;
-      console.log('Fichiers associés à la commande', this.files);
-    });
+    })
   }
 
   loadUserDetails(){
@@ -204,59 +198,4 @@ export class OrderDetailComponent implements OnInit {
     this.router.navigate([`/order-update/${this.contract._id}`]);
   }
 
-
-
-  onFileDownload(file: any) { // TODO à tester
-    console.log('Téléchargement du fichier', file);
-    this.contractService.getFile(file._id, this.contract._id).subscribe({
-      next: (data) => {
-        console.log('Fichier téléchargé', data);
-        const url = window.URL.createObjectURL(data);
-        window.open(url);
-      },
-      error: (error) => console.error('Erreur lors du téléchargement du fichier', error)
-    });
-  }
-
-  removeFile(index: number) {
-    // supprime le fichier avec ContractService : deleteFile(fileId: string, contractId: string)
-    const file = this.files[index];
-    this.contractService.deleteFile(file["_id"], this.contractId).subscribe({
-      next: (data) => {
-        console.log('Fichier supprimé', data);
-        this.files.splice(index, 1);
-      },
-      error: (error) => console.error('Erreur lors de la suppression du fichier', error)
-    });
-
-  }
-
-  onSelect(event) {
-    console.log(event);
-    // this.files.push(...event.addedFiles);
-    this.files_to_upload.push(...event.addedFiles)
-    this.uploadFile(this.files_to_upload);
-    this.files_to_upload = [];
-  }
-
-  uploadFile(files: File[]) {
-    console.log('Fichier à télécharger', files);
-
-    this.contractService.uploadFiles(this.contractId, files).subscribe(
-      event => {
-        // Traite les événements de la réponse
-        if (event.type === HttpEventType.UploadProgress) {
-          // suivi de la progression
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          console.log(`Progression de l'upload: ${percentDone}%`);
-        } else if (event instanceof HttpResponse) {
-          console.log('Fichiers complètement uploadés!', event.body);
-          this.files = event.body.files;
-        }
-      },
-      error => {
-        console.error("Erreur lors de l'upload des fichiers", error);
-      }
-    );
-  }
 }

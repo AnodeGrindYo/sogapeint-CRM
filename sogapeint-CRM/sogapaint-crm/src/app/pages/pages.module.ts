@@ -42,6 +42,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { OrderUpdateComponent } from './order-update/order-update.component';
 import { ContractActivityComponent } from './contract-activity/contract-activity.component';
+import { OrderFilesManagementComponent } from './order-files-management/order-files-management.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FilterPipe } from './dashboard-fake/filter.pipe'; // TODO pipe à modifier
@@ -56,6 +57,7 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
   declarations: [
     FilterPipe,
     ContractActivityComponent,
+    OrderFilesManagementComponent,
     ManageUsersComponent, 
     CreateUserComponent, 
     UserDetailComponent, 

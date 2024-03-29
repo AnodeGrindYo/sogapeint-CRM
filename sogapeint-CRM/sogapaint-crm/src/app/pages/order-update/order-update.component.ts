@@ -55,10 +55,6 @@ export class OrderUpdateComponent implements OnInit {
   contractId: string;
   invalidKeyStrokes = 0;
   isEmojiVisible = false;
-
-  files: File[] = [];
-  newFiles: File[] = [];
-  deletedFiles: string[] = [];
   
   constructor(
     private contractService: ContractService, 
@@ -201,8 +197,6 @@ export class OrderUpdateComponent implements OnInit {
               internalNumberNumericPart: numericPart, // Numeric part
               benefit: contract.benefit,
             };
-            // alert(JSON.stringify(patchValues));
-            this.files = contract.files;
             
             // Load user data and patch the form
             this.loadUserDataAndPatchForm(contract, patchValues);
@@ -254,7 +248,7 @@ export class OrderUpdateComponent implements OnInit {
           if (this.orderUpdateForm.valid) {
             this.contractService.updateContract(this.contractId, this.orderUpdateForm.value).subscribe({
               next: () => {
-                this.onFileUpload(this.newFiles, this.contractId);
+                console.log('Contract updated successfully');
               },
               error: (error) => {
                 console.error('Error updating contract:', error);
@@ -348,35 +342,4 @@ export class OrderUpdateComponent implements OnInit {
           return `${this.orderUpdateForm.get("internalNumberAbbrPart").value.toUpperCase()}-${this.orderUpdateForm.get("internalNumberNumericPart").value}`;
         }
 
-        onSelect(event) {
-          console.log(event);
-          this.files.push(...event.addedFiles);
-          this.newFiles.push(...event.addedFiles);
-        }
-      
-        removeFile(index: number) {
-          this.files.splice(index, 1);
-          this.deletedFiles.push(this.files[index].name);
-        }
-
-        // GED
-      onFileUpload(files: File[], contractId: string) {
-        console.log("Fichiers à uploader:", files);
-        
-        this.contractService.uploadFiles(contractId, files).subscribe(
-          event => {
-            // Traite les événements de la réponse
-            if (event.type === HttpEventType.UploadProgress) {
-              // suivi de la progression
-              const percentDone = Math.round(100 * event.loaded / event.total);
-              console.log(`Progression de l'upload: ${percentDone}%`);
-            } else if (event instanceof HttpResponse) {
-              console.log('Fichiers complètement uploadés!', event.body);
-            }
-          },
-          error => {
-            console.error("Erreur lors de l'upload des fichiers", error);
-          }
-        );
-      }
 }
