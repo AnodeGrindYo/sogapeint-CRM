@@ -121,6 +121,9 @@ router.post('/upload', upload.array('files'), isAdminOrSuperAdmin, authControlle
 // Route pour envoyer un fichier (protégée par le middleware isAdminOrSuperAdmin)
 router.get('/download', isAdminOrSuperAdmin, authController.downloadFile);
 
+// Route pour supprimer un fichier (protégée par le middleware isAdminOrSuperAdmin)
+router.delete('/deleteFile', isAdminOrSuperAdmin, authController.deleteFile);
+
 // Route pour obtenir le nom d'une prestation par son id
 router.get('/benefit/:benefitId', isConnected, authController.getBenefitNameById);
 

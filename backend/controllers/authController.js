@@ -875,7 +875,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         date_cde,
       } = req.body;
       
-  
+      
       
       // Création d'un nouveau contrat avec les champs adaptés
       const newContract = new ContractModel({
@@ -984,8 +984,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           date_cde,
         },
         { new: true }
-      );
-      
+        );
+        
         
         if (!updatedContract) {
           return res.status(404).json({ message: 'Contrat non trouvé.' });
@@ -1063,7 +1063,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           console.log('Suppression de l\'observation avec l\'ID:', observationId);
           // conversion de l'ID en ObjectId
           const observationObjectId = new mongoose.Types.ObjectId(observationId);
-
+          
           // Trouver le contrat qui contient l'observation et la retirer
           const updatedContract = await ContractModel.findOneAndUpdate(
             { 'observation._id': observationObjectId },
@@ -1097,246 +1097,291 @@ exports.resetPasswordFromAdmin = async (req, res) => {
             if (!contract) {
               return res.status(404).json({ message: 'Contrat non trouvé.' });
             }
-
+            
             const observationsWithUserDetails = await Promise.all(
               contract.observation.map(async (obs) => {
                 const user = await User.findById(obs.user).select('firstname lastname');
                 return { ...obs, user: user ? { firstname: user.firstname, lastname: user.lastname } : null };
               })
-            );
-
-            console.log("Observation: ", observationsWithUserDetails);
-            res.status(200).json(observationsWithUserDetails);
-          } catch (error) {
-            console.error('Erreur lors de la récupération des observations d\'un contrat:', error);
-            res.status(500).json({ error: error.message });
-          }
-        };
-        
-        
-        
-        // Fonction pour ajouter un incident à un contrat
-        exports.addIncident = async (req, res) => {
-          console.log('Tentative d\'ajout d\'un incident à un contrat');
-          console.log('Corps de la requête:', req.body);
-          try {
-            const { contractId, dateAdd, user, comment } = req.body;
-            const userObjectId = new mongoose.Types.ObjectId(user);
-            
-            // Trouver le contrat par son ID et ajouter le nouvel incident directement
-            const updatedContract = await ContractModel.findByIdAndUpdate(
-              contractId,
-              { $push: 
-                { incident: 
-                  { 
-                    comment: comment, 
-                    dateAdd: dateAdd, 
-                    user: userObjectId,
-                    _id: new mongoose.Types.ObjectId() // Crée un nouvel ObjectId pour l'incident
-                  } 
-                } 
-              },
-              { new: true }
               );
               
-              if (!updatedContract) {
-                console.log('Contrat non trouvé.');
-                return res.status(404).json({ message: 'Contrat non trouvé.' });
-              }
-              
-              console.log('Incident ajouté avec succès.');
-              res.status(200).json(updatedContract);
+              console.log("Observation: ", observationsWithUserDetails);
+              res.status(200).json(observationsWithUserDetails);
             } catch (error) {
-              console.error('Erreur lors de l\'ajout de l\'incident:', error);
+              console.error('Erreur lors de la récupération des observations d\'un contrat:', error);
               res.status(500).json({ error: error.message });
             }
           };
           
-          // Fonction pour supprimer un incident d'un contrat
-          exports.deleteIncident = async (req, res) => {
+          
+          
+          // Fonction pour ajouter un incident à un contrat
+          exports.addIncident = async (req, res) => {
+            console.log('Tentative d\'ajout d\'un incident à un contrat');
+            console.log('Corps de la requête:', req.body);
             try {
-              const incidentId = req.params.incidentId; // L'ID de l'incident est obtenu de l'URL
-              console.log('Suppression de l\'incident avec l\'ID:', incidentId);
-              // conversion de l'ID en ObjectId
-              const incidentObjectId = new mongoose.Types.ObjectId(incidentId);
+              const { contractId, dateAdd, user, comment } = req.body;
+              const userObjectId = new mongoose.Types.ObjectId(user);
               
-              // Trouver le contrat qui contient l'incident et le retirer
-              const updatedContract = await ContractModel.findOneAndUpdate(
-                { 'incident._id': incidentObjectId },
-                { $pull: { incident: { _id: incidentObjectId } } },
+              // Trouver le contrat par son ID et ajouter le nouvel incident directement
+              const updatedContract = await ContractModel.findByIdAndUpdate(
+                contractId,
+                { $push: 
+                  { incident: 
+                    { 
+                      comment: comment, 
+                      dateAdd: dateAdd, 
+                      user: userObjectId,
+                      _id: new mongoose.Types.ObjectId() // Crée un nouvel ObjectId pour l'incident
+                    } 
+                  } 
+                },
                 { new: true }
                 );
                 
                 if (!updatedContract) {
-                  return res.status(404).json({ message: 'Incident non trouvé.' });
-                }
-                
-                res.status(200).json({ message: 'Incident supprimé avec succès.', contract: updatedContract });
-              } catch (error) {
-                console.error('Erreur lors de la suppression de l\'incident:', error);
-                res.status(500).json({ error: error.message });
-              }
-            };
-            
-            
-            // Fonction pour récupérer tous les incidents d'un contrat
-            exports.getIncidents = async (req, res) => {
-              console.log('Tentative de récupération des incidents d\'un contrat');
-              try {
-                const { contractId } = req.params;
-                
-                // Récupération du contrat avec ses incidents
-                const contract = await ContractModel.findById(contractId)
-                .select('incident');
-                
-                if (!contract) {
                   console.log('Contrat non trouvé.');
                   return res.status(404).json({ message: 'Contrat non trouvé.' });
                 }
-
-                const incidentsWithUserDetails = await Promise.all(
-                  contract.incident.map(async (incident) => {
-                    const user = await User.findById(incident.user).select('firstname lastname');
-                    return { ...incident, user: user ? { firstname: user.firstname, lastname: user.lastname } : null };
-                  })
-                );
                 
-                console.log('Incidents récupérés avec succès.');
-                // res.status(200).json(contract.incident);
-                res.status(200).json(incidentsWithUserDetails);
+                console.log('Incident ajouté avec succès.');
+                res.status(200).json(updatedContract);
               } catch (error) {
-                console.error('Erreur lors de la récupération des incidents:', error);
+                console.error('Erreur lors de l\'ajout de l\'incident:', error);
                 res.status(500).json({ error: error.message });
               }
             };
             
-            
-            
-            
-            // Fonction pour renvoyer la liste des abbréviations des entreprises
-            exports.getCompaniesAbbreviations = async (req, res) => {
+            // Fonction pour supprimer un incident d'un contrat
+            exports.deleteIncident = async (req, res) => {
               try {
-                console.log('Récupération des abbréviations des entreprises');
-                const companies = await CompanyModel.find().select('abbreviation');
-                const abbreviations = companies.map(company => company.abbreviation);
-                console.log(`Found ${companies.length} companies`);
-                res.status(200).json(abbreviations);
-              } catch (error) {
-                console.error('Erreur lors de la récupération des abbréviations des entreprises:', error);
-                res.status(500).json({ error: error.message });
-              }
-            };
-            
-            // Fonction pour uploader des fichiers
-            exports.uploadFiles = async (req, res) => {
-              console.log("Tentative de téléversement de fichiers");
-              console.log("Corps de la requête:", req.body);
-              console.log("contractId", req.body.contractId);
-              console.log("Fichiers:", req.files);
-            
-              if (!req.files || req.files.length === 0) {
-                return res.status(400).send("Aucun fichier n'a été téléversé.");
-              }
-            
-              // Convertir contractId en ObjectId pour garantir la compatibilité avec MongoDB
-              const contractId = req.body.contractId;
-            
-              // Préparer les chemins des fichiers pour être enregistrés dans la base de données
-              const filesPaths = req.files.map((file) => ({
-                path: file.path,
-                name: file.originalname,
-                size: file.size,
-              }));
-            
-              try {
-                const contract = await ContractModel.findByIdAndUpdate(
-                  contractId,
-                  { $push: { file: { $each: filesPaths } } }, // Assurez-vous que 'files' correspond au champ dans votre modèle
-                  { new: true, useFindAndModify: false }
-                );
-            
-                if (!contract) {
-                  console.log("Contrat non trouvé. id: " + contractId);
-                  return res.status(404).send("Contrat non trouvé. id: " + contractId);
-                }
-            
-                console.log("Fichiers téléversés et enregistrés avec succès.");
-                res.status(200).send({
-                  message: "Fichiers téléversés et enregistrés avec succès.",
-                  files: contract.file,
-                });
-              } catch (error) {
-                console.error("Erreur lors de l'enregistrement des fichiers:", error);
-                res.status(500).send(error);
-              }
-            };
-              
-              // Fonction pour envoyer un fichier au client
-              exports.downloadFile = async (req, res) => {
-                try {
-                  const { contractId, fileId } = req.query;
-              
-                  if (!mongoose.Types.ObjectId.isValid(contractId)) {
-                    return res.status(400).send('ID de contrat invalide.');
+                const incidentId = req.params.incidentId; // L'ID de l'incident est obtenu de l'URL
+                console.log('Suppression de l\'incident avec l\'ID:', incidentId);
+                // conversion de l'ID en ObjectId
+                const incidentObjectId = new mongoose.Types.ObjectId(incidentId);
+                
+                // Trouver le contrat qui contient l'incident et le retirer
+                const updatedContract = await ContractModel.findOneAndUpdate(
+                  { 'incident._id': incidentObjectId },
+                  { $pull: { incident: { _id: incidentObjectId } } },
+                  { new: true }
+                  );
+                  
+                  if (!updatedContract) {
+                    return res.status(404).json({ message: 'Incident non trouvé.' });
                   }
-              
-                  if (!mongoose.Types.ObjectId.isValid(fileId)) {
-                    return res.status(400).send('ID de fichier invalide.');
-                  }
-              
-                  const contract = await ContractModel.findById(contractId, 'file');
-                  if (!contract) {
-                    return res.status(404).send('Contrat non trouvé.');
-                  }
-              
-                  const file = contract.file.id(fileId);
-                  if (!file) {
-                    return res.status(404).send('Fichier non trouvé.');
-                  }
-              
-                  // Vérification de l'existence du fichier dans le système de fichiers
-                  fs.access(file.path, fs.constants.R_OK, (err) => {
-                    if (err) {
-                      console.error('Le fichier n\'est pas accessible:', err);
-                      return res.status(404).send('Fichier non trouvé sur le serveur.');
-                    }
-                    // Envoi du fichier au client
-                    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // HTTP 1.1.
-                    res.setHeader('Pragma', 'no-cache'); // HTTP 1.0.
-                    res.setHeader('cache', 'no-cache'); // Proxies.
-                    res.setHeader('Expires', '0'); // Proxies.
-
-                    res.download(file.path, file.name, (downloadErr) => {
-                      if (downloadErr) {
-                        console.error('Erreur lors de l\'envoi du fichier:', downloadErr);
-                        // Si l'erreur est autre que l'annulation du téléchargement par l'utilisateur
-                        if (downloadErr.code !== 'ECONNABORTED' && downloadErr.code !== 'ECONNRESET') {
-                          res.status(500).send('Erreur lors du téléchargement du fichier.');
-                        }
-                      }
-                    });
-                  });
+                  
+                  res.status(200).json({ message: 'Incident supprimé avec succès.', contract: updatedContract });
                 } catch (error) {
-                  console.error('Erreur lors de la tentative de téléchargement du fichier:', error);
-                  res.status(500).send(error);
-                }
-              };
-              
-              // Fonction pour avoir le nom d'une prestation par son _id
-              exports.getBenefitNameById = async (req, res) => {
-                try {
-                  // console.log('Fetching service name by id');
-                  // console.log('Request :', req);
-                  const { benefitId } = req.params;
-                  // console.log('Service id:', benefitId);
-                  const service = await benefit.findById(benefitId);
-                  if (!service) {
-                    return res.status(404).json({ message: 'Service non trouvé.' });
-                  }
-                  console.log('Found service:', service);
-                  res.status(200).json(service.name);
-                } catch (error) {
-                  console.error('Error retrieving service name:', error);
+                  console.error('Erreur lors de la suppression de l\'incident:', error);
                   res.status(500).json({ error: error.message });
                 }
               };
+              
+              
+              // Fonction pour récupérer tous les incidents d'un contrat
+              exports.getIncidents = async (req, res) => {
+                console.log('Tentative de récupération des incidents d\'un contrat');
+                try {
+                  const { contractId } = req.params;
+                  
+                  // Récupération du contrat avec ses incidents
+                  const contract = await ContractModel.findById(contractId)
+                  .select('incident');
+                  
+                  if (!contract) {
+                    console.log('Contrat non trouvé.');
+                    return res.status(404).json({ message: 'Contrat non trouvé.' });
+                  }
+                  
+                  const incidentsWithUserDetails = await Promise.all(
+                    contract.incident.map(async (incident) => {
+                      const user = await User.findById(incident.user).select('firstname lastname');
+                      return { ...incident, user: user ? { firstname: user.firstname, lastname: user.lastname } : null };
+                    })
+                    );
+                    
+                    console.log('Incidents récupérés avec succès.');
+                    // res.status(200).json(contract.incident);
+                    res.status(200).json(incidentsWithUserDetails);
+                  } catch (error) {
+                    console.error('Erreur lors de la récupération des incidents:', error);
+                    res.status(500).json({ error: error.message });
+                  }
+                };
+                
+                
+                
+                
+                // Fonction pour renvoyer la liste des abbréviations des entreprises
+                exports.getCompaniesAbbreviations = async (req, res) => {
+                  try {
+                    console.log('Récupération des abbréviations des entreprises');
+                    const companies = await CompanyModel.find().select('abbreviation');
+                    const abbreviations = companies.map(company => company.abbreviation);
+                    console.log(`Found ${companies.length} companies`);
+                    res.status(200).json(abbreviations);
+                  } catch (error) {
+                    console.error('Erreur lors de la récupération des abbréviations des entreprises:', error);
+                    res.status(500).json({ error: error.message });
+                  }
+                };
+                
+                // Fonction pour uploader des fichiers
+                exports.uploadFiles = async (req, res) => {
+                  console.log("Tentative de téléversement de fichiers");
+                  console.log("Corps de la requête:", req.body);
+                  console.log("contractId", req.body.contractId);
+                  console.log("Fichiers:", req.files);
+                  
+                  if (!req.files || req.files.length === 0) {
+                    return res.status(400).send("Aucun fichier n'a été téléversé.");
+                  }
+                  
+                  // Convertir contractId en ObjectId pour garantir la compatibilité avec MongoDB
+                  const contractId = req.body.contractId;
+                  
+                  // Préparer les chemins des fichiers pour être enregistrés dans la base de données
+                  const filesPaths = req.files.map((file) => ({
+                    path: file.path,
+                    name: file.originalname,
+                    size: file.size,
+                  }));
+                  
+                  try {
+                    const contract = await ContractModel.findByIdAndUpdate(
+                      contractId,
+                      { $push: { file: { $each: filesPaths } } }, // Assurez-vous que 'files' correspond au champ dans votre modèle
+                      { new: true, useFindAndModify: false }
+                      );
+                      
+                      if (!contract) {
+                        console.log("Contrat non trouvé. id: " + contractId);
+                        return res.status(404).send("Contrat non trouvé. id: " + contractId);
+                      }
+                      
+                      console.log("Fichiers téléversés et enregistrés avec succès.");
+                      res.status(200).send({
+                        message: "Fichiers téléversés et enregistrés avec succès.",
+                        files: contract.file,
+                      });
+                    } catch (error) {
+                      console.error("Erreur lors de l'enregistrement des fichiers:", error);
+                      res.status(500).send(error);
+                    }
+                  };
+                  
+                  // Fonction pour envoyer un fichier au client
+                  exports.downloadFile = async (req, res) => {
+                    try {
+                      const { contractId, fileId } = req.query;
+                      
+                      if (!mongoose.Types.ObjectId.isValid(contractId)) {
+                        return res.status(400).send('ID de contrat invalide.');
+                      }
+                      
+                      if (!mongoose.Types.ObjectId.isValid(fileId)) {
+                        return res.status(400).send('ID de fichier invalide.');
+                      }
+                      
+                      const contract = await ContractModel.findById(contractId, 'file');
+                      if (!contract) {
+                        return res.status(404).send('Contrat non trouvé.');
+                      }
+                      
+                      const file = contract.file.id(fileId);
+                      if (!file) {
+                        return res.status(404).send('Fichier non trouvé.');
+                      }
+                      
+                      // Vérification de l'existence du fichier dans le système de fichiers
+                      fs.access(file.path, fs.constants.R_OK, (err) => {
+                        if (err) {
+                          console.error('Le fichier n\'est pas accessible:', err);
+                          return res.status(404).send('Fichier non trouvé sur le serveur.');
+                        }
+                        // Envoi du fichier au client
+                        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // HTTP 1.1.
+                        res.setHeader('Pragma', 'no-cache'); // HTTP 1.0.
+                        res.setHeader('cache', 'no-cache'); // Proxies.
+                        res.setHeader('Expires', '0'); // Proxies.
+                        
+                        res.download(file.path, file.name, (downloadErr) => {
+                          if (downloadErr) {
+                            console.error('Erreur lors de l\'envoi du fichier:', downloadErr);
+                            // Si l'erreur est autre que l'annulation du téléchargement par l'utilisateur
+                            if (downloadErr.code !== 'ECONNABORTED' && downloadErr.code !== 'ECONNRESET') {
+                              res.status(500).send('Erreur lors du téléchargement du fichier.');
+                            }
+                          }
+                        });
+                      });
+                    } catch (error) {
+                      console.error('Erreur lors de la tentative de téléchargement du fichier:', error);
+                      res.status(500).send(error);
+                    }
+                  };
+
+                  // Fonction pour supprimer un fichier d'un contrat
+                  exports.deleteFile = async (req, res) => {
+                    try {
+                      const { contractId, fileId } = req.query;
+                      console.log('Suppression du fichier avec l\'ID:', fileId);
+                      console.log('Contrat ID:', contractId);
+                      // Vérification de la validité des IDs
+                      if (!mongoose.Types.ObjectId.isValid(contractId)) {
+                        return res.status(400).send('ID de contrat invalide.');
+                      }
+                      if (!mongoose.Types.ObjectId.isValid(fileId)) {
+                        return res.status(400).send('ID de fichier invalide.');
+                      }
+                      // Supprime le fichier du système de fichiers
+                      const contract = await ContractModel.findById(contractId, 'file');
+                      if (!contract) {
+                        return res.status(404).send('Contrat non trouvé.');
+                      }
+                      const file = contract.file.id(fileId);
+                      if (!file) {
+                        return res.status(404).send('Fichier non trouvé.');
+                      }
+                      fs.unlink(file.path, async (err) => {
+                        if (err) {
+                          console.error('Erreur lors de la suppression du fichier:', err);
+                          return res.status(500).send('Erreur lors de la suppression du fichier.');
+                        }
+                        // Trouver le contrat qui contient le fichier et le retirer
+                        const updatedContract = await ContractModel.findByIdAndUpdate(
+                          contractId,
+                          { $pull: { file: { _id: fileId } } },
+                          { new: true }
+                        );
+                        if (!updatedContract) {
+                          return res.status(404).send('Fichier non trouvé.');
+                        }
+                        res.status(200).send({ message: 'Fichier supprimé avec succès.', contract: updatedContract });
+                      });
+                      
+                    } catch (error) {
+                      console.error('Erreur lors de la suppression du fichier:', error);
+                      res.status(500).json({ error: error.message });
+                    }
+                  };
+                  
+                  // Fonction pour avoir le nom d'une prestation par son _id
+                  exports.getBenefitNameById = async (req, res) => {
+                    try {
+                      // console.log('Fetching service name by id');
+                      // console.log('Request :', req);
+                      const { benefitId } = req.params;
+                      // console.log('Service id:', benefitId);
+                      const service = await benefit.findById(benefitId);
+                      if (!service) {
+                        return res.status(404).json({ message: 'Service non trouvé.' });
+                      }
+                      console.log('Found service:', service);
+                      res.status(200).json(service.name);
+                    } catch (error) {
+                      console.error('Error retrieving service name:', error);
+                      res.status(500).json({ error: error.message });
+                    }
+                  };

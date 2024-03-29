@@ -218,6 +218,19 @@ export class OrderDetailComponent implements OnInit {
     });
   }
 
+  removeFile(index: number) {
+    // supprime le fichier avec ContractService : deleteFile(fileId: string, contractId: string)
+    const file = this.files[index];
+    this.contractService.deleteFile(file["_id"], this.contractId).subscribe({
+      next: (data) => {
+        console.log('Fichier supprimé', data);
+        this.files.splice(index, 1);
+      },
+      error: (error) => console.error('Erreur lors de la suppression du fichier', error)
+    });
+
+  }
+
   onSelect(event) {
     console.log(event);
     // this.files.push(...event.addedFiles);

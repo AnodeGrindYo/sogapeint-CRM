@@ -187,6 +187,17 @@ export class ContractService {
             return this.http.request(req);
         }
 
+        /**
+         * Supprime un fichier d'un contrat
+         * 
+         * @param fileId, l'id du fichier
+         * @param contractId, l'id du contrat
+         * @returns un Observable contenant la réponse du serveur
+         */
+        deleteFile(fileId: string, contractId: string): Observable<any>{
+            return this.http.delete<any>(`${environment.apiUrl}/api/auth//deleteFile`, { params: { contractId: contractId, fileId: fileId } });
+        }
+
         /** 
          * Permet de récupérer un fichier par son id. La route est ${environment.apiUrl}/api/auth/download
          * et les paramètres sont le contractId et le fileId

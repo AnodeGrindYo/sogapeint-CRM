@@ -280,10 +280,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px; /* Ajustement de la largeur pour le bouton de téléchargement */
-    height: 40px; /* Ajustement de la hauteur pour le bouton de téléchargement */
+    width: 30px; /* Ajustement de la largeur pour le bouton de téléchargement */
+    height: 30px; /* Ajustement de la hauteur pour le bouton de téléchargement */
     border-radius: 20px; /* Forme circulaire ajustée */
     margin-left: 12px; /* Espacement à gauche conservé */
+    margin-right: 5px;
     background-color: transparent;
     color: #17a2b8; /* Couleur Bootstrap pour l'information */
     border: 1px solid #17a2b8; /* Couleur de bordure Bootstrap pour l'information */
@@ -297,6 +298,29 @@
 
 .btn-download i {
     pointer-events: none; /* Empêche l'icône de bloquer l'événement de clic sur le bouton */
+}
+
+.btn-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Fixed width for the delete button */
+    height: 30px;
+    border-radius: 15px; /* Circle shape */
+    margin-left: 12px;
+    background-color: transparent;
+    color: #dc3545; /* Bootstrap danger color */
+    border: 1px solid #dc3545; /* Bootstrap danger color */
+}
+
+.btn-delete:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: transparent;
+}
+
+.btn-delete i {
+    pointer-events: none; /* Prevents the icon from blocking the click event on the button */
 }
 
 .tags-container {

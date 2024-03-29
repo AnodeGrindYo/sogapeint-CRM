@@ -284,6 +284,9 @@
                                                 <button type="button" class="btn btn-download ms-auto" (click)="onFileDownload(file)" [ngbTooltip]="'Télécharger '+ file.name">
                                                     <i class="fas fa-download"></i>
                                                 </button>
+                                                <button type="button" class="btn btn-delete ms-auto" (click)="removeFile(i)" [ngbTooltip]="'Supprimer '+ file.name +' de la liste'">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
                                             </div>
                                         </li>
                                     </ul>
