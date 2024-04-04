@@ -1,4 +1,5 @@
-<!-- <pre></pre> -->
+<!-- <p>order-update works!</p> -->
+<pre></pre>
 
 <div class="container-fluid">
     <app-pagetitle title="Mise à jour d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
@@ -44,7 +45,6 @@
                                 >
                             </div>
                         </div>
-                        <!-- Client -->
                         <div class="mb-3">
                             <label for="customer" class="form-label">Client</label>
                             <ng-select id="customer" 
@@ -67,68 +67,45 @@
                             </ng-template>
                         </ng-select>
                     </div>
-                    <!-- contact -->
                     <div class="mb-3">
-                        <label for="contact" class="form-label">Contact</label>
-                        <ng-select id="contact" 
-                        formControlName="contact" 
-                        [items]="users" 
-                        bindLabel="name" 
-                        bindValue="_id" 
-                        placeholder="Sélectionner un client"
-                        [typeahead]="userInput$"
-                        [virtualScroll]="true" 
-                        [addTag]="false" 
-                        (focus)="onUserInputFocus()" 
-                        [compareWith]="compareWithFn" 
-                        (blur)="onUserInputBlur($event)">
-                        <ng-template ng-label-tmp let-item="item">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                        <ng-template ng-option-tmp let-item="item" let-index="index">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
+                        <label for="quote_number" class="form-label">Numéro de devis</label>
+                        <input type="text" class="form-control" id="quote_number" formControlName="quote_number">
+                    </div>
+                    <div class="mb-3">
+                        <label for="benefit" class="form-label">Prestation</label>
+                        <ng-select id="benefit"
+                        formControlName="benefit"
+                        [items]="benefits"
+                        bindLabel="name"
+                        bindValue="value"
+                        placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !">
                     </ng-select>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Résidence/Adresse</div>
+            <div class="card-body">
                 <div class="mb-3">
-                    <label for="quote_number" class="form-label">Numéro de devis</label>
-                    <input type="text" class="form-control" id="quote_number" formControlName="quote_number">
+                    <label for="address" class="form-label">Adresse</label>
+                    <input type="text" class="form-control" id="address" formControlName="address">
                 </div>
                 <div class="mb-3">
-                    <label for="benefit" class="form-label">Prestation</label>
-                    <ng-select id="benefit"
-                    formControlName="benefit"
-                    [items]="benefits"
-                    bindLabel="name"
-                    bindValue="value"
-                    placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !">
-                </ng-select>
+                    <label for="appartment_number" class="form-label">N° appart</label>
+                    <input type="text" class="form-control" id="appartment_number" formControlName="appartment_number">
+                </div>
+                <div class="mb-3">
+                    <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
+                    <select class="form-control" id="occupied" formControlName="occupied">
+                        <option value="true">Oui</option>
+                        <option value="false">Non</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-md-6">
-    <div class="card">
-        <div class="card-header">Résidence/Adresse</div>
-        <div class="card-body">
-            <div class="mb-3">
-                <label for="address" class="form-label">Adresse</label>
-                <input type="text" class="form-control" id="address" formControlName="address">
-            </div>
-            <div class="mb-3">
-                <label for="appartment_number" class="form-label">N° appart</label>
-                <input type="text" class="form-control" id="appartment_number" formControlName="appartment_number">
-            </div>
-            <div class="mb-3">
-                <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
-                <select class="form-control" id="occupied" formControlName="occupied">
-                    <option value="true">Oui</option>
-                    <option value="false">Non</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 <div class="row mb-3">
     <div class="col-md-6">
@@ -158,16 +135,15 @@
                     </ng-template>
                 </ng-select>
             </div>
-            
-            <!-- Co-traitant -->
+            <!-- contact -->
             <div class="mb-3">
-                <label for="external_contributor" class="form-label">Co-traitant</label>
-                <ng-select id="external_contributor" 
-                formControlName="external_contributor" 
+                <label for="contact" class="form-label">Contact</label>
+                <ng-select id="contact" 
+                formControlName="contact" 
                 [items]="users" 
                 bindLabel="name" 
                 bindValue="_id" 
-                placeholder="Sélectionner un co-traitant"
+                placeholder="Sélectionner un client"
                 [typeahead]="userInput$"
                 [virtualScroll]="true" 
                 [addTag]="false" 
@@ -182,11 +158,11 @@
                 </ng-template>
             </ng-select>
         </div>
-        <!-- Sous-traitant -->
+        <!-- Co-traitant -->
         <div class="mb-3">
-            <label for="subcontractor" class="form-label">Sous-traitant</label>
-            <ng-select id="subcontractor" 
-            formControlName="subcontractor" 
+            <label for="external_contributor" class="form-label">Co-traitant</label>
+            <ng-select id="external_contributor" 
+            formControlName="external_contributor" 
             [items]="users" 
             bindLabel="name" 
             bindValue="_id" 
@@ -205,6 +181,29 @@
             </ng-template>
         </ng-select>
     </div>
+    <!-- Sous-traitant -->
+    <div class="mb-3">
+        <label for="subcontractor" class="form-label">Sous-traitant</label>
+        <ng-select id="subcontractor" 
+        formControlName="subcontractor" 
+        [items]="users" 
+        bindLabel="name" 
+        bindValue="_id" 
+        placeholder="Sélectionner un client"
+        [typeahead]="userInput$"
+        [virtualScroll]="true" 
+        [addTag]="false" 
+        (focus)="onUserInputFocus()" 
+        [compareWith]="compareWithFn" 
+        (blur)="onUserInputBlur($event)">
+        <ng-template ng-label-tmp let-item="item">
+            {{ item.firstname }} {{ item.lastname }}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+            {{ item.firstname }} {{ item.lastname }}
+        </ng-template>
+    </ng-select>
+</div>
 </div>
 </div>
 </div>
@@ -348,7 +347,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="external_contributor_amount" class="form-label">Montant Co-traitant</label>
-                    
+
                     <input type="number" class="form-control" id="external_contributor_amount" formControlName="external_contributor_amount" (keydown)="onAlphaInput($event)">
                 </div>
                 <div class="mb-3">
@@ -356,11 +355,11 @@
                     
                     <input type="number" class="form-control" id="subcontractor_amount" formControlName="subcontractor_amount" (keydown)="onAlphaInput($event)">
                 </div>
-                <!-- <div class="mb-3">
+                <div class="mb-3">
                     <label for="benefit_ht" class="form-label">Bénéfice HT</label>
                     
                     <input type="number" class="form-control" id="benefit_ht" formControlName="benefit_ht" (keydown)="onAlphaInput($event)">
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -395,8 +394,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
 </div>
 <div class="col-md-6">
     <div class="card">
@@ -412,16 +411,16 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']"></app-contract-activity>
+        <div class="col-md-6">
+            <div class="card">
+                <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']"></app-contract-activity>
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <app-order-files-management [contractId]="contractId"></app-order-files-management>
-    </div>
-    
-    
+        <div class="col-md-6">
+            <app-order-files-management [contractId]="contractId"></app-order-files-management>
+        </div>
+            
+
 </div>
 </div>
 

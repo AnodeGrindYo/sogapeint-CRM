@@ -71,34 +71,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  // loadContracts() {
-  //   console.log("Chargement des commandes");
-  //   this.isLoading = true;
-  //   this.contractService.getOnGoingContracts().subscribe({
-  //     next: (data) => {
-  //       this.orders = data;
-  //       this.filteredOrders = [...this.orders];
-
-  //       this.filteredOrders.forEach((order) => {
-  //         order.date_cde = this.convertDateFormat(order.date_cde);
-  //         order.start_date_work = this.convertDateFormat(order.start_date_work);
-  //         order.end_date_work = this.convertDateFormat(order.end_date_work);
-  //       });
-
-  //       this.availableTags = this.tags.filter((tag) => tag !== "En cours");
-
-  //       this.activeTags = ["En cours"];
-  //       this.onSearch();
-
-  //       this.isLoading = false;
-
-  //       this.updateOrdersToShow();
-  //     },
-
-  //     error: (error) =>
-  //       console.error("Erreur lors du chargement des commandes", error),
-  //   });
-  // }
 
   loadNotOnGoingContracts() {
     console.log("loadNotOnGoingContracts");
@@ -115,36 +87,31 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     });
   }
 
-  // processOrders() {
-  //   console.log("processOrders");
-
-  //   this.filteredOrders.forEach((order) => {
-  //     order.date_cde = this.convertDateFormat(order.date_cde);
-  //     order.start_date_work = this.convertDateFormat(order.start_date_work);
-  //     order.end_date_work = this.convertDateFormat(order.end_date_work);
-  //   });
-  //   this.updateOrdersToShow();
-  // }
-
   // loadOnGoingContractsStream() {
-  //   this.isLoading = true;
+  //   this.isLoading = true; // Indique le début du chargement
+  
   //   this.contractService
   //     .getOnGoingContractsStream()
   //     .pipe(takeUntil(this.destroy$))
   //     .subscribe({
   //       next: (contract: any) => {
-  //         this.orders.push(contract);
-  //         this.isLoading = false;
-  //         if (this.activeTags.includes("En cours")) {
-  //           this.filteredOrders.push(contract);
-  //           this.updateOrdersToShow();
+  //         this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+  //         this.filteredOrders.push(contract);
+  //         // Vérifie si le nombre de contrats affichés est inférieur à itemsPerPage
+  //         if (this.totalOrdersToShow.length < this.itemsPerPage) {
+  //           this.ordersToDisplay.push(contract); // Ajoute le contrat à la liste filtrée pour affichage
+  //           this.updateOrdersToShow(); // Met à jour les contrats à afficher
+  
+  //           if (this.totalOrdersToShow.length === 1) {
+  //             this.isLoading = false; // Arrête le chargement une fois itemsPerPage atteint
+  //           }
   //         }
+  //         // Si itemsPerPage contrats sont affichés, les contrats suivants seront chargés en mémoire mais pas immédiatement affichés
   //       },
-  //       error: (error) =>
-  //         console.error(
-  //           "Erreur lors du chargement des contrats en cours",
-  //           error
-  //         ),
+  //       error: (error) => {
+  //         console.error("Erreur lors du chargement des contrats en cours", error);
+  //         this.isLoading = false; // Arrête le chargement en cas d'erreur
+  //       },
   //     });
   // }
   loadOnGoingContractsStream() {
@@ -157,9 +124,12 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
         next: (contract: any) => {
           this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
           this.filteredOrders.push(contract);
+  
+          // Trier les commandes par date_cde en ordre décroissant
+          this.sortOrdersByDateCde();
+  
           // Vérifie si le nombre de contrats affichés est inférieur à itemsPerPage
           if (this.totalOrdersToShow.length < this.itemsPerPage) {
-            this.ordersToDisplay.push(contract); // Ajoute le contrat à la liste filtrée pour affichage
             this.updateOrdersToShow(); // Met à jour les contrats à afficher
   
             if (this.totalOrdersToShow.length === 1) {
@@ -174,18 +144,15 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
         },
       });
   }
+  
+  // Fonction pour trier les contrats par date_cde
+  sortOrdersByDateCde() {
+    this.filteredOrders.sort((a, b) => {
+      return new Date(b.date_cde).getTime() - new Date(a.date_cde).getTime();
+    });
+  }
+  
 
-  // filterAndProcessOrders() {
-  //   if (this.activeTags.includes("En cours")) {
-  //     this.filteredOrders = this.orders.filter((order) =>
-  //       this.orderHasTag(order, "En cours")
-  //     );
-  //   } else {
-  //     this.filteredOrders = this.orders;
-  //   }
-
-  //   this.updateOrdersToShow();
-  // }
 
 
   shouldAddToDisplay(): boolean {
@@ -331,28 +298,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     this.router.navigate(["/order-detail", order._id]);
   }
 
-  // getUserName(userId: string) {
-  //   return this.userService.getOne(userId).subscribe({
-  //     next: (user) => {
-  //       return `${user.firstName} ${user.lastName}`;
-  //     },
-  //     error: (error) =>
-  //       console.error("Erreur lors de la récupération de l'utilisateur", error),
-  //   });
-  // }
-
-  // mapTagToStatus(tag: string): string | null {
-  //   const tagStatusMapping: { [key: string]: string } = {
-  //     in_progress: "En cours",
-  //     null: "Non attribué",
-  //     achieve: "Réalisé",
-  //     invoiced: "Facturé",
-  //     anomaly: "Anomalie",
-  //     canceled: "Annulé",
-  //   };
-
-  //   return tagStatusMapping[tag] || null;
-  // }
 
   trackByFn(index, item) {
     return item._id;

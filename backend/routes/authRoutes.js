@@ -145,4 +145,13 @@ router.delete('/incident/:incidentId', isAdminOrSuperAdmin, authController.delet
 // Route pour obtenir les incidents d'un contrat
 router.get('/incidents/:contractId', isConnected, authController.getIncidents);
 
+//  Route pour obtenir la liste de tous les services
+router.get('/benefits', isConnected, authController.getBenefits);
+
+// Route pour ajouter un service
+router.post('/benefit', isAdminOrSuperAdmin, authController.addBenefit);
+
+// Route pour supprimer un service par son id
+router.delete('/benefit/:benefitId', isAdminOrSuperAdmin, authController.deleteBenefit);
+
 module.exports = router;

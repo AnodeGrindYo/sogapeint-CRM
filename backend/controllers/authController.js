@@ -721,7 +721,24 @@ exports.resetPasswordFromAdmin = async (req, res) => {
       'Connection': 'keep-alive',
     });
     
-    const cursor = ContractModel.find({ status: 'in_progress' })
+    // Récupérer les paramètres ou utiliser les valeurs par défaut
+    const period = parseInt(req.query.period) || 2; // Nombre d'années
+    const filter_trash = req.query.filter_trash !== 'false'; // Convertit en boolean, true par défaut
+    
+    // Construire le filtre de base
+    let filter = {
+      status: 'in_progress',
+      date_cde: {
+        $gte: new Date(new Date().setFullYear(new Date().getFullYear() - period))
+      }
+    };
+    
+    // Si filter_trash est vrai, ajouter la condition pour filtrer les trash à false
+    if (filter_trash) {
+      filter.trash = false;
+    }
+    
+    const cursor = ContractModel.find(filter)
     .populate('customer')
     .populate('contact')
     .populate('external_contributor')
@@ -751,14 +768,14 @@ exports.resetPasswordFromAdmin = async (req, res) => {
       'Cache-Control': 'no-cache',
       'Connection': 'keep-alive',
     });
-    
+  
     const cursor = ContractModel.find({ status: { $ne: 'in_progress' } })
     .populate('customer')
     .populate('contact')
     .populate('external_contributor')
     .populate('subcontractor')
     .cursor();
-    
+  
     cursor.eachAsync((contract) => {
       // Supprimer les informations sensibles
       sanitizeContract(contract);
@@ -773,6 +790,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
       res.status(500).end();
     });
   };
+  
+  
   
   function sanitizeContract(contract) {
     ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(role => {
@@ -873,6 +892,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         end_date_customer,
         trash,
         date_cde,
+        billing_amount
       } = req.body;
       
       
@@ -904,6 +924,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         end_date_customer,
         trash,
         date_cde,
+        billing_amount
       });
       
       
@@ -952,6 +973,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         end_date_customer,
         trash,
         date_cde,
+        billing_amount
       } = req.body;
       
       // Mise à jour du contrat
@@ -982,6 +1004,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           end_date_customer,
           trash,
           date_cde,
+          billing_amount
         },
         { new: true }
         );
@@ -1321,7 +1344,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
                       res.status(500).send(error);
                     }
                   };
-
+                  
                   // Fonction pour supprimer un fichier d'un contrat
                   exports.deleteFile = async (req, res) => {
                     try {
@@ -1354,34 +1377,87 @@ exports.resetPasswordFromAdmin = async (req, res) => {
                           contractId,
                           { $pull: { file: { _id: fileId } } },
                           { new: true }
-                        );
-                        if (!updatedContract) {
-                          return res.status(404).send('Fichier non trouvé.');
-                        }
-                        res.status(200).send({ message: 'Fichier supprimé avec succès.', contract: updatedContract });
-                      });
-                      
-                    } catch (error) {
-                      console.error('Erreur lors de la suppression du fichier:', error);
-                      res.status(500).json({ error: error.message });
-                    }
-                  };
-                  
-                  // Fonction pour avoir le nom d'une prestation par son _id
-                  exports.getBenefitNameById = async (req, res) => {
-                    try {
-                      // console.log('Fetching service name by id');
-                      // console.log('Request :', req);
-                      const { benefitId } = req.params;
-                      // console.log('Service id:', benefitId);
-                      const service = await benefit.findById(benefitId);
-                      if (!service) {
-                        return res.status(404).json({ message: 'Service non trouvé.' });
+                          );
+                          if (!updatedContract) {
+                            return res.status(404).send('Fichier non trouvé.');
+                          }
+                          res.status(200).send({ message: 'Fichier supprimé avec succès.', contract: updatedContract });
+                        });
+                        
+                      } catch (error) {
+                        console.error('Erreur lors de la suppression du fichier:', error);
+                        res.status(500).json({ error: error.message });
                       }
-                      console.log('Found service:', service);
-                      res.status(200).json(service.name);
-                    } catch (error) {
-                      console.error('Error retrieving service name:', error);
-                      res.status(500).json({ error: error.message });
-                    }
-                  };
+                    };
+                    
+                    // Fonction pour avoir le nom d'une prestation par son _id
+                    exports.getBenefitNameById = async (req, res) => {
+                      try {
+                        // console.log('Fetching service name by id');
+                        // console.log('Request :', req);
+                        const { benefitId } = req.params;
+                        // console.log('Service id:', benefitId);
+                        const service = await benefit.findById(benefitId);
+                        if (!service) {
+                          return res.status(404).json({ message: 'Service non trouvé.' });
+                        }
+                        console.log('Found service:', service);
+                        res.status(200).json(service.name);
+                      } catch (error) {
+                        console.error('Error retrieving service name:', error);
+                        res.status(500).json({ error: error.message });
+                      }
+                    };
+                    
+                    // Fonction pour obtenir la liste de tous les services
+                    exports.getBenefits = async (req, res) => {
+                      try {
+                        // console.log('Récupération de tous les services');
+                        const services = await benefit.find();
+                        // console.log(`Found ${services.length} services`);
+                        res.json(services);
+                      } catch (error) {
+                        res.status(500).send({ message: "Erreur lors de la récupération des services", error });
+                        console.error('Erreur lors de la récupération des services:', error);
+                      }
+                    };
+                    
+                    // Fonction pour ajouter un nouveau service
+                    exports.addBenefit = async (req, res) => {
+                      try {
+                        // console.log('Ajout d’un nouveau service');
+                        const { name } = req.body;
+                        // normalisation du nom pour éviter les doublons : première lettre en majuscule, le reste en minuscule
+                        const normalized_name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+                        let service = await benefit.findOne({ normalized_name });
+                        if (service) {
+                          return res.status(400).json({ message: 'Un service avec ce nom existe déjà.' });
+                        }
+                        const newService = new benefit({
+                          normalized_name
+                        });
+                        await newService.save();
+                        // console.log('Nouveau service ajouté');
+                        res.status(201).json({ message: 'Service créé avec succès.', benefitId: newService._id });
+                      } catch (error) {
+                        console.error('Erreur lors de l’ajout d’un nouveau service:', error);
+                        res.status(500).json({ error: error.message });
+                      }
+                    };
+                    
+                    // Fonction pour supprimer un service par son id
+                    exports.deleteBenefit = async (req, res) => {
+                      try {
+                        // console.log('Suppression du service');
+                        const { benefitId } = req.params;
+                        const deletedService = await benefit.findByIdAndDelete(benefitId);
+                        if (!deletedService) {
+                          return res.status(404).json({ message: 'Service non trouvé.' });
+                        }
+                        // console.log('Service supprimé avec succès');
+                        res.status(200).json({ message: 'Service supprimé avec succès.' });
+                      } catch (error) {
+                        console.error('Erreur lors de la suppression du service:', error);
+                        res.status(500).json({ error: error.message });
+                      }
+                    };
