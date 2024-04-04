@@ -1030,6 +1030,27 @@ exports.resetPasswordFromAdmin = async (req, res) => {
       }
       
     };
+
+    // Fonction pour supprimer un contrat par son id
+    exports.deleteContract = async (req, res) => {
+      try {
+        // console.log('Suppression du contrat');
+        const { contractId } = req.params;
+
+        const deletedContract = await ContractModel.findById
+        AndDelete(contractId);
+
+        if (!deletedContract) {
+          return res.status(404).json({ message: 'Contrat non trouvé.' });
+        }
+
+        // console.log('Contrat supprimé avec succès');
+        res.status(200).json({ message: 'Contrat supprimé avec succès.' });
+      } catch (error) {
+        console.error('Erreur lors de la suppression du contrat:', error);
+        res.status(500).json({ error: error.message });
+      }
+    };
     
     // Fonction pour renvoyer la liste des internal_number des contrats dont date_cde concernae l'année en cours
     exports.getContractsInternalNumbers = async (req, res) => {

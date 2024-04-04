@@ -91,6 +91,9 @@ router.post('/contract', isAdminOrSuperAdmin, authController.addContract);
 // Route pour modifier un contrat (protégée par le middleware isAdminOrSuperAdmin)
 router.put('/contract/:contractId', isAdminOrSuperAdmin, authController.updateContract);
 
+// Route pour supprimer un contrat (protégée par le middleware isAdminOrSuperAdmin)
+router.delete('/contract/:contractId', isAdminOrSuperAdmin, authController.deleteContract);
+
 // Route pour getOngoingContracts (protégée par le middleware isAdminOrSuperAdmin, obtient les contrats en cours)
 router.get('/ongoingContracts', isAdminOrSuperAdmin, authController.getOngoingContracts);
 

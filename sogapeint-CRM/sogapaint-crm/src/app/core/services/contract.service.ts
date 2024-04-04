@@ -58,6 +58,17 @@ export class ContractService {
         addContract(contractData: any): Observable<any> {
             return this.http.post<any>(`${environment.apiUrl}/api/auth/contract`, contractData);
         }
+
+        /**
+         * Supprime un contrat par son identifiant.
+         * 
+         * Envoie une requête DELETE pour supprimer un contrat par son identifiant.
+         * @param contractId L'identifiant du contrat à supprimer.
+         * @returns Un Observable contenant la réponse du serveur.
+         */
+        deleteContract(contractId: string): Observable<any> {
+            return this.http.delete<any>(`${environment.apiUrl}/api/auth/contract/${contractId}`);
+        }
         
         /**
         * Met à jour un contrat existant.
