@@ -5,6 +5,7 @@ import { UserProfileService } from "../../core/services/user.service";
 import { CompanyService } from "../../core/services/company.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
+  Observable,
   Subject,
   debounceTime,
   distinctUntilChanged,
@@ -14,6 +15,8 @@ import {
   takeUntil,
 } from "rxjs";
 import { HttpEventType, HttpResponse } from "@angular/common/http";
+import { BenefitService } from "src/app/core/services/benefit.service";
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: "app-order-update",
@@ -40,19 +43,7 @@ export class OrderUpdateComponent implements OnInit {
     { name: "Anomalie", value: "anomaly" },
   ];
 
-  benefits = [
-    { name: "Peinture", value: "5e4ba27006d62fd4a4e49916" },
-    { name: "Sol", value: "5e4ba27606d62fd4a4e49917" },
-    { name: "Électricité", value: "5e52cb8148f8b27b3d077a84" },
-    { name: "Plomberie", value: "5e52cb8148f8b27b3d077a85" },
-    { name: "Maçonnerie", value: "5e52cb8148f8b27b3d077a86" },
-    { name: "Menuiserie", value: "5e52cb8148f8b27b3d077a87" },
-    { name: "Vitrification", value: "5e52cb8148f8b27b3d077a88" },
-    { name: "Nettoyage", value: "5e52cb8148f8b27b3d077a89" },
-    { name: "Faïence", value: "5f58fef3bfdad857fcfbba50" },
-    { name: "Placo", value: "5f58fefdbfdad857fcfbba51" },
-    { name: "Carrelage", value: "5f58ff06bfdad857fcfbba52" },
-  ];
+  benefits = [];
 
   internalNumberList: any[] = [];
   abbreviationList: string[] = [];
@@ -68,98 +59,249 @@ export class OrderUpdateComponent implements OnInit {
     private contractService: ContractService,
     private userProfileService: UserProfileService,
     private companyService: CompanyService,
+    private benefitService: BenefitService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
+  // ngOnInit(): void {
+  //   this.currentUser = this.userProfileService.getCurrentUser();
+  //   console.log("Current user:", this.currentUser);
+  //   this.contractId = this.route.snapshot.params["orderId"];
+  //   this.initializeForm();
+  //   this.loadContractData();
+  //   this.setupUserSearch();
+  //   this.breadCrumbItems = [
+  //     { label: "Accueil", path: "/" },
+  //     { label: "Mise à jour d’une commande", active: true },
+  //   ];
+
+  //   // Récupérer les abréviations depuis le service
+  //   this.getAbbreviationList();
+
+  //   // Setup for abbreviation search and typeahead functionality
+  //   this.abbreviationInput$
+  //     .pipe(
+  //       debounceTime(300),
+  //       distinctUntilChanged(),
+  //       switchMap((term) => {
+  //         if (term) {
+  //           const lowerCaseTerm = term.toLowerCase();
+  //           return of(
+  //             this.fullAbbreviationList.filter((abbr) =>
+  //               abbr.toLowerCase().includes(lowerCaseTerm)
+  //             )
+  //           );
+  //         } else {
+  //           // Si la saisie de l'utilisateur est vide, retournez la liste complète
+  //           return of(this.fullAbbreviationList);
+  //         }
+  //       }),
+  //       takeUntil(this.unsubscribe$)
+  //     )
+  //     .subscribe((filteredAbbreviations) => {
+  //       this.filteredAbbreviationList = filteredAbbreviations;
+  //     });
+
+  //   // Calculer la différence entre les heures de prévision et d'exécution en temps réel
+  //   this.orderUpdateForm.valueChanges.subscribe((val) => {
+  //     // Utiliser `.value` pour obtenir la valeur actuelle des FormControl
+  //     const totalPrevisionHours =
+  //       Number(this.orderUpdateForm.get("prevision_data_day").value) * 8 +
+  //       Number(this.orderUpdateForm.get("prevision_data_hour").value);
+  //     const totalExecutionHours =
+  //       Number(this.orderUpdateForm.get("execution_data_day").value) * 8 +
+  //       Number(this.orderUpdateForm.get("execution_data_hour").value);
+  //     const difference = totalExecutionHours - totalPrevisionHours;
+
+  //     // Mise à jour du formulaire sans déclencher un nouvel événement valueChanges
+  //     this.orderUpdateForm.patchValue(
+  //       { difference: difference },
+  //       { emitEvent: false }
+  //     );
+  //   });
+
+  //   // calculer le bénéfice en temps réel (montant HT - montant contributeur externe - montant sous-traitant)
+  //   this.orderUpdateForm.valueChanges.subscribe((val) => {
+  //     const amountHt = Number(this.orderUpdateForm.get("amount_ht").value);
+  //     const benefitHt = Number(this.orderUpdateForm.get("benefit_ht").value);
+  //     const external_contributor_amount = Number(
+  //       this.orderUpdateForm.get("external_contributor_amount").value
+  //     );
+  //     const subcontractor_amount = Number(
+  //       this.orderUpdateForm.get("subcontractor_amount").value
+  //     );
+  //     const benefitHT =
+  //       amountHt - external_contributor_amount - subcontractor_amount;
+  //     this.orderUpdateForm.patchValue(
+  //       { benefit: benefitHT },
+  //       { emitEvent: false }
+  //     );
+  //   });
+
+  //   // Patch de date_cde avec la date actuelle si elle est vide
+  //   this.orderUpdateForm.get("date_cde").valueChanges.subscribe((val) => {
+  //     if (!val) {
+  //       this.orderUpdateForm.patchValue(
+  //         { date_cde: new Date().toISOString().split("T")[0] },
+  //         { emitEvent: false }
+  //       );
+  //     }
+  //   });
+
+  //   // Récupérer la liste des prestations avec BenefitService
+  //   this.benefitService.getBenefits().subscribe({
+  //     next: (benefits) => {
+  //       this.benefits = benefits;
+  //     },
+  //     error: (error) => {
+  //       console.error("Erreur lors de la récupération des prestations", error);
+  //     },
+  //   });
+  // }
   ngOnInit(): void {
+    this.initializeCurrentUser();
+    this.initializeContractId();
+    this.initializeBenefits();
+    this.initializeForm();
+    this.loadAndSetup();
+    this.initializeBreadCrumbItems();
+    this.initializeAbbreviationSearch();
+    this.initializeRealTimeCalculations();
+    
+  }
+  
+  initializeCurrentUser(): void {
     this.currentUser = this.userProfileService.getCurrentUser();
     console.log("Current user:", this.currentUser);
+  }
+  
+  initializeContractId(): void {
     this.contractId = this.route.snapshot.params["orderId"];
-    this.initializeForm();
+  }
+  
+  loadAndSetup(): void {
     this.loadContractData();
     this.setupUserSearch();
+  }
+  
+  initializeBreadCrumbItems(): void {
     this.breadCrumbItems = [
       { label: "Accueil", path: "/" },
       { label: "Mise à jour d’une commande", active: true },
     ];
-
-    // Récupérer les numéros internes depuis le service
-    // this.getInternalNumbers();
-
-    // Récupérer les abréviations depuis le service
+  }
+  
+  initializeAbbreviationSearch(): void {
     this.getAbbreviationList();
-
-    // Setup for abbreviation search and typeahead functionality
     this.abbreviationInput$
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        switchMap((term) => {
-          if (term) {
-            const lowerCaseTerm = term.toLowerCase();
-            return of(
-              this.fullAbbreviationList.filter((abbr) =>
-                abbr.toLowerCase().includes(lowerCaseTerm)
-              )
-            );
-          } else {
-            // Si la saisie de l'utilisateur est vide, retournez la liste complète
-            return of(this.fullAbbreviationList);
-          }
-        }),
+        switchMap(term => this.handleAbbreviationSearch(term)),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe((filteredAbbreviations) => {
+      .subscribe(filteredAbbreviations => {
         this.filteredAbbreviationList = filteredAbbreviations;
       });
-
-    // Calculer la différence entre les heures de prévision et d'exécution en temps réel
-    this.orderUpdateForm.valueChanges.subscribe((val) => {
-      // Utiliser `.value` pour obtenir la valeur actuelle des FormControl
-      const totalPrevisionHours =
-        Number(this.orderUpdateForm.get("prevision_data_day").value) * 8 +
-        Number(this.orderUpdateForm.get("prevision_data_hour").value);
-      const totalExecutionHours =
-        Number(this.orderUpdateForm.get("execution_data_day").value) * 8 +
-        Number(this.orderUpdateForm.get("execution_data_hour").value);
+  }
+  
+  handleAbbreviationSearch(term: string): Observable<string[]> {
+    if (term) {
+      const lowerCaseTerm = term.toLowerCase();
+      return of(this.fullAbbreviationList.filter(abbr => abbr.toLowerCase().includes(lowerCaseTerm)));
+    } else {
+      return of(this.fullAbbreviationList);
+    }
+  }
+  
+  initializeRealTimeCalculations(): void {
+    this.handleRealTimeDifference();
+    this.handleRealTimeAdjustments();
+    // this.handleRealTimeBenefit();
+    this.patchOrderDate();
+  }
+  
+  handleRealTimeDifference(): void {
+    this.orderUpdateForm.valueChanges.subscribe(val => {
+      const totalPrevisionHours = this.calculateHours('prevision_data_day', 'prevision_data_hour');
+      const totalExecutionHours = this.calculateHours('execution_data_day', 'execution_data_hour');
       const difference = totalExecutionHours - totalPrevisionHours;
-
-      // Mise à jour du formulaire sans déclencher un nouvel événement valueChanges
-      this.orderUpdateForm.patchValue(
-        { difference: difference },
-        { emitEvent: false }
-      );
+      this.orderUpdateForm.patchValue({ difference: difference }, { emitEvent: false });
     });
+  }
 
-    // calculer le bénéfice en temps réel (montant HT - montant contributeur externe - montant sous-traitant)
-    this.orderUpdateForm.valueChanges.subscribe((val) => {
+  private handleRealTimeAdjustments(): void {
+    this.orderUpdateForm.valueChanges.subscribe(() => {
+      const totalPrevisionHours =
+        Number(this.orderUpdateForm.get('prevision_data_day').value) * 8 +
+        Number(this.orderUpdateForm.get('prevision_data_hour').value);
+      const totalExecutionHours =
+        Number(this.orderUpdateForm.get('execution_data_day').value) * 8 +
+        Number(this.orderUpdateForm.get('execution_data_hour').value);
+      const difference = totalExecutionHours - totalPrevisionHours;
+  
+      const benefitId = this.orderUpdateForm.get('benefit').value;
+      const benefitType = this.benefits.find(benefit => benefit.value === benefitId)?.name;
+      const amount = Number(this.orderUpdateForm.get('external_contributor_amount').value);
+  
+      let divider = 0;
+      let hours = 0;
+      if (benefitType === 'Peinture') {
+        divider = 450;
+      } else if (benefitType === 'Sol') {
+        divider = 650;
+      } else {
+        divider = 450;
+      }
+  
+      hours = amount / divider;
+      hours = Math.round(hours * 100) / 100;
+  
+      this.orderUpdateForm.patchValue({
+        prevision_data_hour: hours,
+        difference: difference,
+      }, { emitEvent: false });
+    });
+  }
+  
+  
+  calculateHours(dayFieldName: string, hourFieldName: string): number {
+    return Number(this.orderUpdateForm.get(dayFieldName).value) * 8 + Number(this.orderUpdateForm.get(hourFieldName).value);
+  }
+  
+  handleRealTimeBenefit(): void {
+    this.orderUpdateForm.valueChanges.subscribe(val => {
       const amountHt = Number(this.orderUpdateForm.get("amount_ht").value);
-      const benefitHt = Number(this.orderUpdateForm.get("benefit_ht").value);
-      const external_contributor_amount = Number(
-        this.orderUpdateForm.get("external_contributor_amount").value
-      );
-      const subcontractor_amount = Number(
-        this.orderUpdateForm.get("subcontractor_amount").value
-      );
-      const benefitHT =
-        amountHt - external_contributor_amount - subcontractor_amount;
-      this.orderUpdateForm.patchValue(
-        { benefit: benefitHT },
-        { emitEvent: false }
-      );
+      const external_contributor_amount = Number(this.orderUpdateForm.get("external_contributor_amount").value);
+      const subcontractor_amount = Number(this.orderUpdateForm.get("subcontractor_amount").value);
+      // const benefitHT = amountHt - external_contributor_amount - subcontractor_amount;
+      // this.orderUpdateForm.patchValue({ benefit_ht: benefitHT }, { emitEvent: false });
     });
-
-    // Patch de date_cde avec la date actuelle si elle est vide
-    this.orderUpdateForm.get("date_cde").valueChanges.subscribe((val) => {
+  }
+  
+  patchOrderDate(): void {
+    this.orderUpdateForm.get("date_cde").valueChanges.subscribe(val => {
       if (!val) {
-        this.orderUpdateForm.patchValue(
-          { date_cde: new Date().toISOString().split("T")[0] },
-          { emitEvent: false }
-        );
+        this.orderUpdateForm.patchValue({ date_cde: new Date().toISOString().split("T")[0] }, { emitEvent: false });
       }
     });
   }
+  
+  initializeBenefits(): void {
+    this.benefitService.getBenefits().subscribe({
+      next: benefits => {
+        this.benefits = benefits;
+        console.log("Prestations récupérées:", benefits);
+      },
+      error: error => {
+        console.error("Erreur lors de la récupération des prestations", error);
+      }
+    });
+  }
+  
+
+  //////////////////////////
 
   private initializeForm() {
     this.orderUpdateForm = new FormGroup({
@@ -169,7 +311,7 @@ export class OrderUpdateComponent implements OnInit {
         Validators.pattern(/^\d{3}$/),
       ]),
       internalNumberAbbrPart: new FormControl("", Validators.required),
-      customer: new FormControl("", Validators.required),
+      customer: new FormControl(undefined, Validators.required),
       contact: new FormControl(""),
       internal_contributor: new FormControl(""),
       external_contributor: new FormControl(""),
@@ -187,10 +329,12 @@ export class OrderUpdateComponent implements OnInit {
         Validators.pattern(/^\d+\.?\d*$/),
       ]),
       benefit_ht: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
+      billing_amount: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
       prevision_data_hour: new FormControl("", [Validators.pattern(/^\d+$/)]),
       prevision_data_day: new FormControl("", [Validators.pattern(/^\d+$/)]),
       execution_data_day: new FormControl("", [Validators.pattern(/^\d+$/)]),
       execution_data_hour: new FormControl("", [Validators.pattern(/^\d+$/)]),
+      difference: new FormControl(""),
       benefit: new FormControl(""),
       status: new FormControl(""),
       occupied: new FormControl(""),
@@ -281,7 +425,17 @@ export class OrderUpdateComponent implements OnInit {
     if (contract.subcontractor)
       userRequests.push(this.userProfileService.getOne(contract.subcontractor));
 
-    forkJoin(userRequests).subscribe((userResponses) => {
+
+    forkJoin(userRequests).pipe(
+      catchError(error => {
+        // Logique de gestion d'erreur
+        console.error('Une erreur est survenue lors de la récupération des utilisateurs', error);
+        // On pourra décider de renvoyer un Observable vide, ou de gérer l'erreur d'une manière 
+        // qui convient à notre application
+        return of([]);
+      })
+    ).subscribe((userResponses) => {
+
       if (contract.customer)
         patchValues.customer = userResponses.find(
           (u) => u._id === contract.customer
@@ -302,11 +456,36 @@ export class OrderUpdateComponent implements OnInit {
         patchValues.subcontractor = userResponses.find(
           (u) => u._id === contract.subcontractor
         );
-
+        if (contract.benefit) {
+          // Utilisez la valeur correspondante de l'objet benefit, pas l'objet entier
+          console.log("Benefit id to patch:", contract.benefit);
+          // const benefitObject = this.benefits.find(b => b._id === contract.benefit);
+          // patchValues.benefit = benefitObject ? benefitObject._id : null;
+          patchValues.benefit = this.benefits.find(b => b._id === contract.benefit);
+          console.log("Benefit value to patch:", patchValues.benefit);
+        }
+      
+      console.log("User data loaded:", userResponses);
       // Après que toutes les opérations asynchrones sont terminées, patche le formulaire
-      // this.orderUpdateForm.patchValue(patchValues);
+      
       if (this.orderUpdateForm && patchValues) {
         this.orderUpdateForm.patchValue(patchValues);
+      //   if (contract.customer && patchValues.customer) {
+      //     this.orderUpdateForm.get("customer").setValue(patchValues.customer);
+      //   }
+      //   if (contract.contact && patchValues.contact) {
+      //     this.orderUpdateForm.get("contact").setValue(patchValues.contact);
+      //   }
+      //   if (contract.internal_contributor && patchValues.internal_contributor) {
+      //     this.orderUpdateForm.get("internal_contributor").setValue(patchValues.internal_contributor);
+      //   }
+      //   if (contract.external_contributor && patchValues.external_contributor) {
+      //     this.orderUpdateForm.get("external_contributor").setValue(patchValues.external_contributor);
+      //   }
+      //   if (contract.subcontractor && patchValues.subcontractor) {
+      //     this.orderUpdateForm.get("subcontractor").setValue(patchValues.subcontractor);
+      //   }
+
       }
     });
   }
@@ -329,6 +508,8 @@ export class OrderUpdateComponent implements OnInit {
   }
 
   onSubmitUpdate(): void {
+    console.log("Attempting to submit form", this.orderUpdateForm.value);
+    console.log("Form validity:", this.orderUpdateForm.valid);
     if (this.orderUpdateForm.valid) {
       this.contractService
         .updateContract(this.contractId, this.orderUpdateForm.value)
@@ -343,6 +524,9 @@ export class OrderUpdateComponent implements OnInit {
         .add(() => {
           this.router.navigate(["/order-detail", this.contractId]);
         });
+    } else {
+      console.error("Form is invalid");
+      console.log("invalid fields:", this.orderUpdateForm.value);
     }
   }
 
@@ -450,5 +634,20 @@ export class OrderUpdateComponent implements OnInit {
       .value.toUpperCase()}-${
       this.orderUpdateForm.get("internalNumberNumericPart").value
     }`;
+  }
+
+  onDelete(): void {
+    if (this.contractId) {
+      this.contractService.deleteContract(this.contractId).subscribe({
+        next: () => {
+          console.log("Contract deleted successfully");
+        },
+        error: (error) => {
+          console.error("Error deleting contract:", error);
+        },
+      });
+    } else {
+      console.error("No contract id provided");
+    }
   }
 }

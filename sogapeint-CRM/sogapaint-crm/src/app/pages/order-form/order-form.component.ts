@@ -88,144 +88,33 @@ export class OrderFormComponent implements OnInit {
     private router: Router
     ) {}
     
-    // ngOnInit(): void {
-    //   // Initialize the form group with controls corresponding to contractData structure
-    //   this.orderForm = new FormGroup({
-    //     internalNumberAbbrPart: new FormControl(this.contractData.internalNumberAbbrPart, [Validators.pattern(/^[BCDFGHJKLMNPQRSTVWXYZ]{1,5}$/)]), // Only 3-4 uppercase letters, consonnants only
-    //     internalNumberNumericPart: new FormControl(this.contractData.internalNumberNumericPart, [Validators.pattern(/^\d{3}$/)]), // Only 3 digits
-    //     customer: new FormControl(this.contractData.customer, Validators.required), // Assuming it's required
-    //     internalContributor: new FormControl(this.contractData.internalContributor),
-    //     contact: new FormControl(this.contractData.contact),
-    //     externalContributor: new FormControl(this.contractData.externalContributor),
-    //     subcontractor: new FormControl(this.contractData.subcontractor),
-    //     address: new FormControl(this.contractData.address),
-    //     appartmentNumber: new FormControl(this.contractData.appartmentNumber),
-    //     quoteNumber: new FormControl(this.contractData.quoteNumber),
-    //     mailSended: new FormControl(this.contractData.mailSended),
-    //     invoiceNumber: new FormControl(this.contractData.invoiceNumber),
-    //     amountHt: new FormControl(this.contractData.amountHt, [Validators.pattern(/^\d+\.?\d*$/)]), // Only numbers with optional decimal
-    //     externalContributorAmount: new FormControl(this.contractData.externalContributorAmount, [Validators.pattern(/^\d+\.?\d*$/)]), // Only numbers with optional decimal
-    //     subcontractorAmount: new FormControl(this.contractData.subcontractorAmount, [Validators.pattern(/^\d+\.?\d*$/)]), // Only numbers with optional decimal
-    //     previsionDataHour: new FormControl(this.contractData.previsionDataHour, [Validators.pattern(/^\d+$/)]), // Only whole numbers
-    //     previsionDataDay: new FormControl(this.contractData.previsionDataDay, [Validators.pattern(/^\d+$/)]), // Only whole numbers
-    //     executionDataDay: new FormControl(this.contractData.executionDataDay, [Validators.pattern(/^\d+$/)]), // Only whole numbers
-    //     executionDataHour: new FormControl(this.contractData.executionDataHour, [Validators.pattern(/^\d+$/)]), // Only whole numbers
-    //     difference: new FormControl(this.contractData.difference),
-    //     benefit: new FormControl(this.contractData.benefit),
-    //     status: new FormControl(this.contractData.status),
-    //     occupied: new FormControl(this.contractData.occupied),
-    //     startDateWorks: new FormControl(this.contractData.startDateWorks),
-    //     endDateWorks: new FormControl(this.contractData.endDateWorks),
-    //     endDateCustomer: new FormControl(this.contractData.endDateCustomer),
-    //     trash: new FormControl(this.contractData.trash),
-    //     dateCde: new FormControl(this.contractData.dateCde),
-    //     billingAmount: new FormControl(this.contractData.billingAmount, [Validators.pattern(/^\d+\.?\d*$/)]) // Only numbers with optional decimal
-    //     // ged: new FormControl(this.contractData.ged),
-    //   });
-    
-    //   this.orderForm.valueChanges.subscribe(val => {
-    //     console.log(val);
-    //   });
-    
-    //   // Mettre à jour `contractData` en temps réel avec les changements de formulaire.
-    //   this.orderForm.valueChanges.subscribe(val => {
-    //     this.contractData = { ...this.contractData, ...val };
-    //     console.log(this.contractData);
-    //   });
-    
-    //   this.breadCrumbItems = [
-    //     { label: 'Accueil', path: '/' },
-    //     { label: 'Saisie d’une commande', active: true }
-    //   ];
-    
-    //   // Setup for user search and typeahead functionality
-    //   this.userInput$.pipe(
-    //     debounceTime(300),
-    //     distinctUntilChanged(),
-    //     switchMap(term => term ? this.userProfileService.searchUsers(term.toLowerCase()) : of([])),
-    //     takeUntil(this.unsubscribe$)
-    //     ).subscribe(users => {
-    //       this.users = users;
-    //     });
-    
-    //     // Récupérer les numéros internes depuis le service
-    //     this.getInternalNumbers();
-    
-    //     // Récupérer les prestations depuis le service
-    //     this.loadBenefits();
-    
-    //     // Récupérer les abréviations depuis le service
-    //     this.getAbbreviationList();
-    
-    //     // Filtrer les abréviations en temps réel
-    //     this.abbreviationInput$.pipe(
-    //       debounceTime(300),
-    //       distinctUntilChanged(),
-    //       switchMap(term => {
-    //         if (term) {
-    //           const lowerCaseTerm = term.toLowerCase();
-    //           return of(this.fullAbbreviationList.filter(abbr => abbr.toLowerCase().includes(lowerCaseTerm)));
-    //         } else {
-    //           // Si la saisie de l'utilisateur est vide, retournez la liste complète
-    //           return of(this.fullAbbreviationList);
-    //         }
-    //       }),
-    //       takeUntil(this.unsubscribe$)
-    //       ).subscribe(filteredAbbreviations => {
-    //         this.filteredAbbreviationList = filteredAbbreviations;
-    //       });
-    
-    
-    //       // Calculer la différence entre les heures de prévision et d'exécution en temps réel
-    //       this.orderForm.valueChanges.subscribe(val => {
-    //         // Utiliser `.value` pour obtenir la valeur actuelle des FormControl
-    //         const totalPrevisionHours = (Number(this.orderForm.get("previsionDataDay").value) * 8) + Number(this.orderForm.get("previsionDataHour").value);
-    //         const totalExecutionHours = (Number(this.orderForm.get("executionDataDay").value) * 8) + Number(this.orderForm.get("executionDataHour").value);
-    //         const difference = totalExecutionHours - totalPrevisionHours;
-    
-    //         // Mise à jour du formulaire sans déclencher un nouvel événement valueChanges
-    //         this.orderForm.patchValue({difference: difference}, {emitEvent: false});
-    
-    //         // Ajuste previsionDataHour en fonction de la prestation
-    //         const benefitType = this.orderForm.get("benefit").value; // Assurez-vous que cette ligne récupère correctement la valeur du type de prestation sélectionné
-    //         const amountOfWork = Number(this.orderForm.get("amountOfWork").value); // Exemple, ajustez selon votre champ réel
-    //         let hours = 0;
-    //         if (benefitType === 'Peinture') {
-    //           hours = amountOfWork / 450;
-    //         } else if (benefitType === 'Sol') {
-    //           hours = amountOfWork / 650;
-    //         } else {
-    //           hours = amountOfWork / 450; // Pour tout le reste
-    //         }
-    
-    //         this.orderForm.patchValue({ 
-    //           previsionDataHour: hours, // Mise à jour de previsionDataHour sans déclencher un nouvel événement de changement
-    //           difference: difference 
-    //         }, { emitEvent: false });
-    //       });
-    
-    //       // Patch de date_cde avec la date actuelle
-    //       // Obtention de la date actuelle
-    //       const today = new Date();
-    
-    //       const formattedDate = [
-    //         today.getFullYear(),
-    //         (today.getMonth() + 1).toString().padStart(2, '0'), // Ajout d'un zéro pour les mois < 10
-    //         today.getDate().toString().padStart(2, '0') // Ajout d'un zéro pour les jours < 10
-    //       ].join('-');
-    
-    //       this.orderForm.patchValue({
-    //         dateCde: formattedDate,
-    //       });
-    //     }
     ngOnInit(): void {
+      this.setupBreadCrumbItems();
       this.initializeOrderForm();
       this.subscribeToFormChanges();
-      this.setupBreadCrumbItems();
       this.setupUserSearchAndTypeahead();
       this.retrieveDataFromServices();
       this.subscribeToAbbreviationInput();
       this.initializeDateCdeWithCurrentDate();
+
+      // Abonnement aux changements du formulaire pour logguer les modifications
+      this.orderForm.valueChanges.subscribe(values => {
+        console.log('Modification du formulaire:', values);
+        console.log(this.orderForm.status);  // Affiche 'VALID' ou 'INVALID'
+        console.log(this.orderForm.errors);  // Affiche les erreurs de formulaire
+      });
+      this.orderForm.get('invoiceNumber').valueChanges.subscribe(value => {
+        console.log('invoiceNumber change:', value);
+      });
+      Object.keys(this.orderForm.controls).forEach(key => {
+        const control = this.orderForm.get(key);
+        console.log(key, control.errors);
+      });
+
+      this.orderForm.patchValue({
+        previsionDataHour: this.contractData.previsionDataHour,
+        previsionDataDay: this.contractData.previsionDataDay
+      });
     }
     
     private initializeOrderForm(): void {
@@ -243,6 +132,7 @@ export class OrderFormComponent implements OnInit {
         mailSended: new FormControl(this.contractData.mailSended),
         invoiceNumber: new FormControl(this.contractData.invoiceNumber),
         amountHt: new FormControl(this.contractData.amountHt, [Validators.pattern(/^\d+\.?\d*$/)]),
+        benefitHt: new FormControl(this.contractData.benefitHt, [Validators.pattern(/^\d+\.?\d*$/)]),
         externalContributorAmount: new FormControl(this.contractData.externalContributorAmount, [Validators.pattern(/^\d+\.?\d*$/)]),
         subcontractorAmount: new FormControl(this.contractData.subcontractorAmount, [Validators.pattern(/^\d+\.?\d*$/)]),
         previsionDataHour: new FormControl(this.contractData.previsionDataHour, [Validators.pattern(/^\d+\.?\d*$/)]),
@@ -281,6 +171,13 @@ export class OrderFormComponent implements OnInit {
         this.calculateDifferencesAndAdjustments();
       });
       this.orderForm.get('externalContributorAmount').valueChanges.subscribe(() => {
+        this.calculateDifferencesAndAdjustments();
+      });
+      // 8 previsionDataHour = 1 previsionDataDay, 8 executionDataHour = 1 executionDataDay
+      this.orderForm.get('previsionDataHour').valueChanges.subscribe(() => {
+        this.calculateDifferencesAndAdjustments();
+      });
+      this.orderForm.get('previsionDataDay').valueChanges.subscribe(() => {
         this.calculateDifferencesAndAdjustments();
       });
     }
@@ -336,7 +233,7 @@ export class OrderFormComponent implements OnInit {
           // Ajuste previsionDataHour en fonction de la prestation
           const benefitId = this.orderForm.get("benefit").value;
           const benefitType = this.benefits.find(benefit => benefit.value === benefitId)?.name;
-          const amount= Number(this.orderForm.get("externalContributorAmount").value);
+          const amount= Number(this.orderForm.get("benefitHt").value);
           // console.log('Montant:', amount);
           // console.log('Type de prestation:', benefitType);
           let divider = 0;
@@ -354,9 +251,19 @@ export class OrderFormComponent implements OnInit {
 
           // arrondir à 2 décimales
           hours = Math.round(hours * 100) / 100;
+
+          // 8 previsionDataHour = 1 previsionDataDay, 8 executionDataHour = 1 executionDataDay
+          const daysPrevision = Math.floor(hours / 8);
+          const hoursPrevision = hours % 8;
+          // console.log('Jours prévus:', daysPrevision);
+          // console.log('Heures prévues:', hoursPrevision);
+
+
   
           this.orderForm.patchValue({ 
             previsionDataHour: hours, // Mise à jour de previsionDataHour sans déclencher un nouvel événement de changement
+            previsionDataDay: daysPrevision,
+            executionDataDay: Math.floor(totalExecutionHours / 8),  // Mise à jour de executionDataDay sans déclencher un nouvel événement de changement
             difference: difference 
           }, { emitEvent: false });
           
@@ -448,7 +355,7 @@ export class OrderFormComponent implements OnInit {
           // Vérifie si la partie numérique numéro interne existe déjà dans la liste
           isInternalNumberNumericPartValid(): boolean {
             return this.internalNumberList.some(item => {
-              const match = item.match(/^([A-Z]{3,4}-)(\d{3})$/i); // Modifier selon le format exact de vos numéros
+              const match = item.match(/^([A-Z]{3,4}-)(\d{3})$/i); // Modifier selon le format exact des numéros internes
               return match && match[2] === this.contractData.internalNumberNumericPart;
             });
           }
@@ -488,7 +395,7 @@ export class OrderFormComponent implements OnInit {
                 inputElement.classList.remove('input-error');
               }, 820); 
               
-              // If three invalid characters have been entered, show the emoji
+              // Si trois caractères invalides ont été saisis, affiche l'emoji
               if (this.invalidKeyStrokes >= 3) {
                 this.showEmoji();
               }
@@ -498,7 +405,7 @@ export class OrderFormComponent implements OnInit {
           showEmoji(): void {
             console.log('showEmoji');
             this.isEmojiVisible = true;
-            this.invalidKeyStrokes = 0; // Reset the counter
+            this.invalidKeyStrokes = 0; // Reset le compteur
             
             setTimeout(() => {
               this.isEmojiVisible = false; // Cache l'emoji après un certain temps
@@ -546,7 +453,7 @@ export class OrderFormComponent implements OnInit {
           }
           
           private submitContractData(): void {
-
+            console.log('Soumission des données du contrat:', this.contractData);
             this.contractService.addContract(this.contractData).subscribe({
               next: (response) => {
                 console.log('Contrat créé avec succès', response);
@@ -564,18 +471,22 @@ export class OrderFormComponent implements OnInit {
           }
           
           private prepareDataForSubmission(): void {
-            // Convert each key in the contractData object to snake_case.
+            console.log('Préparation des données pour la soumission');
+            console.log('Données du contrat avant la préparation:', this.contractData);
+            // Convertit chaque clé de l'objet contractData en snake_case.
             const dataForSubmission = {};
             Object.keys(this.contractData).forEach((key) => {
               const snakeCaseKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
               dataForSubmission[snakeCaseKey] = this.contractData[key];
             });
+            console.log('Données du contrat après la conversion en snake_case:', dataForSubmission);
             
-            // Convert boolean and number values if necessary.
+            // Convertit les valeurs booléennes et numériques si nécessaire.
             dataForSubmission['mail_sended'] = this.convertToBoolean(dataForSubmission['mail_sended']);
             dataForSubmission['occupied'] = this.convertToBoolean(dataForSubmission['occupied']);
             dataForSubmission['trash'] = this.convertToBoolean(dataForSubmission['trash']);
             dataForSubmission['amount_ht'] = this.convertToNumber(dataForSubmission['amount_ht']);
+            dataForSubmission['benefit_ht'] = this.convertToNumber(dataForSubmission['benefit_ht']);
             dataForSubmission['external_contributor_amount'] = this.convertToNumber(dataForSubmission['external_contributor_amount']);
             dataForSubmission['subcontractor_amount'] = this.convertToNumber(dataForSubmission['subcontractor_amount']);
             // dataForSubmission['benefit_ht'] = this.convertToNumber(dataForSubmission['benefit_ht']);
@@ -647,74 +558,108 @@ export class OrderFormComponent implements OnInit {
             openConfirmationModal() {
               const modalRef = this.modalService.open(this.confirmationModal); // Utilisez la méthode d'ouverture de votre service de modal
               modalRef.result.then(
-                (result) => {
-                  if (result === 'Confirm') {
-                    this.confirmCreation();
-                  }
-                }, (reason) => {
-                  console.log('Dismissed', reason);
-                });
+                  (result) => {
+                      // Ce bloc peut être utilisé si vous avez besoin de gérer une action spécifique à la fermeture du modal
+                      // indépendamment des boutons "Oui" et "Non".
+                  }, (reason) => {
+                      console.log('Modal dismissed', reason); // Log la raison pour laquelle le modal a été fermé sans action
+                  });
+          }
+
+            // confirmCreation() {
+            //   // Soumission de la commande
+            //   this.submitContractData();
+
+            //   // fermer le modal
+            //   this.modalService.dismissAll();
+            
+            //   // Réinitialisez les champs spécifiques pour une nouvelle commande
+            //   this.orderForm.patchValue({
+            //     // Pré-remplir les champs conservés pour une nouvelle commande
+            //     customer: this.orderForm.value.customer._id,
+            //     contact: this.orderForm.value.contact._id,
+            //     address: this.orderForm.value.address,
+            //     appartmentNumber: this.orderForm.value.appartmentNumber,
+            //     quoteNumber: this.orderForm.value.quoteNumber,
+            //     mailSended: this.orderForm.value.mailSended,
+            //     invoiceNumber: this.orderForm.value.invoiceNumber,
+            //     amountHt: this.orderForm.value.amountHt,
+            //     benefitHt: this.orderForm.value.benefitHt,
+            //     externalContributorAmount: this.orderForm.value.externalContributorAmount,
+            //     subcontractorAmount: this.orderForm.value.subcontractorAmount,
+            //     status: this.orderForm.value.status,
+            //     startDateWorks: this.orderForm.value.startDateWorks,
+            //     endDateWorks: this.orderForm.value.endDateWorks,
+            //     endDateCustomer: this.orderForm.value.endDateCustomer,
+            //     dateCde: this.orderForm.value.dateCde,
+            //     billingAmount: this.orderForm.value.billingAmount,
+            //   });
+              
+            //   // Réinitialiser les champs spécifiques que l'on veut vider
+            //   this.orderForm.patchValue({
+            //     internalContributor: null,
+            //     externalContributor: null,
+            //     subcontractor: null,
+            //     previsionDataHour: null,
+            //     previsionDataDay: null,
+            //     executionDataDay: null,
+            //     executionDataHour: null,
+            //     difference: null,
+            //     benefit: null, // réinitialiser la prestation
+            //     occupied: false,
+            //     trash: false, 
+            //   });
+              
+            
+            //   // Réinitialiser/réinitialiser les champs que l'on ne veut pas conserver
+            //   this.orderForm.patchValue({
+            //     internalContributor: '',
+            //     externalContributor: '',
+            //     subcontractor: '',
+            //     previsionDataHour: 0,
+            //     previsionDataDay: 0,
+            //     executionDataDay: 0,
+            //     executionDataHour: 0,
+            //     // Tout autre champ à réinitialiser
+            //   });
+
+            //   // init dateCde
+            //   this.initializeDateCdeWithCurrentDate();
+            // }
+            confirmCreation(reuseSameNumber: boolean) {
+              this.submitContractData();  // Cette méthode crée la commande
+            
+              this.modalService.dismissAll();  // Fermer le modal dans tous les cas
+            
+              if (reuseSameNumber) {
+                // Logique pour pré-remplir une nouvelle commande
+                this.prepareNewOrder();
+              } else {
+                // Rediriger vers manageOrders une fois la commande créée
+                this.router.navigate(['/manageOrders']);
+              }
             }
 
-            confirmCreation() {
-              // Soumission de la commande
-              this.submitContractData();
-
-              // fermer le modal
-              this.modalService.dismissAll();
+            private prepareNewOrder() {
+              // Réinitialisation spécifique des champs du formulaire pour préparer une nouvelle commande
+              this.orderForm.patchValue({
+                internalContributor: null,  // Réinitialiser l'intervenant interne
+                externalContributor: null,  // Réinitialiser le co-traitant
+                subcontractor: null,        // Réinitialiser le sous-traitant
+                previsionDataHour: 0,       // Réinitialiser les heures prévues
+                previsionDataDay: 0,        // Réinitialiser les jours prévus
+                executionDataDay: 0,        // Réinitialiser les jours réalisés
+                executionDataHour: 0,       // Réinitialiser les heures réalisées
+                difference: 0,              // Réinitialiser la différence d'heures
+                benefit: null               // Réinitialiser la prestation
+              });
             
-              // Réinitialisez les champs spécifiques pour une nouvelle commande
-              this.orderForm.patchValue({
-                // Pré-remplir les champs conservés pour une nouvelle commande
-                customer: this.orderForm.value.customer._id,
-                contact: this.orderForm.value.contact._id,
-                address: this.orderForm.value.address,
-                appartmentNumber: this.orderForm.value.appartmentNumber,
-                quoteNumber: this.orderForm.value.quoteNumber,
-                mailSended: this.orderForm.value.mailSended,
-                invoiceNumber: this.orderForm.value.invoiceNumber,
-                amountHt: this.orderForm.value.amountHt,
-                externalContributorAmount: this.orderForm.value.externalContributorAmount,
-                subcontractorAmount: this.orderForm.value.subcontractorAmount,
-                status: this.orderForm.value.status,
-                startDateWorks: this.orderForm.value.startDateWorks,
-                endDateWorks: this.orderForm.value.endDateWorks,
-                endDateCustomer: this.orderForm.value.endDateCustomer,
-                dateCde: this.orderForm.value.dateCde,
-                billingAmount: this.orderForm.value.billingAmount,
-              });
-              
-              // Réinitialiser les champs spécifiques que vous voulez vider
-              this.orderForm.patchValue({
-                internalContributor: null,
-                externalContributor: null,
-                subcontractor: null,
-                previsionDataHour: null,
-                previsionDataDay: null,
-                executionDataDay: null,
-                executionDataHour: null,
-                difference: null,
-                benefit: null, // réinitialiser la prestation
-                occupied: false,
-                trash: false, 
-              });
-              
+              // Conserver les autres champs tels que le client, contact, etc.(pas de code ici pour ces champs n'est nécessaire)
             
-              // Réinitialiser/réinitialiser les champs que vous ne voulez pas conserver
-              this.orderForm.patchValue({
-                internalContributor: '',
-                externalContributor: '',
-                subcontractor: '',
-                previsionDataHour: 0,
-                previsionDataDay: 0,
-                executionDataDay: 0,
-                executionDataHour: 0,
-                // Tout autre champ que vous souhaitez réinitialiser
-              });
-
-              // init dateCde
-              this.initializeDateCdeWithCurrentDate();
+              // Affichage d'un message pour confirmer que la nouvelle commande est prête à être saisie
+              console.log("Le formulaire a été préparé pour une nouvelle saisie avec certains champs réinitialisés.");
             }
+            
             
             // Une fonction d'aide pour trouver l'utilisateur par ID dans la liste chargée
             findUserById(userId: string) {
@@ -722,8 +667,6 @@ export class OrderFormComponent implements OnInit {
             }
 
             private updateContractDataFromForm(): void {
-              // Copie des valeurs du formulaire dans contractData
-              // Assurez-vous que chaque clé correspond bien à celles attendues par votre backend
               this.contractData = {
                 ...this.contractData,
                 ...this.orderForm.value,

@@ -9,6 +9,7 @@ const Incident = require('../models/incident');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const { sendEmail } = require('../services/emailService');
+const { scheduleEmailToContributor } = require('../schedulers/emailScheduler');
 const crypto = require('crypto');
 const upload = require('../middlewares/uploadMiddleware');
 const multer = require('multer');
@@ -863,51 +864,135 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   };
   
   // Fonction pour ajouter un nouveau contrat
+  // exports.addContract = async (req, res) => {
+  //   try {
+  //     // Extraction des champs nécessaires du corps de la requête
+  //     const {
+  //       internal_number,
+  //       customer,
+  //       contact,
+  //       internal_contributor,
+  //       external_contributor,
+  //       external_contributor_amount,
+  //       subcontractor,
+  //       subcontractor_amount,
+  //       address,
+  //       appartment_number,
+  //       quote_number,
+  //       mail_sended,
+  //       invoice_number,
+  //       amount_ht,
+  //       benefit_ht,
+  //       execution_data_day,
+  //       execution_data_hour,
+  //       prevision_data_day,
+  //       prevision_data_hour,
+  //       benefit,
+  //       status,
+  //       occupied,
+  //       start_date_works,
+  //       end_date_works,
+  //       end_date_customer,
+  //       trash,
+  //       date_cde,
+  //       billing_amount
+  //     } = req.body;
+      
+  //     // si subcontractor est vide, on le remplace par null
+  //     if (!subcontractor) {
+  //       subcontractor = null;
+  //     }
+      
+  //     // Création d'un nouveau contrat avec les champs adaptés
+  //     const newContract = new ContractModel({
+  //       internal_number,
+  //       customer,
+  //       contact,
+  //       internal_contributor,
+  //       external_contributor,
+  //       external_contributor_amount,
+  //       subcontractor,
+  //       subcontractor_amount,
+  //       address,
+  //       appartment_number,
+  //       quote_number,
+  //       mail_sended,
+  //       invoice_number,
+  //       amount_ht,
+  //       benefit_ht,
+  //       execution_data_day,
+  //       execution_data_hour,
+  //       prevision_data_day,
+  //       prevision_data_hour,
+  //       benefit,
+  //       status,
+  //       occupied,
+  //       start_date_works,
+  //       end_date_works,
+  //       end_date_customer,
+  //       trash,
+  //       date_cde,
+  //       billing_amount
+  //     });
+      
+      
+  //     // Enregistrement du nouveau contrat dans la base de données
+  //     await newContract.save();
+      
+  //     // Réponse indiquant la réussite de l'ajout du contrat
+  //     res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id });
+  //   } catch (error) {
+  //     console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
+  //     res.status(500).json({ error: error.message });
+  //   }
+  // };
   exports.addContract = async (req, res) => {
     try {
-      // Extraction des champs nécessaires du corps de la requête
+      // Destructuration avec des valeurs par défaut pour éviter les valeurs undefined
       const {
-        internal_number,
-        customer,
-        contact,
-        internal_contributor,
-        external_contributor,
-        external_contributor_amount,
-        subcontractor,
-        subcontractor_amount,
-        address,
-        appartment_number,
-        quote_number,
-        mail_sended,
-        invoice_number,
-        amount_ht,
-        benefit_ht,
-        execution_data_day,
-        execution_data_hour,
-        prevision_data_day,
-        prevision_data_hour,
-        benefit,
-        status,
-        occupied,
-        start_date_works,
-        end_date_works,
-        end_date_customer,
-        trash,
-        date_cde,
-        billing_amount
+        internal_number = '',
+        customer = null,
+        contact = null,
+        internal_contributor = null,
+        external_contributor = null,
+        external_contributor_amount = 0,
+        subcontractor = null,
+        subcontractor_amount = 0,
+        address = '',
+        appartment_number = '',
+        quote_number = '',
+        mail_sended = false,
+        invoice_number = '',
+        amount_ht = 0,
+        benefit_ht = 0,
+        execution_data_day = 0,
+        execution_data_hour = 0,
+        prevision_data_day = 0,
+        prevision_data_hour = 0,
+        benefit = '',
+        status = '',
+        occupied = false,
+        start_date_works = null,
+        end_date_works = null,
+        end_date_customer = null,
+        trash = false,
+        date_cde = null,
+        billing_amount = 0
       } = req.body;
-      
-      
-      
+  
+      const currentDate = new Date();
+      const dateAdd = currentDate; // Date d'ajout est la date actuelle
+      const external_contributor_invoice_date = new Date(currentDate.setDate(currentDate.getDate() + 2)); // Fixer la date de facturation à deux jours après la date d'ajout
+  
       // Création d'un nouveau contrat avec les champs adaptés
       const newContract = new ContractModel({
-        internal_number,
-        customer,
-        contact,
-        internal_contributor,
-        external_contributor,
+        internal_number: internal_number || 'Default-Number', // Fournit une valeur par défaut si internal_number est vide
+        customer: customer ? new mongoose.Types.ObjectId(customer) : null,
+        contact: contact ? new mongoose.Types.ObjectId(contact) : null,
+        internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
+        external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
         external_contributor_amount,
-        subcontractor,
+        subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
         subcontractor_amount,
         address,
         appartment_number,
@@ -923,20 +1008,21 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         benefit,
         status,
         occupied,
-        start_date_works,
-        end_date_works,
-        end_date_customer,
+        start_date_works: start_date_works ? new Date(start_date_works) : null,
+        end_date_works: end_date_works ? new Date(end_date_works) : null,
+        end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
         trash,
-        date_cde,
-        billing_amount
+        date_cde: date_cde ? new Date(date_cde) : new Date(), // Utilise la date actuelle si date_cde est null
+        billing_amount,
+        dateAdd: dateAdd, // Date d'ajout
+        external_contributor_invoice_date // Date de facturation du contributeur externe
       });
-      
-      
+  
       // Enregistrement du nouveau contrat dans la base de données
       await newContract.save();
-      
+  
       // Réponse indiquant la réussite de l'ajout du contrat
-      res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id });
+      res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id, contract: newContract});
     } catch (error) {
       console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
       res.status(500).json({ error: error.message });
@@ -944,92 +1030,135 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   };
   
   // Fonction pour modifier un contrat
-  exports.updateContract = async (req, res) => {
-    // console.log('Modification du contrat');
-    // console.log('Request :', req);
-    // console.log('Request body:', req.body);
-    // console.log('Request params:', req.params);
-    try {
-      // console.log('Modification du contrat');
-      const { contractId } = req.params;
-      const {
-        internal_number,
-        customer,
-        contact,
-        external_contributor,
-        external_contributor_amount,
-        subcontractor,
-        subcontractor_amount,
-        address,
-        appartment_number,
-        quote_number,
-        mail_sended,
-        invoice_number,
-        amount_ht,
-        benefit_ht,
-        execution_data_day,
-        execution_data_hour,
-        prevision_data_day,
-        prevision_data_hour,
-        benefit,
-        status,
-        occupied,
-        start_date_works,
-        end_date_works,
-        end_date_customer,
-        trash,
-        date_cde,
-        billing_amount
-      } = req.body;
+  // exports.updateContract = async (req, res) => {
+  //   // console.log('Modification du contrat');
+  //   // console.log('Request :', req);
+  //   // console.log('Request body:', req.body);
+  //   // console.log('Request params:', req.params);
+  //   try {
+  //     // console.log('Modification du contrat');
+  //     const { contractId } = req.params;
+  //     const {
+  //       internal_number,
+  //       customer,
+  //       contact,
+  //       external_contributor,
+  //       external_contributor_amount,
+  //       subcontractor,
+  //       subcontractor_amount,
+  //       address,
+  //       appartment_number,
+  //       quote_number,
+  //       mail_sended,
+  //       invoice_number,
+  //       amount_ht,
+  //       benefit_ht,
+  //       execution_data_day,
+  //       execution_data_hour,
+  //       prevision_data_day,
+  //       prevision_data_hour,
+  //       benefit,
+  //       status,
+  //       occupied,
+  //       start_date_works,
+  //       end_date_works,
+  //       end_date_customer,
+  //       trash,
+  //       date_cde,
+  //       billing_amount
+  //     } = req.body;
       
-      // Mise à jour du contrat
-      const updatedContract = await ContractModel.findByIdAndUpdate(
-        new mongoose.Types.ObjectId(contractId),
-        {
-          internal_number,
-          customer,
-          contact,
-          external_contributor,
-          external_contributor_amount,
-          subcontractor,
-          subcontractor_amount,
-          address,
-          appartment_number,
-          quote_number,
-          mail_sended,
-          invoice_number,
-          amount_ht,
-          benefit_ht,
-          execution_data_day,
-          execution_data_hour,
-          prevision_data_day,
-          prevision_data_hour,
-          benefit,
-          status,
-          occupied,
-          start_date_works,
-          end_date_works,
-          end_date_customer,
-          trash,
-          date_cde,
-          billing_amount
-        },
-        { new: true }
+  //     // Mise à jour du contrat
+  //     const updatedContract = await ContractModel.findByIdAndUpdate(
+  //       new mongoose.Types.ObjectId(contractId),
+  //       {
+  //         internal_number,
+  //         customer,
+  //         contact,
+  //         external_contributor,
+  //         external_contributor_amount,
+  //         subcontractor,
+  //         subcontractor_amount,
+  //         address,
+  //         appartment_number,
+  //         quote_number,
+  //         mail_sended,
+  //         invoice_number,
+  //         amount_ht,
+  //         benefit_ht,
+  //         execution_data_day,
+  //         execution_data_hour,
+  //         prevision_data_day,
+  //         prevision_data_hour,
+  //         benefit,
+  //         status,
+  //         occupied,
+  //         start_date_works,
+  //         end_date_works,
+  //         end_date_customer,
+  //         trash,
+  //         date_cde,
+  //         billing_amount
+  //       },
+  //       { new: true }
+  //       );
+        
+        
+  //       if (!updatedContract) {
+  //         return res.status(404).json({ message: 'Contrat non trouvé.' });
+  //       }
+        
+  //       // console.log('Contrat modifié avec succès');
+  //       res.status(200).json(updatedContract);
+  //     } catch (error) {
+  //       console.error('Erreur lors de la modification du contrat:', error);
+  //       res.status(500).json({ error: error.message });
+  //     }
+      
+  //   };
+  exports.updateContract = async (req, res) => {
+    try {
+        const { contractId } = req.params;
+        const updateData = {
+            ...req.body // Utiliser le spread operator pour éviter la redéfinition manuelle
+        };
+        console.log('Modification du contrat', contractId, updateData);
+        console.log('liste des champs à modifier', Object.keys(updateData).join(', '));
+
+        // Convertir les ID utilisateur en ObjectId si présents et valides
+        ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
+            if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
+                updateData[key] = mongoose.Types.ObjectId(updateData[key]);
+            }
+        });
+
+        // Validation de la date pour éviter les dates invalides
+        ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
+            if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
+                delete updateData[dateKey]; // Supprimer la clé si la date est invalide
+            } else if (updateData[dateKey]) {
+                updateData[dateKey] = new Date(updateData[dateKey]);
+            }
+        });
+
+        // Mise à jour du contrat
+        const updatedContract = await ContractModel.findByIdAndUpdate(
+            contractId, // Plus besoin de convertir en ObjectId, Mongoose le gère
+            updateData,
+            { new: true, runValidators: true } // Options pour retourner le document modifié et exécuter les validateurs du schéma
         );
-        
-        
+
         if (!updatedContract) {
-          return res.status(404).json({ message: 'Contrat non trouvé.' });
+            return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
         }
-        
-        // console.log('Contrat modifié avec succès');
-        res.status(200).json(updatedContract);
-      } catch (error) {
+        // renvoyer le contrat mis à jour avec un message de succès
+        res.status(200).json(updatedContract, { message: 'Contrat modifié avec succès.' });
+        // res.status(200).json(updatedContract);
+    } catch (error) {
         console.error('Erreur lors de la modification du contrat:', error);
         res.status(500).json({ error: error.message });
-      }
-      
-    };
+    }
+  };
 
     // Fonction pour supprimer un contrat par son id
     exports.deleteContract = async (req, res) => {

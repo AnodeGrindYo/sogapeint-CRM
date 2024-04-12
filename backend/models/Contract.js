@@ -29,6 +29,8 @@ const contractSchema = new mongoose.Schema({
     invoice_number: String,
     amount_ht: Number,
     benefit_ht: Number,
+    prevision_data_day: Number,
+    prevision_data_hour: Number,
     execution_data_day: Number,
     execution_data_hour: Number,
     external_contributor_invoice_date: Date,

@@ -22,6 +22,8 @@ export class Contract {
     invoice_number: string;
     amount_ht: number | null;
     benefit_ht: number | null;
+    prevision_data_day: number | null;
+    prevision_data_hour: number | null;
     execution_data_day: number | null;
     execution_data_hour: number | null;
     external_contributor_invoice_date: Date | null;

@@ -1,10 +1,34 @@
+<div *ngIf="showSecretDiv" class="secret-div">
+  <div class="machine-wrap">
+      <div class="machine">
+          <div class="machine-roof">
+              <div class="machine-silencer">
+                  <div class="machine-smoke"></div>
+              </div>
+          </div>
+          <div class="machine-main">
+              <div class="machine-body"></div>
+              <div class="machine-back"></div>
+              <div class="machine-front"></div>
+          </div>	
+      </div>
+      <div class="road">
+          <div class="mud-wrap clearfix">
+              <div class="mud"></div>
+              <div class="mud"></div>
+              <div class="mud"></div>
+              <div class="mud"></div>
+          </div>
+      </div>
+  </div>
+</div>
+
 <div class="container-fluid">
     <app-pagetitle title="Détails de la Commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
     <div class="row mb-3">
       <div class="col-12 mb-2">
-        <h2>Détails de la Commande</h2>
+        <!-- <h2>Détails de la Commande</h2> -->
         <div class="text-end">
-          <!-- Le bouton Editer est placé ici conformément à la structure initiale fournie pour order-detail -->
           <button class="btn btn-primary ms-2" (click)="goToEditOrder()" *ngIf="isAdminOrSuperAdmin()">Editer</button>
         </div>
         <hr>
@@ -82,6 +106,25 @@
       </div>
     </div>
     <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Intervenants</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="internal_contributor" class="form-label">Intervenant Sogapeint</label>
+              <input type="text" id="internal_contributor" class="form-control" value="{{ sogapeintContact?.firstname + ' ' + sogapeintContact?.lastname }}" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="external_contributor" class="form-label">Co-traitant</label>
+              <input type="text" id="external_contributor" class="form-control" value="{{ coContractor?.firstname + ' ' + coContractor?.lastname }}" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="subcontractor" class="form-label">Sous-traitant</label>
+              <input type="text" id="subcontractor" class="form-control" value="{{ subcontractor?.firstname + ' ' + subcontractor?.lastname }}" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="col-md-6">
           <div class="card">
             <div class="card-header">Montants</div>
@@ -89,6 +132,10 @@
               <div class="mb-3">
                 <label class="form-label">Montant de la commande HT</label>
                 <input type="text" class="form-control" value="{{ contract?.amount_ht | currency:'EUR' }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Montant de la prestation HT</label>
+                <input type="text" class="form-control" value="{{ contract?.benefit_ht | currency:'EUR' }}" disabled>
               </div>
               <div class="mb-3">
                 <label class="form-label">Montant de la prestation du co-traitant</label>
@@ -101,25 +148,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-              <div class="card-header">Intervenants</div>
-              <div class="card-body">
-                <div class="mb-3">
-                  <label for="internal_contributor" class="form-label">Intervenant Sogapeint</label>
-                  <input type="text" id="internal_contributor" class="form-control" value="{{ sogapeintContact?.firstname + ' ' + sogapeintContact?.lastname }}" disabled>
-                </div>
-                <div class="mb-3">
-                  <label for="external_contributor" class="form-label">Co-traitant</label>
-                  <input type="text" id="external_contributor" class="form-control" value="{{ coContractor?.firstname + ' ' + coContractor?.lastname }}" disabled>
-                </div>
-                <div class="mb-3">
-                  <label for="subcontractor" class="form-label">Sous-traitant</label>
-                  <input type="text" id="subcontractor" class="form-control" value="{{ subcontractor?.firstname + ' ' + subcontractor?.lastname }}" disabled>
-                </div>
-              </div>
-            </div>
-          </div>
+        
         <div class="col-md-6">
           <div class="card">
             <div class="card-header">Dates</div>
@@ -138,6 +167,10 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="col-md-6">
+          <app-order-files-management [contractId]="contractId"></app-order-files-management>
         </div>
       </div>
       <div class="row mb-3">
@@ -193,24 +226,13 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-md-6">
-          <!-- <div class="card">
-            <div class="card-header">Activité du contrat</div>
-            <div class="card-body"> -->
               <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']"></app-contract-activity>
-            <!-- </div>
-          </div>
-        </div> -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">Gestion des fichiers de la commande</div>
-            <div class="card-body">
-              <app-order-files-management [contractId]="contractId"></app-order-files-management>
             </div>
-          </div>
-        </div>
-      </div>
+        
       
   </div>
+  </div>
+
   

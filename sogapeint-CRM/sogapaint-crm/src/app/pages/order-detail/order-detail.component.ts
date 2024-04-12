@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContractService } from '../../core/services/contract.service';
 import { UserProfileService } from 'src/app/core/services/user.service';
+import { BenefitService } from 'src/app/core/services/benefit.service';
 import { User } from 'src/app/core/models/auth.models';
 import { Router } from '@angular/router';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -38,6 +39,7 @@ export class OrderDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private contractService: ContractService,
     private userProfileService: UserProfileService,
+    private benefitService: BenefitService,
     private router: Router
   ) { }
 
@@ -72,6 +74,7 @@ export class OrderDetailComponent implements OnInit {
         // du client, du co-traitant, du contact sogapeint et du sous-traitant
         if (this.contract) {
           this.loadUserDetails();
+          this.benefit_name = this.getBenefitName(this.contract.benefit);
         }
       },
       error: (error) => console.error('Erreur lors du chargement des détails de la commande', error)
@@ -129,24 +132,39 @@ export class OrderDetailComponent implements OnInit {
         
   }
 
-  getBenefitName(benefitId: string): string {
-    // Mapping des identifiants aux noms des bénéfices
-    const benefitsMap: { [key: string]: string } = {
-      '5e4ba27006d62fd4a4e49916': 'Peinture',
-      '5e4ba27606d62fd4a4e49917': 'Sol',
-      '5e52cb8148f8b27b3d077a84': 'Électricité',
-      '5e52cb8148f8b27b3d077a85': 'Plomberie',
-      '5e52cb8148f8b27b3d077a86': 'Maçonnerie',
-      '5e52cb8148f8b27b3d077a87': 'Menuiserie',
-      '5e52cb8148f8b27b3d077a88': 'Vitrification',
-      '5e52cb8148f8b27b3d077a89': 'Nettoyage',
-      '5f58fef3bfdad857fcfbba50': 'Faïence',
-      '5f58fefdbfdad857fcfbba51': 'Placo',
-      '5f58ff06bfdad857fcfbba52': 'Carrelage'
-    };
+  // getBenefitName(benefitId: string): string {
+  //   // Mapping des identifiants aux noms des bénéfices
+  //   const benefitsMap: { [key: string]: string } = {
+  //     '5e4ba27006d62fd4a4e49916': 'Peinture',
+  //     '5e4ba27606d62fd4a4e49917': 'Sol',
+  //     '5e52cb8148f8b27b3d077a84': 'Électricité',
+  //     '5e52cb8148f8b27b3d077a85': 'Plomberie',
+  //     '5e52cb8148f8b27b3d077a86': 'Maçonnerie',
+  //     '5e52cb8148f8b27b3d077a87': 'Menuiserie',
+  //     '5e52cb8148f8b27b3d077a88': 'Vitrification',
+  //     '5e52cb8148f8b27b3d077a89': 'Nettoyage',
+  //     '5f58fef3bfdad857fcfbba50': 'Faïence',
+  //     '5f58fefdbfdad857fcfbba51': 'Placo',
+  //     '5f58ff06bfdad857fcfbba52': 'Carrelage'
+  //   };
   
-    // Retourne le nom du bénéfice correspondant à l'identifiant, ou une chaîne vide si non trouvé
-    return benefitsMap[benefitId] || 'Identifiant non reconnu';
+  //   // Retourne le nom du bénéfice correspondant à l'identifiant, ou une chaîne vide si non trouvé
+  //   return benefitsMap[benefitId] || 'Identifiant non reconnu';
+  // }
+
+  // la méthode getBenefits du service BenefitService retourne la liste des prestations avec deux clés: _id et name
+  getBenefitName(benefitId: string): string {
+    // Récupérer la liste des prestations
+    this.benefitService.getBenefits().subscribe({
+      next: (benefits) => {
+        // Trouver la prestation correspondant à l'identifiant
+        const benefit = benefits.find(benefit => benefit._id === benefitId);
+        // Retourner le nom de la prestation si trouvée, sinon une chaîne vide
+        this.benefit_name = benefit ? benefit.name : '';
+      },
+      error: (error) => console.error('Erreur lors de la récupération des prestations', error)
+    });
+    return this.benefit_name;
   }
 
   getStatus(value: string | null): string {
@@ -197,5 +215,7 @@ export class OrderDetailComponent implements OnInit {
     // 'order-update/:orderId'
     this.router.navigate([`/order-update/${this.contract._id}`]);
   }
+
+
 
 }

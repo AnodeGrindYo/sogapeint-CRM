@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facturation de votre contribution</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e2e2e2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            color: black;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            color: black;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #333333;
+        }
+        .amount {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .details {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://www.sogapeint.fr/apps/uploads/2019/10/logo.png" alt="Logo Sogapeint" style="max-height: 60px;">
+        </div>
+        <div class="content">
+            <h3>Facturation de votre contribution</h3>
+            <p>Bonjour {{firstname}} {{lastname}},</p>
+            <p>Vous recevez cet e-mail en tant que contributeur externe pour le contrat numéro <strong>{{contract_number}}</strong>.</p>
+            <p>Voici le détail de votre prestation :</p>
+            <ul>
+                <li>Montant de la prestation : <span class="amount">{{external_contributor_amount}}</span> €</li>
+                <li>Date de la facturation : <strong>{{invoice_date}}</strong></li>
+            </ul>
+            <p class="details">Merci de vous assurer que toutes les informations sont correctes et de contacter notre équipe pour toute modification nécessaire.</p>
+        </div>
+        <div class="footer">
+            Cordialement,<br>
+            L'équipe Sogapeint<br>
+            <a href="https://www.sogapeint.fr" class="button">Visitez notre application web</a>
+            <p>Si vous avez des questions, veuillez contacter le support ou votre administrateur.</p>
+            &copy; Sogapeint, Tous droits réservés.
+        </div>
+    </div>
+</body>
+</html>
