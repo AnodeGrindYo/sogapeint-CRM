@@ -1,143 +1,163 @@
 <div class="container-fluid">
-    <app-pagetitle title="Saisie d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
-    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-      <!-- Première ligne -->
-      <div class="row mb-3">
-        <!-- Référence commande -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">Référence commande</div>
-            <div class="card-body">
-              <div class="row mb-3 d-flex align-items-center">
-                <div class="col">
-                  <label for="internalNumberAbbrPart" class="form-label">Abbréviation</label>
-                  <ng-select id="internalNumberAbbrPart" formControlName="internalNumberAbbrPart" [items]="filteredAbbreviationList" placeholder="Sélectionnez l'abréviation" class="form-control" [addTag]="true" addTagText="Ajouter l'abbréviation" [typeahead]="abbreviationInput$" [virtualScroll]="true"></ng-select>
-                </div>
-                <div class="col-auto align-self-center"> - </div>
-                <div class="col">
-                  <label for="internalNumberNumericPart" class="form-label">Numéro interne</label>
-                  <!-- champ de saisie du numéro interne pré-rempli avec la méthode getNextInternalNumber() -->
-                  <input type="text" class="form-control" id="internalNumberNumericPart" formControlName="internalNumberNumericPart">
-                </div>
+  <app-pagetitle title="Saisie d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <!-- Première ligne -->
+    <div class="row mb-3">
+      <!-- Référence commande -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Référence commande</div>
+          <div class="card-body">
+            <div class="row mb-3 d-flex align-items-center">
+              <div class="col">
+                <label for="internalNumberAbbrPart" class="form-label">Abbréviation</label>
+                <ng-select id="internalNumberAbbrPart" formControlName="internalNumberAbbrPart" [items]="filteredAbbreviationList" placeholder="Sélectionnez l'abréviation" class="form-control" [addTag]="true" addTagText="Ajouter l'abbréviation" [typeahead]="abbreviationInput$" [virtualScroll]="true"></ng-select>
               </div>
-              <div class="mb-3">
-                <label for="customer" class="form-label">Client</label>
-                <ng-select id="customer" formControlName="customer" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                  <ng-template ng-label-tmp let-item="item">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item" let-index="index">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                </ng-select>
-              </div>
-              <div class="mb-3">
-                <label for="contact" class="form-label">Contact</label>
-                <ng-select id="contact" formControlName="contact" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                  <ng-template ng-label-tmp let-item="item">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item" let-index="index">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                </ng-select>
-              </div>
-              <div class="mb-3">
-                <label for="quoteNumber" class="form-label">Numéro de devis</label>
-                <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
-              </div>
-              <div class="mb-3">
-                <label for="benefit" class="form-label">Prestation</label>
-                <ng-select 
-                  id="benefit" 
-                  formControlName="benefit" 
-                  [items]="benefits" 
-                  bindLabel="name" 
-                  bindValue="value" 
-                  placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !"
-                  ></ng-select>
-              </div>
-              <div class="mb-3">
-                <label for="order_status" class="form-label">Statut</label>
-                <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="🔮 Devinez le statut... ou sélectionnez-le ici!"></ng-select>
-              </div>
-              <div class="mb-3">
-                <label for="dateCde" class="form-label">Date de Commande</label>
-                <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
+              <div class="col-auto align-self-center"> - </div>
+              <div class="col">
+                <label for="internalNumberNumericPart" class="form-label">Numéro interne</label>
+                <!-- champ de saisie du numéro interne pré-rempli avec la méthode getNextInternalNumber() -->
+                <input type="text" class="form-control" id="internalNumberNumericPart" formControlName="internalNumberNumericPart">
               </div>
             </div>
-          </div>
-        </div>
-        <!-- Résidence/Adresse -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">Résidence/Adresse</div>
-            <div class="card-body">
-              <div class="mb-3">
-                <label for="address" class="form-label">Adresse</label>
-                <input type="text" class="form-control" id="address" formControlName="address">
-              </div>
-              <div class="mb-3">
-                <label for="appartmentNumber" class="form-label">N° appart</label>
-                <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
-              </div>
-              <div class="mb-3">
-                <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
-                <select class="form-control" id="occupied" formControlName="occupied">
-                  <option value="true">Oui</option>
-                  <option value="false">Non</option>
-                </select>
-              </div>
+            <div class="mb-3">
+              <label for="customer" class="form-label">Client</label>
+              <ng-select id="customer" formControlName="customer" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                <ng-template ng-label-tmp let-item="item">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="mb-3">
+              <label for="contact" class="form-label">Contact</label>
+              <ng-select id="contact" formControlName="contact" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                <ng-template ng-label-tmp let-item="item">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="mb-3">
+              <label for="quoteNumber" class="form-label">Numéro de devis</label>
+              <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
+            </div>
+            <div class="mb-3">
+              <label for="benefit" class="form-label">Prestation</label>
+              <!-- <ng-select 
+                id="benefit" 
+                formControlName="benefit" 
+                [items]="benefits" 
+                bindLabel="name" 
+                bindValue="value" 
+                placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !"
+                ></ng-select> -->
+                <ng-select 
+                id="benefit" 
+                formControlName="benefit" 
+                [items]="benefits" 
+                bindLabel="name" 
+                bindValue="value" 
+                placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !" 
+                [addTag]="addNewBenefit.bind(this)"
+                addTagText="Ajouter une prestation"
+                [multiple]="false"
+                [closeOnSelect]="true"
+                [compareWith]="compareWithFn">
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  <div class="d-flex justify-content-between align-items-center w-100">
+                    <span class="flex-grow-1">{{ item.name }}</span>
+                    <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+                  </div>
+                </ng-template>
+              </ng-select>
+              
+            </div>
+            <div class="mb-3">
+              <label for="order_status" class="form-label">Statut</label>
+              <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="🔮 Devinez le statut... ou sélectionnez-le ici!"></ng-select>
+            </div>
+            <div class="mb-3">
+              <label for="dateCde" class="form-label">Date de Commande</label>
+              <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
             </div>
           </div>
         </div>
       </div>
-      <!-- Deuxième ligne -->
-      <div class="row mb-3">
-        <!-- Intervenants -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">Intervenants</div>
-            <div class="card-body">
-              <div class="mb-3">
-                <label for="internalContributor" class="form-label">Intervenant Sogapeint</label>
-                <ng-select id="internalContributor" formControlName="internalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un intervenant Sogapeint" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                  <ng-template ng-label-tmp let-item="item">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item" let-index="index">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                </ng-select>
-              </div>
-              <div class="mb-3">
-                <label for="externalContributor" class="form-label">Co-traitant</label>
-                <ng-select id="externalContributor" formControlName="externalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un co-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                  <ng-template ng-label-tmp let-item="item">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item" let-index="index">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                </ng-select>
-              </div>
-              <div class="mb-3">
-                <label for="subcontractor" class="form-label">Sous-traitant</label>
-                <ng-select id="subcontractor" formControlName="subcontractor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un sous-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                  <ng-template ng-label-tmp let-item="item">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item" let-index="index">
-                    {{ item.firstname }} {{ item.lastname }}
-                  </ng-template>
-                </ng-select>
-              </div>
+      <!-- Résidence/Adresse -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Résidence/Adresse</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="address" class="form-label">Adresse</label>
+              <input type="text" class="form-control" id="address" formControlName="address">
+            </div>
+            <div class="mb-3">
+              <label for="appartmentNumber" class="form-label">N° appart</label>
+              <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
+            </div>
+            <div class="mb-3">
+              <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
+              <select class="form-control" id="occupied" formControlName="occupied">
+                <option value="true">Oui</option>
+                <option value="false">Non</option>
+              </select>
             </div>
           </div>
         </div>
-        <!-- Montants -->
-        <div class="col-md-6">
-          <!-- <div class="row mb-3"> -->
+      </div>
+    </div>
+    <!-- Deuxième ligne -->
+    <div class="row mb-3">
+      <!-- Intervenants -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Intervenants</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="internalContributor" class="form-label">Intervenant Sogapeint</label>
+              <ng-select id="internalContributor" formControlName="internalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un intervenant Sogapeint" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                <ng-template ng-label-tmp let-item="item">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="mb-3">
+              <label for="externalContributor" class="form-label">Co-traitant</label>
+              <ng-select id="externalContributor" formControlName="externalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un co-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                <ng-template ng-label-tmp let-item="item">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="mb-3">
+              <label for="subcontractor" class="form-label">Sous-traitant</label>
+              <ng-select id="subcontractor" formControlName="subcontractor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un sous-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                <ng-template ng-label-tmp let-item="item">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  {{ item.firstname }} {{ item.lastname }}
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Montants -->
+      <div class="col-md-6">
+        <!-- <div class="row mb-3"> -->
           <div class="card">
             <div class="card-header">Montants</div>
             <div class="card-body">
@@ -202,17 +222,17 @@
                             transform: translateY(100%);
                             animation: moveup 1.5s ease-in-out infinite;
                           }
-  
+                          
                           @keyframes moveup {
                             0% {
                               transform: translateY(100%);
                             }
-  
+                            
                             40%,
                             60% {
                               transform: translateY(0);
                             }
-  
+                            
                             100% {
                               transform: translateY(-100%);
                             }
@@ -296,80 +316,60 @@
         <div class="col-md-6">
           <!-- <div class="row"> -->
             <div class="card">
-                <div class="card-header">Facturation</div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label for="invoiceNumber" class="form-label">Numéro de Facture</label>
-                        <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber">
-                    </div>
-                    <div class="mb-3">
-                        <label for="billingAmount" class="form-label">Montant de la facture</label>
-                        <input type="number" class="form-control" id="billingAmount" formControlName="billingAmount" (keydown)="onAlphaInput($event)">
-                    </div>
+              <div class="card-header">Facturation</div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label for="invoiceNumber" class="form-label">Numéro de Facture</label>
+                  <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber">
                 </div>
+                <div class="mb-3">
+                  <label for="billingAmount" class="form-label">Montant de la facture</label>
+                  <input type="number" class="form-control" id="billingAmount" formControlName="billingAmount" (keydown)="onAlphaInput($event)">
+                </div>
+              </div>
             </div>
             <div class="card">
-                <div class="card-header">Communication et suivi</div>
-                <div class="card-body">
+              <div class="card-header">Communication et suivi</div>
+              <div class="card-body">
                 <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="mailSended" formControlName="mailSended">
-                    <label for="mailSended" class="form-check-label">Mail Envoyé</label>
+                  <input type="checkbox" class="form-check-input" id="mailSended" formControlName="mailSended">
+                  <label for="mailSended" class="form-check-label">Mail Envoyé</label>
                 </div>
                 <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="trash" formControlName="trash">
-                    <label for="trash" class="form-check-label">Marquer comme supprimé</label>
+                  <input type="checkbox" class="form-check-input" id="trash" formControlName="trash">
+                  <label for="trash" class="form-check-label">Marquer comme supprimé</label>
                 </div>
-                </div>
+              </div>
             </div>
-          <!-- </div> -->
-            
+          </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <button type="submit" class="btn btn-primary">Valider</button>
+        
+        <div class="row">
+          <div class="col"></div>
+          <div class="col d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Valider</button>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- <ng-template #confirmationModal let-modal>
-    <div class="modal-dialog" role="document">
+      </form>
+    </div>
+    
+    <ng-template #confirmationModal let-modal>
+      <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmation</h5>
-                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Voulez-vous créer une nouvelle commande avec le même numéro interne ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
-                <button type="button" class="btn btn-primary" (click)="confirmCreation()">Confirmer</button>
-            </div>
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Voulez-vous créer une nouvelle commande avec le même numéro interne ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="confirmCreation(true)">Oui</button>
+            <button type="button" class="btn btn-danger" (click)="confirmCreation(false)">Non</button>
+          </div>
         </div>
-    </div>
-</ng-template> -->
-<ng-template #confirmationModal let-modal>
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Confirmation</h5>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      <div class="modal-body">
-        Voulez-vous créer une nouvelle commande avec le même numéro interne ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
-        <button type="button" class="btn btn-primary" (click)="confirmCreation(true)">Oui</button>
-        <button type="button" class="btn btn-danger" (click)="confirmCreation(false)">Non</button>
-      </div>
-    </div>
-  </div>
-</ng-template>
+    </ng-template>

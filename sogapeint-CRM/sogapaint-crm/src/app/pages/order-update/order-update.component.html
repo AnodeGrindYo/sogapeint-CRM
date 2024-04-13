@@ -71,7 +71,7 @@
               </div>
               <div class="mb-3">
                 <label for="benefit" class="form-label">Prestation</label>
-                <ng-select 
+                <!-- <ng-select 
                   id="benefit" 
                   formControlName="benefit" 
                   [items]="benefits" 
@@ -79,7 +79,26 @@
                   bindValue="_id" 
                   placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !" 
                   [compareWith]="compareWithFn"
-                ></ng-select>
+                ></ng-select> -->
+                <ng-select 
+                id="benefit" 
+                formControlName="benefit" 
+                [items]="benefits" 
+                bindLabel="name" 
+                bindValue="value" 
+                placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !" 
+                [addTag]="addNewBenefit.bind(this)"
+                addTagText="Ajouter une prestation"
+                [multiple]="false"
+                [closeOnSelect]="true"
+                [compareWith]="compareWithFn">
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  <div class="d-flex justify-content-between align-items-center w-100">
+                    <span class="flex-grow-1">{{ item.name }}</span>
+                    <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+                  </div>
+                </ng-template>
+              </ng-select>
               </div>
               <div class="mb-3">
                 <label for="order_status" class="form-label">Statut</label>
@@ -313,14 +332,12 @@
         <div class="col-md-6"></div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col"></div>
+        <div class="col d-flex justify-content-end">
+          <button type="button" class="btn btn-danger me-2" (click)="onDelete()">Supprimer</button>
           <button type="submit" class="btn btn-primary">Valider</button>
         </div>
-        <!-- supprimer le contrat -->
-        <div class="col">
-          <button type="button" class="btn btn-danger" (click)="onDelete()">Supprimer</button>
-          </div>
-      </div>
+    </div>
     </form>
   </div>
 

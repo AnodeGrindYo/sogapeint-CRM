@@ -459,8 +459,6 @@ export class OrderUpdateComponent implements OnInit {
         if (contract.benefit) {
           // Utilisez la valeur correspondante de l'objet benefit, pas l'objet entier
           console.log("Benefit id to patch:", contract.benefit);
-          // const benefitObject = this.benefits.find(b => b._id === contract.benefit);
-          // patchValues.benefit = benefitObject ? benefitObject._id : null;
           patchValues.benefit = this.benefits.find(b => b._id === contract.benefit);
           console.log("Benefit value to patch:", patchValues.benefit);
         }
@@ -649,5 +647,33 @@ export class OrderUpdateComponent implements OnInit {
     } else {
       console.error("No contract id provided");
     }
+  }
+
+  addNewBenefit(name: string): void {
+    console.log('Ajout de la prestation:', name);
+    const newBenefit = { name: name };
+    this.benefitService.addBenefit(newBenefit).subscribe({
+      next: benefit => {
+        console.log('Prestation ajoutée avec succès:', benefit.benefit._id);
+        this.initializeBenefits();
+        const benefitToSet = {name: benefit.benefit.name, value: benefit.benefit._id};
+        console.log('Prestation à définir:', benefitToSet);
+        setTimeout(() => {
+          this.orderUpdateForm.get('benefit').setValue(benefitToSet.value);
+        }
+        , 500);
+      },
+      error: error => console.error("Erreur lors de l'ajout de la prestation", error)
+    });
+  }
+  
+  deleteBenefit(benefitId: string, event: Event): void {
+    event.stopPropagation(); // Pour empêcher la sélection de l'élément
+    this.benefitService.deleteBenefit(benefitId).subscribe({
+      next: () => {
+        this.initializeBenefits();
+      },
+      error: error => console.error("Erreur lors de la suppression de la prestation", error)
+    });
   }
 }

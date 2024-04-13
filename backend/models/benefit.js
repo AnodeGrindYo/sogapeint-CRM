@@ -6,10 +6,10 @@ const benefitSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    _id: {
-        type: String,
-        required: true
-    },
+    // _id: {
+    //     type: String,
+    //     required: false
+    // },
 });
 
 module.exports = mongoose.model('Benefit', benefitSchema, 'benefits');

@@ -285,6 +285,10 @@ export class OrderFormComponent implements OnInit {
             dateCde: formattedDate,
           });
         }
+
+        compareWithFn = (o1, o2) => {
+          return o1 && o2 ? o1._id === o2._id : o1 === o2;
+        };
         
         
         loadBenefits() {
@@ -295,6 +299,7 @@ export class OrderFormComponent implements OnInit {
                 return { name: benefit.name, value: benefit._id };
               })
               .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+              console.log('Prestations récupérées:', this.benefits);
             },
             (error) => {
               console.error("Erreur lors de la récupération des benefits", error);
@@ -676,5 +681,35 @@ export class OrderFormComponent implements OnInit {
               // Log pour vérification
               console.log("Updated contractData:", this.contractData);
             }
+
+            addNewBenefit(name: string): void {
+              console.log('Ajout de la prestation:', name);
+              const newBenefit = { name: name };
+              this.benefitService.addBenefit(newBenefit).subscribe({
+                next: benefit => {
+                  console.log('Prestation ajoutée avec succès:', benefit.benefit._id);
+                  this.loadBenefits();
+                  const benefitToSet = {name: benefit.benefit.name, value: benefit.benefit._id};
+                  console.log('Prestation à définir:', benefitToSet);
+                  setTimeout(() => {
+                    this.orderForm.get('benefit').setValue(benefitToSet.value);
+                  }
+                  , 500);
+                },
+                error: error => console.error("Erreur lors de l'ajout de la prestation", error)
+              });
+            }
+            
+            deleteBenefit(benefitId: string, event: Event): void {
+              event.stopPropagation(); // Pour empêcher la sélection de l'élément
+              this.benefitService.deleteBenefit(benefitId).subscribe({
+                next: () => {
+                  // this.benefits = this.benefits.filter(benefit => benefit._id !== benefitId);
+                  this.loadBenefits();
+                },
+                error: error => console.error("Erreur lors de la suppression de la prestation", error)
+              });
+            }
+            
 
           }

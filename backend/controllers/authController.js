@@ -1128,7 +1128,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         // Convertir les ID utilisateur en ObjectId si présents et valides
         ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
             if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
-                updateData[key] = mongoose.Types.ObjectId(updateData[key]);
+                updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
             }
         });
 
@@ -1592,11 +1592,11 @@ exports.resetPasswordFromAdmin = async (req, res) => {
                           return res.status(400).json({ message: 'Un service avec ce nom existe déjà.' });
                         }
                         const newService = new benefit({
-                          normalized_name
+                          name: normalized_name
                         });
                         await newService.save();
                         // console.log('Nouveau service ajouté');
-                        res.status(201).json({ message: 'Service créé avec succès.', benefitId: newService._id });
+                        res.status(201).json({ message: 'Service créé avec succès.', benefit: newService });
                       } catch (error) {
                         console.error('Erreur lors de l’ajout d’un nouveau service:', error);
                         res.status(500).json({ error: error.message });
@@ -1608,6 +1608,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
                       try {
                         // console.log('Suppression du service');
                         const { benefitId } = req.params;
+                        console.log('Suppression du service avec l\'ID:', benefitId);
                         const deletedService = await benefit.findByIdAndDelete(benefitId);
                         if (!deletedService) {
                           return res.status(404).json({ message: 'Service non trouvé.' });
