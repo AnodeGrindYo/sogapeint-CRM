@@ -102,12 +102,20 @@ table > tbody > tr > td {
   word-wrap: break-word;
 }
 
+// table td {
+//   font-size: 12px;
+// }
+
+// table th {
+//   font-size: 13px;
+// }
+
 table td {
-  font-size: 12px;
+  font-size: calc(0.30vw + 0.75vmin); // Vous pouvez ajuster la formule selon vos besoins
 }
 
 table th {
-  font-size: 13px;
+  font-size: calc(0.35vw + 0.75vmin); // Un peu plus grande pour les en-têtes
 }
 
 .bg-pink {

@@ -127,6 +127,15 @@
                               <i class="fas fa-sort-down" *ngIf="sortColumn === 'status' && sortDirection === 'desc'"></i>
                             </div>
                           </th>
+                          <!-- facture reçue (email sended) -->
+                          <th scope="col">
+                            <div class="cell-centered">Facture reçue</div>
+                            <div class="sort-icons float-end" (click)="onSort('invoice_received')">
+                              <i class="fas fa-sort" *ngIf="sortColumn !== 'invoice_received'"></i>
+                              <i class="fas fa-sort-up" *ngIf="sortColumn === 'invoice_received' && sortDirection === 'asc'"></i>
+                              <i class="fas fa-sort-down" *ngIf="sortColumn === 'invoice_received' && sortDirection === 'desc'"></i>
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       
@@ -165,8 +174,8 @@
                                 </div>
                             </td>
                             <td class="cell-centered">
-                                <div [ngbTooltip]="order?.benefit">
-                                    {{ order?.benefit }}
+                                <div [ngbTooltip]="getBenefitName(order?.benefit)">
+                                    {{ getBenefitName(order?.benefit) }}
                                 </div>
                             </td>
                             <td class="cell-centered">
@@ -212,6 +221,19 @@
                                 <ng-container *ngSwitchDefault>Non attribué</ng-container>
                             </span>
                         </td>
+                        <td class="cell-centered">
+                            <span 
+                                [ngSwitch]="order?.mail_sended"
+                                class="badge" 
+                                [ngClass]="{
+                                    'bg-success': order?.mail_sended === true,
+                                    'bg-danger': order?.mail_sended === false,
+                                    'bg-secondary': order?.mail_sended === null
+                                }">
+                                <ng-container *ngSwitchCase="true">Oui</ng-container>
+                                <ng-container *ngSwitchCase="false">Non</ng-container>
+                                <ng-container *ngSwitchDefault>Non</ng-container>
+                            </span>
                     </tr>
                 </tbody>
             </table>

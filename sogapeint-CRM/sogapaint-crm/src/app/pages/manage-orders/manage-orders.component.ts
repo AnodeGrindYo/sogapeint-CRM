@@ -5,6 +5,8 @@ import { Contract } from "../../core/models/contract.models";
 import { UserProfileService } from "src/app/core/services/user.service";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
+import { BenefitService } from '../../core/services/benefit.service';
+
 
 @Component({
   selector: "app-manage-orders",
@@ -41,9 +43,12 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   currentPage = 1;
   totalOrdersToShow = [];
 
+  benefits = [];
+
   constructor(
     private contractService: ContractService,
     private userService: UserProfileService,
+    private benefitService: BenefitService,
     private renderer: Renderer2,
     private router: Router
   ) {}
@@ -54,6 +59,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
       { label: "Gestion des commandes", active: true },
     ];
     this.availableTags = this.tags;
+    this.loadBenefits();
 
     this.activeTags.push("En cours");
 
@@ -71,6 +77,23 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  loadBenefits() {
+    this.benefitService.getBenefits().subscribe({
+      next: (benefits) => {
+        this.benefits = benefits;
+        console.log("Prestations chargées", benefits);
+      },
+      error: (error) => {
+        console.error("Erreur lors du chargement des prestations", error);
+      },
+    });
+  }
+
+  // un benefit a un _id et un name. Cette fonction permet de récupérer le nom d'une prestation à partir de son _id
+  getBenefitName(benefitId: string): string {
+    const benefit = this.benefits.find((benefit) => benefit._id === benefitId);
+    return benefit ? benefit.name : "";
+  }
 
   loadNotOnGoingContracts() {
     console.log("loadNotOnGoingContracts");
