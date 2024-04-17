@@ -25,6 +25,16 @@ export class ContractService {
         private http: HttpClient,
         @Inject(AuthenticationService) private authService: AuthenticationService 
         ) {}
+
+        /**
+         * obtient tous les contrats (endpoint /api/auth/contracts)
+         * 
+         * Envoie une requête GET pour obtenir une liste de tous les contrats.
+         * @returns Un Observable contenant un tableau de contrats.
+         */
+        getContracts(): Observable<any[]> {
+            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contracts`);
+        }
         
         /**
         * Recherche des contrats.

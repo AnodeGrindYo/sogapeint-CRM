@@ -190,9 +190,9 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   }
 
   onScroll(): void {
-    console.log("Scrolling");
+    // console.log("Scrolling");
     this.currentPage++;
-    console.log("Current page:", this.currentPage);
+    // console.log("Current page:", this.currentPage);
     this.updateOrdersToShow();
   }
 
@@ -333,5 +333,23 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     }
 
     return dateStr;
+  }
+
+  loadOldOrders() {
+    console.log("Chargement des anciens contrats");
+    this.isLoading = true;
+    this.filteredOrders = [];
+    this.contractService.getContracts().subscribe({
+      next: (oldContracts) => {
+        this.orders = [...this.orders, ...oldContracts];
+        this.filteredOrders = [...this.filteredOrders, ...oldContracts];
+        this.sortOrders();
+        this.isLoading = false;
+        this.updateOrdersToShow();
+      },
+      error: (error) => {
+        console.error("Erreur lors du chargement des anciens contrats", error);
+      },
+    });
   }
 }

@@ -13,6 +13,13 @@
             </div>
         </div>
         <br/>
+        <!-- Bouton rouge "charger les anciens contrats, aligné tout à droite" -->
+        <div class="row">
+          <div class="col-12">
+              <button class="btn btn-danger float-end adapt-fontsize" (click)="loadOldOrders()">Charger les anciens contrats</button>
+          </div>
+        </div>
+        <br/>
         <p>Vous pouvez filtrer les commandes selon l'état des contrats :</p>
         <div class="available-tags mb-3">
             <div *ngFor="let tag of availableTags" class="badge bg-primary" (click)="activateTag(tag)">
@@ -209,8 +216,7 @@
                                     'bg-success': order?.status === 'achieve',
                                     'bg-warning': order?.status === 'invoiced',
                                     'bg-danger': order?.status === 'anomaly',
-                                    'bg-secondary': order?.status === 'in_progress',
-                                    'bg-secondary': order?.status === null,
+                                    'bg-secondary': order?.status === null || order?.status === 'in_progress',
                                     'bg-info': order?.status === 'canceled'
                                 }">
                                 <ng-container *ngSwitchCase="'achieve'">Réalisé</ng-container>
