@@ -727,9 +727,15 @@ exports.resetPasswordFromAdmin = async (req, res) => {
     const filter_trash = req.query.filter_trash !== 'false'; // Convertit en boolean, true par défaut
     
     // Construire le filtre de base (contrats en cours ou dont le statut est null depuis les 2 dernières années par défaut)
+    // let filter = {
+    //   status: { $in: ['in_progress', null] },
+    //   date_cde: {
+    //     $gte: new Date(new Date().setFullYear(new Date().getFullYear() - period))
+    //   }
+    // };
     let filter = {
       status: { $in: ['in_progress', null] },
-      date_cde: {
+      dateAdd: {
         $gte: new Date(new Date().setFullYear(new Date().getFullYear() - period))
       }
     };
