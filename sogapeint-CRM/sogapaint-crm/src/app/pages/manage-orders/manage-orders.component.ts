@@ -25,7 +25,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   ordersToDisplay: any[] = [];
   tags: string[] = [
     "En cours",
-    "Non attribué",
     "Réalisé",
     "Facturé",
     "Annulé",
@@ -239,7 +238,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
         return order.status === "canceled";
       case "Incident":
         return Array.isArray(order.incident) && order.incident.length > 0;
-      case "Non attribué":
+      case "En cours":
         return order.status === null;
       default:
         return false;
