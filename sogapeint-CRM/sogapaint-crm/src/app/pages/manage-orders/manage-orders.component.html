@@ -209,7 +209,8 @@
                                     'bg-success': order?.status === 'achieve',
                                     'bg-warning': order?.status === 'invoiced',
                                     'bg-danger': order?.status === 'anomaly',
-                                    'bg-secondary': order?.status || order?.null === 'in_progress',
+                                    'bg-secondary': order?.status === 'in_progress',
+                                    'bg-secondary': order?.status === null,
                                     'bg-info': order?.status === 'canceled'
                                 }">
                                 <ng-container *ngSwitchCase="'achieve'">Réalisé</ng-container>
@@ -217,7 +218,7 @@
                                 <ng-container *ngSwitchCase="'anomaly'">Anomalie</ng-container>
                                 <ng-container *ngSwitchCase="'in_progress'">En cours</ng-container>
                                 <ng-container *ngSwitchCase="'canceled'">Annulé</ng-container>
-                                <ng-container *ngSwitchDefault>Non attribué</ng-container>
+                                <ng-container *ngSwitchDefault>En cours</ng-container>
                             </span>
                         </td>
                         <td class="cell-centered">
@@ -231,7 +232,7 @@
                                 }">
                                 <ng-container *ngSwitchCase="true">Oui</ng-container>
                                 <ng-container *ngSwitchCase="false">Non</ng-container>
-                                <ng-container *ngSwitchDefault>Non</ng-container>
+                                <ng-container *ngSwitchDefault>Non attribué</ng-container>
                             </span>
                     </tr>
                 </tbody>
