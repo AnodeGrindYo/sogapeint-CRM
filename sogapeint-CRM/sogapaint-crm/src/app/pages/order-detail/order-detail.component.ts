@@ -70,9 +70,11 @@ export class OrderDetailComponent implements OnInit {
         this.contract = data;
         // this.files = this.contract.file;
         console.log('Détails de la commande chargés', this.contract);
+        
         // si on a réussi à charger le contrat, on va chercher les détails 
         // du client, du co-traitant, du contact sogapeint et du sous-traitant
         if (this.contract) {
+          // this.patchExternalContributorInvoiceDate();
           this.loadUserDetails();
           this.benefit_name = this.getBenefitName(this.contract.benefit);
         }
@@ -132,26 +134,6 @@ export class OrderDetailComponent implements OnInit {
         
   }
 
-  // getBenefitName(benefitId: string): string {
-  //   // Mapping des identifiants aux noms des bénéfices
-  //   const benefitsMap: { [key: string]: string } = {
-  //     '5e4ba27006d62fd4a4e49916': 'Peinture',
-  //     '5e4ba27606d62fd4a4e49917': 'Sol',
-  //     '5e52cb8148f8b27b3d077a84': 'Électricité',
-  //     '5e52cb8148f8b27b3d077a85': 'Plomberie',
-  //     '5e52cb8148f8b27b3d077a86': 'Maçonnerie',
-  //     '5e52cb8148f8b27b3d077a87': 'Menuiserie',
-  //     '5e52cb8148f8b27b3d077a88': 'Vitrification',
-  //     '5e52cb8148f8b27b3d077a89': 'Nettoyage',
-  //     '5f58fef3bfdad857fcfbba50': 'Faïence',
-  //     '5f58fefdbfdad857fcfbba51': 'Placo',
-  //     '5f58ff06bfdad857fcfbba52': 'Carrelage'
-  //   };
-  
-  //   // Retourne le nom du bénéfice correspondant à l'identifiant, ou une chaîne vide si non trouvé
-  //   return benefitsMap[benefitId] || 'Identifiant non reconnu';
-  // }
-
   // la méthode getBenefits du service BenefitService retourne la liste des prestations avec deux clés: _id et name
   getBenefitName(benefitId: string): string {
     // Récupérer la liste des prestations
@@ -171,7 +153,7 @@ export class OrderDetailComponent implements OnInit {
     // Dictionnaire de statuts
     const statusDict: { [key: string]: string } = {
       'in_progress': 'En cours',
-      'null': 'À réaliser', // Utiliser 'null' comme chaîne pour représenter la valeur null
+      'null': 'En cours', // Utiliser 'null' comme chaîne pour représenter la valeur null
       'achieve': 'Réalisé',
       'canceled': 'Annulé',
       'invoiced': 'Facturé',
@@ -215,7 +197,5 @@ export class OrderDetailComponent implements OnInit {
     // 'order-update/:orderId'
     this.router.navigate([`/order-update/${this.contract._id}`]);
   }
-
-
 
 }

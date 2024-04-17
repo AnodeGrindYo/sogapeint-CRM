@@ -778,6 +778,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
     });
   
     const cursor = ContractModel.find({ status: { $ne: 'in_progress' } })
+    .sort({ 'dateAdd': 'desc' })
     .populate('customer')
     .populate('contact')
     .populate('external_contributor')

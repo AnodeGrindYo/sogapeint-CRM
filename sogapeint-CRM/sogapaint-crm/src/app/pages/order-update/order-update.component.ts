@@ -220,6 +220,7 @@ export class OrderUpdateComponent implements OnInit {
     this.handleRealTimeAdjustments();
     // this.handleRealTimeBenefit();
     this.patchOrderDate();
+    this.patchExternalContributorInvoiceDate();
   }
   
   handleRealTimeDifference(): void {
@@ -287,6 +288,14 @@ export class OrderUpdateComponent implements OnInit {
       }
     });
   }
+
+  patchExternalContributorInvoiceDate(): void {
+    this.orderUpdateForm.get("external_contributor_invoice_date").valueChanges.subscribe(val => {
+      if (!val) {
+        this.orderUpdateForm.patchValue({ external_contributor_invoice_date: new Date().toISOString().split("T")[0] }, { emitEvent: false });
+      }
+    });
+  }
   
   initializeBenefits(): void {
     this.benefitService.getBenefits().subscribe({
@@ -325,6 +334,7 @@ export class OrderUpdateComponent implements OnInit {
       external_contributor_amount: new FormControl("", [
         Validators.pattern(/^\d+\.?\d*$/),
       ]),
+      external_contributor_invoice_date: new FormControl(""),
       subcontractor_amount: new FormControl("", [
         Validators.pattern(/^\d+\.?\d*$/),
       ]),
@@ -386,12 +396,17 @@ export class OrderUpdateComponent implements OnInit {
           contract.date_cde = contract.date_cde
             ? contract.date_cde.split("T")[0]
             : "";
+          // conversion de external_contributor_invoice_date
+          contract.external_contributor_invoice_date = contract.external_contributor_invoice_date
+            ? contract.external_contributor_invoice_date.split("T")[0]
+            : "";
 
           const patchValues = {
             ...contract,
             start_date_works: contract.start_date_works,
             end_date_works: contract.end_date_works,
             end_date_customer: contract.end_date_customer,
+            external_contributor_invoice_date: contract.external_contributor_invoice_date,
             date_cde: contract.date_cde,
             internalNumberAbbrPart: abbreviation, // Partie abréviation
             internalNumberNumericPart: numericPart, // Partie numérique

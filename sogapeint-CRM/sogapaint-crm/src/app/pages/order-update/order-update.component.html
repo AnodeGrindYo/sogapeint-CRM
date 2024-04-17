@@ -230,6 +230,11 @@
                 <label for="external_contributor_amount" class="form-label">Montant co-traitant</label>
                 <input type="number" class="form-control" id="external_contributor_amount" formControlName="external_contributor_amount" (keydown)="onAlphaInput($event)">
               </div>
+              <!-- date de réception de la facture external_contributor_invoice_date -->
+              <div class="mb-3">
+                <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
+                <input type="date" class="form-control" id="external_contributor_invoice_date" formControlName="external_contributor_invoice_date">
+              </div>
               <div class="mb-3">
                 <label for="subcontractor_amount" class="form-label">Montant sous-traitant</label>
                 <input type="number" class="form-control" id="subcontractor_amount" formControlName="subcontractor_amount" (keydown)="onAlphaInput($event)">

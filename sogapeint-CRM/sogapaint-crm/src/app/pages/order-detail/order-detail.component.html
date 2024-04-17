@@ -141,6 +141,11 @@
                 <label class="form-label">Montant co-traitant</label>
                 <input type="text" class="form-control" value="{{ contract?.external_contributor_amount | currency:'EUR' }}" disabled>
               </div>
+              <!-- date de réception de la facture external_contributor_invoice_date -->
+              <div class="mb-3">
+                <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
+                <input type="date" class="form-control" value="{{ contract?.external_contributor_invoice_date | date:'yyyy-MM-dd' }}" disabled>
+              </div>
               <div class="mb-3">
                 <label class="form-label">Montant sous-traitant</label>
                 <input type="text" class="form-control" value="{{ contract?.subcontractor_amount | currency:'EUR' }}" disabled>

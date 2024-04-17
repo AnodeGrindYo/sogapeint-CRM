@@ -32,6 +32,7 @@ export class OrderFormComponent implements OnInit {
     invoiceNumber: '',
     amountHt: null,
     externalContributorAmount: 0,
+    external_contributor_invoice_date: null,
     subcontractorAmount: 0,
     // benefitHt: null,
     previsionDataHour: 0, // Nouveau champ ajouté
@@ -135,6 +136,7 @@ export class OrderFormComponent implements OnInit {
         benefitHt: new FormControl(this.contractData.benefitHt, [Validators.pattern(/^\d+\.?\d*$/)]),
         externalContributorAmount: new FormControl(this.contractData.externalContributorAmount, [Validators.pattern(/^\d+\.?\d*$/)]),
         subcontractorAmount: new FormControl(this.contractData.subcontractorAmount, [Validators.pattern(/^\d+\.?\d*$/)]),
+        external_contributor_invoice_date: new FormControl(this.contractData.external_contributor_invoice_date),
         previsionDataHour: new FormControl(this.contractData.previsionDataHour, [Validators.pattern(/^\d+\.?\d*$/)]),
         previsionDataDay: new FormControl(this.contractData.previsionDataDay, [Validators.pattern(/^\d+\.?\d*$/)]),
         executionDataDay: new FormControl(this.contractData.executionDataDay, [Validators.pattern(/^\d+\.?\d*$/)]),
@@ -283,6 +285,24 @@ export class OrderFormComponent implements OnInit {
           
           this.orderForm.patchValue({
             dateCde: formattedDate,
+          });
+
+          // initialise la date de facturation du contributeur externe (deux jours après dateCde)
+          this.initializeExternalContributorInvoiceDate();
+        }
+
+        // initialise la date de facturation du contributeur externe (deux jours après dateCde)
+        initializeExternalContributorInvoiceDate(): void {
+          const dateCde = new Date(this.orderForm.get('dateCde').value);
+          const externalContributorInvoiceDate = new Date(dateCde.setDate(dateCde.getDate() + 2));
+          const formattedDate = [
+            externalContributorInvoiceDate.getFullYear(),
+            (externalContributorInvoiceDate.getMonth() + 1).toString().padStart(2, '0'),
+            externalContributorInvoiceDate.getDate().toString().padStart(2, '0')
+          ].join('-');
+          
+          this.orderForm.patchValue({
+            external_contributor_invoice_date: formattedDate,
           });
         }
 
@@ -704,7 +724,6 @@ export class OrderFormComponent implements OnInit {
               event.stopPropagation(); // Pour empêcher la sélection de l'élément
               this.benefitService.deleteBenefit(benefitId).subscribe({
                 next: () => {
-                  // this.benefits = this.benefits.filter(benefit => benefit._id !== benefitId);
                   this.loadBenefits();
                 },
                 error: error => console.error("Erreur lors de la suppression de la prestation", error)
