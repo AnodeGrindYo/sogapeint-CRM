@@ -148,22 +148,32 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
           this.filteredOrders.push(contract);
   
           // Trier les commandes par date_cde en ordre décroissant
-          this.sortOrdersByDateCde();
+          // this.sortOrdersByDateCde();
+          // this.sortOrdersByMostRecent();
+          this.sortfilteredOrdersByMostRecent();
   
           // Vérifie si le nombre de contrats affichés est inférieur à itemsPerPage
           if (this.totalOrdersToShow.length < this.itemsPerPage) {
+            this.sortfilteredOrdersByMostRecent();
             this.updateOrdersToShow(); // Met à jour les contrats à afficher
   
             if (this.totalOrdersToShow.length === 1) {
+              this.sortfilteredOrdersByMostRecent();
               this.isLoading = false; // Arrête le chargement une fois itemsPerPage atteint
             }
           }
+          this.sortfilteredOrdersByMostRecent();
           // Si itemsPerPage contrats sont affichés, les contrats suivants seront chargés en mémoire mais pas immédiatement affichés
         },
         error: (error) => {
           console.error("Erreur lors du chargement des contrats en cours", error);
           this.isLoading = false; // Arrête le chargement en cas d'erreur
         },
+        complete: () => {
+          console.log("complete");
+          this.sortfilteredOrdersByMostRecent();
+          this.updateOrdersToShow();
+        }
       });
   }
   
@@ -280,6 +290,22 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     this.updateOrdersToShow();
   }
 
+  sortfilteredOrdersByMostRecent() {
+    this.filteredOrders.sort((a, b) => {
+      // met les contrats les plus récents en premier
+      return new Date(b.dateAdd).getTime() - new Date(a.dateAdd).getTime(); 
+    });
+    this.updateOrdersToShow();
+  }
+
+  sortOrdersByMostRecent() {
+    this.orders.sort((a, b) => {
+      // met les contrats les plus récents en premier
+      return new Date(b.dateAdd).getTime() - new Date(a.dateAdd).getTime();
+    });
+    this.updateOrdersToShow();
+  }
+
   getColumnValue(order: any, column: string) {
     switch (column) {
       case "client":
@@ -343,7 +369,8 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
       next: (oldContracts) => {
         this.orders = [...this.orders, ...oldContracts];
         this.filteredOrders = [...this.filteredOrders, ...oldContracts];
-        this.sortOrders();
+        this.sortfilteredOrdersByMostRecent();
+        // this.sortOrdersByMostRecent();
         this.isLoading = false;
         this.updateOrdersToShow();
       },

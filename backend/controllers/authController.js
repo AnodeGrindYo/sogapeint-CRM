@@ -746,6 +746,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
     }
     
     const cursor = ContractModel.find(filter)
+    .sort({ dateAdd: -1 })
     .populate('customer')
     .populate('contact')
     .populate('external_contributor')
