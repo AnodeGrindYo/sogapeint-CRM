@@ -209,8 +209,7 @@
                                     'bg-success': order?.status === 'achieve',
                                     'bg-warning': order?.status === 'invoiced',
                                     'bg-danger': order?.status === 'anomaly',
-                                    'bg-secondary': order?.status === 'in_progress',
-                                    'bg-pink': order?.status === null,
+                                    'bg-secondary': order?.status || order?.null === 'in_progress',
                                     'bg-info': order?.status === 'canceled'
                                 }">
                                 <ng-container *ngSwitchCase="'achieve'">Réalisé</ng-container>
