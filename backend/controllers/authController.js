@@ -1137,6 +1137,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
             if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
                 updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
+                // updateData[key] = updateData[key];
             }
         });
 
@@ -1160,7 +1161,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
             return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
         }
         // renvoyer le contrat mis à jour avec un message de succès
-        res.status(200).json(updatedContract, { message: 'Contrat modifié avec succès.' });
+        // res.status(200).json(updatedContract, { message: 'Contrat modifié avec succès.' });
+        res.status(200).json({ contract: updatedContract, message: 'Contrat modifié avec succès.' });
         // res.status(200).json(updatedContract);
     } catch (error) {
         console.error('Erreur lors de la modification du contrat:', error);

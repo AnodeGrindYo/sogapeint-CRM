@@ -340,10 +340,10 @@ export class OrderUpdateComponent implements OnInit {
       ]),
       benefit_ht: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
       billing_amount: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
-      prevision_data_hour: new FormControl("", [Validators.pattern(/^\d+$/)]),
-      prevision_data_day: new FormControl("", [Validators.pattern(/^\d+$/)]),
-      execution_data_day: new FormControl("", [Validators.pattern(/^\d+$/)]),
-      execution_data_hour: new FormControl("", [Validators.pattern(/^\d+$/)]),
+      prevision_data_hour: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
+      prevision_data_day: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
+      execution_data_day: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
+      execution_data_hour: new FormControl("", [Validators.pattern(/^\d+\.?\d*$/)]),
       difference: new FormControl(""),
       benefit: new FormControl(""),
       status: new FormControl(""),
@@ -523,12 +523,17 @@ export class OrderUpdateComponent implements OnInit {
   onSubmitUpdate(): void {
     console.log("Attempting to submit form", this.orderUpdateForm.value);
     console.log("Form validity:", this.orderUpdateForm.valid);
+
     if (this.orderUpdateForm.valid) {
+      const data = this.prepareDataForSubmit();
+      console.log("Data to submit:", data);
       this.contractService
-        .updateContract(this.contractId, this.orderUpdateForm.value)
+        // .updateContract(this.contractId, this.orderUpdateForm.value)
+        .updateContract(this.contractId, data)
         .subscribe({
           next: () => {
             console.log("Contract updated successfully");
+            this.router.navigate(["/order-detail", this.contractId]);
           },
           error: (error) => {
             console.error("Error updating contract:", error);
@@ -539,8 +544,56 @@ export class OrderUpdateComponent implements OnInit {
         });
     } else {
       console.error("Form is invalid");
-      console.log("invalid fields:", this.orderUpdateForm.value);
+      console.log("Form values:", this.orderUpdateForm.value);
+      console.log("data values:", this.prepareDataForSubmit());
+      console.log("invalid fields: ", this.findInvalidControls());
     }
+  }
+
+  prepareDataForSubmit(): any {
+    // récupère le status
+    const status = this.orderUpdateForm.get("status").value;
+    const data = { ...this.orderUpdateForm.value };
+    console.log("data befor modification", data);
+    data.status = status;
+    // // Remplace le benefit par son _id
+    // data.benefit = data.benefit.value;
+    // // remplace le contact par son _id
+    // data.contact = data.contact._id;
+    // // remplace le customer par son _id
+    // data.customer = data.customer._id;
+    // // remplace le contact par son _id
+    // data.contact = data.contact._id;
+    // // remplace le internal_contributor par son _id
+    // data.internal_contributor = data.internal_contributor._id;
+    // // remplace le external_contributor par son _id
+    // data.external_contributor = data.external_contributor._id;
+    // // remplace le subcontractor par son _id
+    // data.subcontractor = data.subcontractor._id;
+    // convertit date_cde en dd/mm/yyyy
+    data.date_cde = new Date(data.date_cde).toLocaleDateString("fr-CA");
+    // convertit end_date_customer en dd/mm/yyyy
+    data.end_date_customer = new Date(data.end_date_customer).toLocaleDateString("fr-CA");
+    // convertit external_contributor_invoice_date en dd/mm/yyyy
+    data.external_contributor_invoice_date = new Date(data.external_contributor_invoice_date).toLocaleDateString("fr-CA");
+    // convertit start_date_works en dd/mm/yyyy
+    data.start_date_works = new Date(data.start_date_works).toLocaleDateString("fr-CA");
+    // convertit end_date_works en dd/mm/yyyy
+    data.end_date_works = new Date(data.end_date_works).toLocaleDateString("fr-CA");
+    return data;
+  }
+
+
+
+  findInvalidControls() {
+    const invalid = [];
+    const controls = this.orderUpdateForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
   }
 
   // convertit les dates de n'importe quel format vers "yyyy-MM-dd"

@@ -346,4 +346,32 @@
     </form>
   </div>
 
-  
+  <!-- Modal de validation de Suppression de la commande ("Êtes-vous sûr?") -->
+  <ng-template #confirmDeleteModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmation</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir supprimer cette commande ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Annuler</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Supprimer</button>
+    </div>
+  </ng-template>
+
+  <!-- Modal de validation des modifications ("Êtes-vous sûr?") -->
+  <ng-template #confirmUpdateModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmation</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir valider les modifications de cette commande ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="modal.close('confirm')">Valider</button>
+    </div>
+  </ng-template>
