@@ -175,7 +175,7 @@
         </div>
 
         <div class="col-md-6">
-          <app-order-files-management [contractId]="contractId"></app-order-files-management>
+          <app-order-files-management [contractId]="contractId" *ngIf="isAdminOrSuperAdmin()"></app-order-files-management>
         </div>
       </div>
       <div class="row mb-3">
@@ -233,7 +233,7 @@
       </div>
       <div class="row mb-3">
         <div class="col-md-6">
-              <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']"></app-contract-activity>
+              <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']" *ngIf="isAdminOrSuperAdmin()"></app-contract-activity>
             </div>
         
       
