@@ -33,6 +33,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.initialize();
     this.addDocumentationLinkIfSuperAdmin(); // Méthode pour gérer l'ajout conditionnel du lien de documentation
+    this.addEditionLinkIfSuperAdmin(); // Méthode pour gérer l'ajout conditionnel des liens d'édition
   }
 
   ngAfterViewInit() {
@@ -206,6 +207,49 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           label: 'Documentation',
           icon: 'ri-file-text-line', // icône de documentation
           link: '/documentation'
+        });
+      }
+    }
+  }
+
+  addEditionLinkIfSuperAdmin() {
+    const user = this.userProfileService.getCurrentUser(); // Obtient les informations de l'utilisateur actuel
+    if (user && user.role === 'superAdmin') {
+      // Vérifie si les élément de menu concernant l'édition et les trucs de superAdmin existent déjà pour éviter les doublons
+      /**
+       * Les éléments de menu pour l'édition sont les éléments avec les ID suivants:
+       * 0: 'Dashboard',
+       * 2: 'Ajouter un contact',
+       * 4: 'Ajouter une entreprise',
+       * 6: 'Saisir une commande'
+       */
+      const editionItemsLinks = [0,2,4,6];
+      const editionExists = this.menuItems.some(item => editionItemsLinks.includes(item.id)); // Utilise l'ID  attribué au lien de la documentation
+      if (!editionExists) {
+        // Ajoute l'élément de menu pour la documentation si l'utilisateur est un superAdmin et s'il n'existe pas déjà
+        this.menuItems.push({
+          id: 0, // Un ID unique pour l'élément de menu Dashboard
+          label: 'Dashboard',
+          icon: 'ri-dashboard-line', // icône de dashboard
+          link: '/dashboard'
+        });
+        this.menuItems.push({
+          id: 2, // Un ID unique pour l'élément de menu Ajouter un contact
+          label: 'Ajouter un contact',
+          icon: 'ri-user-add-line', // icône d'ajout de contact
+          link: '/createUser'
+        });
+        this.menuItems.push({
+          id: 4, // Un ID unique pour l'élément de menu Ajouter une entreprise
+          label: 'Ajouter une entreprise',
+          icon: 'ri-building-2-line', // icône d'ajout d'entreprise
+          link: '/company-create'
+        });
+        this.menuItems.push({
+          id: 6, // Un ID unique pour l'élément de menu Saisir une commande
+          label: 'Saisir une commande',
+          icon: 'ri-shopping-cart-2-line', // icône de saisie de commande
+          link: '/order-form'
         });
       }
     }

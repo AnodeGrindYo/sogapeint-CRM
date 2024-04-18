@@ -1,12 +1,12 @@
 import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [
-    {
-        id: 0,
-        label: 'Dashboard',
-        icon: 'ri-dashboard-line',
-        link: '/dashboard'
-    },
+    // {
+    //     id: 0,
+    //     label: 'Dashboard',
+    //     icon: 'ri-dashboard-line',
+    //     link: '/dashboard'
+    // },
     {
         id: 1,
         label: 'Gestion des contacts',
@@ -27,12 +27,12 @@ export const MENU: MenuItem[] = [
         // ]
     },
     
-    {
-        id: 2,
-        label: 'AJouter un contact',
-        icon: 'ri-contacts-book-upload-line',
-        link: '/createUser'
-    },
+    // {
+    //     id: 2,
+    //     label: 'AJouter un contact',
+    //     icon: 'ri-contacts-book-upload-line',
+    //     link: '/createUser'
+    // },
 
     {
         id: 3,
@@ -40,29 +40,31 @@ export const MENU: MenuItem[] = [
         icon: 'ri-building-2-line',
         link: '/manageCompanies'
     },
-    {
-        id: 4,
-        label: 'Ajouter une entreprise',
-        icon: 'ri-building-2-fill',
-        link: '/company-create'
-    },
-    {
-        id: 5,
-        label: 'FAQ',
-        icon: 'ri-question-answer-line',
-        link: '/FAQ'
-    },
-    {
-        id: 6,
-        label: 'Saisir une commande',
-        icon: 'ri-shopping-cart-2-line',
-        link: '/order-form'
-    },
+    // {
+    //     id: 4,
+    //     label: 'Ajouter une entreprise',
+    //     icon: 'ri-building-2-fill',
+    //     link: '/company-create'
+    // },
+    
+    // {
+    //     id: 6,
+    //     label: 'Saisir une commande',
+    //     icon: 'ri-shopping-cart-2-line',
+    //     link: '/order-form'
+    // },
     {
         id: 7,
         label: 'Gestion des commandes',
         icon: 'ri-shopping-cart-2-fill',
         link: '/manageOrders'
+    },
+
+    {
+        id: 5,
+        label: 'FAQ',
+        icon: 'ri-question-answer-line',
+        link: '/FAQ'
     },
     
     // {
