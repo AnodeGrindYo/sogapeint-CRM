@@ -89,18 +89,44 @@ export class UserDetailComponent implements OnInit {
       }
       
       loadUserData() {
-        this.userForm.patchValue({
-          firstName: this.user.firstName ?? '',
-          lastName: this.user.lastName ?? '',
-          role: this.user.role ?? '',
-          email: this.user.email ?? '',
-          company: this.user.company ?? '', 
-          phone: this.user.phone ?? '', // facultatif
-          status: this.user.active ?? '',
-          authorized_connection: this.user.authorized_connection ?? '',
-          address: this.user.address ?? '' // facultatif  
-        });
+        
+        
+        // this.userForm.patchValue({
+        //   firstName: this.user.firstName ?? '',
+        //   lastName: this.user.lastName ?? '',
+        //   role: this.user.role ?? '',
+        //   email: this.user.email ?? '',
+        //   company: this.user.company ?? '', 
+        //   // company: company ?? '',
+        //   phone: this.user.phone ?? '', // facultatif
+        //   status: this.user.active ?? '',
+        //   authorized_connection: this.user.authorized_connection ?? '',
+        //   address: this.user.address ?? '' // facultatif  
+        // });
+        const company = this.companyService.searchCompanies(this.user.company).subscribe(company => {
+          // this.userForm.get('company').setValue(company[0]);
+          // console.log("Entreprise trouvée: ", company[0]);
+          this.userForm.patchValue({
+            firstName: this.user.firstName ?? '',
+            lastName: this.user.lastName ?? '',
+            role: this.user.role ?? '',
+            email: this.user.email ?? '',
+            company: company[0] ?? '', 
+            // company: company ?? '',
+            phone: this.user.phone ?? '', // facultatif
+            status: this.user.active ?? '',
+            authorized_connection: this.user.authorized_connection ?? '',
+            address: this.user.address ?? '' // facultatif  
+          });
+        }
+        );
       }
+
+      compareWithFn = (o1, o2) => {
+        return (o1._id === o2._id) && (o1.normalized_name === o2.normalized_name);
+      }
+
+
       
       isAdminOrSuperAdmin(): boolean {
         return this.currentUser && (this.currentUser.role === 'admin' || this.currentUser.role === 'superAdmin');

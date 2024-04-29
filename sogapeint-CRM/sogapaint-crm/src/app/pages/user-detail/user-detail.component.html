@@ -99,12 +99,14 @@
                                                 <ng-select id="company" 
                                                 formControlName="company" 
                                                 [items]="companies" 
-                                                bindLabel="name" 
-                                                bindValue="id" 
+                                                bindLabel="normalized_name" 
+                                                bindValue="normalized_name" 
                                                 placeholder="Sélectionner une entreprise"
                                                 [typeahead]="companyInput$"
                                                 [virtualScroll]="true" 
+                                                [compareWith]="compareWithFn"
                                                 [addTag]="true"
+                                                addTagText="Ajoutez l'entreprise"
                                                 (blur)="onCompanyInputBlur($event); resetDirty('company')">
                                             </ng-select>
                                         </div>

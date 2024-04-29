@@ -413,6 +413,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   // Fonction pour rechercher des entreprises par nom
   // Si aucune entreprise n'est trouvée, renvoie un tableau vide
   exports.searchCompanies = async (req, res) => {
+    console.log('Recherche d’entreprises');
+    console.log('Request :', req.query);
     try {
       const query = req.query.q;
       const companies = await CompanyModel.find({
@@ -420,7 +422,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           { normalized_name: new RegExp(query, 'i') },
           { names: new RegExp(query, 'i') }
         ]
-      }).select('normalized_name names -_id');
+      }).select('normalized_name names _id');
       res.json(companies);
     } catch (error) {
       res.status(500).send({ message: "Erreur lors de la recherche des entreprises", error });
