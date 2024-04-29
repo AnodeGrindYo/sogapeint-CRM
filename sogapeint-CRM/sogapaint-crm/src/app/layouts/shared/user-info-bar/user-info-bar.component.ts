@@ -53,6 +53,7 @@ export class UserInfoBarComponent implements OnInit {
     // Effacer le token du stockage local ou de la session
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
+    sessionStorage.clear();
     this.router.navigate(['/account/login']);
     // Peut-être faire un appel API pour informer le backend de la déconnexion ?
   }
