@@ -97,20 +97,54 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     return benefit ? benefit.name : "";
   }
 
+  // loadNotOnGoingContracts() {
+  //   console.log("loadNotOnGoingContracts");
+  //   this.contractService.getNotOnGoingContracts().subscribe({
+  //     next: (notOnGoingContracts) => {
+
+  //       this.orders = [...this.orders, ...notOnGoingContracts];
+  //     },
+  //     error: (error) => {
+  //       console.error(
+  //         "Erreur lors du chargement des contrats non en cours",
+  //         error
+  //       );
+  //     },
+  //   });
+  // }
   loadNotOnGoingContracts() {
     console.log("loadNotOnGoingContracts");
+    this.isLoading = true;
     this.contractService.getNotOnGoingContracts().subscribe({
-      next: (notOnGoingContracts) => {
-        this.orders = [...this.orders, ...notOnGoingContracts];
-      },
-      error: (error) => {
-        console.error(
-          "Erreur lors du chargement des contrats non en cours",
-          error
-        );
-      },
+        next: (notOnGoingContracts) => {
+            const filteredContracts = notOnGoingContracts.filter(contract => {
+              
+                  if (this.currentUser.role === "superAdmin") {
+                      return true;
+                  } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
+                      const user_company = this.normalizeString(this.currentUser.company);
+                      return this.checkCompanyInContract(contract, user_company);
+                  } else if (this.currentUser.role === "customer") {
+                    if (contract.customer) {
+                      return this.currentUser.firstName.toLowerCase() === contract.customer.firstname.toLowerCase()
+                        && this.currentUser.lastName.toLowerCase() === contract.customer.lastname.toLowerCase();
+                    }
+                  }
+                  return false;
+            });
+
+            // this.orders = [...this.orders, ...filteredContracts];
+            this.sortfilteredOrdersByMostRecent();
+            this.updateOrdersToShow();
+            this.isLoading = false;
+        },
+        error: (error) => {
+            console.error("Erreur lors du chargement des contrats non en cours", error);
+            this.isLoading = false;
+        }
     });
   }
+
 
   loadOnGoingContractsStream() {
     this.isLoading = true; // Indique le début du chargement
@@ -120,13 +154,27 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (contract: any) => {
-          this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
-          this.filteredOrders.push(contract);
+          if (this.currentUser.role === "superAdmin") {
+            this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+            this.filteredOrders.push(contract);
+          } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
+            // filtre les contrats pour les co-traitants et sous-traitants : ils ne peuvent voir que les contrats où leur entreprise est impliquée
+            // console.log("coContractor/subcontractor contract :", contract);
+            const user_company = this.normalizeString(this.currentUser.company);
+            if (this.checkCompanyInContract(contract, user_company)) {
+              this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+              this.filteredOrders.push(contract);
+            }
+          } else if (this.currentUser.role === "customer") {
+            if (this.currentUser.firstName.toLowerCase() == contract.customer.firstname.toLowerCase() && this.currentUser.lastName.toLowerCase() == contract.customer.lastname.toLowerCase()){
+              this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+              this.filteredOrders.push(contract);
+            }
+          }
   
           // Trier les commandes par date_cde en ordre décroissant
-          // this.sortOrdersByDateCde();
-          // this.sortOrdersByMostRecent();
           this.sortfilteredOrdersByMostRecent();
+          // this.updateOrdersToShow(); // Met à jour les contrats à afficher
   
           // Vérifie si le nombre de contrats affichés est inférieur à itemsPerPage
           if (this.totalOrdersToShow.length < this.itemsPerPage) {
@@ -321,14 +369,22 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     console.log("Commande sélectionnée:", order);
     switch (this.currentUser.role) {
       case "superAdmin":
+        console.log(" case superAdmin");
         this.router.navigate(["/order-detail", order._id]);
         break;
-      case "coContractor":
+      case "cocontractor":
+        console.log(" case cocontractor");
       case "subcontractor":
+        console.log(" case subcontractor");
         this.router.navigate(["/order-detail-cocontractor", order._id]);
         break;
+      case "customer":
+        console.log(" case customer");
+        this.router.navigate(["/order-detail-customer", order._id]);
+        break;
       default:
-        this.router.navigate(["/", order._id]);
+        console.log(" case default");
+        // this.router.navigate(["/", order._id]);
         break;
     }
   }
@@ -365,5 +421,25 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
         console.error("Erreur lors du chargement des anciens contrats", error);
       },
     });
+  }
+
+  normalizeString(str: string): string {
+    return str.replace(/[^a-zA-Z]/g, '').toLowerCase();
+  }
+
+  checkCompanyInContract(contract: any, normalizedCompany: string): boolean {
+    for (let key in contract) {
+      if (contract[key] && typeof contract[key] === 'object') {
+        if (this.checkCompanyInContract(contract[key], normalizedCompany)) {
+          return true;
+        }
+      } else if (typeof contract[key] === 'string') {
+        let normalizedValue = this.normalizeString(contract[key]);
+        if (normalizedValue.includes(normalizedCompany)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

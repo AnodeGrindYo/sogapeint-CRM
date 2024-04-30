@@ -35,10 +35,10 @@ const routes: Routes = [
     { path: 'FAQ', component: FAQComponent , canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
     { path: 'order-form', component: OrderFormComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin
     { path: 'order-detail/:orderId', component: OrderDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin']} }, // auth: any role for connected users
-    { path: 'order-detail-cocontractor/:orderId', component: OrderDetailCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor'] } }, // auth: Admin, subcontractor, coContractor
+    { path: 'order-detail-cocontractor/:orderId', component: OrderDetailCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'cocontractor'] } }, // auth: Admin, subcontractor, coContractor
     { path: 'manageOrders', component: ManageOrdersComponent, data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor'] }}, // auth: Admin, subcontractor, coContractor
     { path: 'order-update/:orderId', component: OrderUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin, subcontractor, coContractor
-    { path: 'order-update-cocontractor/:orderId', component: OrderUpdateCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor'] } },
+    { path: 'order-update-cocontractor/:orderId', component: OrderUpdateCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'cocontractor'] } },
     // route pour la landing page
     { path: '', component: LandingPageComponent}
 ];
