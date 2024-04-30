@@ -1,0 +1,176 @@
+<div *ngIf="showSecretDiv" class="secret-div">
+    <div class="machine-wrap">
+        <div class="machine">
+            <div class="machine-roof">
+                <div class="machine-silencer">
+                    <div class="machine-smoke"></div>
+                </div>
+            </div>
+            <div class="machine-main">
+                <div class="machine-body"></div>
+                <div class="machine-back"></div>
+                <div class="machine-front"></div>
+            </div>	
+        </div>
+        <div class="road">
+            <div class="mud-wrap clearfix">
+                <div class="mud"></div>
+                <div class="mud"></div>
+                <div class="mud"></div>
+                <div class="mud"></div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="container-fluid">
+      <app-pagetitle title="Détails de la Commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+      <div class="row mb-3">
+        <div class="col-12 mb-2">
+          <div class="text-end">
+            <button class="btn btn-primary ms-2" (click)="goToEditOrder()" *ngIf="isAdminOrSuperAdmin()">Editer</button>
+          </div>
+          <hr>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Référence commande</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="internal_number" class="form-label">Numéro Interne</label>
+                <input type="text" id="internal_number" class="form-control" value="{{ contract?.internal_number }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="date_cde" class="form-label">Date de Commande</label>
+                <input type="date" id="date_cde" class="form-control" value="{{ contract?.date_cde | date:'yyyy-MM-dd' }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="customer" class="form-label">Client</label>
+                <input type="text" id="customer" class="form-control" value="{{ customer?.firstname+' '+customer?.lastname }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="contact" class="form-label">Contact</label>
+                <input type="text" id="contact" class="form-control" value="{{ contact?.firstname+' '+contact?.lastname}}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="benefit" class="form-label">Prestation</label>
+                <input type="text" id="benefit" class="form-control" value="{{ benefit_name }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="status" class="form-label">Statut</label>
+                <div class="row">
+                  <td class="cell-centered">
+                      <span 
+                      class="badge" 
+                      [ngClass]="{
+                          'bg-success': contract?.status === 'achieve',
+                          'bg-warning': contract?.status === 'invoiced',
+                          'bg-danger': contract?.status === 'anomaly',
+                          'bg-secondary': contract?.status === 'in_progress',
+                          'bg-pink': contract?.status === null,
+                          'bg-info': contract?.status === 'canceled'
+                      }">
+                      {{ getStatus(contract?.status) }}
+                      
+                  </span>
+                  </td>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Résidence/Adresse</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="address" class="form-label">Adresse</label>
+                <input type="text" id="address" class="form-control" value="{{ contract?.address }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="appartment_number" class="form-label">N° appart</label>
+                <input type="text" id="appartment_number" class="form-control" value="{{ contract?.appartment_number }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="occupied" class="form-label">Occupé</label>
+                <input type="text" id="occupied" class="form-control" value="{{ contract?.occupied ? 'Oui' : 'Non' }}" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Intervenants</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="internal_contributor" class="form-label">Intervenant Sogapeint</label>
+                <input type="text" id="internal_contributor" class="form-control" value="{{ sogapeintContact?.firstname + ' ' + sogapeintContact?.lastname }}" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="external_contributor" class="form-label">Co-traitant</label>
+                <input type="text" id="external_contributor" class="form-control" value="{{ coContractor?.firstname + ' ' + coContractor?.lastname }}" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">Montants</div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label class="form-label">Montant de la commande HT</label>
+                  <input type="text" class="form-control" value="{{ contract?.amount_ht | currency:'EUR' }}" disabled>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Montant co-traitant</label>
+                  <input type="text" class="form-control" value="{{ contract?.external_contributor_amount | currency:'EUR' }}" disabled>
+                </div>
+                <div class="mb-3">
+                  <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
+                  <input type="date" class="form-control" value="{{ contract?.external_contributor_invoice_date | date:'yyyy-MM-dd' }}" disabled>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Montant sous-traitant</label>
+                  <input type="text" class="form-control" value="{{ contract?.subcontractor_amount | currency:'EUR' }}" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">Dates</div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label class="form-label">Début des travaux</label>
+                  <input type="text" class="form-control" value="{{ contract?.start_date_works | date:'shortDate' }}" disabled>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Fin des travaux</label>
+                  <input type="text" class="form-control" value="{{ contract?.end_date_works | date:'shortDate' }}" disabled>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Date de fin client</label>
+                  <input type="text" class="form-control" value="{{ contract?.end_date_customer | date:'shortDate' }}" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-6">
+            <app-order-files-management [contractId]="contractId" *ngIf="isAdminOrSuperAdmin()"></app-order-files-management>
+          </div>
+        </div>
+        <!-- <div class="row mb-3">
+          <div class="col-md-6">
+                <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']" *ngIf="isAdminOrSuperAdmin()"></app-contract-activity>
+              </div>
+          
+        
+    </div> -->
+    </div>
+  
+    

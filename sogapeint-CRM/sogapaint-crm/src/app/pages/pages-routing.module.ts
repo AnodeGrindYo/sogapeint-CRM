@@ -13,8 +13,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardFakeComponent } from './dashboard-fake/dashboard-fake.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderDetailCocontractorComponent } from './order-detail-cocontractor/order-detail-cocontractor.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { OrderUpdateComponent } from './order-update/order-update.component';
+import { OrderUpdateCocontractorComponent } from './order-update-cocontractor/order-update-cocontractor.component';
 import { RoleGuard } from '../core/guards/role.guard';
 import { AuthGuard } from '../core/guards/auth.guard';
 
@@ -22,19 +24,21 @@ import { AuthGuard } from '../core/guards/auth.guard';
 
 const routes: Routes = [
     { path: 'icons', loadChildren: () => import('./icons/icons.module').then(m => m.IconsModule) },
-    { path: 'manageUsers', component: ManageUsersComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] }}, // auth: Admin
-    { path: 'createUser', component: CreateUserComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] } }, // auth: Admin
-    { path: 'user-detail/:userId', component: UserDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] } }, // auth: Admin
-    { path: 'manageCompanies', component: ManageCompaniesComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] }}, // auth: Admin
-    { path: 'company-detail/:companyId', component: CompanyDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] }}, // auth: Admin
-    { path: 'company-update/:companyId', component: CompanyUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] }}, // auth: Admin
-    { path: 'company-create', component: CompanyCreateComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] }}, // auth: Admin
-    { path: 'dashboard', component: DashboardFakeComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] }}, // auth: Admin
-    { path: 'FAQ', component: FAQComponent , canActivate: [RoleGuard], data: { roles: ['Admin'] }}, // auth: Admin
-    { path: 'order-form', component: OrderFormComponent, canActivate: [RoleGuard], data: { roles: ['Admin'] } }, // auth: Admin
-    { path: 'order-detail/:orderId', component: OrderDetailComponent, canActivate: [AuthGuard] }, // auth: any role for connected users
-    { path: 'manageOrders', component: ManageOrdersComponent, data: { roles: ['Admin', 'subcontractor', 'coContractor'] }}, // auth: Admin, subcontractor, coContractor
-    { path: 'order-update/:orderId', component: OrderUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'subcontractor', 'coContractor'] } }, // auth: Admin, subcontractor, coContractor
+    { path: 'manageUsers', component: ManageUsersComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
+    { path: 'createUser', component: CreateUserComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin
+    { path: 'user-detail/:userId', component: UserDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin
+    { path: 'manageCompanies', component: ManageCompaniesComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
+    { path: 'company-detail/:companyId', component: CompanyDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
+    { path: 'company-update/:companyId', component: CompanyUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
+    { path: 'company-create', component: CompanyCreateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
+    { path: 'dashboard', component: DashboardFakeComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
+    { path: 'FAQ', component: FAQComponent , canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
+    { path: 'order-form', component: OrderFormComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin
+    { path: 'order-detail/:orderId', component: OrderDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin']} }, // auth: any role for connected users
+    { path: 'order-detail-cocontractor/:orderId', component: OrderDetailCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor'] } }, // auth: Admin, subcontractor, coContractor
+    { path: 'manageOrders', component: ManageOrdersComponent, data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor'] }}, // auth: Admin, subcontractor, coContractor
+    { path: 'order-update/:orderId', component: OrderUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin, subcontractor, coContractor
+    { path: 'order-update-cocontractor/:orderId', component: OrderUpdateCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor'] } },
     // route pour la landing page
     { path: '', component: LandingPageComponent}
 ];

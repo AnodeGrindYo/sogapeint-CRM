@@ -39,8 +39,10 @@ import { DashboardFakeComponent } from './dashboard-fake/dashboard-fake.componen
 import { DashboardModule } from './dashboard/dashboard.module';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderDetailCocontractorComponent } from './order-detail-cocontractor/order-detail-cocontractor.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { OrderUpdateComponent } from './order-update/order-update.component';
+import { OrderUpdateCocontractorComponent } from './order-update-cocontractor/order-update-cocontractor.component';
 import { ContractActivityComponent } from './contract-activity/contract-activity.component';
 import { OrderFilesManagementComponent } from './order-files-management/order-files-management.component';
 
@@ -68,8 +70,10 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
     DashboardFakeComponent,
     OrderFormComponent,
     OrderDetailComponent,
+    OrderDetailCocontractorComponent,
     ManageOrdersComponent,
     OrderUpdateComponent,
+    OrderUpdateCocontractorComponent,
     FileSizePipe
     // DashboardComponent
     // LandingPageComponent

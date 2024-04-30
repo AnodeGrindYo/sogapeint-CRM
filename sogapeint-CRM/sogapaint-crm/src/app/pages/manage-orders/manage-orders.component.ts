@@ -6,6 +6,7 @@ import { UserProfileService } from "src/app/core/services/user.service";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { BenefitService } from '../../core/services/benefit.service';
+import { User } from '../../core/models/auth.models';
 
 
 @Component({
@@ -44,6 +45,8 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
 
   benefits = [];
 
+  currentUser: User;
+
   constructor(
     private contractService: ContractService,
     private userService: UserProfileService,
@@ -58,6 +61,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
       { label: "Gestion des commandes", active: true },
     ];
     this.availableTags = this.tags;
+    this.currentUser = this.userService.getCurrentUser();
     this.loadBenefits();
 
     this.activeTags.push("En cours");
@@ -66,7 +70,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     // charge les contrats en cours, puis les contrats non en cours seulement après
     this.loadOnGoingContractsStream();
     this.loadNotOnGoingContracts();
-    // this.loadOnGoingContractsStream();
   }
 
   ngOnDestroy() {
@@ -109,33 +112,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     });
   }
 
-  // loadOnGoingContractsStream() {
-  //   this.isLoading = true; // Indique le début du chargement
-  
-  //   this.contractService
-  //     .getOnGoingContractsStream()
-  //     .pipe(takeUntil(this.destroy$))
-  //     .subscribe({
-  //       next: (contract: any) => {
-  //         this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
-  //         this.filteredOrders.push(contract);
-  //         // Vérifie si le nombre de contrats affichés est inférieur à itemsPerPage
-  //         if (this.totalOrdersToShow.length < this.itemsPerPage) {
-  //           this.ordersToDisplay.push(contract); // Ajoute le contrat à la liste filtrée pour affichage
-  //           this.updateOrdersToShow(); // Met à jour les contrats à afficher
-  
-  //           if (this.totalOrdersToShow.length === 1) {
-  //             this.isLoading = false; // Arrête le chargement une fois itemsPerPage atteint
-  //           }
-  //         }
-  //         // Si itemsPerPage contrats sont affichés, les contrats suivants seront chargés en mémoire mais pas immédiatement affichés
-  //       },
-  //       error: (error) => {
-  //         console.error("Erreur lors du chargement des contrats en cours", error);
-  //         this.isLoading = false; // Arrête le chargement en cas d'erreur
-  //       },
-  //     });
-  // }
   loadOnGoingContractsStream() {
     this.isLoading = true; // Indique le début du chargement
   
@@ -343,7 +319,18 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
 
   selectOrder(order: any) {
     console.log("Commande sélectionnée:", order);
-    this.router.navigate(["/order-detail", order._id]);
+    switch (this.currentUser.role) {
+      case "superAdmin":
+        this.router.navigate(["/order-detail", order._id]);
+        break;
+      case "coContractor":
+      case "subcontractor":
+        this.router.navigate(["/order-detail-cocontractor", order._id]);
+        break;
+      default:
+        this.router.navigate(["/", order._id]);
+        break;
+    }
   }
 
 

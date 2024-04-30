@@ -1,0 +1,333 @@
+<div class="container-fluid">
+    <app-pagetitle title="Modification d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+    <form [formGroup]="orderUpdateForm" (ngSubmit)="onSubmitUpdate()">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Référence commande</div>
+            <div class="card-body">
+              <div class="row mb-3 d-flex align-items-center">
+                <div class="col">
+                  <label for="internal_number_abbr_part" class="form-label">Abbréviation</label>
+                  <ng-select 
+                    id="internal_number_abbr_part" 
+                    formControlName="internalNumberAbbrPart" 
+                    [items]="filteredAbbreviationList" 
+                    placeholder="Sélectionnez l'abréviation" 
+                    class="form-control" 
+                    [addTag]="false" 
+                    addTagText="Ajouter l'abbréviation" 
+                    [readonly]="true"
+                    [searchable]="false"
+                    [clearable]="false"
+                    ></ng-select>
+                </div>
+                <div class="col-auto align-self-center"> - </div>
+                <div class="col">
+                  <label for="internal_number_numeric_part" class="form-label">Numéro interne</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="internal_number_numeric_part" 
+                    formControlName="internalNumberNumericPart"
+                    [readOnly]="true"
+                  >
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="customer" class="form-label">Client</label>
+                <ng-select 
+                  id="customer" 
+                  formControlName="customer" 
+                  [items]="users" 
+                  bindLabel="name" 
+                  bindValue="_id" 
+                  placeholder="Sélectionner un client" 
+                  [typeahead]="userInput$" 
+                  [virtualScroll]="true" 
+                  [addTag]="false" 
+                  (focus)="onUserInputFocus()" 
+                  (blur)="onUserInputBlur($event)"  
+                  [compareWith]="compareWithFn"
+                  [readonly]="true"
+                >
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+              </div>
+              <div class="mb-3">
+                <label for="contact" class="form-label">Contact</label>
+                <ng-select 
+                  id="contact" 
+                  formControlName="contact" 
+                  [items]="users" 
+                  bindLabel="name" 
+                  bindValue="_id" 
+                  placeholder="Sélectionner un client" 
+                  [typeahead]="userInput$" 
+                  [virtualScroll]="true" 
+                  [addTag]="false" 
+                  (focus)="onUserInputFocus()" 
+                  (blur)="onUserInputBlur($event)" 
+                  [compareWith]="compareWithFn"
+                  [readonly]="true"
+                  >
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+              </div>
+              <!-- <div class="mb-3">
+                <label for="quote_number" class="form-label">Numéro de devis</label>
+                <input type="text" class="form-control" id="quote_number" formControlName="quote_number">
+              </div> -->
+              <div class="mb-3">
+                <label for="benefit" class="form-label">Prestation</label>
+                <ng-select 
+                id="benefit" 
+                formControlName="benefit" 
+                [items]="benefits" 
+                bindLabel="name" 
+                bindValue="value" 
+                placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !" 
+                [addTag]="addNewBenefit.bind(this)"
+                addTagText="Ajouter une prestation"
+                [multiple]="false"
+                [closeOnSelect]="true"
+                [compareWith]="compareWithFn"
+                [readonly]="true"
+                >
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  <div class="d-flex justify-content-between align-items-center w-100">
+                    <span class="flex-grow-1">{{ item.name }}</span>
+                    <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+                  </div>
+                </ng-template>
+              </ng-select>
+              </div>
+              <div class="mb-3">
+                <label for="order_status" class="form-label">Statut</label>
+                <ng-select 
+                  id="order_status" 
+                  formControlName="status" 
+                  [items]="statuses" 
+                  bindLabel="name" 
+                  bindValue="value" 
+                  placeholder="🔮 Devinez le statut... ou sélectionnez-le ici!"
+                  [readonly]="true"
+                ></ng-select>
+              </div>
+              <div class="mb-3">
+                <label for="date_cde" class="form-label">Date de Commande</label>
+                <input 
+                  type="date" 
+                  class="form-control" 
+                  id="date_cde" 
+                  formControlName="date_cde"
+                  [readOnly]="true"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Résidence/Adresse</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="address" class="form-label">Adresse</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="address" 
+                  formControlName="address"
+                  [readOnly]="true"
+                >
+              </div>
+              <div class="mb-3">
+                <label for="appartment_number" class="form-label">N° appart</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="appartment_number" 
+                    formControlName="appartment_number"
+                    [readOnly]="true"
+                >
+              </div>
+              <div class="mb-3">
+                <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
+                <!-- input si occupied==true affiche 'Oui', sinon affiche 'Non' -->
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="occupied" 
+                  formControlName="occupied"
+                  [readOnly]="true"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Intervenants</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="internal_contributor" class="form-label">Intervenant Sogapeint</label>
+                <ng-select 
+                  id="internal_contributor" 
+                  formControlName="internal_contributor" 
+                  [items]="users" 
+                  bindLabel="name" 
+                  bindValue="_id" 
+                  placeholder="Sélectionner un intervenant Sogapeint" 
+                  [typeahead]="userInput$" 
+                  [virtualScroll]="true" 
+                  [addTag]="false" 
+                  (focus)="onUserInputFocus()" 
+                  (blur)="onUserInputBlur($event)"
+                  [compareWith]="compareWithFn"
+                  [readonly]="true"
+                  >
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+              </div>
+              <div class="mb-3">
+                <label for="external_contributor" class="form-label">Co-traitant</label>
+                <input type="text" class="form-control" id="external_contributor" formControlName="external_contributor" [readonly]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Montants</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="amount_ht" class="form-label">Montant de la commande HT</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="amount_ht" 
+                  formControlName="amount_ht" 
+                  (keydown)="onAlphaInput($event)"
+                  [readOnly]="true"
+                >
+              </div>
+              <div class="mb-3">
+                <label for="external_contributor_amount" class="form-label">Montant co-traitant</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="external_contributor_amount" 
+                  formControlName="external_contributor_amount" 
+                  (keydown)="onAlphaInput($event)"
+                  [readOnly]="true"
+                >
+              </div>
+              <!-- date de réception de la facture external_contributor_invoice_date -->
+              <div class="mb-3">
+                <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
+                <input 
+                  type="date" 
+                  class="form-control" 
+                  id="external_contributor_invoice_date" 
+                  formControlName="external_contributor_invoice_date"
+                  [readOnly]="true"
+                >
+              </div>
+              <div class="mb-3">
+                <label for="subcontractor_amount" class="form-label">Montant sous-traitant</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="subcontractor_amount" 
+                  formControlName="subcontractor_amount" 
+                  (keydown)="onAlphaInput($event)"
+                  [readOnly]="true"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Dates</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="start_date_works" class="form-label">Début</label>
+                <input type="date" class="form-control" id="start_date_works" formControlName="start_date_works">
+              </div>
+              <div class="mb-3">
+                <label for="end_date_works" class="form-label">Date de fin</label>
+                <input type="date" class="form-control" id="end_date_works" formControlName="end_date_works">
+              </div>
+              <div class="mb-3">
+                <label for="end_date_customer" class="form-label">Date de fin client</label>
+                <input type="date" class="form-control" id="end_date_customer" formControlName="end_date_customer">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!-- Documents -->
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6"></div>
+      </div>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col d-flex justify-content-end">
+          <!-- <button type="button" class="btn btn-danger me-2" (click)="onDelete()">Supprimer</button> -->
+          <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
+    </div>
+    </form>
+  </div>
+
+  <!-- Modal de validation de Suppression de la commande ("Êtes-vous sûr?") -->
+  <ng-template #confirmDeleteModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmation</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir supprimer cette commande ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Annuler</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Supprimer</button>
+    </div>
+  </ng-template>
+
+  <!-- Modal de validation des modifications ("Êtes-vous sûr?") -->
+  <ng-template #confirmUpdateModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmation</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir valider les modifications de cette commande ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="modal.close('confirm')">Valider</button>
+    </div>
+  </ng-template>
