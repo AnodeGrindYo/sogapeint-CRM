@@ -95,10 +95,10 @@ router.put('/contract/:contractId', isAdminOrSuperAdmin, authController.updateCo
 router.delete('/contract/:contractId', isAdminOrSuperAdmin, authController.deleteContract);
 
 // Route pour getOngoingContracts (protégée par le middleware isAdminOrSuperAdmin, obtient les contrats en cours)
-router.get('/ongoingContracts', isAdminOrSuperAdmin, authController.getOngoingContracts);
+router.get('/ongoingContracts', isConnected, authController.getOngoingContracts);
 
 // Route pour getNotOngoingContracts (protégée par le middleware isAdminOrSuperAdmin, obtient les contrats non en cours)
-router.get('/notOngoingContracts', isAdminOrSuperAdmin, authController.getNotOngoingContracts);
+router.get('/notOngoingContracts', isConnected, authController.getNotOngoingContracts);
 
 // Route pour streamOnGoingContracts (obtient les contrats en cours)
 router.get('/streamOnGoingContracts', authController.streamOnGoingContracts);

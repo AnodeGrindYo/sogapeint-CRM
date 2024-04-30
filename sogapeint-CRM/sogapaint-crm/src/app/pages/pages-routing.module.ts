@@ -14,6 +14,7 @@ import { DashboardFakeComponent } from './dashboard-fake/dashboard-fake.componen
 import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderDetailCocontractorComponent } from './order-detail-cocontractor/order-detail-cocontractor.component';
+import { OrderDetailCustomerComponent } from './order-detail-customer/order-detail-customer.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { OrderUpdateComponent } from './order-update/order-update.component';
 import { OrderUpdateCocontractorComponent } from './order-update-cocontractor/order-update-cocontractor.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
     { path: 'manageOrders', component: ManageOrdersComponent, data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor'] }}, // auth: Admin, subcontractor, coContractor
     { path: 'order-update/:orderId', component: OrderUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin, subcontractor, coContractor
     { path: 'order-update-cocontractor/:orderId', component: OrderUpdateCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'cocontractor'] } },
+    { path: 'order-detail-customer/:orderId', component: OrderDetailCustomerComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'customer'] } },
     // route pour la landing page
     { path: '', component: LandingPageComponent}
 ];

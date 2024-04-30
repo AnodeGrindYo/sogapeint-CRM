@@ -40,6 +40,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderDetailCocontractorComponent } from './order-detail-cocontractor/order-detail-cocontractor.component';
+import { OrderDetailCustomerComponent } from './order-detail-customer/order-detail-customer.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { OrderUpdateComponent } from './order-update/order-update.component';
 import { OrderUpdateCocontractorComponent } from './order-update-cocontractor/order-update-cocontractor.component';
@@ -71,6 +72,7 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
     OrderFormComponent,
     OrderDetailComponent,
     OrderDetailCocontractorComponent,
+    OrderDetailCustomerComponent,
     ManageOrdersComponent,
     OrderUpdateComponent,
     OrderUpdateCocontractorComponent,
