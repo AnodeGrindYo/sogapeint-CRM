@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthenticationService } from './auth.service';
@@ -185,28 +185,26 @@ export class ContractService {
         * 
         * @param contractId L'identifiant unique du contrat auquel les fichiers sont associés.
         * @param files Les fichiers à téléverser.
+        * @param folderName (optionel) Le nom du dossier dans lequel les fichiers seront téléversés.
         * @returns Un Observable de l'événement Http qui inclut la réponse du serveur ou des erreurs.
         */
-        uploadFiles(contractId: string, files: File[]): Observable<HttpEvent<any>> {
-            const formData: FormData = new FormData();
-            
-            // Ajoute tous les fichiers à l'objet FormData
+        uploadFiles(contractId: string, files: File[], folderName?: string): Observable<HttpEvent<any>> {
+            const formData = new FormData();
             files.forEach(file => {
                 formData.append('files', file, file.name);
+                formData.append('contractId', contractId);
             });
-            
-            // Ajoute l'ID du contrat à l'objet FormData
-            formData.append('contractId', contractId);
-            
-            // Crée une requête HttpRequest pour le téléversement
-            const req = new HttpRequest('POST', `${environment.apiUrl}/api/auth/upload`, formData, {
-                reportProgress: true, // Activez cela si vous voulez suivre la progression
+        
+            const url = `${environment.apiUrl}/api/auth/upload` + (folderName ? `?folderName=${folderName}` : '');
+            const req = new HttpRequest('POST', url, formData, {
+                reportProgress: true,
                 responseType: 'json'
             });
-            
-            // Envoie la requête et retournez l'Observable pour la gestion des événements de la requête
+        
             return this.http.request(req);
         }
+        
+          
 
         /**
          * Supprime un fichier d'un contrat

@@ -5,6 +5,7 @@ const router = express.Router();
 const upload = require('../middlewares/uploadMiddleware');
 const authController = require('../controllers/authController');
 const { isAdminOrSuperAdmin, isConnected } = require('../middlewares/authMiddleware');
+const extractFolderName = require('../middlewares/extractFolderName');
 
 console.log('authController', authController);
 
@@ -118,11 +119,11 @@ router.get('/companiesAbbreviations', isConnected, authController.getCompaniesAb
 // route pour récupérer tous les contrats sous la forme d'un stream
 // router.get('/contracts-stream', isAdminOrSuperAdmin, authController.getContractsAsStream);
 
-// Route pour recevoir des fichiers (protégée par le middleware isAdminOrSuperAdmin)
-router.post('/upload', upload.array('files'), isAdminOrSuperAdmin, authController.uploadFiles);
+// Route pour recevoir des fichiers (protégée par le middleware isConnected)
+router.post('/upload', extractFolderName, upload.array('files'), isConnected, authController.uploadFiles);
 
 // Route pour envoyer un fichier (protégée par le middleware isAdminOrSuperAdmin)
-router.get('/download', isAdminOrSuperAdmin, authController.downloadFile);
+router.get('/download', isConnected, authController.downloadFile);
 
 // Route pour supprimer un fichier (protégée par le middleware isAdminOrSuperAdmin)
 router.delete('/deleteFile', isAdminOrSuperAdmin, authController.deleteFile);

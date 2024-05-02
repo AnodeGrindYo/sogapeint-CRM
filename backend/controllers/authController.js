@@ -1421,48 +1421,99 @@ exports.resetPasswordFromAdmin = async (req, res) => {
                 };
                 
                 // Fonction pour uploader des fichiers
-                exports.uploadFiles = async (req, res) => {
+                // exports.uploadFiles = async (req, res) => {
+                //   console.log("Tentative de téléversement de fichiers");
+                //   console.log("Corps de la requête:", req.body);
+                //   console.log("contractId", req.body.contractId);
+                //   console.log("Fichiers:", req.files);
+                  
+                //   if (!req.files || req.files.length === 0) {
+                //     return res.status(400).send("Aucun fichier n'a été téléversé.");
+                //   }
+                  
+                //   // Convertir contractId en ObjectId pour garantir la compatibilité avec MongoDB
+                //   const contractId = req.body.contractId;
+                  
+                //   // Préparer les chemins des fichiers pour être enregistrés dans la base de données
+                //   const filesPaths = req.files.map((file) => ({
+                //     path: file.path,
+                //     name: file.originalname,
+                //     size: file.size,
+                //   }));
+                  
+                //   try {
+                //     const contract = await ContractModel.findByIdAndUpdate(
+                //       contractId,
+                //       { $push: { file: { $each: filesPaths } } }, // Assurez-vous que 'files' correspond au champ dans votre modèle
+                //       { new: true, useFindAndModify: false }
+                //       );
+                      
+                //       if (!contract) {
+                //         console.log("Contrat non trouvé. id: " + contractId);
+                //         return res.status(404).send("Contrat non trouvé. id: " + contractId);
+                //       }
+                      
+                //       console.log("Fichiers téléversés et enregistrés avec succès.");
+                //       res.status(200).send({
+                //         message: "Fichiers téléversés et enregistrés avec succès.",
+                //         files: contract.file,
+                //       });
+                //     } catch (error) {
+                //       console.error("Erreur lors de l'enregistrement des fichiers:", error);
+                //       res.status(500).send(error);
+                //     }
+                //   };
+              exports.uploadFiles = async (req, res) => {
                   console.log("Tentative de téléversement de fichiers");
                   console.log("Corps de la requête:", req.body);
                   console.log("contractId", req.body.contractId);
                   console.log("Fichiers:", req.files);
-                  
+                  // console.log("Dossier de destination:", req.query.folderName);
+              
                   if (!req.files || req.files.length === 0) {
-                    return res.status(400).send("Aucun fichier n'a été téléversé.");
+                      return res.status(400).send("Aucun fichier n'a été téléversé.");
                   }
-                  
-                  // Convertir contractId en ObjectId pour garantir la compatibilité avec MongoDB
+              
                   const contractId = req.body.contractId;
+                  let filesPaths;
                   
-                  // Préparer les chemins des fichiers pour être enregistrés dans la base de données
-                  const filesPaths = req.files.map((file) => ({
-                    path: file.path,
-                    name: file.originalname,
-                    size: file.size,
+                  if (req.query.folderName == "invoices") {
+                      filesPaths = req.files.map((file) => ({
+                        path: file.path, // Chemin incluant le dossier spécifié si applicable
+                        name: 'invoice_'+file.originalname,
+                        size: file.size,
+                    }));
+                  } else {
+                    filesPaths = req.files.map((file) => ({
+                      path: file.path, // Chemin incluant le dossier spécifié si applicable
+                      name: file.originalname,
+                      size: file.size,
                   }));
-                  
+                }
+              
                   try {
-                    const contract = await ContractModel.findByIdAndUpdate(
-                      contractId,
-                      { $push: { file: { $each: filesPaths } } }, // Assurez-vous que 'files' correspond au champ dans votre modèle
-                      { new: true, useFindAndModify: false }
+                      const contract = await ContractModel.findByIdAndUpdate(
+                          contractId,
+                          { $push: { file: { $each: filesPaths } } }, // Assurez-vous que 'file' correspond au champ dans votre modèle
+                          { new: true, useFindAndModify: false }
                       );
-                      
+              
                       if (!contract) {
-                        console.log("Contrat non trouvé. id: " + contractId);
-                        return res.status(404).send("Contrat non trouvé. id: " + contractId);
+                          console.log("Contrat non trouvé. id: " + contractId);
+                          return res.status(404).send("Contrat non trouvé. id: " + contractId);
                       }
-                      
+              
                       console.log("Fichiers téléversés et enregistrés avec succès.");
                       res.status(200).send({
-                        message: "Fichiers téléversés et enregistrés avec succès.",
-                        files: contract.file,
+                          message: "Fichiers téléversés et enregistrés avec succès.",
+                          files: contract.file,
                       });
-                    } catch (error) {
+                  } catch (error) {
                       console.error("Erreur lors de l'enregistrement des fichiers:", error);
                       res.status(500).send(error);
-                    }
-                  };
+                  }
+              };
+              
                   
                   // Fonction pour envoyer un fichier au client
                   exports.downloadFile = async (req, res) => {
