@@ -7,7 +7,7 @@ import { UserProfileService } from 'src/app/core/services/user.service';
 @Component({
   selector: 'app-order-files-management',
   templateUrl: './order-files-management.component.html',
-  styleUrls: ['./order-files-management.component.scss']
+  styleUrls: ['./order-files-management.component.scss', '../order-detail/order-detail.component.scss']
 })
 export class OrderFilesManagementComponent implements OnInit {
   @Input() contractId: string;

@@ -7,7 +7,7 @@ import { UserProfileService } from 'src/app/core/services/user.service';
 @Component({
   selector: 'app-contract-activity',
   templateUrl: './contract-activity.component.html',
-  styleUrls: ['./contract-activity.component.scss']
+  styleUrls: ['./contract-activity.component.scss', '../order-detail/order-detail.component.scss']
 })
 export class ContractActivityComponent implements OnInit {
   @Input() contractId: string;

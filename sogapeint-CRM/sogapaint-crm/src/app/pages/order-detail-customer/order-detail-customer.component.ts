@@ -13,7 +13,7 @@ import { Observable, catchError, map, of, switchMap } from 'rxjs';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail-customer.component.html',
-  styleUrls: ['./order-detail-customer.component.scss']
+  styleUrls: ['./order-detail-customer.component.scss', '../order-detail/order-detail.component.scss']
 })
 export class OrderDetailCustomerComponent implements OnInit {
   breadCrumbItems: Array<{ label: string; url?: string; active?: boolean }> = [
