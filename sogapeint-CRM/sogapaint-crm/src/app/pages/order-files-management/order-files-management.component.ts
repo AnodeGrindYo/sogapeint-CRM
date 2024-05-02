@@ -13,6 +13,7 @@ export class OrderFilesManagementComponent implements OnInit {
   @Input() contractId: string;
   @Input() role: string;
   @Input() isInvoiceMode: boolean = false;
+  @Input() isReadOnly: boolean = false;
   currentUser: any;
   files: File[] = [];
   files_to_upload: File[] = [];
@@ -58,25 +59,29 @@ export class OrderFilesManagementComponent implements OnInit {
   
   onFileDownload(file: any) {
     console.log("Téléchargement du fichier", file);
-    this.contractService.getFile(file._id, this.contractId).subscribe({
-      next: (data) => {
-        console.log("Fichier téléchargé", data);
-        const url = window.URL.createObjectURL(data);
-        window.open(url);
-      },
-      error: (error) => console.error("Erreur lors du téléchargement du fichier", error)
-    });
+    if (!this.isReadOnly){
+      this.contractService.getFile(file._id, this.contractId).subscribe({
+        next: (data) => {
+          console.log("Fichier téléchargé", data);
+          const url = window.URL.createObjectURL(data);
+          window.open(url);
+        },
+        error: (error) => console.error("Erreur lors du téléchargement du fichier", error)
+      });
+    }
   }
   
   removeFile(index: number) {
-    const file = this.files[index];
-    this.contractService.deleteFile(file["_id"], this.contractId).subscribe({
-      next: (data) => {
-        console.log("Fichier supprimé", data);
-        this.files.splice(index, 1);
-      },
-      error: (error) => console.error("Erreur lors de la suppression du fichier", error)
-    });
+    if (!this.isReadOnly) {
+      const file = this.files[index];
+      this.contractService.deleteFile(file["_id"], this.contractId).subscribe({
+        next: (data) => {
+          console.log("Fichier supprimé", data);
+          this.files.splice(index, 1);
+        },
+        error: (error) => console.error("Erreur lors de la suppression du fichier", error)
+      });
+    }
   }
   
   onSelect(event) {
@@ -93,22 +98,24 @@ export class OrderFilesManagementComponent implements OnInit {
   
   uploadFile(files: File[]) {
     console.log("Fichiers à télécharger", files);
-    const folderName = this.isInvoiceMode ? 'invoices' : 'files';  // Simplification de la logique
-  
-    this.contractService.uploadFiles(this.contractId, files, folderName).subscribe(
-      (event) => {
-        if (event instanceof HttpResponse) {
-          console.log("Fichiers complètement uploadés!", event.body);
-          this.loadFiles();  // Recharger les fichiers pour mettre à jour l'affichage
-        } else if (event.type === HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          console.log(`Progression de l'upload: ${percentDone}%`);
+    if (!this.isReadOnly) {
+      const folderName = this.isInvoiceMode ? 'invoices' : 'files';  // Simplification de la logique
+    
+      this.contractService.uploadFiles(this.contractId, files, folderName).subscribe(
+        (event) => {
+          if (event instanceof HttpResponse) {
+            console.log("Fichiers complètement uploadés!", event.body);
+            this.loadFiles();  // Recharger les fichiers pour mettre à jour l'affichage
+          } else if (event.type === HttpEventType.UploadProgress) {
+            const percentDone = Math.round(100 * event.loaded / event.total);
+            console.log(`Progression de l'upload: ${percentDone}%`);
+          }
+        },
+        (error) => {
+          console.error("Erreur lors de l'upload des fichiers", error);
         }
-      },
-      (error) => {
-        console.error("Erreur lors de l'upload des fichiers", error);
-      }
-    );
+      );
+    }
   }
   
   
