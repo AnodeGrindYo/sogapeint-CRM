@@ -37,9 +37,12 @@ export class OrderFilesManagementComponent implements OnInit {
           if (['cocontractor', 'subcontractor'].includes(this.currentUser.role)) {
             // Filtrer pour ne montrer que les fichiers commençant par 'invoice_'
             this.files = data.file.filter(file => file.name.startsWith('invoice_'));
-          } else {
+          } else if (this.currentUser.role === 'superAdmin'){
             // Les superAdmins voient tous les fichiers
             this.files = data.file;
+          } else {
+            // Les autres rôles ne voient que les fichiers qui ne commencent pas par 'invoice_'
+            this.files = data.file.filter(file => !file.name.startsWith('invoice_'));
           }
         } else {
           console.error("Aucun fichier ou mauvais format de données:", data);
