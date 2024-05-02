@@ -11,7 +11,7 @@ import { Observable, catchError, map, of, switchMap } from 'rxjs';
 
 
 @Component({
-  selector: 'app-order-detail',
+  selector: 'app-order-detail-cocontractor',
   templateUrl: './order-detail-cocontractor.component.html',
   styleUrls: ['./order-detail-cocontractor.component.scss']
 })

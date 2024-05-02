@@ -13,13 +13,13 @@
                         <small>{{ activity.dateAdd | date:'short' }}</small>
                         <p>{{ activity.comment }}</p>
                         
-                        <button (click)="deleteActivity(activity._id, activity.type, $event)" class="btn btn-outline-danger">
+                        <button *ngIf="!isReadOnly" (click)="deleteActivity(activity._id, activity.type, $event)" class="btn btn-outline-danger">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
                 </ng-container>
             </div>
-            <form (submit)="addActivity(activityInput.value, typeSelect.value)" class="add-activity-form mt-3">
+            <form *ngIf="!isReadOnly" (submit)="addActivity(activityInput.value, typeSelect.value)" class="add-activity-form mt-3">
                 <select #typeSelect class="form-control"(change)="updatePlaceholder(typeSelect.value)">
                     <option value="Observation">Observation</option>
                     <option value="Incident">Incident</option>

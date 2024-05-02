@@ -12,6 +12,7 @@ import { UserProfileService } from 'src/app/core/services/user.service';
 export class ContractActivityComponent implements OnInit {
   @Input() contractId: string;
   @Input() userId: string;
+  @Input() isReadOnly: boolean = false;
   activities: any[] = [];
   selectedType: string = 'Observation';
   placeholderText: string = 'Ajouter une activité...';
