@@ -1,67 +1,7 @@
-<p>ça fonctionnera quand on me donnera assez de temps</p>
 <div class="container-fluid">
-    <!-- Titre du tableau de bord et fil d'ariane -->
-    <app-pagetitle title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
-    
+    <app-pagetitle title="Tableau de bord" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
     <div class="row">
-        <!-- Colonne de gauche pour KPIs, graphiques, et tableaux -->
-        <div class="col-xl-8">
-            <!-- Widgets de KPI -->
-            <div class="row">
-                <!-- Emplacement pour app-kpi-card -->
-                <!-- <app-kpi-card></app-kpi-card> -->
-                <app-kpi-card></app-kpi-card>
-                <app-kpi-card [selectedKpi]="'totalRevenue'" [selectedPeriod]="'day'"></app-kpi-card>
-                <app-kpi-card [selectedKpi]="'averageRevenue'" [selectedPeriod]="'day'"></app-kpi-card>
-                <!-- Ajoutez d'autres app-kpi-card au besoin -->
-            </div>
-            
-            <!-- Analyse des revenus via graphique -->
-            <!-- Emplacement pour app-chart-card -->
-            <!-- <app-chart-card></app-chart-card> -->
-            
-            <!-- Tableau de transactions récentes -->
-            <!-- Emplacement pour app-table-card -->
-            <!-- <app-table-card></app-table-card> -->
+      <div class="col-xl-8">
+        <div class="row">
+          <app-kpi-card></app-kpi-card>
         </div>
-        
-        <!-- Colonne de droite pour cartes supplémentaires -->
-        <div class="col-xl-4">
-            <!-- Résumé des statistiques -->
-            <!-- Emplacement pour app-stat-summary-card -->
-            <!-- <app-stat-summary-card></app-stat-summary-card> -->
-            
-            <!-- Analytiques des ventes via graphique -->
-            <!-- Emplacement pour app-chart-card spécifique aux ventes -->
-            <!-- <app-chart-card></app-chart-card> -->
-        </div>
-    </div>
-    
-    <div class="row">
-        <!-- Carte pour l'affichage des données géolocalisées -->
-        <div class="col-lg-6">
-            <!-- Emplacement pour app-map-card -->
-            <!-- <app-map-card></app-map-card> -->
-        </div>
-        
-        <!-- Carte pour l'affichage d'un flux d'activités ou événements chronologiques -->
-        <div class="col-lg-6">
-            <!-- Emplacement pour app-timeline-card -->
-            <!-- <app-timeline-card></app-timeline-card> -->
-        </div>
-    </div>
-    
-    <div class="row">
-        <!-- Interaction de chat -->
-        <div class="col-lg-4">
-            <!-- Emplacement pour app-chat-card -->
-            <!-- <app-chat-card></app-chat-card> -->
-        </div>
-        
-        <!-- Sélecteur de dates ou de plages de dates -->
-        <div class="col-lg-8">
-            <!-- Emplacement pour app-picker-card -->
-            <!-- <app-picker-card></app-picker-card> -->
-        </div>
-    </div>
-</div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard.component';
 import { KpiCardComponent } from './kpi-card/kpi-card.component';
 import { ChartCardComponent } from './chart-card/chart-card.component';
@@ -10,7 +11,10 @@ import { StatSummaryCardComponent } from './stat-summary-card/stat-summary-card.
 import { ChatCardComponent } from './chat-card/chat-card.component';
 import { PickerCardComponent } from './picker-card/picker-card.component';
 import { UiModule } from 'src/app/shared/ui/ui.module';
-import { FormsModule } from '@angular/forms';
+// import { FormsModule } from '@angular/forms';
+import { GridsterModule } from 'angular-gridster2';
+import {GridsterComponent, GridsterItemComponent} from 'angular-gridster2';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 
@@ -30,7 +34,12 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     UiModule,
-    FormsModule
+    ReactiveFormsModule,
+    // FormsModule,
+    GridsterModule,
+    GridsterComponent,
+    GridsterItemComponent,
+    NgApexchartsModule
   ]
 })
 export class DashboardModule { }

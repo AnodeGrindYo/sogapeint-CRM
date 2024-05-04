@@ -80,3 +80,9 @@
 .btn-delete i {
     pointer-events: none; /* Prevents the icon from blocking the click event on the button */
 }
+
+.svg-container {
+    display: flex;
+    justify-content: center; // This will center the SVG horizontally
+    // margin-bottom: 10px; // Optional spacing from the bottom
+}

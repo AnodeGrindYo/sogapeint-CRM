@@ -987,7 +987,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         end_date_customer = null,
         trash = false,
         date_cde = null,
-        billing_amount = 0
+        billing_amount = 0,
+        createdBy = null
       } = req.body;
   
       const currentDate = new Date();
@@ -1025,7 +1026,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         date_cde: date_cde ? new Date(date_cde) : new Date(), // Utilise la date actuelle si date_cde est null
         billing_amount,
         dateAdd: dateAdd, // Date d'ajout
-        external_contributor_invoice_date // Date de facturation du contributeur externe
+        external_contributor_invoice_date, // Date de facturation du contributeur externe
+        createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
       });
   
       // Enregistrement du nouveau contrat dans la base de données

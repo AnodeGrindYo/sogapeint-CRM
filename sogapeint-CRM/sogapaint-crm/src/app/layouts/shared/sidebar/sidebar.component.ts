@@ -138,6 +138,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           link: '/dashboard'
         },
         {
+          id: 10,
+          label: 'Dashboard (fake)',
+          icon: 'ri-dashboard-line',
+          link: '/dashboard-fake'
+        },
+        {
           id: 2,
           label: 'Gestion des contacts',
           icon: 'ri-contacts-book-fill',

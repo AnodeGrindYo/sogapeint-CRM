@@ -55,6 +55,7 @@ export class OrderFormComponent implements OnInit {
   users: any[] = [];
   userInput$ = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
+  currentUser: any;
   
   statuses = [
     { name: 'En cours', value: 'in_progress' || null }, // ou une chaîne vide si nécessaire
@@ -91,6 +92,8 @@ export class OrderFormComponent implements OnInit {
     
     ngOnInit(): void {
       this.setupBreadCrumbItems();
+      this.currentUser = this.userProfileService.getCurrentUser();
+      console.log('Utilisateur connecté:', this.currentUser);
       this.initializeOrderForm();
       this.subscribeToFormChanges();
       this.setupUserSearchAndTypeahead();
@@ -526,6 +529,10 @@ export class OrderFormComponent implements OnInit {
             // adds dateUppd and dateAdd (ISO 8601)
             dataForSubmission['dateAdd'] = new Date().toISOString();
             dataForSubmission['dateUppd'] = new Date().toISOString();
+
+            // rajoute un champ createdBy avec l'ID de l'utilisateur connecté
+            dataForSubmission['createdBy'] = this.currentUser.userId;
+            console.log('createdBy:', this.currentUser);
             
             // Log the data to check if it's correctly formatted for submission.
             console.log('Data prepared for submission', dataForSubmission);

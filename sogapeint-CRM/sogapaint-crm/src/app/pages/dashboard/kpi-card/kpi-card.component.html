@@ -1,46 +1,94 @@
-<!-- <p>kpi-card works!</p> -->
-<div class="card kpi-card">
-    <div class="card-header">
-      <div class="row">
-        <div class="col">
-          <select class="form-select" [(ngModel)]="selectedKpi" (change)="onKpiChange()">
-            <option value="totalOrders">Total des commandes</option>
-            <option value="activeOrders">Commandes actives</option>
-            <option value="inactiveOrders">Commandes inactives</option>
-            <option value="completedOrders">Commandes complétées</option>
-            <option value="averageExecutionTime">Temps d'exécution moyen</option>
-            <option value="totalRevenue">Revenu total</option>
-            <option value="averageRevenue">Revenu moyen</option>
-            <option value="ordersByService">Commandes par service</option>
-            <option value="ordersWithIncidents">Commandes avec incidents</option>
-            <option value="mailResponseRate">Taux de réponse aux mails</option>
-            <option value="contributorsEfficiency">Efficacité des contributeurs</option>
-            <option value="occupationRate">Taux d'occupation</option>
-            <option value="averageBillingAmount">Montant moyen de facturation</option>
-            <option value="averageExternalContributorPaymentDelay">Délai de paiement moyen des contributeurs externes</option>
-            <option value="ordersStatusDistribution">Distribution du statut des commandes</option>
-            <option value="customerRenewalRate">Taux de renouvellement des clients</option>
-          </select>
-        </div>
-        <div class="col">
-          <select class="form-select" [(ngModel)]="selectedPeriod" (change)="onPeriodChange()">
-            <option value="day">Jour</option>
-            <option value="week">Semaine</option>
-            <option value="month">Mois</option>
-            <option value="quarter">Trimestre</option>
-            <option value="year">Année</option>
-          </select>
-        </div>
+<div class="bg-white overflow-hidden shadow rounded-lg kpi-card relative">
+  <button class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none"
+            (click)="openSettingsModal(settingsModal)">
+      <i class="fas fa-cog"></i>
+    </button>
+  <div class="px-3 py-2 card-content mt-3">
+    
+    <div class="flex justify-between items-center mb-2">
+      <div>
+        <p class="text-sm font-medium text-gray-500">Nombre de lignes</p>
+        <p class="text-xl font-semibold text-gray-900">1452</p>
       </div>
+      <i class="fas fa-chart-bar text-blue-500 fa-2x"></i>
     </div>
-    <div class="card-body">
-      <h5 class="card-title">{{ selectedKpiName }}</h5>
-      <div class="kpi-value">
-        <span class="kpi-amount">{{ kpiValue | currency:'EUR' }}</span>
-        <span class="kpi-percentage-change" [ngClass]="{ 'text-success': kpiChange >= 0, 'text-danger': kpiChange < 0 }">
-          {{ kpiChange | percent:'1.0-2' }} <span>depuis la période précédente</span>
-        </span>
+    <hr class="my-2 border-gray-300">
+    <div class="flex justify-between items-center">
+      <div class="bg-green-100 text-green-800 px-2 py-1 rounded flex items-center xxs-font">
+        <!-- Icône conditionnelle selon le pourcentage -->
+        <i class="fas" [ngClass]="{'fa-arrow-up': percentage > 0, 'fa-arrow-down': percentage < 0, 'text-green-500': percentage > 0, 'text-red-500': percentage < 0}"></i>
+        <span>{{ percentage | number:'1.1-2' }}%</span>
       </div>
+      <p class="xxs-font text-gray-500">Depuis la période précédente</p>
     </div>
   </div>
-  
+</div>
+
+
+
+<!-- <ng-template #settingsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Paramètres</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="startDate">Date de début:</label>
+        <input type="date" class="form-control" id="startDate" class="form-control" formControlName="startDate">
+      </div>
+      <div class="form-group">
+        <label for="endDate">Date de fin:</label>
+        <input type="date" class="form-control" id="endDate" class="form-control" formControlName="endDate">
+      </div>
+      <div class="form-group">
+        <label for="preset">Présélection:</label>
+        <select class="form-control" id="preset" formControlName="preset">
+          <option value="week">Depuis le début de la semaine</option>
+          <option value="month">Depuis le début du mois</option>
+          <option value="quarter">Depuis le début du trimestre</option>
+          <option value="year">Depuis le début de l'année</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">Fermer</button>
+    <button type="button" class="btn btn-primary">Sauvegarder les changements</button>
+  </div>
+</ng-template> -->
+<ng-template #settingsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Paramètres</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="startDate">Date de début:</label>
+        <input type="date" class="form-control" id="startDate" formControlName="startDate">
+      </div>
+      <div class="form-group">
+        <label for="endDate">Date de fin:</label>
+        <input type="date" class="form-control" id="endDate" formControlName="endDate">
+      </div>
+      <div class="form-group">
+        <label for="preset">Présélection:</label>
+        <select class="form-control" id="preset" formControlName="preset">
+          <option value="week">Depuis le début de la semaine</option>
+          <option value="month">Depuis le début du mois</option>
+          <option value="quarter">Depuis le début du trimestre</option>
+          <option value="year">Depuis le début de l'année</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fermer</button>
+    <button type="button" class="btn btn-primary" (click)="saveSettings()">Sauvegarder les changements</button>
+  </div>
+</ng-template>

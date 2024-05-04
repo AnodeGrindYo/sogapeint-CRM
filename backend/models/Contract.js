@@ -46,7 +46,8 @@ const contractSchema = new mongoose.Schema({
     billing_number: String,
     billing_amount: Number,
     situation_number: Number,
-    occupied: Boolean
+    occupied: Boolean,
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Contract', contractSchema, 'orderforms');

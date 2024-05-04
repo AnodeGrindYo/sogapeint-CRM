@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserProfileService } from 'src/app/core/services/user.service';
 
 
 @Component({
@@ -9,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit{
   breadCrumbItems: Array<{ label: string; url?: string; active?: boolean }> = [];
   pageTitle: string = 'Dashboard';
-
-  constructor() { }
-
-  ngOnInit(): void {
+  
+  
+  constructor(
+    private userProfileService: UserProfileService
+  ) {
+    
   }
+  
+  ngOnInit(): void {
+    this.breadCrumbItems = [{ label: 'Sogapeint' }, { label: this.pageTitle, active: true }];
+  }
+  
+  
 }
