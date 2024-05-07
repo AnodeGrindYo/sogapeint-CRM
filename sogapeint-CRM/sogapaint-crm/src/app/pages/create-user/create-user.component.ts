@@ -41,6 +41,7 @@ export class CreateUserComponent implements OnInit {
   public successMessage: string;
   public errorMessage: string;
   confirmationModal: any;
+  companyCheckList: any[];
   
   
   constructor(
@@ -111,29 +112,11 @@ export class CreateUserComponent implements OnInit {
       onSubmit(): void {
         if (this.userForm.valid) {
           // // Recherche si l'entreprise existe dans la liste des entreprises
-          const companyExists = this.companies.includes(this.userForm.get('company').value);
-          if (!companyExists) {
-            console.log('Création d\'une nouvelle entreprise');
-            // Normalise le nom de l'entreprise
-            const normalized_name = this.normalizeCompanyName(this.userForm.get('company').value);
-            console.log('Nom normalisé de l\'entreprise:', normalized_name);
-            // ajoute la nouvelle entreprise et log le retours du backend
-            this.companyService.createCompany({"normalized_name": normalized_name}).subscribe({
-              next: (data: any) => {
-                console.log('Entreprise créée avec succès:', data);
-                this.successMessage = 'Entreprise créée avec succès';
-                // Rediriger l'utilisateur vers la page de gestion des entreprises
-                // this.router.navigate(['/company-detail/'+data.companyId])
-              },
-              error: (error) => {
-                console.error('Erreur lors de la création de l\'entreprise:', error);
-                this.errorMessage = 'Erreur lors de la création de l\'entreprise : '+error;
-              },
-              complete: () => {
-                console.log('Création de l\'entreprise terminée');
-              }
-            });
-          }
+          // const companyExists = this.companies.includes(this.userForm.get('company').value);
+          const inputValue = this.userForm.get('company').value;
+          // Vérifie si la valeur saisie n'est pas vide et n'est pas déjà dans la liste des entreprises
+
+          
           // Crée un user à partir des données du formulaire
           const user: User = {
             firstName: this.userForm.get('firstName').value,
@@ -237,6 +220,24 @@ export class CreateUserComponent implements OnInit {
       filterCompanies(val: string): Observable<any[]> {
         return this.companyService.searchCompanies(val);
       }
+
+      /**
+       * Vérifie si l'entreprise existe déjà dans la liste des entreprises.
+       */
+      async companyExists(companyName: string): Promise<boolean> {
+        try {
+            const data = await this.companyService.searchCompanies(companyName).toPromise();
+            console.log("data : ", data);
+            this.companyCheckList = data || [];
+            console.log("company exists : ", this.companyCheckList.length > 0);
+            return this.companyCheckList.length > 0;
+        } catch (err) {
+            console.error('Error searching companies:', err);
+            this.companyCheckList = [];
+            return false;
+        }
+    }
+    
       
       /**
       * Ajoute une nouvelle entreprise à la liste des entreprises si elle n'existe pas déjà.
@@ -245,15 +246,46 @@ export class CreateUserComponent implements OnInit {
       * le nom d'une nouvelle entreprise dans le formulaire.
       * @param event L'événement de saisie dans le champ de recherche.
       */
-      onCompanyInputBlur(event: any): void {
+      async onCompanyInputBlur(event: any): Promise<void> {
         console.log("onCompanyInputBlur");
-        const inputValue = event.target.value;
-        if (inputValue && !this.companies.includes(inputValue)) {
+        this.companyExists(this.userForm.get('company').value);
+        const inputValue = this.userForm.get('company').value;
+        const normalizedInputValue = this.normalizeCompanyName(inputValue);
+        // Vérifie si la valeur saisie n'est pas vide et n'est pas déjà dans la liste des entreprises
+        const companyExists = await this.companyExists(normalizedInputValue);
+        // vérifie si la valeur saisie est déjà dans la liste des entreprises
+        // if (inputValue && !normalizedCompanies.includes(normalizedInputValue)) {
+        //   // Ajoute inputValue à la liste des entreprises
+        //   this.companies = [...this.companies, inputValue];
+        //   // S'assure que la valeur est sélectionnée
+        //   this.userForm.get('company').setValue(inputValue);
+        // }
+        // if (inputValue && !this.companies.includes(inputValue)) {
+        if (inputValue && companyExists === false) {
           // Ajoute inputValue à la liste des entreprises
           this.companies = [...this.companies, inputValue];
           // S'assure que la valeur est sélectionnée
           this.userForm.get('company').setValue(inputValue);
+
+          // création de l'entreprise si elle n'existe pas
+          console.log('Création d\'une nouvelle entreprise');
+          this.companyService.createCompany({"normalized_name": normalizedInputValue}).subscribe({
+            next: (data: any) => {
+              console.log('Entreprise créée avec succès:', data);
+              this.successMessage = 'Entreprise créée avec succès';
+              // Rediriger l'utilisateur vers la page de gestion des entreprises
+              // this.router.navigate(['/company-detail/'+data.companyId])
+            },
+            error: (error) => {
+              console.error('Erreur lors de la création de l\'entreprise:', error);
+              this.errorMessage = 'Erreur lors de la création de l\'entreprise : '+error;
+            },
+            complete: () => {
+              console.log('Création de l\'entreprise terminée');
+            }
+          });
         }
+        
       }
       
       /**
