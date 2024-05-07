@@ -72,6 +72,8 @@
 
 const ContractModel = require('../models/Contract');
 const mongoose = require('mongoose');
+const moment = require('moment-business-days'); // cette dépendance gère les calculs de temps pour les jours ouvrables
+moment.updateLocale('fr', { workingWeekdays: [1, 2, 3, 4, 5] });
 
 // Fonction pour calculer le nombre total de commandes
 exports.getTotalOrders = async (req, res, next) => {
@@ -610,4 +612,252 @@ exports.getCustomerRenewalRate = async (req, res, next) => {
         next(error);
     }
 };
+
+// Fonction pour obtenir le nombre de commandes crées par un utilisateur entre dateStart et dateEnd.
+// Pour savoir qui a créé une commande, dans la collection orderforms il y a un champ createdBy qui contient
+// l'id de l'utilisateur qui a créé la commande.
+exports.getOrderAmount = async (req, res, next) => {
+  const { userId, dateStart, dateEnd } = req.query;
+  console.log("getOrderAmount -> userId", userId);
+  console.log("getOrderAmount -> dateStart", dateStart);
+  console.log("getOrderAmount -> dateEnd", dateEnd);
+
+  try {
+    // Convertir les chaînes de dates en objets moment.js
+    const startDate = moment(dateStart);
+    const endDate = moment(dateEnd);
+
+    // Calculer le nombre de jours ouvrés dans la période actuelle
+    const numDaysCurrent = endDate.businessDiff(startDate);
+
+    // Calculer les dates de début et de fin de la période précédente
+    const lastPeriodEnd = startDate.businessSubtract(1);
+    const lastPeriodStart = lastPeriodEnd.businessSubtract(numDaysCurrent);
+    console.log("getOrderAmount -> lastPeriodStart", lastPeriodStart);
+    console.log("getOrderAmount -> lastPeriodEnd", lastPeriodEnd);
+
+    // Compter les commandes pour la période actuelle
+    const countCurrentPeriod = await ContractModel.countDocuments({
+      createdBy: userId,
+      dateAdd: { $gte: startDate.toDate(), $lte: endDate.toDate() }
+    });
+
+    // Compter les commandes pour la période précédente
+    const countLastPeriod = await ContractModel.countDocuments({
+      createdBy: userId,
+      dateAdd: { $gte: lastPeriodStart.toDate(), $lte: lastPeriodEnd.toDate() }
+    });
+
+    // Calculer l'évolution en pourcentage
+    const evolution = countLastPeriod === 0 ? 'N/A' : (((countCurrentPeriod - countLastPeriod) / countLastPeriod) * 100).toFixed(2);
+
+    // Formatage du signe de l'évolution
+    const formattedEvolution = `${evolution >= 0 ? '+' : ''}${evolution}%`;
+
+    res.status(200).json({
+      success: true,
+      message: 'Informations sur le nombre de commandes récupérées avec succès',
+      data: {
+        amount_current_period: countCurrentPeriod,
+        amount_last_period: countLastPeriod,
+        evolution: formattedEvolution
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la récupération des informations',
+      error: error.message
+    });
+  }
+};
+
+
+// Fonction pour obtenir le nombre de commandes pour le mois courant et le mois précédent, ainsi que l'évolution en pourcentage
+exports.getOrderAmountThisMonth = async (req, res, next) => {
+  const { userId } = req.query;  // userId doit être passé en paramètre
+
+  try {
+    const today = moment();  // Aujourd'hui
+    const startOfCurrentMonth = today.clone().startOf('month');  // Début du mois courant
+    const endOfLastMonth = startOfCurrentMonth.clone().subtract(1, 'second');  // Fin du mois dernier
+    const startOfLastMonth = endOfLastMonth.clone().startOf('month');  // Début du mois dernier
+
+    // Compter les commandes pour le mois courant
+    const countCurrentMonth = await ContractModel.countDocuments({
+      createdBy: userId,
+      dateAdd: {
+        $gte: startOfCurrentMonth.toDate(),
+        $lte: today.toDate()
+      }
+    });
+
+    // Compter les commandes pour le mois précédent
+    const countLastMonth = await ContractModel.countDocuments({
+      createdBy: userId,
+      dateAdd: {
+        $gte: startOfLastMonth.toDate(),
+        $lte: endOfLastMonth.toDate()
+      }
+    });
+
+    // Calculer l'évolution en pourcentage
+    let evolution;
+    if (countLastMonth === 0) {
+      evolution = countCurrentMonth === 0 ? 'N/A' : 'New';
+    } else {
+      evolution = (((countCurrentMonth - countLastMonth) / countLastMonth) * 100).toFixed(2);
+      evolution = `${evolution >= 0 ? '+' : ''}${evolution}%`;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Informations sur le nombre de commandes récupérées avec succès',
+      data: {
+        amount_this_month: countCurrentMonth,
+        amount_last_month: countLastMonth,
+        evolution: evolution
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la récupération des informations',
+      error: error.message
+    });
+  }
+};
+
+// Fonction pour obtenir le montant moyen des commandes sur la période donnée, la précédente prériode (en jours ouvrés) et l'évolution en pourcentage
+// exports.getAverageOrderAmount = async (req, res, next) => {
+//   const { userId, dateStart, dateEnd } = req.query; // Ces dates doivent être fournies au format YYYY-MM-DD
+//   console.log("getAverageOrderAmount -> userId", userId);
+//   console.log("getAverageOrderAmount -> dateStart", dateStart);
+//   console.log("getAverageOrderAmount -> dateEnd", dateEnd);
+//   try {
+//     // Configurer moment pour utiliser les jours ouvrés, définir les jours ouvrés selon votre localisation si nécessaire
+//     moment.updateLocale('fr', { workingWeekdays: [1, 2, 3, 4, 5] });
+
+//     // Convertir les chaînes de dates en objets moment.js en tenant compte des jours ouvrés
+//     const startDate = moment(dateStart).startOf('day');
+//     const endDate = moment(dateEnd).endOf('day');
+//     const numDaysCurrent = endDate.businessDiff(startDate);
+//     console.log("numDaysCurrent", numDaysCurrent);
+
+//     // Calculer les dates de début et de fin pour la période précédente
+//     const lastPeriodEnd = startDate.businessSubtract(1);
+//     const lastPeriodStart = lastPeriodEnd.clone().businessSubtract(numDaysCurrent - 1);
+//     console.log("lastPeriodStart", lastPeriodStart);
+//     console.log("lastPeriodEnd", lastPeriodEnd);
+
+//     // Agrégation pour calculer le montant moyen pour la période actuelle
+//     const avgCurrentPeriod = await ContractModel.aggregate([
+//       { $match: {
+//           createdBy: userId,
+//           dateAdd: { $gte: startDate.toDate(), $lte: endDate.toDate() }
+//         }
+//       },
+//       { $group: {
+//           _id: null,
+//           averageAmount: { $avg: "$billing_amount" }
+//         }
+//       }
+//     ]);
+
+//     // Agrégation pour calculer le montant moyen pour la période précédente
+//     const avgLastPeriod = await ContractModel.aggregate([
+//       { $match: {
+//           createdBy: userId,
+//           dateAdd: { $gte: lastPeriodStart.toDate(), $lte: lastPeriodEnd.toDate() }
+//         }
+//       },
+//       { $group: {
+//           _id: null,
+//           averageAmount: { $avg: "$billing_amount" }
+//         }
+//       }
+//     ]);
+
+//     // Extraire les valeurs moyennes
+//     const averageCurrent = avgCurrentPeriod.length > 0 ? avgCurrentPeriod[0].averageAmount : 0;
+//     const averageLast = avgLastPeriod.length > 0 ? avgLastPeriod[0].averageAmount : 0;
+
+//     // Calculer l'évolution en pourcentage
+//     let evolution = averageLast === 0 ? 'N/A' : (((averageCurrent - averageLast) / averageLast) * 100).toFixed(2);
+//     evolution = `${evolution >= 0 ? '+' : ''}${evolution}%`;
+
+//     res.status(200).json({
+//       success: true,
+//       message: 'Moyenne des montants des commandes récupérée avec succès',
+//       data: {
+//         average_amount_current_period: averageCurrent,
+//         average_amount_last_period: averageLast,
+//         evolution: evolution
+//       }
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: 'Erreur lors de la récupération des moyennes des montants des commandes',
+//       error: error.message
+//     });
+//   }
+// };
+exports.getAverageOrderAmount = async (req, res, next) => {
+  const { userId } = req.query; // Assumer que userId est passé en tant que paramètre de requête
+
+  try {
+    // Configurer les jours ouvrés si nécessaire
+    moment.updateLocale('fr', { workingWeekdays: [1, 2, 3, 4, 5] });
+
+    // Déterminer les périodes: mois actuel et le mois dernier
+    const startOfCurrentMonth = moment().startOf('month');
+    const startOfLastMonth = moment().subtract(1, 'month').startOf('month');
+    const endOfLastMonth = startOfCurrentMonth.clone().subtract(1, 'second');
+
+    // affiche le montant de chaque commande (champ amount_ht)
+    const amountCurrentMonth = await ContractModel.find({
+      createdBy: userId,
+      dateAdd: { $gte: startOfCurrentMonth.toDate(), $lt: moment().toDate() }
+    }, { amount_ht: 1 });
+    amountCurrentMonth.forEach((order) => {
+      console.log("amountCurrentMonth", order.amount_ht);
+    });
+    averageAmountCurrentMonth = amountCurrentMonth.reduce((acc, order) => acc + order.amount_ht, 0);
+    console.log("averageAmountCurrentMonth", averageAmountCurrentMonth);
+
+    // affiche le montant de chaque commande (champ amount_ht)
+    const amountLastMonth = await ContractModel.find({
+      createdBy: userId,
+      dateAdd: { $gte: startOfLastMonth.toDate(), $lt: endOfLastMonth.toDate() }
+    }, { amount_ht: 1 });
+    amountLastMonth.forEach((order) => {
+      console.log("amountLastMonth", order.amount_ht);
+    });
+    averageAmountLastMonth = amountLastMonth.reduce((acc, order) => acc + order.amount_ht, 0);
+    console.log("averageAmountLastMonth", averageAmountLastMonth);
+
+    // Calcul de l'évolution en pourcentage
+    let evolutionPercent = averageAmountLastMonth === 0 ? 'N/A' : (((averageAmountCurrentMonth - averageAmountLastMonth) / averageAmountLastMonth) * 100).toFixed(2);
+    console.log("evolutionPercent", evolutionPercent);
+
+
+    res.status(200).json({
+      success: true,
+      message: 'Moyenne des montants des commandes récupérée avec succès',
+      data: {
+        average_amount_current_period: averageAmountCurrentMonth,
+        average_amount_last_period: averageAmountLastMonth,
+        evolution: evolutionPercent
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la récupération des moyennes des montants des commandes',
+      error: error.message
+    });
+  }
+};
+
 

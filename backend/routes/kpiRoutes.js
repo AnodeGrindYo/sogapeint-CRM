@@ -47,5 +47,7 @@ router.get('/averageBillingAmount', kpiController.getAverageBillingAmount);
 router.get('/averageExternalContributorPaymentDelay', kpiController.getAverageExternalContributorPaymentDelay);
 router.get('/ordersStatusDistribution', kpiController.getOrdersStatusDistribution);
 router.get('/customerRenewalRate', kpiController.getCustomerRenewalRate);
-
+router.get('/order-amount', kpiController.getOrderAmount);
+router.get('/order-amount-this-month', kpiController.getOrderAmountThisMonth);
+router.get('/average-order-amount', kpiController.getAverageOrderAmount);
 module.exports = router;

@@ -3,5 +3,16 @@
     <div class="row">
       <div class="col-xl-8">
         <div class="row">
-          <app-kpi-card></app-kpi-card>
+          <div class="col-xl-4">
+            <app-kpi-card [mode]="'nb_lines_today'"></app-kpi-card>
+          </div>
+          <div class="col-xl-4">
+            <app-kpi-card [mode]="'nb_orders_from_last_month'"></app-kpi-card>
+          </div>
+          <div class="col-xl-4">
+            <app-kpi-card [mode]="'avg_order_amount'"></app-kpi-card>
+          </div>
         </div>
+      </div>
+    </div>
+</div>

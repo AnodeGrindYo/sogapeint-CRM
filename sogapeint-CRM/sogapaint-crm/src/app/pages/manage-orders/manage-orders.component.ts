@@ -157,7 +157,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
           if (this.currentUser.role === "superAdmin") {
             this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
             this.filteredOrders.push(contract);
-          } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
+          } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor" || this.currentUser.role === "supermanager") {
             // filtre les contrats pour les co-traitants et sous-traitants : ils ne peuvent voir que les contrats où leur entreprise est impliquée
             // console.log("coContractor/subcontractor contract :", contract);
             const user_company = this.normalizeString(this.currentUser.company);
@@ -165,7 +165,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
               this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
               this.filteredOrders.push(contract);
             }
-          } else if (this.currentUser.role === "customer") {
+          } else if (this.currentUser.role === "customer" || this.currentUser.role === "comanager") {
             if (this.currentUser.firstName.toLowerCase() == contract.customer.firstname.toLowerCase() && this.currentUser.lastName.toLowerCase() == contract.customer.lastname.toLowerCase()){
               this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
               this.filteredOrders.push(contract);

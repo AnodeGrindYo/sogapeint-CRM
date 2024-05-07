@@ -993,7 +993,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   
       const currentDate = new Date();
       const dateAdd = currentDate; // Date d'ajout est la date actuelle
-      const external_contributor_invoice_date = new Date(currentDate.setDate(currentDate.getDate() + 2)); // Fixer la date de facturation à deux jours après la date d'ajout
+      const external_contributor_invoice_date = new Date();
+      external_contributor_invoice_date.setDate(currentDate.getDate() + 2); // Fixer la date de facturation à deux jours après la date d'ajout
   
       // Création d'un nouveau contrat avec les champs adaptés
       const newContract = new ContractModel({
