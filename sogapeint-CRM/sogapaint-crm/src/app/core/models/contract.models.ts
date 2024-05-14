@@ -17,6 +17,7 @@ export class Contract {
     __v: number;
     address: string;
     appartment_number: string;
+    ss4: boolean;
     quote_number: string;
     mail_sended: boolean;
     invoice_number: string;
@@ -38,7 +39,13 @@ export class Contract {
     billing_amount: number | null;
     situation_number: number;
     occupied: boolean | null;
-    
+    createdBy: string | null;
+    modifiedBy: [
+        {
+            user: string;
+            date: Date;
+        }
+    ]
     constructor() {
         // Initialiser les valeurs par défaut ici si nécessaire
     }

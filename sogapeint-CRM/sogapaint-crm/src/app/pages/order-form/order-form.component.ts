@@ -27,6 +27,7 @@ export class OrderFormComponent implements OnInit {
     subcontractor: '', // Nouveau champ ajouté
     address: '',
     appartmentNumber: '',
+    ss4: false,
     quoteNumber: '',
     mailSended: false,
     invoiceNumber: '',
@@ -132,6 +133,7 @@ export class OrderFormComponent implements OnInit {
         subcontractor: new FormControl(this.contractData.subcontractor),
         address: new FormControl(this.contractData.address),
         appartmentNumber: new FormControl(this.contractData.appartmentNumber),
+        ss4: new FormControl(this.contractData.ss4),
         quoteNumber: new FormControl(this.contractData.quoteNumber),
         mailSended: new FormControl(this.contractData.mailSended),
         invoiceNumber: new FormControl(this.contractData.invoiceNumber),
@@ -512,6 +514,7 @@ export class OrderFormComponent implements OnInit {
             // Convertit les valeurs booléennes et numériques si nécessaire.
             dataForSubmission['mail_sended'] = this.convertToBoolean(dataForSubmission['mail_sended']);
             dataForSubmission['occupied'] = this.convertToBoolean(dataForSubmission['occupied']);
+            dataForSubmission['ss4'] = this.convertToBoolean(dataForSubmission['ss4']);
             dataForSubmission['trash'] = this.convertToBoolean(dataForSubmission['trash']);
             dataForSubmission['amount_ht'] = this.convertToNumber(dataForSubmission['amount_ht']);
             dataForSubmission['benefit_ht'] = this.convertToNumber(dataForSubmission['benefit_ht']);
@@ -532,7 +535,7 @@ export class OrderFormComponent implements OnInit {
 
             // rajoute un champ createdBy avec l'ID de l'utilisateur connecté
             dataForSubmission['createdBy'] = this.currentUser.userId;
-            console.log('createdBy:', this.currentUser);
+            console.log('createdBy:', this.currentUser.userId);
             
             // Log the data to check if it's correctly formatted for submission.
             console.log('Data prepared for submission', dataForSubmission);

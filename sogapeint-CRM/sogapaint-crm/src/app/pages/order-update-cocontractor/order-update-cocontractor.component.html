@@ -172,6 +172,17 @@
                   [readOnly]="true"
                 >
               </div>
+              <!-- cas à cocher 'SS4' readonly -->
+              <div class="mb-3">
+                <label for="ss4" class="form-label">SS4</label>
+                <input 
+                  type="checkbox" 
+                  class="form-check-input" 
+                  id="ss4" 
+                  formControlName="ss4"
+                  [readOnly]="true"
+                >
+                </div>
             </div>
           </div>
         </div>
@@ -229,7 +240,7 @@
                 >
               </div>
               <div class="mb-3">
-                <label for="external_contributor_amount" class="form-label">Montant co-traitant</label>
+                <label for="external_contributor_amount" class="form-label">Montant co-traitant/sous-traitant</label>
                 <input 
                   type="number" 
                   class="form-control" 
@@ -250,7 +261,7 @@
                   [readOnly]="true"
                 >
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label for="subcontractor_amount" class="form-label">Montant sous-traitant</label>
                 <input 
                   type="number" 
@@ -260,7 +271,7 @@
                   (keydown)="onAlphaInput($event)"
                   [readOnly]="true"
                 >
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

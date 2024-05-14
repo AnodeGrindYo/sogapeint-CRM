@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détails de la Commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e2e2e2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            color: black;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            color: black;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #333333;
+        }
+        .amount {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .details {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://www.sogapeint.fr/apps/uploads/2019/10/logo.png" alt="Logo Sogapeint" style="max-height: 60px;">
+        </div>
+        <div class="content">
+            <h3>Détails de votre commande</h3>
+            <p>Bonjour,</p>
+            <p>Veuillez trouver ci-dessous les détails de la commande que vous avez passée avec nous.</p>
+            <table>
+                <tr>
+                    <th>Numéro Interne</th>
+                    <td>{{contract.internal_number}}</td>
+                </tr>
+                <tr>
+                    <th>Date de Commande</th>
+                    <td>{{contract.date_cde}}</td>
+                </tr>
+                <tr>
+                    <th>Client</th>
+                    <td>{{customer.firstname}} {{customer.lastname}}</td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td>{{contact.firstname}} {{contact.lastname}}</td>
+                </tr>
+                <tr>
+                    <th>Prestation</th>
+                    <td>{{benefit_name}}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>{{contract.status}}</td>
+                </tr>
+                <tr>
+                    <th>Adresse</th>
+                    <td>{{contract.address}}</td>
+                </tr>
+                <tr>
+                    <th>N° Appartement</th>
+                    <td>{{contract.appartment_number}}</td>
+                </tr>
+                <tr>
+                    <th>Occupé</th>
+                    <td>{{contract.occupied}}</td>
+                </tr>
+            </table>
+            <p class="details">Merci de vérifier que toutes les informations sont correctes. Contactez notre service client pour toute modification nécessaire.</p>
+        </div>
+        <div class="footer">
+            Cordialement,<br>
+            L'équipe Sogapeint<br>
+            <!-- <a href="https://www.sogapeint.fr" class="button">Visitez notre site web</a> -->
+            <a href="{{CRM_URL}}" class="button">Visitez l'application web Sogapeint</a>
+            <p>Si vous avez des questions, veuillez contacter notre support.</p>
+            &copy; Sogapeint, Tous droits réservés.
+        </div>
+    </div>
+</body>
+</html>

@@ -24,6 +24,7 @@ const contractSchema = new mongoose.Schema({
     __v: Number,
     address: String,
     appartment_number: String,
+    ss4: Boolean,
     quote_number: String,
     mail_sended: Boolean,
     invoice_number: String,
@@ -47,7 +48,13 @@ const contractSchema = new mongoose.Schema({
     billing_amount: Number,
     situation_number: Number,
     occupied: Boolean,
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    modifiedBy: [
+        {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+            date: Date
+        }
+    ] // tableau d'ObjectId d'Users avec horodatage
 });
 
 module.exports = mongoose.model('Contract', contractSchema, 'orderforms');

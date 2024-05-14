@@ -327,6 +327,7 @@ export class OrderUpdateComponent implements OnInit {
       subcontractor: new FormControl(""),
       address: new FormControl(""),
       appartment_number: new FormControl(""),
+      ss4: new FormControl(""),
       quote_number: new FormControl(""),
       mail_sended: new FormControl(""),
       invoice_number: new FormControl(""),
@@ -580,6 +581,8 @@ export class OrderUpdateComponent implements OnInit {
     data.start_date_works = new Date(data.start_date_works).toLocaleDateString("fr-CA");
     // convertit end_date_works en dd/mm/yyyy
     data.end_date_works = new Date(data.end_date_works).toLocaleDateString("fr-CA");
+    // rajoute une entrée {user: _id, date: date} dans modifiedBy
+    data.modifiedBy.append({ user: this.currentUser.userId, date: new Date() });
     return data;
   }
 

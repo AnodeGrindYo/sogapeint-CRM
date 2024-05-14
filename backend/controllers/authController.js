@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const benefit = require('../models/benefit');
+const Benefit = require('../models/benefit');
 const CompanyModel = require('../models/Company');
 const ContractModel = require('../models/Contract');
 const Observation = require('../models/observation');
@@ -14,6 +15,8 @@ const crypto = require('crypto');
 const upload = require('../middlewares/uploadMiddleware');
 const multer = require('multer');
 const fs = require('fs');
+const schedule = require('node-schedule');
+
 
 // Le middleware multer pour gérer le téléversement
 const uploadMiddleware = upload.array('files'); // 'files' est le nom du champ dans le formulaire
@@ -970,6 +973,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         subcontractor_amount = 0,
         address = '',
         appartment_number = '',
+        ss4 = false,
         quote_number = '',
         mail_sended = false,
         invoice_number = '',
@@ -1008,6 +1012,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         subcontractor_amount,
         address,
         appartment_number,
+        ss4,
         quote_number,
         mail_sended,
         invoice_number,
@@ -1033,6 +1038,72 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   
       // Enregistrement du nouveau contrat dans la base de données
       await newContract.save();
+
+      /////////EMAIL PART//////////////////
+
+      // Define getStatus within the scope of addContract
+      const getStatus = (status) => {
+        const statusDict = {
+            'in_progress': 'En cours',
+            'null': 'En cours',
+            null: 'En cours',
+            'achieve': 'Réalisé',
+            'canceled': 'Annulé',
+            'invoiced': 'Facturé',
+            'anomaly': 'Anomalie'
+        };
+        return statusDict[status] || 'Status inconnu';
+      };
+
+      // Define the future date (two days later)
+      const futureDate = new Date();
+      // futureDate.setDate(new Date().getDate() + 2); // décommenter
+      futureDate.setMinutes(futureDate.getMinutes() + 1); // à commenter
+
+      // Fetch customer and external_contributor details
+      const customerDetails = await User.findById(newContract.customer);
+      const externalContributorDetails = await User.findById(newContract.external_contributor);
+      const contactDetails = await User.findById(newContract.contact);
+      const formattedDate = newContract.date_cde ? new Date(newContract.date_cde).toISOString().split('T')[0] : 'Aucune date fournie';
+      const occupiedText = newContract.occupied ? 'Oui' : 'Non';
+      const statusText = getStatus(newContract.status);
+      const benefitDetails = await Benefit.findById(newContract.benefit).exec();
+      const benefitName = benefitDetails ? benefitDetails.name : 'Prestation inconnue';
+
+
+      const replacements = {
+        'contract.internal_number': newContract.internal_number || '',
+        'contract.date_cde': formattedDate,
+        'customer.firstname': customerDetails.firstname || '',
+        'customer.lastname': customerDetails.lastname || '',
+        'contact.firstname': contactDetails ? contactDetails.firstname : '',
+        'contact.lastname': contactDetails ? contactDetails.lastname : '',
+        'benefit_name': benefitName,
+        'contract.status': statusText,
+        'contract.address': newContract.address || '',
+        'contract.appartment_number': newContract.appartment_number || '',
+        'contract.occupied': occupiedText,
+        'CRM_URL': process.env.CRM_URL
+    };
+
+      // Schedule email sending two days later for the customer
+      if (customerDetails && customerDetails.email) {
+          await scheduleEmailToContributor(
+            customerDetails.email,
+            replacements,
+            futureDate
+          );
+      }
+
+      // Schedule email sending two days later for the external contributor
+      if (externalContributorDetails && externalContributorDetails.email) {
+          await scheduleEmailToContributor(
+            externalContributorDetails.email,
+            replacements,
+            futureDate
+          );
+      }
+      /////////EMAIL PART////////////////////
   
       // Réponse indiquant la réussite de l'ajout du contrat
       res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id, contract: newContract});
