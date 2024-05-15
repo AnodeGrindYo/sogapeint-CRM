@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard.component';
@@ -15,6 +15,7 @@ import { UiModule } from 'src/app/shared/ui/ui.module';
 import { GridsterModule } from 'angular-gridster2';
 import {GridsterComponent, GridsterItemComponent} from 'angular-gridster2';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { DonutCardComponent } from './donut-card/donut-card.component';
 
 
 
@@ -29,7 +30,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     TimelineCardComponent,
     StatSummaryCardComponent,
     ChatCardComponent,
-    PickerCardComponent
+    PickerCardComponent,
+    DonutCardComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     GridsterComponent,
     GridsterItemComponent,
     NgApexchartsModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DashboardModule { }
 

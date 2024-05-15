@@ -22,7 +22,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { IconsModule } from './icons/icons.module';
 
-import { NgApexchartsModule } from 'ng-apexcharts';
+// import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 import { ManageUsersComponent } from './manage-users/manage-users.component';
@@ -96,7 +96,7 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
     NgScrollbarModule, 
     IconsModule,
     HttpClientModule,
-    NgApexchartsModule,
+    // NgApexchartsModule,
     DashboardModule,
     WidgetModule,
     NgScrollbarModule,
