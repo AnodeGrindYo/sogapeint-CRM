@@ -83,6 +83,9 @@ router.delete('/company/:companyId', isAdminOrSuperAdmin, authController.deleteC
 // Route pour obtenir la liste de tous les contrats
 router.get('/contracts', isConnected, authController.getContracts);
 
+// Route pour obtenir la liste de tous les contrats pour un mois donné, pour l'année en cours
+router.get('/contractsByMonth', isConnected, authController.getContractsByMonth);
+
 // Route pour obtenir un contrat (protégée par le middleware)
 router.get('/contract/:contractId', isConnected, authController.getContractById);
 

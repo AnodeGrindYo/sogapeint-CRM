@@ -610,6 +610,64 @@ exports.resetPasswordFromAdmin = async (req, res) => {
       console.error('Erreur lors de la récupération des contrats:', error);
     }
   };
+
+  // Fonction pour obtenir la liste de tous les contrats pour un mois donné, pour l'année en cours
+  exports.getContractsByMonth = async (req, res) => {
+    try {
+        const { month } = req.query; // Supposons que le mois est passé en paramètre de requête
+        const currentYear = new Date().getFullYear();
+
+        // Vérification et conversion des valeurs de mois
+        const monthNumber = parseInt(month, 10);
+        if (isNaN(monthNumber) || monthNumber < 1 || monthNumber > 12) {
+            return res.status(400).send({ message: "Le mois spécifié est invalide" });
+        }
+
+        // Construction des dates de début et de fin pour le mois donné de l'année en cours
+        const startDate = new Date(currentYear, monthNumber - 1, 1);
+        const endDate = new Date(currentYear, monthNumber, 0, 23, 59, 59);
+
+        // Récupération des contrats pour le mois donné
+        const contracts = await ContractModel.find({
+            dateAdd: {
+                $gte: startDate,
+                $lt: endDate
+            }
+        })
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+        .populate('subcontractor');
+
+        // Suppression des mots de passe et du sel pour chaque utilisateur
+        contracts.forEach(contract => {
+            if (contract.customer) {
+                contract.customer.password = undefined;
+                contract.customer.salt = undefined;
+            }
+            if (contract.contact) {
+                contract.contact.password = undefined;
+                contract.contact.salt = undefined;
+            }
+            if (contract.external_contributor) {
+                contract.external_contributor.password = undefined;
+                contract.external_contributor.salt = undefined;
+            }
+            if (contract.subcontractor) {
+                contract.subcontractor.password = undefined;
+                contract.subcontractor.salt = undefined;
+            }
+        });
+
+        res.json(contracts);
+    } catch (error) {
+        res.status(500).send({ message: "Erreur lors de la récupération des contrats pour le mois donné", error });
+        console.error('Erreur lors de la récupération des contrats pour le mois donné:', error);
+    }
+};
+
+
+  
   
   // Fonction pour obtenir uniquement les contrats avec un statut "En cours"
   exports.getOngoingContracts = async (req, res) => {
@@ -959,6 +1017,159 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   //     res.status(500).json({ error: error.message });
   //   }
   // };
+  // exports.addContract = async (req, res) => {
+  //   try {
+  //     // Destructuration avec des valeurs par défaut pour éviter les valeurs undefined
+  //     const {
+  //       internal_number = '',
+  //       customer = null,
+  //       contact = null,
+  //       internal_contributor = null,
+  //       external_contributor = null,
+  //       external_contributor_amount = 0,
+  //       subcontractor = null,
+  //       subcontractor_amount = 0,
+  //       address = '',
+  //       appartment_number = '',
+  //       ss4 = false,
+  //       quote_number = '',
+  //       mail_sended = false,
+  //       invoice_number = '',
+  //       amount_ht = 0,
+  //       benefit_ht = 0,
+  //       execution_data_day = 0,
+  //       execution_data_hour = 0,
+  //       prevision_data_day = 0,
+  //       prevision_data_hour = 0,
+  //       benefit = '',
+  //       status = '',
+  //       occupied = false,
+  //       start_date_works = null,
+  //       end_date_works = null,
+  //       end_date_customer = null,
+  //       trash = false,
+  //       date_cde = null,
+  //       billing_amount = 0,
+  //       createdBy = null
+  //     } = req.body;
+  
+  //     const currentDate = new Date();
+  //     const dateAdd = currentDate; // Date d'ajout est la date actuelle
+  //     const external_contributor_invoice_date = new Date();
+  //     external_contributor_invoice_date.setDate(currentDate.getDate() + 2); // Fixer la date de facturation à deux jours après la date d'ajout
+  
+  //     // Création d'un nouveau contrat avec les champs adaptés
+  //     const newContract = new ContractModel({
+  //       internal_number: internal_number || 'Default-Number', // Fournit une valeur par défaut si internal_number est vide
+  //       customer: customer ? new mongoose.Types.ObjectId(customer) : null,
+  //       contact: contact ? new mongoose.Types.ObjectId(contact) : null,
+  //       internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
+  //       external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
+  //       external_contributor_amount,
+  //       subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
+  //       subcontractor_amount,
+  //       address,
+  //       appartment_number,
+  //       ss4,
+  //       quote_number,
+  //       mail_sended,
+  //       invoice_number,
+  //       amount_ht,
+  //       benefit_ht,
+  //       execution_data_day,
+  //       execution_data_hour,
+  //       prevision_data_day,
+  //       prevision_data_hour,
+  //       benefit,
+  //       status,
+  //       occupied,
+  //       start_date_works: start_date_works ? new Date(start_date_works) : null,
+  //       end_date_works: end_date_works ? new Date(end_date_works) : null,
+  //       end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
+  //       trash,
+  //       date_cde: date_cde ? new Date(date_cde) : new Date(), // Utilise la date actuelle si date_cde est null
+  //       billing_amount,
+  //       dateAdd: dateAdd, // Date d'ajout
+  //       external_contributor_invoice_date, // Date de facturation du contributeur externe
+  //       createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
+  //     });
+  
+  //     // Enregistrement du nouveau contrat dans la base de données
+  //     await newContract.save();
+
+  //     /////////EMAIL PART//////////////////
+
+  //     // Define getStatus within the scope of addContract
+  //     const getStatus = (status) => {
+  //       const statusDict = {
+  //           'in_progress': 'En cours',
+  //           'null': 'En cours',
+  //           null: 'En cours',
+  //           'achieve': 'Réalisé',
+  //           'canceled': 'Annulé',
+  //           'invoiced': 'Facturé',
+  //           'anomaly': 'Anomalie'
+  //       };
+  //       return statusDict[status] || 'Status inconnu';
+  //     };
+
+  //     // Define the future date (two days later)
+  //     const futureDate = new Date();
+  //     // futureDate.setDate(new Date().getDate() + 2); // décommenter
+  //     futureDate.setMinutes(futureDate.getMinutes() + 1); // à commenter
+
+  //     // Fetch customer and external_contributor details
+  //     const customerDetails = await User.findById(newContract.customer);
+  //     const externalContributorDetails = await User.findById(newContract.external_contributor);
+  //     const contactDetails = await User.findById(newContract.contact);
+  //     const formattedDate = newContract.date_cde ? new Date(newContract.date_cde).toISOString().split('T')[0] : 'Aucune date fournie';
+  //     const occupiedText = newContract.occupied ? 'Oui' : 'Non';
+  //     const statusText = getStatus(newContract.status);
+  //     const benefitDetails = await Benefit.findById(newContract.benefit).exec();
+  //     const benefitName = benefitDetails ? benefitDetails.name : 'Prestation inconnue';
+
+
+  //     const replacements = {
+  //       'contract.internal_number': newContract.internal_number || '',
+  //       'contract.date_cde': formattedDate,
+  //       'customer.firstname': customerDetails.firstname || '',
+  //       'customer.lastname': customerDetails.lastname || '',
+  //       'contact.firstname': contactDetails ? contactDetails.firstname : '',
+  //       'contact.lastname': contactDetails ? contactDetails.lastname : '',
+  //       'benefit_name': benefitName,
+  //       'contract.status': statusText,
+  //       'contract.address': newContract.address || '',
+  //       'contract.appartment_number': newContract.appartment_number || '',
+  //       'contract.occupied': occupiedText,
+  //       'CRM_URL': process.env.CRM_URL
+  //   };
+
+  //     // Schedule email sending two days later for the customer
+  //     if (customerDetails && customerDetails.email) {
+  //         await scheduleEmailToContributor(
+  //           customerDetails.email,
+  //           replacements,
+  //           futureDate
+  //         );
+  //     }
+
+  //     // Schedule email sending two days later for the external contributor
+  //     if (externalContributorDetails && externalContributorDetails.email) {
+  //         await scheduleEmailToContributor(
+  //           externalContributorDetails.email,
+  //           replacements,
+  //           futureDate
+  //         );
+  //     }
+  //     /////////EMAIL PART////////////////////
+  
+  //     // Réponse indiquant la réussite de l'ajout du contrat
+  //     res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id, contract: newContract});
+  //   } catch (error) {
+  //     console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
+  //     res.status(500).json({ error: error.message });
+  //   }
+  // };
   exports.addContract = async (req, res) => {
     try {
       // Destructuration avec des valeurs par défaut pour éviter les valeurs undefined
@@ -1038,29 +1249,24 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   
       // Enregistrement du nouveau contrat dans la base de données
       await newContract.save();
-
+  
       /////////EMAIL PART//////////////////
-
+  
       // Define getStatus within the scope of addContract
       const getStatus = (status) => {
         const statusDict = {
-            'in_progress': 'En cours',
-            'null': 'En cours',
-            null: 'En cours',
-            'achieve': 'Réalisé',
-            'canceled': 'Annulé',
-            'invoiced': 'Facturé',
-            'anomaly': 'Anomalie'
+          'in_progress': 'En cours',
+          'null': 'En cours',
+          null: 'En cours',
+          'achieve': 'Réalisé',
+          'canceled': 'Annulé',
+          'invoiced': 'Facturé',
+          'anomaly': 'Anomalie'
         };
         return statusDict[status] || 'Status inconnu';
       };
-
-      // Define the future date (two days later)
-      const futureDate = new Date();
-      // futureDate.setDate(new Date().getDate() + 2); // décommenter
-      futureDate.setMinutes(futureDate.getMinutes() + 1); // à commenter
-
-      // Fetch customer and external_contributor details
+  
+      // Fetch customer, external_contributor and contact details
       const customerDetails = await User.findById(newContract.customer);
       const externalContributorDetails = await User.findById(newContract.external_contributor);
       const contactDetails = await User.findById(newContract.contact);
@@ -1069,8 +1275,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
       const statusText = getStatus(newContract.status);
       const benefitDetails = await Benefit.findById(newContract.benefit).exec();
       const benefitName = benefitDetails ? benefitDetails.name : 'Prestation inconnue';
-
-
+  
       const replacements = {
         'contract.internal_number': newContract.internal_number || '',
         'contract.date_cde': formattedDate,
@@ -1084,34 +1289,53 @@ exports.resetPasswordFromAdmin = async (req, res) => {
         'contract.appartment_number': newContract.appartment_number || '',
         'contract.occupied': occupiedText,
         'CRM_URL': process.env.CRM_URL
-    };
-
-      // Schedule email sending two days later for the customer
+      };
+  
+      // Define the delay (two minutes)
+      const delayInMinutes = 1;
+      const futureDate = new Date();
+      futureDate.setMinutes(futureDate.getMinutes() + delayInMinutes);
+  
+      // Send email to the customer after a delay
       if (customerDetails && customerDetails.email) {
-          await scheduleEmailToContributor(
-            customerDetails.email,
-            replacements,
-            futureDate
-          );
+        await scheduleEmailToContributor(
+          customerDetails.email,
+          replacements,
+          futureDate,
+          'orderNotificationTemplate.html'
+        );
       }
-
-      // Schedule email sending two days later for the external contributor
+  
+      // Send email to the external contributor after a delay
       if (externalContributorDetails && externalContributorDetails.email) {
-          await scheduleEmailToContributor(
-            externalContributorDetails.email,
-            replacements,
-            futureDate
-          );
+        await scheduleEmailToContributor(
+          externalContributorDetails.email,
+          replacements,
+          futureDate,
+          'orderNotificationTemplate.html'
+        );
       }
+  
+      // Send email to the subcontractor after a delay
+      if (subcontractor && subcontractor.email) {
+        await scheduleEmailToContributor(
+          subcontractor.email,
+          replacements,
+          futureDate,
+          'orderNotificationTemplate.html'
+        );
+      }
+  
       /////////EMAIL PART////////////////////
   
       // Réponse indiquant la réussite de l'ajout du contrat
-      res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id, contract: newContract});
+      res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id, contract: newContract });
     } catch (error) {
       console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
       res.status(500).json({ error: error.message });
     }
   };
+  
   
   // Fonction pour modifier un contrat
   // exports.updateContract = async (req, res) => {
@@ -1200,50 +1424,166 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   //     }
       
   //   };
+  // exports.updateContract = async (req, res) => {
+  //   try {
+  //       const { contractId } = req.params;
+  //       const updateData = {
+  //           ...req.body // Utiliser le spread operator pour éviter la redéfinition manuelle
+  //       };
+  //       console.log('Modification du contrat', contractId, updateData);
+  //       console.log('liste des champs à modifier', Object.keys(updateData).join(', '));
+
+  //       // Convertir les ID utilisateur en ObjectId si présents et valides
+  //       ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
+  //           if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
+  //               updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
+  //               // updateData[key] = updateData[key];
+  //           }
+  //       });
+
+  //       // Validation de la date pour éviter les dates invalides
+  //       ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
+  //           if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
+  //               delete updateData[dateKey]; // Supprimer la clé si la date est invalide
+  //           } else if (updateData[dateKey]) {
+  //               updateData[dateKey] = new Date(updateData[dateKey]);
+  //           }
+  //       });
+
+  //       // Mise à jour du contrat
+  //       const updatedContract = await ContractModel.findByIdAndUpdate(
+  //           contractId, // Plus besoin de convertir en ObjectId, Mongoose le gère
+  //           updateData,
+  //           { new: true, runValidators: true } // Options pour retourner le document modifié et exécuter les validateurs du schéma
+  //       );
+
+  //       if (!updatedContract) {
+  //           return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
+  //       }
+  //       // renvoyer le contrat mis à jour avec un message de succès
+  //       // res.status(200).json(updatedContract, { message: 'Contrat modifié avec succès.' });
+  //       res.status(200).json({ contract: updatedContract, message: 'Contrat modifié avec succès.' });
+  //       // res.status(200).json(updatedContract);
+  //   } catch (error) {
+  //       console.error('Erreur lors de la modification du contrat:', error);
+  //       res.status(500).json({ error: error.message });
+  //   }
+  // };
   exports.updateContract = async (req, res) => {
     try {
-        const { contractId } = req.params;
-        const updateData = {
-            ...req.body // Utiliser le spread operator pour éviter la redéfinition manuelle
-        };
-        console.log('Modification du contrat', contractId, updateData);
-        console.log('liste des champs à modifier', Object.keys(updateData).join(', '));
-
-        // Convertir les ID utilisateur en ObjectId si présents et valides
-        ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
-            if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
-                updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
-                // updateData[key] = updateData[key];
-            }
-        });
-
-        // Validation de la date pour éviter les dates invalides
-        ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
-            if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
-                delete updateData[dateKey]; // Supprimer la clé si la date est invalide
-            } else if (updateData[dateKey]) {
-                updateData[dateKey] = new Date(updateData[dateKey]);
-            }
-        });
-
-        // Mise à jour du contrat
-        const updatedContract = await ContractModel.findByIdAndUpdate(
-            contractId, // Plus besoin de convertir en ObjectId, Mongoose le gère
-            updateData,
-            { new: true, runValidators: true } // Options pour retourner le document modifié et exécuter les validateurs du schéma
-        );
-
-        if (!updatedContract) {
-            return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
+      const { contractId } = req.params;
+      const updateData = {
+        ...req.body // Utiliser le spread operator pour éviter la redéfinition manuelle
+      };
+      console.log('Modification du contrat', contractId, updateData);
+      console.log('liste des champs à modifier', Object.keys(updateData).join(', '));
+  
+      // Convertir les ID utilisateur en ObjectId si présents et valides
+      ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
+        if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
+          updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
         }
-        // renvoyer le contrat mis à jour avec un message de succès
-        // res.status(200).json(updatedContract, { message: 'Contrat modifié avec succès.' });
-        res.status(200).json({ contract: updatedContract, message: 'Contrat modifié avec succès.' });
-        // res.status(200).json(updatedContract);
+      });
+  
+      // Validation de la date pour éviter les dates invalides
+      ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
+        if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
+          delete updateData[dateKey]; // Supprimer la clé si la date est invalide
+        } else if (updateData[dateKey]) {
+          updateData[dateKey] = new Date(updateData[dateKey]);
+        }
+      });
+  
+      // Mise à jour du contrat
+      const updatedContract = await ContractModel.findByIdAndUpdate(
+        contractId, // Plus besoin de convertir en ObjectId, Mongoose le gère
+        updateData,
+        { new: true, runValidators: true } // Options pour retourner le document modifié et exécuter les validateurs du schéma
+      );
+  
+      if (!updatedContract) {
+        return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
+      }
+  
+      // Fetch customer details
+      const customerDetails = await User.findById(updatedContract.customer);
+      const contactDetails = await User.findById(updatedContract.contact);
+      const formattedDate = updatedContract.date_cde ? new Date(updatedContract.date_cde).toISOString().split('T')[0] : 'Aucune date fournie';
+      const occupiedText = updatedContract.occupied ? 'Oui' : 'Non';
+      const statusText = getStatus(updatedContract.status);
+      const benefitDetails = await Benefit.findById(updatedContract.benefit).exec();
+      const benefitName = benefitDetails ? benefitDetails.name : 'Prestation inconnue';
+  
+      const replacements = {
+        'contract.internal_number': updatedContract.internal_number || '',
+        'contract.date_cde': formattedDate,
+        'customer.firstname': customerDetails.firstname || '',
+        'customer.lastname': customerDetails.lastname || '',
+        'contact.firstname': contactDetails ? contactDetails.firstname : '',
+        'contact.lastname': contactDetails ? contactDetails.lastname : '',
+        'benefit_name': benefitName,
+        'contract.status': statusText,
+        'contract.address': updatedContract.address || '',
+        'contract.appartment_number': updatedContract.appartment_number || '',
+        'contract.occupied': occupiedText,
+        'CRM_URL': process.env.CRM_URL
+      };
+  
+      // Define the delay (two minutes)
+      const delayInMinutes = 2;
+      const futureDate = new Date();
+      futureDate.setMinutes(futureDate.getMinutes() + delayInMinutes);
+  
+      // Send email to the customer after a delay
+      if (customerDetails && customerDetails.email) {
+        await scheduleEmailToContributor(
+          customerDetails.email,
+          replacements,
+          futureDate,
+          'orderUpdateNotificationTemplate.html'
+        );
+      }
+  
+      // Send email to the external contributor after a delay
+      if (externalContributorDetails && externalContributorDetails.email) {
+        await scheduleEmailToContributor(
+          externalContributorDetails.email,
+          replacements,
+          futureDate,
+          'orderUpdateNotificationTemplate.html'
+        );
+      }
+  
+      // Send email to the subcontractor after a delay
+      if (updatedContract.subcontractor && updatedContract.subcontractor.email) {
+        await scheduleEmailToContributor(
+          updatedContract.subcontractor.email,
+          replacements,
+          futureDate,
+          'orderUpdateNotificationTemplate.html'
+        );
+      }
+  
+      // Réponse indiquant la réussite de la mise à jour du contrat
+      res.status(200).json({ contract: updatedContract, message: 'Contrat modifié avec succès.' });
     } catch (error) {
-        console.error('Erreur lors de la modification du contrat:', error);
-        res.status(500).json({ error: error.message });
+      console.error('Erreur lors de la modification du contrat:', error);
+      res.status(500).json({ error: error.message });
     }
+  };  
+  
+  // Fonction pour obtenir le statut en français
+  const getStatus = (status) => {
+    const statusDict = {
+      'in_progress': 'En cours',
+      'null': 'En cours',
+      null: 'En cours',
+      'achieve': 'Réalisé',
+      'canceled': 'Annulé',
+      'invoiced': 'Facturé',
+      'anomaly': 'Anomalie'
+    };
+    return statusDict[status] || 'Status inconnu';
   };
 
     // Fonction pour supprimer un contrat par son id

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApexChart, ApexNonAxisChartSeries, ApexResponsive } from 'ng-apexcharts';
 import { ContractService } from '../../../core/services/contract.service';
 import { BenefitService } from '../../../core/services/benefit.service';
-import * as moment from 'moment';
+import moment from 'moment';
+import { HttpClient } from '@angular/common/http';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -21,8 +22,11 @@ export class DonutCardComponent implements OnInit {
   public benefitsMap: Map<string, string> = new Map();
   public periods: { label: string, value: string }[] = [];
   public selectedPeriod: string;
+  public loading: boolean = true;
+  public loadingText: string = 'Chargement des données sur les contrats en cours...';
 
   constructor(
+    private http: HttpClient,
     private contractService: ContractService,
     private benefitService: BenefitService
   ) {
@@ -49,7 +53,7 @@ export class DonutCardComponent implements OnInit {
 
     // Initialize periods (last 12 months)
     this.periods = this.generatePeriods();
-    this.selectedPeriod = this.periods[0].value; // Default to the current month
+    this.selectedPeriod = moment().format('YYYY-MM'); // Default to the current month
   }
 
   ngOnInit(): void {
@@ -75,14 +79,12 @@ export class DonutCardComponent implements OnInit {
   }
 
   loadContracts(): void {
-    this.contractService.getContracts().subscribe(contracts => {
-      const filteredContracts = contracts.filter(contract =>
-        moment(contract.date_cde).format('YYYY-MM') === this.selectedPeriod
-      );
-
+    this.loading = true;
+    const month = parseInt(this.selectedPeriod.split('-')[1], 10);
+    this.contractService.getContractsByMonth(month).subscribe(contracts => {
       const benefitCounts = new Map<string, number>();
 
-      filteredContracts.forEach(contract => {
+      contracts.forEach(contract => {
         const benefitId = contract.benefit;
         if (benefitCounts.has(benefitId)) {
           benefitCounts.set(benefitId, benefitCounts.get(benefitId)! + 1);
@@ -104,6 +106,7 @@ export class DonutCardComponent implements OnInit {
 
       this.salesAnalytics.series = series;
       this.salesAnalytics.labels = labels;
+      this.loading = false;
     });
   }
 

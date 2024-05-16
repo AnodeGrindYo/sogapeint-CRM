@@ -35,6 +35,18 @@ export class ContractService {
         getContracts(): Observable<any[]> {
             return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contracts`);
         }
+
+        /**
+         * obtient les contrats par mois (endpoint /api/auth/contractsByMonth)
+         * 
+         * Envoie une requête GET pour obtenir une liste de tous les contrats par mois.
+         * @param month, le mois
+         * @returns Un Observable contenant un tableau de contrats.
+         * */
+        getContractsByMonth(month: number): Observable<any[]> {
+            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contractsByMonth`, { params: { month: month.toString() } });
+        }
+        
         
         /**
         * Recherche des contrats.

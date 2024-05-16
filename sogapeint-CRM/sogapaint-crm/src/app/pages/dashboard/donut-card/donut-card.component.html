@@ -6,7 +6,14 @@
         </select>
       </div>
       <h4 class="card-title mb-4">Analyse des commandes</h4>
-  
+
+      <div *ngIf="loading" class="spinner-container">
+        <div class="spinner"></div>
+        <p>
+            {{ loadingText}}
+        </p>
+      </div>
+  <div *ngIf="!loading">
       <apx-chart [series]="salesAnalytics.series" [chart]="salesAnalytics.chart"
         [labels]="salesAnalytics.labels" [responsive]="salesAnalytics.responsive">
       </apx-chart>
@@ -21,6 +28,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
   
