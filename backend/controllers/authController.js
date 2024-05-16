@@ -1325,6 +1325,9 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           'orderNotificationTemplate.html'
         );
       }
+
+      // Schedule recurring reminder emails for external contributor and subcontractor
+      await scheduleRecurringEmails(newContract._id);
   
       /////////EMAIL PART////////////////////
   
@@ -1626,12 +1629,46 @@ exports.resetPasswordFromAdmin = async (req, res) => {
     };
     
     // Fonction pour ajouter une observation à un contrat
+    // exports.addObservation = async (req, res) => {
+    //   console.log('Tentative d\'ajout d\'une observation à un contrat');
+    //   try {
+    //     const { contractId, dateAdd, user, comment } = req.body;
+    //     const userObjectId = new mongoose.Types.ObjectId(user);
+        
+    //     // Trouver le contrat et ajouter l'observation directement
+    //     const updatedContract = await ContractModel.findByIdAndUpdate(
+    //       contractId,
+    //       {
+    //         $push: {
+    //           observation: { 
+    //             dateAdd: dateAdd, 
+    //             user: userObjectId, 
+    //             comment: comment,
+    //             _id: new mongoose.Types.ObjectId() // Crée un nouvel ObjectId pour l'observation
+    //           }
+    //         }
+    //       },
+    //       { new: true, useFindAndModify: false }
+    //       );
+          
+    //       if (!updatedContract) {
+    //         console.log('Contrat non trouvé.');
+    //         return res.status(404).json({ message: 'Contrat non trouvé.' });
+    //       }
+          
+    //       console.log('Observation ajoutée avec succès.');
+    //       res.status(200).json(updatedContract);
+    //     } catch (error) {
+    //       console.error('Erreur lors de l\'ajout de l\'observation:', error);
+    //       res.status(500).json({ error: error.message });
+    //     }
+    //   };
     exports.addObservation = async (req, res) => {
       console.log('Tentative d\'ajout d\'une observation à un contrat');
       try {
         const { contractId, dateAdd, user, comment } = req.body;
         const userObjectId = new mongoose.Types.ObjectId(user);
-        
+    
         // Trouver le contrat et ajouter l'observation directement
         const updatedContract = await ContractModel.findByIdAndUpdate(
           contractId,
@@ -1646,20 +1683,85 @@ exports.resetPasswordFromAdmin = async (req, res) => {
             }
           },
           { new: true, useFindAndModify: false }
-          );
-          
-          if (!updatedContract) {
-            console.log('Contrat non trouvé.');
-            return res.status(404).json({ message: 'Contrat non trouvé.' });
-          }
-          
-          console.log('Observation ajoutée avec succès.');
-          res.status(200).json(updatedContract);
-        } catch (error) {
-          console.error('Erreur lors de l\'ajout de l\'observation:', error);
-          res.status(500).json({ error: error.message });
+        );
+    
+        if (!updatedContract) {
+          console.log('Contrat non trouvé.');
+          return res.status(404).json({ message: 'Contrat non trouvé.' });
         }
-      };
+    
+        console.log('Observation ajoutée avec succès.');
+        res.status(200).json(updatedContract);
+    
+        /////////EMAIL PART//////////////////
+    
+        // Fetch customer, external_contributor, internal_contributor, and contact details
+        const customerDetails = await User.findById(updatedContract.customer);
+        const externalContributorDetails = await User.findById(updatedContract.external_contributor);
+        const internalContributorDetails = await User.findById(updatedContract.internal_contributor);
+        const contactDetails = await User.findById(updatedContract.contact);
+    
+        const formattedDateAdd = new Date(dateAdd).toISOString().split('T')[0];
+    
+        const replacements = {
+          'contract.internal_number': updatedContract.internal_number || '',
+          'observation.dateAdd': formattedDateAdd,
+          'observation.comment': comment || '',
+          'CRM_URL': process.env.CRM_URL
+        };
+    
+        // Define the delay (two minutes)
+        const delayInMinutes = 2;
+        const futureDate = new Date();
+        futureDate.setMinutes(futureDate.getMinutes() + delayInMinutes);
+    
+        // Send email to the customer after a delay
+        if (customerDetails && customerDetails.email) {
+          await scheduleEmailToContributor(
+            customerDetails.email,
+            replacements,
+            futureDate,
+            'observationNotificationTemplate'
+          );
+        }
+    
+        // Send email to the external contributor after a delay
+        if (externalContributorDetails && externalContributorDetails.email) {
+          await scheduleEmailToContributor(
+            externalContributorDetails.email,
+            replacements,
+            futureDate,
+            'observationNotificationTemplate'
+          );
+        }
+    
+        // Send email to the internal contributor after a delay
+        if (internalContributorDetails && internalContributorDetails.email) {
+          await scheduleEmailToContributor(
+            internalContributorDetails.email,
+            replacements,
+            futureDate,
+            'observationNotificationTemplate'
+          );
+        }
+    
+        // Send email to the contact after a delay
+        if (contactDetails && contactDetails.email) {
+          await scheduleEmailToContributor(
+            contactDetails.email,
+            replacements,
+            futureDate,
+            'observationNotificationTemplate'
+          );
+        }
+    
+        /////////EMAIL PART////////////////////
+    
+      } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'observation:', error);
+        res.status(500).json({ error: error.message });
+      }
+    };
       
       
       
@@ -1723,41 +1825,142 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           
           
           // Fonction pour ajouter un incident à un contrat
-          exports.addIncident = async (req, res) => {
-            console.log('Tentative d\'ajout d\'un incident à un contrat');
-            console.log('Corps de la requête:', req.body);
-            try {
-              const { contractId, dateAdd, user, comment } = req.body;
-              const userObjectId = new mongoose.Types.ObjectId(user);
+          // exports.addIncident = async (req, res) => {
+          //   console.log('Tentative d\'ajout d\'un incident à un contrat');
+          //   console.log('Corps de la requête:', req.body);
+          //   try {
+          //     const { contractId, dateAdd, user, comment } = req.body;
+          //     const userObjectId = new mongoose.Types.ObjectId(user);
               
-              // Trouver le contrat par son ID et ajouter le nouvel incident directement
-              const updatedContract = await ContractModel.findByIdAndUpdate(
-                contractId,
-                { $push: 
-                  { incident: 
-                    { 
-                      comment: comment, 
-                      dateAdd: dateAdd, 
-                      user: userObjectId,
-                      _id: new mongoose.Types.ObjectId() // Crée un nouvel ObjectId pour l'incident
-                    } 
-                  } 
-                },
-                { new: true }
-                );
+          //     // Trouver le contrat par son ID et ajouter le nouvel incident directement
+          //     const updatedContract = await ContractModel.findByIdAndUpdate(
+          //       contractId,
+          //       { $push: 
+          //         { incident: 
+          //           { 
+          //             comment: comment, 
+          //             dateAdd: dateAdd, 
+          //             user: userObjectId,
+          //             _id: new mongoose.Types.ObjectId() // Crée un nouvel ObjectId pour l'incident
+          //           } 
+          //         } 
+          //       },
+          //       { new: true }
+          //       );
                 
-                if (!updatedContract) {
-                  console.log('Contrat non trouvé.');
-                  return res.status(404).json({ message: 'Contrat non trouvé.' });
-                }
+          //       if (!updatedContract) {
+          //         console.log('Contrat non trouvé.');
+          //         return res.status(404).json({ message: 'Contrat non trouvé.' });
+          //       }
                 
-                console.log('Incident ajouté avec succès.');
-                res.status(200).json(updatedContract);
-              } catch (error) {
-                console.error('Erreur lors de l\'ajout de l\'incident:', error);
-                res.status(500).json({ error: error.message });
-              }
-            };
+          //       console.log('Incident ajouté avec succès.');
+          //       res.status(200).json(updatedContract);
+          //     } catch (error) {
+          //       console.error('Erreur lors de l\'ajout de l\'incident:', error);
+          //       res.status(500).json({ error: error.message });
+          //     }
+          //   };
+exports.addIncident = async (req, res) => {
+  console.log('Tentative d\'ajout d\'un incident à un contrat');
+  console.log('Corps de la requête:', req.body);
+  try {
+    const { contractId, dateAdd, user, comment } = req.body;
+    const userObjectId = new mongoose.Types.ObjectId(user);
+
+    // Trouver le contrat par son ID et ajouter le nouvel incident directement
+    const updatedContract = await ContractModel.findByIdAndUpdate(
+      contractId,
+      { 
+        $push: { 
+          incident: { 
+            comment: comment, 
+            dateAdd: dateAdd, 
+            user: userObjectId,
+            _id: new mongoose.Types.ObjectId() // Crée un nouvel ObjectId pour l'incident
+          } 
+        } 
+      },
+      { new: true }
+    );
+
+    if (!updatedContract) {
+      console.log('Contrat non trouvé.');
+      return res.status(404).json({ message: 'Contrat non trouvé.' });
+    }
+
+    console.log('Incident ajouté avec succès.');
+    res.status(200).json(updatedContract);
+
+    /////////EMAIL PART//////////////////
+
+    // Fetch customer, external_contributor, internal_contributor, and contact details
+    const customerDetails = await User.findById(updatedContract.customer);
+    const externalContributorDetails = await User.findById(updatedContract.external_contributor);
+    const internalContributorDetails = await User.findById(updatedContract.internal_contributor);
+    const contactDetails = await User.findById(updatedContract.contact);
+
+    const formattedDateAdd = new Date(dateAdd).toISOString().split('T')[0];
+
+    const replacements = {
+      'contract.internal_number': updatedContract.internal_number || '',
+      'incident.dateAdd': formattedDateAdd,
+      'incident.comment': comment || '',
+      'CRM_URL': process.env.CRM_URL
+    };
+
+    // Define the delay (two minutes)
+    const delayInMinutes = 2;
+    const futureDate = new Date();
+    futureDate.setMinutes(futureDate.getMinutes() + delayInMinutes);
+
+    // Send email to the customer after a delay
+    if (customerDetails && customerDetails.email) {
+      await scheduleEmailToContributor(
+        customerDetails.email,
+        replacements,
+        futureDate,
+        'incidentNotificationTemplate'
+      );
+    }
+
+    // Send email to the external contributor after a delay
+    if (externalContributorDetails && externalContributorDetails.email) {
+      await scheduleEmailToContributor(
+        externalContributorDetails.email,
+        replacements,
+        futureDate,
+        'incidentNotificationTemplate'
+      );
+    }
+
+    // Send email to the internal contributor after a delay
+    if (internalContributorDetails && internalContributorDetails.email) {
+      await scheduleEmailToContributor(
+        internalContributorDetails.email,
+        replacements,
+        futureDate,
+        'incidentNotificationTemplate'
+      );
+    }
+
+    // Send email to the contact after a delay
+    if (contactDetails && contactDetails.email) {
+      await scheduleEmailToContributor(
+        contactDetails.email,
+        replacements,
+        futureDate,
+        'incidentNotificationTemplate'
+      );
+    }
+
+    /////////EMAIL PART////////////////////
+
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout de l\'incident:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
             
             // Fonction pour supprimer un incident d'un contrat
             exports.deleteIncident = async (req, res) => {

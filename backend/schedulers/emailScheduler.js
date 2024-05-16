@@ -1,75 +1,10 @@
-// const schedule = require('node-schedule');
-// const { sendEmail } = require('../services/emailService');
-// const User = require('../models/User');
-
-// const scheduleEmailToContributor = async (contract) => {
-//     const { external_contributor, external_contributor_invoice_date } = contract;
-    
-//     const user = await User.findById(external_contributor);
-//     if (!user || !user.email) {
-//         console.log('Aucun email trouvé pour l\'external_contributor');
-//         return;
-//     }
-    
-//     const emailDate = new Date(external_contributor_invoice_date);
-//     if (emailDate > new Date()) {
-//         schedule.scheduleJob(emailDate, () => {
-//             sendEmail(
-//                 user.email,
-//                 'Facturation pour votre contribution',
-//                 { name: user.name, date: emailDate.toISOString().slice(0, 10) },
-//                 'invoiceTemplate'
-//             );
-//         });
-//         console.log(`Email programmé pour ${user.email} à la date ${emailDate}`);
-//     } else {
-//         console.log('La date de facturation est passée, aucun email ne sera envoyé.');
-//     }
-// };
-
-// module.exports = { scheduleEmailToContributor };
-
 const schedule = require('node-schedule');
 const { sendEmail } = require('../services/emailService');
 const Contract = require('../models/Contract');
 const User = require('../models/User');
 
-// const scheduleEmailToContributor = async (contractId) => {
-//     const contract = await Contract.findById(contractId)
-//         .populate('customer')
-//         .populate('contact')
-//         .populate('internal_contributor')
-//         .populate('external_contributor');
-    
-//     if (!contract || !contract.external_contributor || !contract.external_contributor.email) {
-//         console.log('No email found for the external contributor or missing contract details.');
-//         return;
-//     }
 
-//     const emailDate = new Date(contract.external_contributor_invoice_date);
-//     if (emailDate > new Date()) {
-//         schedule.scheduleJob(emailDate, () => {
-//             const replacements = {
-//                 firstname: contract.external_contributor.firstname,
-//                 lastname: contract.external_contributor.lastname,
-//                 contract_number: contract.internal_number,
-//                 external_contributor_amount: contract.external_contributor_amount.toFixed(2),
-//                 invoice_date: emailDate.toISOString().slice(0, 10),
-//                 // Add more details from contract as needed
-//             };
-//             sendEmail(
-//                 contract.external_contributor.email,
-//                 'Facturation pour votre contribution',
-//                 replacements,
-//                 'invoiceTemplate'
-//             );
-//         });
-//         console.log(`Email scheduled for ${contract.external_contributor.email} on ${emailDate.toISOString()}`);
-//     } else {
-//         console.log('The invoice date has passed, no email will be sent.');
-//     }
-// };
-const scheduleEmailToContributor = async (email, replacements, scheduledDate) => {
+const scheduleEmailToContributor = async (email, replacements, scheduledDate, templateName="orderNotificationTemplate") => {
     if (!email) {
         console.log('No email address provided.');
         return;
@@ -81,7 +16,7 @@ const scheduleEmailToContributor = async (email, replacements, scheduledDate) =>
                 email,
                 'Notification de commande',
                 replacements,
-                'orderNotificationTemplate'
+                templateName
             );
             console.log(`Email scheduled for ${email} on ${scheduledDate.toISOString()}`);
         });
@@ -89,6 +24,66 @@ const scheduleEmailToContributor = async (email, replacements, scheduledDate) =>
         console.log('The scheduled date has passed, no email will be sent.');
     }
 };
+
+const getNextBusinessDay = (date, daysToAdd) => {
+    let resultDate = new Date(date);
+    let addedDays = 0;
+    
+    while (addedDays < daysToAdd) {
+        resultDate.setDate(resultDate.getDate() + 1);
+        // Skip weekends
+        if (resultDate.getDay() !== 0 && resultDate.getDay() !== 6) {
+            addedDays++;
+        }
+    }
+
+    return resultDate;
+};
+
+const scheduleRecurringEmails = async (contractId) => {
+    const contract = await Contract.findById(contractId).populate('external_contributor subcontractor');
+    if (!contract) {
+        console.log('Contract not found.');
+        return;
+    }
+
+    const replacements = {
+        'contract.internal_number': contract.internal_number || '',
+        'CRM_URL': process.env.CRM_URL
+    };
+
+    const reminderEmails = async () => {
+        if (!contract.mail_sended) {
+            const today = new Date();
+            const nextBusinessDay = getNextBusinessDay(today, 3);
+
+            if (contract.external_contributor && contract.external_contributor.email) {
+                await scheduleEmailToContributor(
+                    contract.external_contributor.email,
+                    replacements,
+                    nextBusinessDay,
+                    'reminderInvoiceTemplate.html' // New template for invoice reminder
+                );
+            }
+
+            if (contract.subcontractor && contract.subcontractor.email) {
+                await scheduleEmailToContributor(
+                    contract.subcontractor.email,
+                    replacements,
+                    nextBusinessDay,
+                    'reminderInvoiceTemplate.html' // New template for invoice reminder
+                );
+            }
+
+            // Reschedule the function to run again in 3 business days
+            schedule.scheduleJob(nextBusinessDay, reminderEmails);
+        }
+    };
+
+    // Start the first reminder immediately
+    reminderEmails();
+};
+
 
 module.exports = { scheduleEmailToContributor };
 
