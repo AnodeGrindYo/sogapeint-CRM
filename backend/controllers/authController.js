@@ -935,241 +935,6 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   };
   
   // Fonction pour ajouter un nouveau contrat
-  // exports.addContract = async (req, res) => {
-  //   try {
-  //     // Extraction des champs nécessaires du corps de la requête
-  //     const {
-  //       internal_number,
-  //       customer,
-  //       contact,
-  //       internal_contributor,
-  //       external_contributor,
-  //       external_contributor_amount,
-  //       subcontractor,
-  //       subcontractor_amount,
-  //       address,
-  //       appartment_number,
-  //       quote_number,
-  //       mail_sended,
-  //       invoice_number,
-  //       amount_ht,
-  //       benefit_ht,
-  //       execution_data_day,
-  //       execution_data_hour,
-  //       prevision_data_day,
-  //       prevision_data_hour,
-  //       benefit,
-  //       status,
-  //       occupied,
-  //       start_date_works,
-  //       end_date_works,
-  //       end_date_customer,
-  //       trash,
-  //       date_cde,
-  //       billing_amount
-  //     } = req.body;
-      
-  //     // si subcontractor est vide, on le remplace par null
-  //     if (!subcontractor) {
-  //       subcontractor = null;
-  //     }
-      
-  //     // Création d'un nouveau contrat avec les champs adaptés
-  //     const newContract = new ContractModel({
-  //       internal_number,
-  //       customer,
-  //       contact,
-  //       internal_contributor,
-  //       external_contributor,
-  //       external_contributor_amount,
-  //       subcontractor,
-  //       subcontractor_amount,
-  //       address,
-  //       appartment_number,
-  //       quote_number,
-  //       mail_sended,
-  //       invoice_number,
-  //       amount_ht,
-  //       benefit_ht,
-  //       execution_data_day,
-  //       execution_data_hour,
-  //       prevision_data_day,
-  //       prevision_data_hour,
-  //       benefit,
-  //       status,
-  //       occupied,
-  //       start_date_works,
-  //       end_date_works,
-  //       end_date_customer,
-  //       trash,
-  //       date_cde,
-  //       billing_amount
-  //     });
-      
-      
-  //     // Enregistrement du nouveau contrat dans la base de données
-  //     await newContract.save();
-      
-  //     // Réponse indiquant la réussite de l'ajout du contrat
-  //     res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id });
-  //   } catch (error) {
-  //     console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
-  //     res.status(500).json({ error: error.message });
-  //   }
-  // };
-  // exports.addContract = async (req, res) => {
-  //   try {
-  //     // Destructuration avec des valeurs par défaut pour éviter les valeurs undefined
-  //     const {
-  //       internal_number = '',
-  //       customer = null,
-  //       contact = null,
-  //       internal_contributor = null,
-  //       external_contributor = null,
-  //       external_contributor_amount = 0,
-  //       subcontractor = null,
-  //       subcontractor_amount = 0,
-  //       address = '',
-  //       appartment_number = '',
-  //       ss4 = false,
-  //       quote_number = '',
-  //       mail_sended = false,
-  //       invoice_number = '',
-  //       amount_ht = 0,
-  //       benefit_ht = 0,
-  //       execution_data_day = 0,
-  //       execution_data_hour = 0,
-  //       prevision_data_day = 0,
-  //       prevision_data_hour = 0,
-  //       benefit = '',
-  //       status = '',
-  //       occupied = false,
-  //       start_date_works = null,
-  //       end_date_works = null,
-  //       end_date_customer = null,
-  //       trash = false,
-  //       date_cde = null,
-  //       billing_amount = 0,
-  //       createdBy = null
-  //     } = req.body;
-  
-  //     const currentDate = new Date();
-  //     const dateAdd = currentDate; // Date d'ajout est la date actuelle
-  //     const external_contributor_invoice_date = new Date();
-  //     external_contributor_invoice_date.setDate(currentDate.getDate() + 2); // Fixer la date de facturation à deux jours après la date d'ajout
-  
-  //     // Création d'un nouveau contrat avec les champs adaptés
-  //     const newContract = new ContractModel({
-  //       internal_number: internal_number || 'Default-Number', // Fournit une valeur par défaut si internal_number est vide
-  //       customer: customer ? new mongoose.Types.ObjectId(customer) : null,
-  //       contact: contact ? new mongoose.Types.ObjectId(contact) : null,
-  //       internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
-  //       external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
-  //       external_contributor_amount,
-  //       subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
-  //       subcontractor_amount,
-  //       address,
-  //       appartment_number,
-  //       ss4,
-  //       quote_number,
-  //       mail_sended,
-  //       invoice_number,
-  //       amount_ht,
-  //       benefit_ht,
-  //       execution_data_day,
-  //       execution_data_hour,
-  //       prevision_data_day,
-  //       prevision_data_hour,
-  //       benefit,
-  //       status,
-  //       occupied,
-  //       start_date_works: start_date_works ? new Date(start_date_works) : null,
-  //       end_date_works: end_date_works ? new Date(end_date_works) : null,
-  //       end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
-  //       trash,
-  //       date_cde: date_cde ? new Date(date_cde) : new Date(), // Utilise la date actuelle si date_cde est null
-  //       billing_amount,
-  //       dateAdd: dateAdd, // Date d'ajout
-  //       external_contributor_invoice_date, // Date de facturation du contributeur externe
-  //       createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
-  //     });
-  
-  //     // Enregistrement du nouveau contrat dans la base de données
-  //     await newContract.save();
-
-  //     /////////EMAIL PART//////////////////
-
-  //     // Define getStatus within the scope of addContract
-  //     const getStatus = (status) => {
-  //       const statusDict = {
-  //           'in_progress': 'En cours',
-  //           'null': 'En cours',
-  //           null: 'En cours',
-  //           'achieve': 'Réalisé',
-  //           'canceled': 'Annulé',
-  //           'invoiced': 'Facturé',
-  //           'anomaly': 'Anomalie'
-  //       };
-  //       return statusDict[status] || 'Status inconnu';
-  //     };
-
-  //     // Define the future date (two days later)
-  //     const futureDate = new Date();
-  //     // futureDate.setDate(new Date().getDate() + 2); // décommenter
-  //     futureDate.setMinutes(futureDate.getMinutes() + 1); // à commenter
-
-  //     // Fetch customer and external_contributor details
-  //     const customerDetails = await User.findById(newContract.customer);
-  //     const externalContributorDetails = await User.findById(newContract.external_contributor);
-  //     const contactDetails = await User.findById(newContract.contact);
-  //     const formattedDate = newContract.date_cde ? new Date(newContract.date_cde).toISOString().split('T')[0] : 'Aucune date fournie';
-  //     const occupiedText = newContract.occupied ? 'Oui' : 'Non';
-  //     const statusText = getStatus(newContract.status);
-  //     const benefitDetails = await Benefit.findById(newContract.benefit).exec();
-  //     const benefitName = benefitDetails ? benefitDetails.name : 'Prestation inconnue';
-
-
-  //     const replacements = {
-  //       'contract.internal_number': newContract.internal_number || '',
-  //       'contract.date_cde': formattedDate,
-  //       'customer.firstname': customerDetails.firstname || '',
-  //       'customer.lastname': customerDetails.lastname || '',
-  //       'contact.firstname': contactDetails ? contactDetails.firstname : '',
-  //       'contact.lastname': contactDetails ? contactDetails.lastname : '',
-  //       'benefit_name': benefitName,
-  //       'contract.status': statusText,
-  //       'contract.address': newContract.address || '',
-  //       'contract.appartment_number': newContract.appartment_number || '',
-  //       'contract.occupied': occupiedText,
-  //       'CRM_URL': process.env.CRM_URL
-  //   };
-
-  //     // Schedule email sending two days later for the customer
-  //     if (customerDetails && customerDetails.email) {
-  //         await scheduleEmailToContributor(
-  //           customerDetails.email,
-  //           replacements,
-  //           futureDate
-  //         );
-  //     }
-
-  //     // Schedule email sending two days later for the external contributor
-  //     if (externalContributorDetails && externalContributorDetails.email) {
-  //         await scheduleEmailToContributor(
-  //           externalContributorDetails.email,
-  //           replacements,
-  //           futureDate
-  //         );
-  //     }
-  //     /////////EMAIL PART////////////////////
-  
-  //     // Réponse indiquant la réussite de l'ajout du contrat
-  //     res.status(201).json({ message: 'Contrat créé avec succès.', contractId: newContract._id, contract: newContract});
-  //   } catch (error) {
-  //     console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
-  //     res.status(500).json({ error: error.message });
-  //   }
-  // };
   exports.addContract = async (req, res) => {
     try {
       // Destructuration avec des valeurs par défaut pour éviter les valeurs undefined
@@ -1511,6 +1276,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
       // Fetch customer details
       const customerDetails = await User.findById(updatedContract.customer);
       const contactDetails = await User.findById(updatedContract.contact);
+      const externalContributorDetails = await User.findById(updatedContract.external_contributor);
       const formattedDate = updatedContract.date_cde ? new Date(updatedContract.date_cde).toISOString().split('T')[0] : 'Aucune date fournie';
       const occupiedText = updatedContract.occupied ? 'Oui' : 'Non';
       const statusText = getStatus(updatedContract.status);
@@ -1543,7 +1309,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           customerDetails.email,
           replacements,
           futureDate,
-          'orderUpdateNotificationTemplate.html'
+          'orderUpdateNotificationTemplate'
         );
       }
   
@@ -1553,7 +1319,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           externalContributorDetails.email,
           replacements,
           futureDate,
-          'orderUpdateNotificationTemplate.html'
+          'orderUpdateNotificationTemplate'
         );
       }
   
@@ -1563,7 +1329,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           updatedContract.subcontractor.email,
           replacements,
           futureDate,
-          'orderUpdateNotificationTemplate.html'
+          'orderUpdateNotificationTemplate'
         );
       }
   

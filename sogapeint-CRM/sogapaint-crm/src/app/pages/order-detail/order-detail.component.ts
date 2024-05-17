@@ -33,8 +33,10 @@ export class OrderDetailComponent implements OnInit {
   contact: any;
   currentUser: User;
   benefit_name: string = '';
+  history: { user: any, date: Date }[] = [];
+  createdBy: any | null = null;
   
-
+  
   constructor(
     private route: ActivatedRoute,
     private contractService: ContractService,
@@ -42,7 +44,7 @@ export class OrderDetailComponent implements OnInit {
     private benefitService: BenefitService,
     private router: Router
   ) { }
-
+  
   ngOnInit(): void {
     this.currentUser = this.userProfileService.getCurrentUser();
     console.log('currentUser', this.currentUser);
@@ -63,11 +65,35 @@ export class OrderDetailComponent implements OnInit {
       // console.log("status", this.contract.get("status").value);
     });
   }
-
+  
   loadContractDetails(contractId: string) {
     this.contractService.getContractById(contractId).subscribe({
       next: (data) => {
         this.contract = data;
+
+        // historique de la commande
+        // Charger les détails de l'utilisateur qui a créé la commande
+        if (this.contract.createdBy) {
+          this.userProfileService.getOne(this.contract.createdBy).subscribe({
+            next: (user) => {
+              this.createdBy = user;
+              console.log('Détails du créateur de la commande:', user);
+            },
+            error: (error) => console.error('Erreur lors du chargement du créateur de la commande', error)
+          });
+        }
+        
+        // Charger les détails des utilisateurs qui ont modifié la commande
+        if (this.contract.modifiedBy && this.contract.modifiedBy.length > 0) {
+          const modifiedByUsers = this.contract.modifiedBy.map(mod => 
+            this.userProfileService.getOne(mod.user).toPromise().then(user => ({ user, date: mod.date }))
+          );
+          Promise.all(modifiedByUsers).then(results => {
+            this.history = results;
+            console.log('Historique de la commande:', this.history);});
+        }
+        // \historique de la commande
+
         // this.files = this.contract.file;
         console.log('Détails de la commande chargés', this.contract);
         
@@ -82,58 +108,59 @@ export class OrderDetailComponent implements OnInit {
       error: (error) => console.error('Erreur lors du chargement des détails de la commande', error)
     })
   }
-
+  
   loadUserDetails(){
     console.log('Chargement des détails des utilisateurs');
-        this.userProfileService.getOne(this.contract.customer).subscribe({
-          next: (data) => {
-            this.customer = data;
-            console.log('Détails du client chargés', data);
-          },
-          error: (error) => console.error('Erreur lors du chargement des détails du client', error)
-        });
-        if (this.contract.external_contributor){
-          this.userProfileService.getOne(this.contract.external_contributor).subscribe({
-            next: (data) => {
-              this.coContractor = data;
-              console.log('Détails du co-traitant chargés', data);
-            },
-            error: (error) => console.error('Erreur lors du chargement des détails du co-traitant', error)
-          });
-        }
-          
-        if (this.contract.internal_contributor) {
-          this.userProfileService.getOne(this.contract.internal_contributor).subscribe({
-            next: (data) => {
-              this.sogapeintContact = data;
-              console.log('Détails du contact Sogapeint chargés', data);
-            },
-            error: (error) => console.error('Erreur lors du chargement des détails du contact Sogapeint', error)
-          });
-        }
-        
-        if (this.contract.subcontractor) {
-          this.userProfileService.getOne(this.contract.subcontractor).subscribe({
-            next: (data) => {
-              this.subcontractor = data;
-              console.log('Détails du sous-traitant chargés', data);
-            },
-            error: (error) => console.error('Erreur lors du chargement des détails du sous-traitant', error)
-          });
-        }
+    this.userProfileService.getOne(this.contract.customer).subscribe({
+      next: (data) => {
+        this.customer = data;
 
-        if (this.contract.contact) {
-          this.userProfileService.getOne(this.contract.contact).subscribe({
-            next: (data) => {
-              this.contact = data;
-              console.log('Détails du contact chargés', data);
-            },
-            error: (error) => console.error('Erreur lors du chargement des détails du contact', error)
-          });
-        }
-        
+        console.log('Détails du client chargés', data);
+      },
+      error: (error) => console.error('Erreur lors du chargement des détails du client', error)
+    });
+    if (this.contract.external_contributor){
+      this.userProfileService.getOne(this.contract.external_contributor).subscribe({
+        next: (data) => {
+          this.coContractor = data;
+          console.log('Détails du co-traitant chargés', data);
+        },
+        error: (error) => console.error('Erreur lors du chargement des détails du co-traitant', error)
+      });
+    }
+    
+    if (this.contract.internal_contributor) {
+      this.userProfileService.getOne(this.contract.internal_contributor).subscribe({
+        next: (data) => {
+          this.sogapeintContact = data;
+          console.log('Détails du contact Sogapeint chargés', data);
+        },
+        error: (error) => console.error('Erreur lors du chargement des détails du contact Sogapeint', error)
+      });
+    }
+    
+    if (this.contract.subcontractor) {
+      this.userProfileService.getOne(this.contract.subcontractor).subscribe({
+        next: (data) => {
+          this.subcontractor = data;
+          console.log('Détails du sous-traitant chargés', data);
+        },
+        error: (error) => console.error('Erreur lors du chargement des détails du sous-traitant', error)
+      });
+    }
+    
+    if (this.contract.contact) {
+      this.userProfileService.getOne(this.contract.contact).subscribe({
+        next: (data) => {
+          this.contact = data;
+          console.log('Détails du contact chargés', data);
+        },
+        error: (error) => console.error('Erreur lors du chargement des détails du contact', error)
+      });
+    }
+    
   }
-
+  
   // la méthode getBenefits du service BenefitService retourne la liste des prestations avec deux clés: _id et name
   getBenefitName(benefitId: string): string {
     // Récupérer la liste des prestations
@@ -148,7 +175,7 @@ export class OrderDetailComponent implements OnInit {
     });
     return this.benefit_name;
   }
-
+  
   getStatus(value: string | null): string {
     // Dictionnaire de statuts
     const statusDict: { [key: string]: string } = {
@@ -159,15 +186,15 @@ export class OrderDetailComponent implements OnInit {
       'invoiced': 'Facturé',
       'anomaly': 'Anomalie'
     };
-  
+    
     // Convertir la valeur null en chaîne 'null' pour la recherche dans le dictionnaire
     const keyValue = value === null ? 'null' : value;
-  
+    
     // Retourner le nom du statut correspondant ou 'Statut inconnu' si non trouvé
     return statusDict[keyValue] || 'Statut inconnu';
   }
   
-
+  
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     this.currentInput.push(event.key);
@@ -178,24 +205,24 @@ export class OrderDetailComponent implements OnInit {
       this.showSecret();
     }
   }
-
+  
   showSecret() {
     // scrolle automatiquement vers le haut de la page
     window.scrollTo(0, 0);
     this.showSecretDiv = true;
     setTimeout(() => this.showSecretDiv = false, 5000);
   }
-
+  
   isAdminOrSuperAdmin(): boolean {
     const result = this.currentUser && (this.currentUser.role === 'admin' || this.currentUser.role === 'superAdmin');
     // console.log('isAdminOrSuperAdmin:', result);
     return result;
   }
-
+  
   goToEditOrder() {
     // Rediriger vers la page de mise à jour de la commande
     // 'order-update/:orderId'
     this.router.navigate([`/order-update/${this.contract._id}`]);
   }
-
+  
 }

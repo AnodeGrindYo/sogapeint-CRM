@@ -557,21 +557,7 @@ export class OrderUpdateComponent implements OnInit {
     const data = { ...this.orderUpdateForm.value };
     console.log("data befor modification", data);
     data.status = status;
-    // // Remplace le benefit par son _id
-    // data.benefit = data.benefit.value;
-    // // remplace le contact par son _id
-    // data.contact = data.contact._id;
-    // // remplace le customer par son _id
-    // data.customer = data.customer._id;
-    // // remplace le contact par son _id
-    // data.contact = data.contact._id;
-    // // remplace le internal_contributor par son _id
-    // data.internal_contributor = data.internal_contributor._id;
-    // // remplace le external_contributor par son _id
-    // data.external_contributor = data.external_contributor._id;
-    // // remplace le subcontractor par son _id
-    // data.subcontractor = data.subcontractor._id;
-    // convertit date_cde en dd/mm/yyyy
+    // assemble le numéro interne
     data.date_cde = new Date(data.date_cde).toLocaleDateString("fr-CA");
     // convertit end_date_customer en dd/mm/yyyy
     data.end_date_customer = new Date(data.end_date_customer).toLocaleDateString("fr-CA");
@@ -581,8 +567,12 @@ export class OrderUpdateComponent implements OnInit {
     data.start_date_works = new Date(data.start_date_works).toLocaleDateString("fr-CA");
     // convertit end_date_works en dd/mm/yyyy
     data.end_date_works = new Date(data.end_date_works).toLocaleDateString("fr-CA");
+    // assure que modifiedBy est un tableau
+    if (!data.modifiedBy) {
+      data.modifiedBy = [];
+    }
     // rajoute une entrée {user: _id, date: date} dans modifiedBy
-    data.modifiedBy.append({ user: this.currentUser.userId, date: new Date() });
+    data.modifiedBy.push({ user: this.currentUser.userId, date: new Date() });
     return data;
   }
 
