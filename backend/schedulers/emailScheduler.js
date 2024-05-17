@@ -62,7 +62,7 @@ const scheduleRecurringEmails = async (contractId) => {
                     contract.external_contributor.email,
                     replacements,
                     nextBusinessDay,
-                    'reminderInvoiceTemplate.html' // New template for invoice reminder
+                    'reminderInvoiceTemplate' // New template for invoice reminder
                 );
             }
 
@@ -71,7 +71,7 @@ const scheduleRecurringEmails = async (contractId) => {
                     contract.subcontractor.email,
                     replacements,
                     nextBusinessDay,
-                    'reminderInvoiceTemplate.html' // New template for invoice reminder
+                    'reminderInvoiceTemplate' // New template for invoice reminder
                 );
             }
 
@@ -85,5 +85,5 @@ const scheduleRecurringEmails = async (contractId) => {
 };
 
 
-module.exports = { scheduleEmailToContributor };
+module.exports = { scheduleEmailToContributor, scheduleRecurringEmails };
 
