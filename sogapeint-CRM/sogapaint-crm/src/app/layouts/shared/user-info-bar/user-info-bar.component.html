@@ -8,12 +8,12 @@
             <span>{{ currentUser.lastName }}</span>
         </div>
         <div class="role-badge" [ngClass]="getRoleClass(currentUser.role)" *ngIf="currentUser.role !== 'superAdmin'; else superAdminTooltip">
-            {{ currentUser.role }}
+            {{ translateRole(currentUser.role) }}
         </div>
         <ng-template #superAdminTooltip>
             <div class="role-badge" [ngClass]="getRoleClass(currentUser.role)"
                  [title]="randomTooltip">
-                {{ currentUser.role }}
+                {{ translateRole(currentUser.role) }}
             </div>
         </ng-template>
         <button class="logout-button" (click)="logout()" title="Déconnexion">

@@ -174,6 +174,18 @@ export class CompanyDetailComponent implements OnInit {
     this.router.navigate(['/user-detail', user._id]);
   }
 
+  translateRole(role: string): string {
+    const roleTranslationMap = {
+      'superAdmin': 'superAdmin',
+      'cocontractor': 'co-traitant',
+      'subcontractor': 'sous-traitant',
+      'customer': 'client',
+      'comanager': 'régisseur',
+      'supermanager': 'chef régisseur'
+    };
+    return roleTranslationMap[role] || role;
+  }
+
 }
 
 

@@ -26,11 +26,11 @@ export class CreateUserComponent implements OnInit {
   userForm: FormGroup;
   roles = [
     { name: 'Super administrateur', value: 'superAdmin' },
-    { name: 'Cocontractant', value: 'cocontractor' },
+    { name: 'Co-contractant', value: 'cocontractor' },
     { name: 'Sous-traitant', value: 'subcontractor' },
     { name: 'Client', value: 'customer' },
-    { name: 'Cogestionnaire', value: 'comanager' },
-    { name: 'Supermanager', value: 'supermanager' }
+    { name: 'Régisseur', value: 'comanager' },
+    { name: 'Super Régisseur', value: 'supermanager' }
   ];
   passwordStrength: any;
   passwordFeedback: string;

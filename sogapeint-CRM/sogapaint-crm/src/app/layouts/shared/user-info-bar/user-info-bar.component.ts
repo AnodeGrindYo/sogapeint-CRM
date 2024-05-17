@@ -62,4 +62,16 @@ export class UserInfoBarComponent implements OnInit {
       const randomIndex = Math.floor(Math.random() * this.tooltips.length);
       return this.tooltips[randomIndex];
   }
+
+  translateRole(role: string): string {
+    const roleTranslationMap = {
+      'superAdmin': 'superAdmin',
+      'cocontractor': 'co-traitant',
+      'subcontractor': 'sous-traitant',
+      'customer': 'client',
+      'comanager': 'régisseur',
+      'supermanager': 'chef régisseur'
+    };
+    return roleTranslationMap[role] || role;
+  }
 }
