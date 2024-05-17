@@ -152,5 +152,17 @@ export class ManageUsersComponent implements OnInit {
     // Si le format ne correspond pas, retourne le numéro original
     return phoneNumber;
   }
+
+  translateRole(role: string): string {
+    const roleTranslationMap = {
+      'superAdmin': 'superAdmin',
+      'cocontractor': 'co-traitant',
+      'subcontractor': 'sous-traitant',
+      'customer': 'client',
+      'comanager': 'régisseur',
+      'supermanager': 'chef régisseur'
+    };
+    return roleTranslationMap[role] || role;
+  }
   
 }

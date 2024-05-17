@@ -25,7 +25,7 @@
                   'badge-customer': user.role === 'customer',
                   'badge-comanager': user.role === 'comanager',
                   'badge-supermanager': user.role === 'supermanager'
-                }">{{ user.role | titlecase }}</span>
+                }">{{ translateRole(user.role) | titlecase }}</span>
               </ng-container>
               <ng-container *ngIf="column.name === 'phone'">
                 {{ formatPhoneNumber(user.phone) }}
