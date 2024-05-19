@@ -56,6 +56,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
 
 
+
+
 @NgModule({
   declarations: [
     FilterPipe,
@@ -103,7 +105,7 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
     LeafletModule,
     ScrollingModule,
     InfiniteScrollModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
   ],
   providers: [
     

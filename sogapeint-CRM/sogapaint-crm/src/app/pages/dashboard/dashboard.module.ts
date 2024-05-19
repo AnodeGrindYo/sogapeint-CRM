@@ -16,6 +16,8 @@ import { GridsterModule } from 'angular-gridster2';
 import {GridsterComponent, GridsterItemComponent} from 'angular-gridster2';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DonutCardComponent } from './donut-card/donut-card.component';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 
 
@@ -41,7 +43,9 @@ import { DonutCardComponent } from './donut-card/donut-card.component';
     GridsterModule,
     GridsterComponent,
     GridsterItemComponent,
-    NgApexchartsModule
+    NgApexchartsModule, 
+    EmojiModule,
+    PickerComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

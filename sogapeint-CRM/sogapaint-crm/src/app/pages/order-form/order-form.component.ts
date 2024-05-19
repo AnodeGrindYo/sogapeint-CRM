@@ -81,6 +81,12 @@ export class OrderFormComponent implements OnInit {
   files: File[] = [];
 
   @ViewChild('confirmationModal') confirmationModal;
+
+  // suppression de prestation
+  @ViewChild('deleteBenefitModal') deleteBenefitModal;
+  replacementBenefit: string;
+  benefitToDelete: string;
+  filteredBenefits: any[] = [];
   
   constructor(
     private contractService: ContractService, 
@@ -730,15 +736,103 @@ export class OrderFormComponent implements OnInit {
               });
             }
             
-            deleteBenefit(benefitId: string, event: Event): void {
-              event.stopPropagation(); // Pour empêcher la sélection de l'élément
-              this.benefitService.deleteBenefit(benefitId).subscribe({
-                next: () => {
-                  this.loadBenefits();
-                },
-                error: error => console.error("Erreur lors de la suppression de la prestation", error)
-              });
-            }
+            // deleteBenefit(benefitId: string, event: Event): void {
+            //   event.stopPropagation(); // Pour empêcher la sélection de l'élément
+            //   this.benefitService.deleteBenefit(benefitId).subscribe({
+            //     next: () => {
+            //       this.loadBenefits();
+            //     },
+            //     error: error => console.error("Erreur lors de la suppression de la prestation", error)
+            //   });
+            // }
             
+            // deleteBenefit(benefitId: string, event: Event): void {
+            //   event.stopPropagation(); 
+            //   this.benefitToDelete = benefitId;
+          
+            //   this.benefitService.checkBenefitInUse(benefitId).subscribe({
+            //     next: (isInUse) => {
+            //       if (isInUse) {
+            //         this.modalService.open(this.deleteBenefitModal);
+            //       } else {
+            //         this.benefitService.deleteBenefit(benefitId).subscribe({
+            //           next: () => {
+            //             this.loadBenefits();
+            //           },
+            //           error: error => console.error("Erreur lors de la suppression de la prestation", error)
+            //         });
+            //       }
+            //     },
+            //     error: error => console.error("Erreur lors de la vérification de la prestation", error)
+            //   });
+            // }
+          
+            // confirmDeleteBenefit(): void {
+            //   this.benefitService.replaceBenefit(this.benefitToDelete, this.replacementBenefit).subscribe({
+            //     next: () => {
+            //       this.loadBenefits();
+            //       this.modalService.dismissAll();
+            //     },
+            //     error: error => console.error("Erreur lors du remplacement de la prestation", error)
+            //   });
+            // }
+          
+            // addNewReplacementBenefit(): void {
+            //   const newBenefitName = prompt("Entrez le nom de la nouvelle prestation:");
+            //   if (newBenefitName) {
+            //     this.benefitService.addBenefit({ name: newBenefitName }).subscribe({
+            //       next: benefit => {
+            //         this.replacementBenefit = benefit.benefit._id;
+            //         this.benefits.push({ name: benefit.benefit.name, value: benefit.benefit._id });
+            //       },
+            //       error: error => console.error("Erreur lors de l'ajout de la prestation", error)
+            //     });
+            //   }
+            // }
 
-          }
+  deleteBenefit(benefitId: string, event: Event): void {
+    event.stopPropagation(); 
+    this.benefitToDelete = benefitId;
+
+    this.benefitService.checkBenefitInUse(benefitId).subscribe({
+      next: (isInUse) => {
+        if (isInUse) {
+          this.replacementBenefit = null; // Réinitialiser la sélection de remplacement
+          this.filteredBenefits = this.benefits.filter(benefit => benefit.value !== benefitId); // Exclure la prestation à supprimer
+          this.modalService.open(this.deleteBenefitModal);
+        } else {
+          this.benefitService.deleteBenefit(benefitId).subscribe({
+            next: () => {
+              this.loadBenefits();
+            },
+            error: error => console.error("Erreur lors de la suppression de la prestation", error)
+          });
+        }
+      },
+      error: error => console.error("Erreur lors de la vérification de la prestation", error)
+    });
+  }
+
+  confirmDeleteBenefit(): void {
+    this.benefitService.replaceBenefit(this.benefitToDelete, this.replacementBenefit).subscribe({
+      next: () => {
+        this.modalService.dismissAll(); // Ferme tous les modals ouverts
+        this.loadBenefits();
+      },
+      error: error => console.error("Erreur lors du remplacement de la prestation", error)
+    });
+  }
+  
+  addNewReplacementBenefit(): void {
+    const newBenefitName = prompt("Entrez le nom de la nouvelle prestation:");
+    if (newBenefitName) {
+      this.benefitService.addBenefit({ name: newBenefitName }).subscribe({
+        next: benefit => {
+          this.replacementBenefit = benefit.benefit._id;
+          this.loadBenefits();
+        },
+        error: error => console.error("Erreur lors de l'ajout de la prestation", error)
+      });
+    }
+  }
+}

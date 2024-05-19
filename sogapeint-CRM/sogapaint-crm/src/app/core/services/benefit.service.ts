@@ -62,5 +62,30 @@ export class BenefitService {
     deleteBenefit(benefitId: string): Observable<any> {
         return this.http.delete<any>(`${environment.apiUrl}/api/auth/benefit/${benefitId}`);
     }
+
+    // Nouvelle méthode pour vérifier si une prestation est utilisée
+    /**
+     * Vérifie si une prestation est utilisée dans des commandes.
+     * 
+     * @param benefitId L'identifiant de la prestation à vérifier.
+     * @returns Un Observable contenant un booléen indiquant si la prestation est utilisée.
+     */
+    checkBenefitInUse(benefitId: string): Observable<boolean> {
+        return this.http.get<boolean>(`${environment.apiUrl}/api/auth/checkBenefitInUse`, {
+            params: { benefitId }
+        });
+    }
+
+    // Nouvelle méthode pour remplacer une prestation
+    /**
+     * Remplace une prestation par une autre dans les commandes.
+     * 
+     * @param oldBenefitId L'identifiant de la prestation à remplacer.
+     * @param newBenefitId L'identifiant de la nouvelle prestation.
+     * @returns Un Observable contenant la réponse de l'API.
+     */
+    replaceBenefit(oldBenefitId: string, newBenefitId: string): Observable<any> {
+        return this.http.put<any>(`${environment.apiUrl}/api/auth/replaceBenefit`, { oldBenefitId, newBenefitId });
+    }
     
 }

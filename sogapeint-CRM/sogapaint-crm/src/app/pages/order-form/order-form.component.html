@@ -383,3 +383,28 @@
         </div>
       </div>
     </ng-template>
+
+
+    <!-- Modal pour la suppression d'une prestation -->
+    <ng-template #deleteBenefitModal let-modal>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation de suppression</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Cette prestation est utilisée dans des commandes existantes. Veuillez sélectionner une prestation de remplacement :
+            <ng-select [items]="filteredBenefits" bindLabel="name" bindValue="value" [(ngModel)]="replacementBenefit" placeholder="Choisissez une prestation de remplacement"></ng-select>
+            ou <button type="button" class="btn btn-link" (click)="addNewReplacementBenefit()">créer une nouvelle prestation</button>.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="confirmDeleteBenefit()">Confirmer</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    

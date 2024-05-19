@@ -18,6 +18,8 @@ import { AuthenticationService } from './core/services/auth.service';
 
 import { ProtectedDocumentationComponent } from "./protected-documentation/protected-documentation.component";
 
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
@@ -40,6 +42,7 @@ export function createTranslateLoader(http: HttpClient): any {
     PagesModule,
     LayoutsModule,
     FormsModule,
+    PickerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

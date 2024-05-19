@@ -134,6 +134,12 @@ router.delete('/deleteFile', isAdminOrSuperAdmin, authController.deleteFile);
 // Route pour obtenir le nom d'une prestation par son id
 router.get('/benefit/:benefitId', isConnected, authController.getBenefitNameById);
 
+// Route pour checkBenefitInUse
+router.get('/checkBenefitInUse', isConnected, authController.checkBenefitInUse);
+
+// Route pour replaceBenefit
+router.put('/replaceBenefit', isAdminOrSuperAdmin, authController.replaceBenefit);
+
 // Route pour ajouter une observation à un contrat
 router.post('/observation', isAdminOrSuperAdmin, authController.addObservation);
 

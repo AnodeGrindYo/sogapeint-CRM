@@ -1067,7 +1067,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           customerDetails.email,
           replacements,
           futureDate,
-          'orderNotificationTemplate.html'
+          'orderNotificationTemplate'
         );
       }
   
@@ -1077,7 +1077,7 @@ exports.resetPasswordFromAdmin = async (req, res) => {
           externalContributorDetails.email,
           replacements,
           futureDate,
-          'orderNotificationTemplate.html'
+          'orderNotificationTemplate'
         );
       }
   
@@ -2066,3 +2066,72 @@ exports.addIncident = async (req, res) => {
                         res.status(500).json({ error: error.message });
                       }
                     };
+
+// Vérifier si une prestation est utilisée dans des commandes
+exports.checkBenefitInUse = async (req, res) => {
+  console.log('Vérification de l\'utilisation d\'une prestation dans des commandes');
+  try {
+    const benefitId = req.query.benefitId;
+    console.log('benefitId:', benefitId);
+
+    // Vérification de la validité de l'ObjectId
+    if (!mongoose.Types.ObjectId.isValid(benefitId)) {
+      console.error('Invalid benefitId:', benefitId);
+      return res.status(400).json({ error: 'Invalid benefitId' });
+    }
+
+    const contracts = await ContractModel.find({ benefit: benefitId });
+    console.log('contracts:', contracts);
+    console.log('Nombre de contrats:', contracts.length);
+
+    res.json(contracts.length > 0);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send(error);
+  }
+};
+
+// Remplacer une prestation dans des commandes
+// Remplacer une prestation dans des commandes
+exports.replaceBenefit = async (req, res) => {
+  console.log('Début du remplacement de la prestation');
+  try {
+    const { oldBenefitId, newBenefitId } = req.body;
+    console.log('oldBenefitId:', oldBenefitId);
+    console.log('newBenefitId:', newBenefitId);
+
+    // Vérification de la validité des ObjectId
+    if (!mongoose.Types.ObjectId.isValid(oldBenefitId) || !mongoose.Types.ObjectId.isValid(newBenefitId)) {
+      console.error('Invalid benefitId(s):', { oldBenefitId, newBenefitId });
+      return res.status(400).json({ error: 'Invalid benefitId(s)' });
+    }
+
+    // Vérification de l'existence des prestations
+    const oldBenefit = await Benefit.findById(oldBenefitId);
+    const newBenefit = await Benefit.findById(newBenefitId);
+    if (!oldBenefit || !newBenefit) {
+      console.error('Benefit(s) not found:', { oldBenefit, newBenefit });
+      return res.status(404).json({ error: 'Benefit(s) not found' });
+    }
+
+    console.log('oldBenefit:', oldBenefit);
+    console.log('newBenefit:', newBenefit);
+
+    // Mise à jour des contrats
+    const updateResult = await ContractModel.updateMany(
+      { benefit: oldBenefitId },
+      { benefit: newBenefitId }
+    );
+
+    // Suppression de l'ancienne prestation
+    const deleteResult = await Benefit.findByIdAndDelete(oldBenefitId);
+
+    console.log('updateResult:', updateResult);
+    console.log('deleteResult:', deleteResult);
+
+    res.status(200).json({ message: 'Prestation remplacée avec succès.' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send(error);
+  }
+};
