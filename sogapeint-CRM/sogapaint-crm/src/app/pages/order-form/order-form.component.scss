@@ -916,4 +916,41 @@ svg:hover {
     }
 }
 
-
+.pulse-warning {
+    width: 24px;
+    height: 24px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .pulse-warning::before {
+    content: "!";
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  @keyframes pulseWarning {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .pulse-warning {
+    animation: pulseWarning 1s infinite;
+  }
+  

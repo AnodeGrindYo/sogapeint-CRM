@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, of, switchMap, takeUntil } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-order-form',
@@ -87,6 +89,9 @@ export class OrderFormComponent implements OnInit {
   replacementBenefit: string;
   benefitToDelete: string;
   filteredBenefits: any[] = [];
+
+  warningMessage: string;
+  @ViewChild('warningModal') warningModal;
   
   constructor(
     private contractService: ContractService, 
@@ -718,7 +723,32 @@ export class OrderFormComponent implements OnInit {
               console.log("Updated contractData:", this.contractData);
             }
 
+            // addNewBenefit(name: string): void {
+            //   console.log('Ajout de la prestation:', name);
+            //   const newBenefit = { name: name };
+            //   this.benefitService.addBenefit(newBenefit).subscribe({
+            //     next: benefit => {
+            //       console.log('Prestation ajoutée avec succès:', benefit.benefit._id);
+            //       this.loadBenefits();
+            //       const benefitToSet = {name: benefit.benefit.name, value: benefit.benefit._id};
+            //       console.log('Prestation à définir:', benefitToSet);
+            //       setTimeout(() => {
+            //         this.orderForm.get('benefit').setValue(benefitToSet.value);
+            //       }
+            //       , 500);
+            //     },
+            //     error: error => console.error("Erreur lors de l'ajout de la prestation", error)
+            //   });
+            // }
             addNewBenefit(name: string): void {
+              const existingBenefitName = this.isProbableTypo(name, this.benefits.map(benefit => benefit.name));
+              
+              if (existingBenefitName) {
+                this.warningMessage = `Il semble qu'une prestation similaire existe déjà: ${existingBenefitName}`;
+                this.modalService.open(this.warningModal);
+                return;
+              }
+            
               console.log('Ajout de la prestation:', name);
               const newBenefit = { name: name };
               this.benefitService.addBenefit(newBenefit).subscribe({
@@ -729,12 +759,13 @@ export class OrderFormComponent implements OnInit {
                   console.log('Prestation à définir:', benefitToSet);
                   setTimeout(() => {
                     this.orderForm.get('benefit').setValue(benefitToSet.value);
-                  }
-                  , 500);
+                  }, 500);
                 },
                 error: error => console.error("Erreur lors de l'ajout de la prestation", error)
               });
             }
+            
+            
             
             // deleteBenefit(benefitId: string, event: Event): void {
             //   event.stopPropagation(); // Pour empêcher la sélection de l'élément
@@ -835,4 +866,67 @@ export class OrderFormComponent implements OnInit {
       });
     }
   }
+
+  levenshteinDistance(word1: string, word2: string): number {
+    const n = word1.length;
+    const m = word2.length;
+    
+    // Si l'un des mots est vide, la distance est la longueur de l'autre mot
+    if (n === 0) return m;
+    if (m === 0) return n;
+    
+    // Initialiser une matrice (tableau 2D) de dimensions (n+1) x (m+1)
+    const matrix: number[][] = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
+    
+    // Remplir la première colonne et la première ligne de la matrice
+    // Cela correspond aux cas où l'on transforme un mot vide en l'autre en insérant tous ses caractères
+    for (let i = 0; i <= n; i++) {
+        matrix[i][0] = i;
+    }
+    for (let j = 0; j <= m; j++) {
+        matrix[0][j] = j;
+    }
+    
+    // Remplir le reste de la matrice
+    for (let i = 1; i <= n; i++) {
+        for (let j = 1; j <= m; j++) {
+            // Si les caractères des deux mots sont les mêmes, il n'y a pas de coût (0)
+            // Sinon, le coût est de 1 (substitution)
+            const cost = word1[i - 1] === word2[j - 1] ? 0 : 1;
+            
+            // La valeur de la cellule actuelle est le minimum des trois valeurs suivantes :
+            // 1. La valeur de la cellule au-dessus (suppression) + 1
+            // 2. La valeur de la cellule à gauche (insertion) + 1
+            // 3. La valeur de la cellule en diagonale (substitution) + coût
+            matrix[i][j] = Math.min(
+                matrix[i - 1][j] + 1,   // Suppression
+                matrix[i][j - 1] + 1,   // Insertion
+                matrix[i - 1][j - 1] + cost // Substitution
+            );
+        }
+    }
+    
+    // La distance de Levenshtein est la valeur dans la cellule en bas à droite de la matrice
+    return matrix[n][m];
+}
+
+  isProbableTypo(word: string, dictionary: string[], threshold: number = 2): string | null {
+    let minDistance = Infinity;
+    let correction: string | null = null;
+    
+    // Parcourt chaque mot du dictionnaire
+    for (const dictWord of dictionary) {
+        // Calcule la distance de Levenshtein entre le mot à vérifier et le mot du dictionnaire
+        const distance = this.levenshteinDistance(word, dictWord);
+        
+        // Si la distance est inférieure à la distance minimale actuelle, met à jour la distance minimale et la correction
+        if (distance < minDistance) {
+            minDistance = distance;
+            correction = dictWord;
+        }
+    }
+    
+    // Retourne la correction si la distance minimale est inférieure ou égale au seuil, sinon retourne null
+    return minDistance <= threshold ? correction : null;
+}
 }

@@ -408,3 +408,26 @@
       </div>
     </ng-template>
     
+    <ng-template #warningModal let-modal>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Avertissement</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex align-items-center">
+              <div class="warning-icon pulse-warning me-3"></div>
+              <div>{{ warningMessage }}</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    
+    
