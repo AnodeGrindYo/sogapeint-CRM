@@ -1,23 +1,21 @@
-<div class="col-lg-4">
-    <div class="card">
-      <div class="card-body border-bottom">
+<!-- <div class="col-lg-4"> -->
+    <div class="card rounded-lg">
         <div class="user-chat-border">
           <div class="row">
             <div class="col-md-5 col-9">
               <h5 class="font-size-15 mb-1">Chat</h5>
             </div>
           </div>
-        </div>
       </div>
       <div class="card-body">
-        <div class="chat-widget">
+        <div class="chat-widget" #chatWidget>
           <div class="chat-conversation">
-            <ng-scrollbar style="height: 292px;">
-              <ul class="list-unstyled mb-0 pr-3" *ngFor="let data of chatData" [ngClass]="{ 'right': data.align === 'right' }">
-                <li *ngIf="!data.text">
+            <!-- <ng-scrollbar style="height: 292px;"> -->
+              <ul class="list-unstyled mb-0 pr-3">
+                <li *ngFor="let data of chatData" [ngClass]="{ 'right': data.align === 'right', 'left': data.align === 'left' }">
                   <div class="conversation-list">
                     <div class="ctext-wrap">
-                      <div class="conversation-name">{{data.name}}</div>
+                      <div *ngIf="data.showName" class="conversation-name">{{data.name}}</div>
                       <div class="ctext-wrap-content">
                         <p class="mb-0">{{data.message}}</p>
                       </div>
@@ -25,13 +23,8 @@
                     </div>
                   </div>
                 </li>
-                <li *ngIf="data.text">
-                  <div class="chat-day-title">
-                    <span class="title">{{data.text}}</span>
-                  </div>
-                </li>
               </ul>
-            </ng-scrollbar>
+            <!-- </ng-scrollbar> -->
           </div>
         </div>
       </div>
@@ -47,19 +40,12 @@
             </div>
           </div>
           <div class="col-auto">
-            <button type="button" class="btn btn-secondary me-2" (click)="toggleEmojiPicker()">😊</button>
-            <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light">
+            <!-- <button type="button" class="btn btn-secondary me-2" (click)="toggleEmojiPicker()">😊</button> -->
+            <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light" (click)="scrollToBottom()">
               <span class="d-none d-sm-inline-block">Envoyer</span> <i class="mdi mdi-send ms-1"></i>
             </button>
           </div>
         </form>
-        <!-- <emoji-mart
-          *ngIf="emojiPickerVisible"
-          title="Pick your emoji..."
-          emoji="point_up"
-          set="apple"
-          (emojiClick)="addEmoji($event)"
-        ></emoji-mart> -->
         <emoji-mart 
         *ngIf="emojiPickerVisible" 
         (emojiSelect)="select($event)" 
@@ -68,5 +54,5 @@
         ></emoji-mart>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
   

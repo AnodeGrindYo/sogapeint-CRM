@@ -33,7 +33,7 @@ const routes: Routes = [
     { path: 'company-update/:companyId', component: CompanyUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
     { path: 'company-create', component: CompanyCreateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
     { path: 'dashboard', component: DashboardComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
-    { path: 'dashboard-fake', component: DashboardFakeComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }},
+    // { path: 'dashboard-fake', component: DashboardFakeComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }},
     { path: 'FAQ', component: FAQComponent , canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
     { path: 'order-form', component: OrderFormComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin
     { path: 'order-detail/:orderId', component: OrderDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin']} }, // auth: any role for connected users

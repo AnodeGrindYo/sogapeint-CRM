@@ -137,12 +137,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           icon: 'ri-dashboard-line',
           link: '/dashboard'
         },
-        {
-          id: 10,
-          label: 'Dashboard (fake)',
-          icon: 'ri-dashboard-line',
-          link: '/dashboard-fake'
-        },
+        // {
+        //   id: 10,
+        //   label: 'Dashboard (fake)',
+        //   icon: 'ri-dashboard-line',
+        //   link: '/dashboard-fake'
+        // },
         {
           id: 2,
           label: 'Gestion des contacts',
@@ -179,12 +179,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           icon: 'ri-shopping-cart-2-line',
           link: '/order-form'
         },
-        {
-          id: 8,
-          label: 'FAQ',
-          icon: 'ri-question-answer-line',
-          link: '/FAQ'
-        },
+        // {
+        //   id: 8,
+        //   label: 'FAQ',
+        //   icon: 'ri-question-answer-line',
+        //   link: '/FAQ'
+        // },
         {
           id: 9,
           label: 'Documentation',
