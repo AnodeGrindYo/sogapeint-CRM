@@ -409,7 +409,7 @@
     </ng-template>
     
     <ng-template #warningModal let-modal>
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog" role="document" [ngClass]="{'shake-modal': isExploding, 'fall-modal': isFalling}">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Avertissement</h5>
@@ -419,8 +419,14 @@
           </div>
           <div class="modal-body">
             <div class="d-flex align-items-center">
-              <div class="warning-icon pulse-warning me-3"></div>
-              <div>{{ warningMessage }}</div>
+              <div class="warning-icon pulse-warning me-3" [ngClass]="{'explode': isExploding}" (click)="triggerExplosion()">
+                <div class="particle" *ngFor="let particle of [].constructor(50); let i = index" [ngStyle]="{'--i': (i % 10) / 10, '--j': (i / 10) / 10}"></div>
+              </div>
+              <div>
+                <p>{{ warningMessage }}</p>
+                <p>Levenshtein distance score: {{ warningScore }}</p>
+                <a href="https://fr.wikipedia.org/wiki/Distance_de_Levenshtein" target="_blank">euh... c'est quoi la distance de Levenshtein?</a>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -429,5 +435,14 @@
         </div>
       </div>
     </ng-template>
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     

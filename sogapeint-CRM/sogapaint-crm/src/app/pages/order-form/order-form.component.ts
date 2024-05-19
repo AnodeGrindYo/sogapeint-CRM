@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ContractService } from '../../core/services/contract.service';
 import { CompanyService } from '../../core/services/company.service';
@@ -91,7 +91,10 @@ export class OrderFormComponent implements OnInit {
   filteredBenefits: any[] = [];
 
   warningMessage: string;
+  warningScore: number;
   @ViewChild('warningModal') warningModal;
+  isExploding: boolean = false;
+  isFalling: boolean = false; // Propriété pour gérer l'état de décrochement du modal
   
   constructor(
     private contractService: ContractService, 
@@ -99,7 +102,8 @@ export class OrderFormComponent implements OnInit {
     private companyService: CompanyService,
     private benefitService: BenefitService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
     ) {}
     
     ngOnInit(): void {
@@ -741,12 +745,21 @@ export class OrderFormComponent implements OnInit {
             //   });
             // }
             addNewBenefit(name: string): void {
-              const existingBenefitName = this.isProbableTypo(name, this.benefits.map(benefit => benefit.name));
-              
+              const existingBenefit = this.benefits.map(benefit => benefit.name);
+              const existingBenefitName = this.isProbableTypo(name, existingBenefit);
+              const levenshteinScore = this.levenshteinDistance(name, existingBenefitName);
+            
               if (existingBenefitName) {
                 this.warningMessage = `Il semble qu'une prestation similaire existe déjà: ${existingBenefitName}`;
+                this.warningScore = levenshteinScore;
                 this.modalService.open(this.warningModal);
-                return;
+            
+                // Ajouter la classe pour l'effet de lumière diffuse rouge pulsante
+                this.renderer.addClass(document.getElementById('benefit'), 'pulsing-red');
+            
+                setTimeout(() => {
+                  this.renderer.removeClass(document.getElementById('benefit'), 'pulsing-red');
+                }, 7000); // Durée de l'effet
               }
             
               console.log('Ajout de la prestation:', name);
@@ -755,7 +768,7 @@ export class OrderFormComponent implements OnInit {
                 next: benefit => {
                   console.log('Prestation ajoutée avec succès:', benefit.benefit._id);
                   this.loadBenefits();
-                  const benefitToSet = {name: benefit.benefit.name, value: benefit.benefit._id};
+                  const benefitToSet = { name: benefit.benefit.name, value: benefit.benefit._id };
                   console.log('Prestation à définir:', benefitToSet);
                   setTimeout(() => {
                     this.orderForm.get('benefit').setValue(benefitToSet.value);
@@ -764,6 +777,8 @@ export class OrderFormComponent implements OnInit {
                 error: error => console.error("Erreur lors de l'ajout de la prestation", error)
               });
             }
+            
+            
             
             
             
@@ -929,4 +944,22 @@ export class OrderFormComponent implements OnInit {
     // Retourne la correction si la distance minimale est inférieure ou égale au seuil, sinon retourne null
     return minDistance <= threshold ? correction : null;
 }
+
+triggerExplosion(): void {
+  this.isExploding = true;
+
+  this.renderer.addClass(document.body, 'shake-page');
+
+  setTimeout(() => {
+    this.isExploding = false;
+    this.renderer.removeClass(document.body, 'shake-page');
+    this.isFalling = true;
+
+    // Réinitialiser l'état après la chute
+    setTimeout(() => {
+      this.isFalling = false;
+    }, 1500); // Durée de l'animation de chute
+  }, 1000); // Durée de l'animation d'explosion
+}
+
 }
