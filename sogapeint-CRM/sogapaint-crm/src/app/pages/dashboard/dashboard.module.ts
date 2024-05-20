@@ -18,8 +18,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { DonutCardComponent } from './donut-card/donut-card.component';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-
-
+import { InvoicesManagementComponent } from './invoices-management/invoices-management.component';
+// Import NgbTooltipModule
+// import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
     StatSummaryCardComponent,
     ChatCardComponent,
     PickerCardComponent,
-    DonutCardComponent
+    DonutCardComponent,
+    InvoicesManagementComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,9 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
     GridsterItemComponent,
     NgApexchartsModule, 
     EmojiModule,
-    PickerComponent
+    PickerComponent,
+    // InvoicesManagementComponent,
+    // NgbTooltipModule    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

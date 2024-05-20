@@ -1,0 +1,32 @@
+<!-- <p>invoices-management works!</p> -->
+<div class="card rounded-lg">
+    <div class="card-header">Factures</div>
+    <div class="card-body">
+      <div *ngIf="files && files.length > 0" class="mt-2">
+        <div class="card">
+          <div class="card-header">
+            Fichiers:
+            <span class="align-right">{{ files.length }}</span>
+          </div>
+          <div class="file-list">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item file-item" *ngFor="let file of files; let i = index">
+                <div class="file-description d-flex align-items-center">
+                  <i class="fas fa-file-alt me-2"></i>
+                  <span class="file-name flex-grow-1">{{ file.name }}</span>
+                  <span class="file-size me-2">{{ file.size }}</span>
+                  <button type="button" class="btn btn-download ms-auto" (click)="onFileDownload(file)" > <!--[ngbTooltip]="'Télécharger '+ file.name"-->
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <button *ngIf="currentUser.role == 'superAdmin'" type="button" class="btn btn-delete ms-auto" (click)="removeFile(i)" ><!--[ngbTooltip]="'Supprimer '+ file.name +' de la liste'"-->
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

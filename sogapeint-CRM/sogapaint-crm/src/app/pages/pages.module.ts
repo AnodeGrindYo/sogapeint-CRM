@@ -52,6 +52,7 @@ import { FilterPipe } from './dashboard-fake/filter.pipe'; // TODO pipe à modif
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+// import { InvoicesManagementComponent } from './dashboard/invoices-management/invoices-management.component';
 
 import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
 
@@ -78,7 +79,8 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
     ManageOrdersComponent,
     OrderUpdateComponent,
     OrderUpdateCocontractorComponent,
-    FileSizePipe
+    FileSizePipe,
+    // InvoicesManagementComponent,
     // DashboardComponent
     // LandingPageComponent
   ],
@@ -109,6 +111,9 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
   ],
   providers: [
     
-  ]
+  ],
+  // exports: [
+  //   InvoicesManagementComponent
+  // ]
 })
 export class PagesModule { }
