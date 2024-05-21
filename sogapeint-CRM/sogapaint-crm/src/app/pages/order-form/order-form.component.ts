@@ -946,20 +946,20 @@ export class OrderFormComponent implements OnInit {
 }
 
 triggerExplosion(): void {
-  this.isExploding = true;
+  // this.isExploding = true;
 
-  this.renderer.addClass(document.body, 'shake-page');
+  // this.renderer.addClass(document.body, 'shake-page');
 
-  setTimeout(() => {
-    this.isExploding = false;
-    this.renderer.removeClass(document.body, 'shake-page');
-    this.isFalling = true;
+  // setTimeout(() => {
+    // this.isExploding = false;
+  //   this.renderer.removeClass(document.body, 'shake-page');
+  //   this.isFalling = true;
 
-    // Réinitialiser l'état après la chute
-    setTimeout(() => {
-      this.isFalling = false;
-    }, 1500); // Durée de l'animation de chute
-  }, 1000); // Durée de l'animation d'explosion
+  //   // Réinitialiser l'état après la chute
+  //   setTimeout(() => {
+  //     this.isFalling = false;
+  //   }, 1500); // Durée de l'animation de chute
+  // }, 1000); // Durée de l'animation d'explosion
 }
 
 }
