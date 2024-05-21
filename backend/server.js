@@ -14,9 +14,12 @@ const chatRoutes = require('./routes/chatRoutes'); // Importer les routes de cha
 // Initialisation d'Express
 const app = express();
 const server = http.createServer(app);
+const frontendUrl = process.env.FRONTEND_URL;
+const frontendPort = process.env.FRONTEND_PORT;
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:4200", // Votre frontend Angular
+    // origin:"http://localhost:4200", // frontend Angular
+    origin: `http://${frontendUrl}:${frontendPort}`, // frontend Angular
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true

@@ -231,6 +231,7 @@ export class UserDetailComponent implements OnInit {
         }
 
         openConfirmationModalForModification(content: any) {
+          console.log("openConfirmationModalForModification for content: ", content);
           if (this.userForm.valid) {
             const modalRef = this.modalService.open(content);
             modalRef.result.then((result) => {

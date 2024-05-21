@@ -44,6 +44,7 @@ const routes: Routes = [
     { path: 'order-detail-customer/:orderId', component: OrderDetailCustomerComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'customer', 'supermanager', 'comanager'] } },
     // route pour la landing page
     { path: '', component: LandingPageComponent}
+    // { path: '', }
 ];
 
 @NgModule({

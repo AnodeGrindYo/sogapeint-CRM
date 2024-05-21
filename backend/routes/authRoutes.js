@@ -167,4 +167,7 @@ router.post('/benefit', isAdminOrSuperAdmin, authController.addBenefit);
 // Route pour supprimer un service par son id
 router.delete('/benefit/:benefitId', isAdminOrSuperAdmin, authController.deleteBenefit);
 
+// Route pour getInvoices
+router.get('/invoices', isConnected, authController.getInvoices);
+
 module.exports = router;

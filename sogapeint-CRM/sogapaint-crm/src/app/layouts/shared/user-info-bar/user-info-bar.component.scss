@@ -1,6 +1,7 @@
 .user-info-bar {
     width: 100%;
-    background-color: var(--bs-primary);
+    // background-color: var(--bs-primary);
+    background-color: #CCFFB2;
     color: var(--bs-white);
     padding: 20px;
     box-shadow: var(--bs-box-shadow);
@@ -17,11 +18,15 @@
     .user-details {
         flex: 1; // Permet de prendre l'espace disponible et pousse les autres éléments à droite
         display: flex;
-        align-items: center;
+        // align-items: center;
+        align-items: left;
+        // margin-left: 0px !important;
 
         span {
-            margin-right: 10px;
-            color: var(--bs-light);
+            // margin-right: 10px;
+            // color: var(--bs-light);
+            color: #000;
+            // color: #0A7C24;
         }
     }
     
@@ -30,6 +35,7 @@
         border-radius: 15px;
         color: var(--bs-white);
         font-weight: bold;
+        margin-right: 5px;
         
         &.badge-superadmin { background-color: #e74c3c; } // Rouge pour superAdmin
         &.badge-cocontractor { background-color: #3498db; } // Bleu pour cocontractor
@@ -52,6 +58,12 @@
         i {
             font-size: 1.5rem; // Taille de l'icône
         }
+    }
+
+    #logo {
+        margin-left: 40px;
+        width: 33%;
+        height: 33%;
     }
     
 }

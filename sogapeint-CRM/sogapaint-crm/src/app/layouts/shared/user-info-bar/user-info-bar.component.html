@@ -3,6 +3,12 @@
     <div class="navbar-header">
     <!-- Intégration du user-info-bar -->
     <div class="user-info-bar" *ngIf="currentUser">
+        <div>
+            <a routerLink="" class="logo">
+              <!-- <img src="assets/images/logo-dark.png" height="20" alt="logo"> -->
+              <img id="logo" src="assets/images/sogapeint-logo.png" alt="logo">
+            </a>
+          </div>
         <div class="user-details">
             <span>{{ currentUser.firstName }}</span>
             <span>{{ currentUser.lastName }}</span>
