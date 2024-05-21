@@ -27,7 +27,7 @@
       <div class="row mb-3">
         <div class="col-12 mb-2">
           <div class="text-end">
-            <button class="btn btn-primary ms-2" (click)="goToEditOrder()" *ngIf="isAdminOrSuperAdmin()">Editer</button>
+            <button class="btn btn-primary ms-2" (click)="goToEditOrder()">Editer</button>
           </div>
           <hr>
         </div>
@@ -124,17 +124,17 @@
                   <input type="text" class="form-control" value="{{ contract?.amount_ht | currency:'EUR' }}" disabled>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Montant co-traitant</label>
+                  <label class="form-label">Montant co-traitant/sous-traitant</label>
                   <input type="text" class="form-control" value="{{ contract?.external_contributor_amount | currency:'EUR' }}" disabled>
                 </div>
                 <div class="mb-3">
                   <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
                   <input type="date" class="form-control" value="{{ contract?.external_contributor_invoice_date | date:'yyyy-MM-dd' }}" disabled>
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                   <label class="form-label">Montant sous-traitant</label>
                   <input type="text" class="form-control" value="{{ contract?.subcontractor_amount | currency:'EUR' }}" disabled>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
