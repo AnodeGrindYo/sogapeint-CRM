@@ -1,4 +1,4 @@
-<div class="card">
+<!-- <div class="card">
     <div class="card-body">
       <div class="float-end">
         <select class="custom-select custom-select-sm" (change)="onPeriodChange($event)">
@@ -31,4 +31,39 @@
     </div>
     </div>
   </div>
-  
+   -->
+
+
+
+
+   <div class="card">
+    <div class="card-body">
+        <div class="float-end">
+            <select class="custom-select custom-select-sm" (change)="onPeriodChange($event)">
+                <option *ngFor="let period of periods" [value]="period.value" [selected]="period.value === selectedPeriod">{{ period.label }}</option>
+            </select>
+        </div>
+        <h4 class="card-title mb-4">Analyse des commandes</h4>
+
+        <div *ngIf="loading" class="spinner-container">
+            <div class="spinner"></div>
+            <p>{{ loadingText }}</p>
+        </div>
+        <div *ngIf="!loading">
+            <apx-chart [series]="salesAnalytics.series" [chart]="salesAnalytics.chart"
+                [labels]="salesAnalytics.labels" [responsive]="salesAnalytics.responsive">
+            </apx-chart>
+
+            <div class="row">
+                <div *ngFor="let label of salesAnalytics.labels; let i = index" class="col-4">
+                    <div class="text-center mt-4">
+                        <p class="mb-2 text-truncate">
+                            <i class="mdi mdi-circle" [ngClass]="getLabelColor(i)"></i> {{ label }}
+                        </p>
+                        <h5>{{ salesAnalytics.series[i] }} %</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

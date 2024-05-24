@@ -1,31 +1,4 @@
 <!-- <div class="container-fluid">
-  <app-pagetitle title="Tableau de bord" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
-  <div class="row">
-      <div class="col-xl-8">
-          <div class="row">
-              <div class="col-xl-4">
-                  <app-kpi-card [mode]="'nb_lines_today'"></app-kpi-card>
-              </div>
-              <div class="col-xl-4">
-                  <app-kpi-card [mode]="'nb_orders_from_last_month'"></app-kpi-card>
-              </div>
-              <div class="col-xl-4">
-                  <app-kpi-card [mode]="'avg_order_amount'"></app-kpi-card>
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-8">
-              <app-chat-card></app-chat-card>
-            </div>
-              
-          </div>
-      </div>
-      <div class="col-xl-4">
-          <app-donut-card></app-donut-card>
-      </div>
-  </div>
-</div> -->
-<div class="container-fluid">
     <app-pagetitle title="Tableau de bord" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
     <div class="row">
       <div class="col-xl-8">
@@ -54,4 +27,38 @@
       </div>
     </div>
   </div>
-  
+   -->
+
+
+
+
+
+   <div class="container-fluid">
+    <app-pagetitle title="Tableau de bord" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <app-kpi-card [mode]="'nb_lines_today'"></app-kpi-card>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <app-kpi-card [mode]="'nb_orders_from_last_month'"></app-kpi-card>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <app-kpi-card [mode]="'avg_order_amount'"></app-kpi-card>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <app-chat-card></app-chat-card>
+                </div>
+                <div class="col-md-4">
+                    <app-invoices-management></app-invoices-management>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mt-3 mt-lg-0">
+            <app-donut-card></app-donut-card>
+        </div>
+    </div>
+</div>

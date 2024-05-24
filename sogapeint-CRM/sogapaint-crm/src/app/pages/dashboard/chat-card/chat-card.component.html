@@ -1,4 +1,4 @@
-<!-- <div class="col-lg-4"> -->
+<!-- <div class="col-lg-4">
     <div class="card rounded-lg">
         <div class="user-chat-border">
           <div class="row">
@@ -10,7 +10,6 @@
       <div class="card-body">
         <div class="chat-widget" #chatWidget>
           <div class="chat-conversation">
-            <!-- <ng-scrollbar style="height: 292px;"> -->
               <ul class="list-unstyled mb-0 pr-3">
                 <li *ngFor="let data of chatData" [ngClass]="{ 'right': data.align === 'right', 'left': data.align === 'left' }">
                   <div class="conversation-list">
@@ -24,7 +23,6 @@
                   </div>
                 </li>
               </ul>
-            <!-- </ng-scrollbar> -->
           </div>
         </div>
       </div>
@@ -40,7 +38,6 @@
             </div>
           </div>
           <div class="col-auto">
-            <!-- <button type="button" class="btn btn-secondary me-2" (click)="toggleEmojiPicker()">😊</button> -->
             <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light" (click)="scrollToBottom()">
               <span class="d-none d-sm-inline-block">Envoyer</span> <i class="mdi mdi-send ms-1"></i>
             </button>
@@ -54,5 +51,60 @@
         ></emoji-mart>
       </div>
     </div>
-  <!-- </div> -->
-  
+  </div>
+   -->
+
+
+
+   <div class="card rounded-lg">
+    <div class="user-chat-border">
+        <div class="row">
+            <div class="col-md-5 col-9">
+                <h5 class="font-size-15 mb-1">Chat</h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="chat-widget" #chatWidget>
+            <div class="chat-conversation">
+                <ul class="list-unstyled mb-0 pr-3">
+                    <li *ngFor="let data of chatData" [ngClass]="{ 'right': data.align === 'right', 'left': data.align === 'left' }">
+                        <div class="conversation-list">
+                            <div class="ctext-wrap">
+                                <div *ngIf="data.showName" class="conversation-name">{{data.name}}</div>
+                                <div class="ctext-wrap-content">
+                                    <p class="mb-0">{{data.message}}</p>
+                                </div>
+                                <p class="chat-time mb-0"><i class="mdi mdi-clock-outline align-middle ms-1"></i> {{data.time}}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="p-3 chat-input-section border-top">
+        <form (ngSubmit)="messageSave()" [formGroup]="formData" class="row">
+            <div class="col">
+                <div class="position-relative">
+                    <input type="text" class="form-control chat-input" placeholder="Enter Message..."
+                        formControlName="message" [ngClass]="{'is-invalid': chatSubmit && form.message.errors}">
+                    <div *ngIf="chatSubmit && form.message.errors" class="invalid-feedback">
+                        <span *ngIf="form.message.errors.required">Ce champ est requis.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light" (click)="scrollToBottom()">
+                    <span class="d-none d-sm-inline-block">Envoyer</span> <i class="mdi mdi-send ms-1"></i>
+                </button>
+            </div>
+        </form>
+        <emoji-mart 
+            *ngIf="emojiPickerVisible" 
+            (emojiSelect)="select($event)" 
+            [darkMode]="false"
+            [color]="'#5664D2'"
+        ></emoji-mart>
+    </div>
+</div>
