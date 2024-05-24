@@ -37,6 +37,7 @@ export class UserDetailComponent implements OnInit {
   public successMessage: string; // TODO
   public errorMessage: string; // TODO
   confirmationInput: string = '';
+  companyName: string = '';
   
   constructor(
     private route: ActivatedRoute,
@@ -111,7 +112,8 @@ export class UserDetailComponent implements OnInit {
             lastName: this.user.lastName ?? '',
             role: this.user.role ?? '',
             email: this.user.email ?? '',
-            company: company[0] ?? '', 
+            // company: company[0] ?? '', 
+            company: this.user.company ?? '',
             // company: company ?? '',
             phone: this.user.phone ?? '', // facultatif
             status: this.user.active ?? '',
@@ -221,18 +223,31 @@ export class UserDetailComponent implements OnInit {
         */
         onCompanyInputBlur(event: any): void {
           console.log("onCompanyInputBlur");
+          console.log("Entreprises: ", this.companies);
+          console.log("Valeur saisie: ", this.userForm.get('company').value);
+          this.companyName = this.userForm.get('company').value;
           const inputValue = event.target.value;
           if (inputValue && !this.companies.includes(inputValue)) {
             // Ajoute inputValue à la liste des entreprises
             this.companies = [...this.companies, inputValue];
             // S'assure que la valeur est sélectionnée
             this.userForm.get('company').setValue(inputValue);
+            console.log("Entreprise ajoutée: ", inputValue);
           }
         }
 
         openConfirmationModalForModification(content: any) {
           console.log("openConfirmationModalForModification for content: ", content);
           if (this.userForm.valid) {
+            // log de tout l'userForm
+            // for (const value in this.userForm.value) {
+            //   console.log(value + ': ' + this.userForm.value[value]);
+            //   if (value === 'company') {
+            //     console.log('company: ' + this.userForm.value[value].value);
+            //     console.log('this user company: ' + this.user.company); 
+            //     console.log('this user lastname: ' + this.user.lastName);
+            //   }
+            // }
             const modalRef = this.modalService.open(content);
             modalRef.result.then((result) => {
               if (result === 'Confirm') {

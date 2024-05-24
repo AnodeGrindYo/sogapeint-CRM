@@ -1,7 +1,12 @@
 .kpi-card {
-    width: 18em;
+    width: 100%;
+    max-width: 18em;
     height: 9em;
     position: relative;
+    @media (max-width: 768px) {
+        max-width: 100%;
+        height: auto;
+    }
 }
 
 .card-content {
@@ -9,10 +14,16 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 1rem;
+    @media (max-width: 768px) {
+        padding: 0.5rem;
+    }
 }
 
 .xxs-font {
     font-size: 0.75rem;
+    @media (max-width: 768px) {
+        font-size: 0.625rem;
+    }
 }
 
 .invisible {

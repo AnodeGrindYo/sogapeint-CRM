@@ -253,6 +253,8 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
+                    <!-- <pre>{{ userForm?.value }}</pre>
+                    <pre *ngFor="let control of userForm.controls | keyvalue">{{ control.key }}: {{ control.value.value.value }}</pre> -->
                     <table class="table">
                         <tbody>
                             <tr [ngClass]="{'modified-field': userForm.controls['firstName'].dirty}">
@@ -278,6 +280,7 @@
                             <tr [ngClass]="{'modified-field': userForm.controls['company'].dirty}">
                                 <th scope="row">Entreprise</th>
                                 <td>{{ userForm.value.company }}</td>
+                                <!-- <td>{{ user.company }}</td> -->
                             </tr>
                             <tr [ngClass]="{'modified-field': userForm.controls['role'].dirty}">
                                 <th scope="row">Rôle</th>

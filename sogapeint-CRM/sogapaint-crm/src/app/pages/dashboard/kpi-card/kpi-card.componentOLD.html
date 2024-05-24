@@ -1,0 +1,72 @@
+<div class="bg-white overflow-hidden shadow rounded-lg kpi-card relative">
+  <!-- <button class="invisible absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none"
+            (click)="openSettingsModal(settingsModal)">
+      <i class="fas fa-cog"></i>
+    </button> -->
+  <div class="px-3 py-2 card-content mt-3">
+    
+    <div class="flex justify-between items-center mb-2">
+      <div>
+        <p class="text-sm font-medium text-gray-500">{{ kpi_title }}</p>
+        <p class="text-xl font-semibold text-gray-900">{{ kpi_value }}</p>
+      </div>
+      <i class="fas fa-chart-bar text-blue-500 fa-2x"></i>
+    </div>
+    <hr class="my-2 border-gray-300">
+    <div class="flex justify-between items-center">
+      <!-- cas kpi_evolution_percent positif -->
+      <div *ngIf="kpi_evolution_percent > 0" class="bg-green-100 text-green-800 px-2 py-1 rounded flex items-center xxs-font">
+        <!-- Icône conditionnelle selon le pourcentage -->
+        <i class="fas fa-arrow-up text-green-500"></i>
+        <span>{{ kpi_evolution_percent | number:'1.1-2' }}%</span>
+      </div>
+      <!-- cas kpi_evolution_percent négatif -->
+      <div *ngIf="kpi_evolution_percent < 0" class="bg-red-100 text-red-800 px-2 py-1 rounded flex items-center xxs-font">
+        <!-- Icône conditionnelle selon le pourcentage -->
+        <i class="fas fa-arrow-down text-red-500"></i>
+        <span>{{ kpi_evolution_percent | number:'1.1-2' }}%</span>
+      </div>
+      <!-- cas kpi_evolution_percent nul ou not a number -->
+      <div *ngIf="kpi_evolution_percent === 0 || isNan(kpi_evolution_percent)" class="bg-blue-100 text-blue-800 px-2 py-1 rounded flex items-center xxs-font">
+        <!-- Icône conditionnelle selon le pourcentage -->
+        <i class="fas fa-equals text-blue-500"></i>
+        <span>{{ kpi_evolution_percent | number:'1.1-2' }}%</span>
+      </div>
+      <p class="xxs-font text-gray-500">Depuis la période précédente</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #settingsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Paramètres</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="startDate">Date de début:</label>
+        <input type="date" class="form-control" id="startDate" formControlName="startDate">
+      </div>
+      <div class="form-group">
+        <label for="endDate">Date de fin:</label>
+        <input type="date" class="form-control" id="endDate" formControlName="endDate">
+      </div>
+      <div class="form-group">
+        <label for="preset">Présélection:</label>
+        <select class="form-control" id="preset" formControlName="preset">
+          <option value="week">Depuis le début de la semaine</option>
+          <option value="month">Depuis le début du mois</option>
+          <option value="quarter">Depuis le début du trimestre</option>
+          <option value="year">Depuis le début de l'année</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fermer</button>
+    <button type="button" class="btn btn-primary" (click)="saveSettings()">Sauvegarder les changements</button>
+  </div>
+</ng-template>
