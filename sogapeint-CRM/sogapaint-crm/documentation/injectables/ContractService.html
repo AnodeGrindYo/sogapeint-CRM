@@ -1,0 +1,2498 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sogapaint-crm documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">sogapaint-crm documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ContractService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/services/contract.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service pour la gestion des contrats.</p>
+<p>Ce service fournit des fonctionnalités pour interagir avec les données des contrats,
+telles que l&#39;obtention de la liste des contrats et la recherche de contrats.</p>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#authToken" >authToken</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addContract" >addContract</a>
+                            </li>
+                            <li>
+                                <a href="#addIncident" >addIncident</a>
+                            </li>
+                            <li>
+                                <a href="#addObservation" >addObservation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#closeEventSource" >closeEventSource</a>
+                            </li>
+                            <li>
+                                <a href="#deleteContract" >deleteContract</a>
+                            </li>
+                            <li>
+                                <a href="#deleteFile" >deleteFile</a>
+                            </li>
+                            <li>
+                                <a href="#deleteIncident" >deleteIncident</a>
+                            </li>
+                            <li>
+                                <a href="#deleteObservation" >deleteObservation</a>
+                            </li>
+                            <li>
+                                <a href="#getBenefitById" >getBenefitById</a>
+                            </li>
+                            <li>
+                                <a href="#getContractById" >getContractById</a>
+                            </li>
+                            <li>
+                                <a href="#getContracts" >getContracts</a>
+                            </li>
+                            <li>
+                                <a href="#getContractsByMonth" >getContractsByMonth</a>
+                            </li>
+                            <li>
+                                <a href="#getFile" >getFile</a>
+                            </li>
+                            <li>
+                                <a href="#getIncidents" >getIncidents</a>
+                            </li>
+                            <li>
+                                <a href="#getInternalNumbers" >getInternalNumbers</a>
+                            </li>
+                            <li>
+                                <a href="#getNotOnGoingContracts" >getNotOnGoingContracts</a>
+                            </li>
+                            <li>
+                                <a href="#getNotOnGoingContractsStream" >getNotOnGoingContractsStream</a>
+                            </li>
+                            <li>
+                                <a href="#getObservations" >getObservations</a>
+                            </li>
+                            <li>
+                                <a href="#getOnGoingContracts" >getOnGoingContracts</a>
+                            </li>
+                            <li>
+                                <a href="#getOnGoingContractsStream" >getOnGoingContractsStream</a>
+                            </li>
+                            <li>
+                                <a href="#searchContracts" >searchContracts</a>
+                            </li>
+                            <li>
+                                <a href="#updateContract" >updateContract</a>
+                            </li>
+                            <li>
+                                <a href="#uploadFiles" >uploadFiles</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient, authService: <a href="../injectables/AuthenticationService.html" target="_self">AuthenticationService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/core/services/contract.service.ts:18</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructeur du service ContractService.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>HttpClient pour les requêtes HTTP.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthenticationService.html" target="_self" >AuthenticationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addContract"></a>
+                    <span class="name">
+                        <span ><b>addContract</b></span>
+                        <a href="#addContract"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addContract(contractData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="80"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crée un nouveau contrat.</p>
+<p>Envoie une requête POST pour créer un nouveau contrat avec les données fournies.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Les données du contrat à créer.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant la réponse du serveur.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addIncident"></a>
+                    <span class="name">
+                        <span ><b>addIncident</b></span>
+                        <a href="#addIncident"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addIncident(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, incident: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, dateAdd: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="291"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:291</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet d&#39;ajouter un incident à un contrat</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>incident</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;incident à ajouter</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>dateAdd</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un observable contenant la réponse du serveur</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addObservation"></a>
+                    <span class="name">
+                        <span ><b>addObservation</b></span>
+                        <a href="#addObservation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addObservation(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, observation: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, dateAdd: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:259</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet d&#39;ajouter une observation à un contrat</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>observation</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;observation à ajouter</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>dateAdd</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un observable contenant la réponse du serveur</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeEventSource"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>closeEventSource</b></span>
+                        <a href="#closeEventSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closeEventSource(eventSource: <a href="../interfaces/Event.html" target="_self">EventSource</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="175"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:175</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>eventSource</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Event.html" target="_self" >EventSource</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteContract"></a>
+                    <span class="name">
+                        <span ><b>deleteContract</b></span>
+                        <a href="#deleteContract"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteContract(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Supprime un contrat par son identifiant.</p>
+<p>Envoie une requête DELETE pour supprimer un contrat par son identifiant.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant du contrat à supprimer.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant la réponse du serveur.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFile"></a>
+                    <span class="name">
+                        <span ><b>deleteFile</b></span>
+                        <a href="#deleteFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteFile(fileId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="228"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:228</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Supprime un fichier d&#39;un contrat</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>fileId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du fichier</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>un Observable contenant la réponse du serveur</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteIncident"></a>
+                    <span class="name">
+                        <span ><b>deleteIncident</b></span>
+                        <a href="#deleteIncident"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteIncident(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, incidentId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="302"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:302</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet de supprimer un incident d&#39;un contrat</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>incidentId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id de l&#39;incident</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un observable contenant la réponse du serveur</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteObservation"></a>
+                    <span class="name">
+                        <span ><b>deleteObservation</b></span>
+                        <a href="#deleteObservation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteObservation(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, observationId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="270"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:270</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet de supprimer une observation d&#39;un contrat</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>observationId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id de l&#39;observation</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un observable contenant la réponse du serveur</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBenefitById"></a>
+                    <span class="name">
+                        <span ><b>getBenefitById</b></span>
+                        <a href="#getBenefitById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBenefitById(benefitId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="248"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:248</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet d&#39;obtenir le nom d&#39;une prestation (benefit) par son id</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>benefitId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id de la prestation</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un observable contenant le nom de la prestation</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getContractById"></a>
+                    <span class="name">
+                        <span ><b>getContractById</b></span>
+                        <a href="#getContractById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getContractById(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère un contrat par son identifiant.</p>
+<p>Envoie une requête GET pour obtenir un contrat par son identifiant.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant le contrat.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getContracts"></a>
+                    <span class="name">
+                        <span ><b>getContracts</b></span>
+                        <a href="#getContracts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getContracts()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="35"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>obtient tous les contrats (endpoint /api/auth/contracts)</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les contrats.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de contrats.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getContractsByMonth"></a>
+                    <span class="name">
+                        <span ><b>getContractsByMonth</b></span>
+                        <a href="#getContractsByMonth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getContractsByMonth(month: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="46"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>obtient les contrats par mois (endpoint /api/auth/contractsByMonth)</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les contrats par mois.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>month</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, le mois</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de contrats.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFile"></a>
+                    <span class="name">
+                        <span ><b>getFile</b></span>
+                        <a href="#getFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFile(fileId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="239"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:239</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet de récupérer un fichier par son id. La route est ${environment.apiUrl}/api/auth/download
+et les paramètres sont le contractId et le fileId</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>fileId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du fichier</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>un Observable contenant le fichier</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getIncidents"></a>
+                    <span class="name">
+                        <span ><b>getIncidents</b></span>
+                        <a href="#getIncidents"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getIncidents(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="312"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:312</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet de récupérer les incidents d&#39;un contrat</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un observable contenant les incidents du contrat</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInternalNumbers"></a>
+                    <span class="name">
+                        <span ><b>getInternalNumbers</b></span>
+                        <a href="#getInternalNumbers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInternalNumbers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="187"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:187</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Méthode pour &#39;/internalNumbers&#39; : Récupère les numéros internes des contrats</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les numéros internes des contrats.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de numéros internes des contrats.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNotOnGoingContracts"></a>
+                    <span class="name">
+                        <span ><b>getNotOnGoingContracts</b></span>
+                        <a href="#getNotOnGoingContracts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNotOnGoingContracts()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:123</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère les contrats qui ne sont pas en cours</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les contrats quine sont pas en cours.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de contrats.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNotOnGoingContractsStream"></a>
+                    <span class="name">
+                        <span ><b>getNotOnGoingContractsStream</b></span>
+                        <a href="#getNotOnGoingContractsStream"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNotOnGoingContractsStream()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère les contrats qui ne sont pas en cours sous forme de stream à /streamNotOnGoingContracts</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les contrats qui ne sont pas en cours sous forme de stream.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de contrats.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getObservations"></a>
+                    <span class="name">
+                        <span ><b>getObservations</b></span>
+                        <a href="#getObservations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getObservations(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="280"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:280</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Permet de récupérer les observations d&#39;un contrat</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>, l&#39;id du contrat</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un observable contenant les observations du contrat</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOnGoingContracts"></a>
+                    <span class="name">
+                        <span ><b>getOnGoingContracts</b></span>
+                        <a href="#getOnGoingContracts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOnGoingContracts()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère les contrats en cours</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les contrats en cours.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de contrats.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOnGoingContractsStream"></a>
+                    <span class="name">
+                        <span ><b>getOnGoingContractsStream</b></span>
+                        <a href="#getOnGoingContractsStream"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOnGoingContractsStream()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="136"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère les contrats en cours sous forme de stream à /streamOnGoingContracts</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les contrats en cours sous forme de stream.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de contrats.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchContracts"></a>
+                    <span class="name">
+                        <span ><b>searchContracts</b></span>
+                        <a href="#searchContracts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>searchContracts(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="58"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Recherche des contrats.</p>
+<p>Envoie une requête GET avec un paramètre de requête pour rechercher des contrats.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>La chaîne de caractères pour filtrer les contrats.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de contrats filtrés.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateContract"></a>
+                    <span class="name">
+                        <span ><b>updateContract</b></span>
+                        <a href="#updateContract"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateContract(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, contractData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="103"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Met à jour un contrat existant.</p>
+<p>Envoie une requête PUT pour mettre à jour un contrat existant avec les données fournies.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant du contrat à mettre à jour.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>contractData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Les données du contrat à mettre à jour.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant la réponse du serveur.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadFiles"></a>
+                    <span class="name">
+                        <span ><b>uploadFiles</b></span>
+                        <a href="#uploadFiles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>uploadFiles(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, files: File[], folderName?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="203"
+                                    class="link-to-prism">src/app/core/services/contract.service.ts:203</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Téléverse des fichiers pour un contrat donné.</p>
+<p>Utilise FormData pour construire une requête multipart/form-data qui est la
+requête standard pour envoyer des fichiers via HTTP. Chaque fichier est ajouté
+à cette requête avec la clé &#39;files&#39;.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant unique du contrat auquel les fichiers sont associés.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>files</td>
+                                            <td>
+                                                        <code>File[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Les fichiers à téléverser.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>folderName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <p>(optionel) Le nom du dossier dans lequel les fichiers seront téléversés.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Event.html" target="_self" >Observable&lt;HttpEvent&lt;any&gt;&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable de l&#39;événement Http qui inclut la réponse du serveur ou des erreurs.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authToken"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>authToken</b></span>
+                        <a href="#authToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.authService.getToken()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/core/services/contract.service.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from &#x27;@angular/common/http&#x27;;
+import { Observable, Subject } from &#x27;rxjs&#x27;;
+import { environment } from &#x27;../../../environments/environment&#x27;;
+import { AuthenticationService } from &#x27;./auth.service&#x27;;
+import { Inject } from &#x27;@angular/core&#x27;;
+
+/**
+* Service pour la gestion des contrats.
+*
+* Ce service fournit des fonctionnalités pour interagir avec les données des contrats,
+* telles que l&#x27;obtention de la liste des contrats et la recherche de contrats.
+*/
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class ContractService {
+    private authToken: string &#x3D; this.authService.getToken();
+    
+    /**
+    * Constructeur du service ContractService.
+    * @param http HttpClient pour les requêtes HTTP.
+    */
+    constructor(
+        private http: HttpClient,
+        @Inject(AuthenticationService) private authService: AuthenticationService 
+        ) {}
+
+        /**
+         * obtient tous les contrats (endpoint /api/auth/contracts)
+         * 
+         * Envoie une requête GET pour obtenir une liste de tous les contrats.
+         * @returns Un Observable contenant un tableau de contrats.
+         */
+        getContracts(): Observable&lt;any[]&gt; {
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/contracts&#x60;);
+        }
+
+        /**
+         * obtient les contrats par mois (endpoint /api/auth/contractsByMonth)
+         * 
+         * Envoie une requête GET pour obtenir une liste de tous les contrats par mois.
+         * @param month, le mois
+         * @returns Un Observable contenant un tableau de contrats.
+         * */
+        getContractsByMonth(month: number): Observable&lt;any[]&gt; {
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/contractsByMonth&#x60;, { params: { month: month.toString() } });
+        }
+        
+        
+        /**
+        * Recherche des contrats.
+        *
+        * Envoie une requête GET avec un paramètre de requête pour rechercher des contrats.
+        * @param query La chaîne de caractères pour filtrer les contrats.
+        * @returns Un Observable contenant un tableau de contrats filtrés.
+        */
+        searchContracts(query: string): Observable&lt;any[]&gt; {
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/contract/search&#x60;, { params: { q: query } });
+        }
+        
+        /**
+        * Récupère un contrat par son identifiant.
+        *
+        * Envoie une requête GET pour obtenir un contrat par son identifiant.
+        * @param id L&#x27;identifiant du contrat.
+        * @returns Un Observable contenant le contrat.
+        */
+        getContractById(contractId: string): Observable&lt;any&gt; {
+            return this.http.get&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/contract/${contractId}&#x60;);
+        }
+        
+        /**
+        * Crée un nouveau contrat.
+        * 
+        * Envoie une requête POST pour créer un nouveau contrat avec les données fournies.
+        * @param contractData Les données du contrat à créer.
+        * @returns Un Observable contenant la réponse du serveur.
+        */
+        addContract(contractData: any): Observable&lt;any&gt; {
+            return this.http.post&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/contract&#x60;, contractData);
+        }
+
+        /**
+         * Supprime un contrat par son identifiant.
+         * 
+         * Envoie une requête DELETE pour supprimer un contrat par son identifiant.
+         * @param contractId L&#x27;identifiant du contrat à supprimer.
+         * @returns Un Observable contenant la réponse du serveur.
+         */
+        deleteContract(contractId: string): Observable&lt;any&gt; {
+            return this.http.delete&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/contract/${contractId}&#x60;);
+        }
+        
+        /**
+        * Met à jour un contrat existant.
+        * 
+        * Envoie une requête PUT pour mettre à jour un contrat existant avec les données fournies.
+        * @param contractId L&#x27;identifiant du contrat à mettre à jour.
+        * @param contractData Les données du contrat à mettre à jour.
+        * @returns Un Observable contenant la réponse du serveur.
+        */ 
+        updateContract(contractId: string, contractData: any): Observable&lt;any&gt; {
+            return this.http.put&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/contract/${contractId}&#x60;, contractData);
+        }
+        
+        /**
+        * Récupère les contrats en cours
+        * 
+        * Envoie une requête GET pour obtenir une liste de tous les contrats en cours.
+        * @returns Un Observable contenant un tableau de contrats.
+        */
+        getOnGoingContracts(): Observable&lt;any[]&gt; {
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/onGoingContracts&#x60;);
+        }
+        
+        /**
+        * Récupère les contrats qui ne sont pas en cours
+        * 
+        * Envoie une requête GET pour obtenir une liste de tous les contrats quine sont pas en cours.
+        * @returns Un Observable contenant un tableau de contrats.
+        */
+        getNotOnGoingContracts(): Observable&lt;any[]&gt; {
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/notOnGoingContracts&#x60;);
+        }
+        
+        /**
+        * Récupère les contrats en cours sous forme de stream à /streamOnGoingContracts
+        * 
+        * Envoie une requête GET pour obtenir une liste de tous les contrats en cours sous forme de stream.
+        * @returns Un Observable contenant un tableau de contrats.
+        */
+        // getOnGoingContractsStream(): Observable&lt;any[]&gt; {
+        //     return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/streamOnGoingContracts&#x60;);
+        // }
+        getOnGoingContractsStream(): Observable&lt;any[]&gt; {
+            const contractsSubject &#x3D; new Subject&lt;any[]&gt;();
+            
+            const eventSource &#x3D; new EventSource(&#x60;${environment.apiUrl}/api/auth/streamOnGoingContracts&#x60;);
+            eventSource.onmessage &#x3D; event &#x3D;&gt; {
+                contractsSubject.next(JSON.parse(event.data));
+            };
+            eventSource.onerror &#x3D; error &#x3D;&gt; {
+                contractsSubject.error(error);
+                eventSource.close();
+            };
+            
+            return contractsSubject.asObservable();
+        }
+        
+        /**
+        * Récupère les contrats qui ne sont pas en cours sous forme de stream à /streamNotOnGoingContracts
+        * 
+        * Envoie une requête GET pour obtenir une liste de tous les contrats qui ne sont pas en cours sous forme de stream.
+        * @returns Un Observable contenant un tableau de contrats.
+        */
+        // getNotOnGoingContractsStream(): Observable&lt;any[]&gt; {
+        //     return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/streamNotOnGoingContracts&#x60;);
+        // }
+        getNotOnGoingContractsStream(): Observable&lt;any[]&gt; {
+            const contractsSubject &#x3D; new Subject&lt;any[]&gt;();
+            
+            const eventSource &#x3D; new EventSource(&#x60;${environment.apiUrl}/api/auth/streamNotOnGoingContracts&#x60;);
+            eventSource.onmessage &#x3D; event &#x3D;&gt; {
+                contractsSubject.next(JSON.parse(event.data));
+            };
+            eventSource.onerror &#x3D; error &#x3D;&gt; {
+                contractsSubject.error(error);
+                eventSource.close();
+            };
+            
+            return contractsSubject.asObservable();
+        }
+        
+        public closeEventSource(eventSource: EventSource) {
+            if (eventSource) {
+                eventSource.close();
+            }
+        }
+        
+        /**
+        * Méthode pour &#x27;/internalNumbers&#x27; : Récupère les numéros internes des contrats
+        * 
+        * Envoie une requête GET pour obtenir une liste de tous les numéros internes des contrats.
+        * @returns Un Observable contenant un tableau de numéros internes des contrats.
+        */
+        getInternalNumbers(): Observable&lt;any[]&gt; {
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/internalNumbers&#x60;);
+        }
+        
+        /**
+        * Téléverse des fichiers pour un contrat donné.
+        * 
+        * Utilise FormData pour construire une requête multipart/form-data qui est la 
+        * requête standard pour envoyer des fichiers via HTTP. Chaque fichier est ajouté 
+        * à cette requête avec la clé &#x27;files&#x27;.
+        * 
+        * @param contractId L&#x27;identifiant unique du contrat auquel les fichiers sont associés.
+        * @param files Les fichiers à téléverser.
+        * @param folderName (optionel) Le nom du dossier dans lequel les fichiers seront téléversés.
+        * @returns Un Observable de l&#x27;événement Http qui inclut la réponse du serveur ou des erreurs.
+        */
+        uploadFiles(contractId: string, files: File[], folderName?: string): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+            const formData &#x3D; new FormData();
+            files.forEach(file &#x3D;&gt; {
+                formData.append(&#x27;files&#x27;, file, file.name);
+                formData.append(&#x27;contractId&#x27;, contractId);
+            });
+        
+            const url &#x3D; &#x60;${environment.apiUrl}/api/auth/upload&#x60; + (folderName ? &#x60;?folderName&#x3D;${folderName}&#x60; : &#x27;&#x27;);
+            const req &#x3D; new HttpRequest(&#x27;POST&#x27;, url, formData, {
+                reportProgress: true,
+                responseType: &#x27;json&#x27;
+            });
+        
+            return this.http.request(req);
+        }
+        
+          
+
+        /**
+         * Supprime un fichier d&#x27;un contrat
+         * 
+         * @param fileId, l&#x27;id du fichier
+         * @param contractId, l&#x27;id du contrat
+         * @returns un Observable contenant la réponse du serveur
+         */
+        deleteFile(fileId: string, contractId: string): Observable&lt;any&gt;{
+            return this.http.delete&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth//deleteFile&#x60;, { params: { contractId: contractId, fileId: fileId } });
+        }
+
+        /** 
+         * Permet de récupérer un fichier par son id. La route est ${environment.apiUrl}/api/auth/download
+         * et les paramètres sont le contractId et le fileId
+         * @param fileId, l&#x27;id du fichier
+         * @param contractId, l&#x27;id du contrat
+         * @returns un Observable contenant le fichier
+         **/
+        getFile(fileId: string, contractId: string): Observable&lt;any&gt; {
+            return this.http.get&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/download&#x60;, { params: { fileId: fileId, contractId: contractId }, responseType: &#x27;blob&#x27; as &#x27;json&#x27; });
+        }
+
+        /**
+         * Permet d&#x27;obtenir le nom d&#x27;une prestation (benefit) par son id
+         * @param benefitId, l&#x27;id de la prestation
+         * @returns Un observable contenant le nom de la prestation
+         */
+        getBenefitById(benefitId: string): Observable&lt;any&gt;{
+            return this.http.get&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/benefit/${benefitId}&#x60;);
+        }
+
+        /**
+         * Permet d&#x27;ajouter une observation à un contrat
+         * 
+         * @param contractId, l&#x27;id du contrat
+         * @param observation, l&#x27;observation à ajouter
+         * @returns Un observable contenant la réponse du serveur
+         */
+        addObservation(contractId: string, observation: string, dateAdd: string, user: string): Observable&lt;any&gt;{
+            return this.http.post&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/observation&#x60;, { comment: observation, contractId: contractId, dateAdd: dateAdd, user: user});
+        }
+
+        /**
+         * Permet de supprimer une observation d&#x27;un contrat
+         * 
+         * @param contractId, l&#x27;id du contrat
+         * @param observationId, l&#x27;id de l&#x27;observation
+         * @returns Un observable contenant la réponse du serveur
+         */
+        deleteObservation(contractId: string, observationId: string): Observable&lt;any&gt;{
+            return this.http.delete&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/observation/${observationId}&#x60;);
+        }
+
+        /**
+         * Permet de récupérer les observations d&#x27;un contrat
+         * 
+         * @param contractId, l&#x27;id du contrat
+         * @returns Un observable contenant les observations du contrat
+         */
+        getObservations(contractId: string): Observable&lt;any[]&gt;{
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/observations/${contractId}&#x60;);
+        }
+
+        /**
+         * Permet d&#x27;ajouter un incident à un contrat
+         * 
+         * @param contractId, l&#x27;id du contrat
+         * @param incident, l&#x27;incident à ajouter
+         * @returns Un observable contenant la réponse du serveur
+         */
+        addIncident(contractId: string, incident: string, dateAdd: string, userId: string): Observable&lt;any&gt;{
+            return this.http.post&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/incident&#x60;, { comment: incident, contractId: contractId, dateAdd: dateAdd, user: userId});
+        }
+
+        /**
+         * Permet de supprimer un incident d&#x27;un contrat
+         * 
+         * @param contractId, l&#x27;id du contrat
+         * @param incidentId, l&#x27;id de l&#x27;incident
+         * @returns Un observable contenant la réponse du serveur
+         */
+        deleteIncident(contractId: string, incidentId: string): Observable&lt;any&gt;{
+            return this.http.delete&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/incident/${incidentId}&#x60;);
+        }
+
+        /**
+         * Permet de récupérer les incidents d&#x27;un contrat
+         * 
+         * @param contractId, l&#x27;id du contrat
+         * @returns Un observable contenant les incidents du contrat
+         */
+        getIncidents(contractId: string): Observable&lt;any[]&gt;{
+            return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/incidents/${contractId}&#x60;);
+        }
+    }
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ContractService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

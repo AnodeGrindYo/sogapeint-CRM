@@ -140,11 +140,49 @@
 import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
 import { ManageUsersComponent } from &#x27;./manage-users/manage-users.component&#x27;;
 import { CreateUserComponent } from &#x27;./create-user/create-user.component&#x27;;
+import { UserDetailComponent } from &#x27;./user-detail/user-detail.component&#x27;;
+import { ManageCompaniesComponent } from &#x27;./manage-companies/manage-companies.component&#x27;;
+import { CompanyDetailComponent } from &#x27;./company-detail/company-detail.component&#x27;;
+import { CompanyUpdateComponent } from &#x27;./company-update/company-update.component&#x27;;
+import { CompanyCreateComponent } from &#x27;./company-create/company-create.component&#x27;;
+import { LandingPageComponent } from &#x27;./landing-page/landing-page.component&#x27;;
+import { FAQComponent } from &#x27;./faq/faq.component&#x27;;
+import { DashboardComponent } from &#x27;./dashboard/dashboard.component&#x27;;
+import { DashboardFakeComponent } from &#x27;./dashboard-fake/dashboard-fake.component&#x27;;
+import { OrderFormComponent } from &#x27;./order-form/order-form.component&#x27;;
+import { OrderDetailComponent } from &#x27;./order-detail/order-detail.component&#x27;;
+import { OrderDetailCocontractorComponent } from &#x27;./order-detail-cocontractor/order-detail-cocontractor.component&#x27;;
+import { OrderDetailCustomerComponent } from &#x27;./order-detail-customer/order-detail-customer.component&#x27;;
+import { ManageOrdersComponent } from &#x27;./manage-orders/manage-orders.component&#x27;;
+import { OrderUpdateComponent } from &#x27;./order-update/order-update.component&#x27;;
+import { OrderUpdateCocontractorComponent } from &#x27;./order-update-cocontractor/order-update-cocontractor.component&#x27;;
+import { RoleGuard } from &#x27;../core/guards/role.guard&#x27;;
+import { AuthGuard } from &#x27;../core/guards/auth.guard&#x27;;
+
+
 
 const routes: Routes &#x3D; [
     { path: &#x27;icons&#x27;, loadChildren: () &#x3D;&gt; &quot;import(&#x27;./icons/icons.module&#x27;).then(m &#x3D;&gt; m.IconsModule)&quot; },
-    { path: &#x27;manageUsers&#x27;, component: ManageUsersComponent },
-    { path: &#x27;createUser&#x27;, component: CreateUserComponent }
+    { path: &#x27;manageUsers&#x27;, component: ManageUsersComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }}, // auth: Admin
+    { path: &#x27;createUser&#x27;, component: CreateUserComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] } }, // auth: Admin
+    { path: &#x27;user-detail/:userId&#x27;, component: UserDetailComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] } }, // auth: Admin
+    { path: &#x27;manageCompanies&#x27;, component: ManageCompaniesComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }}, // auth: Admin
+    { path: &#x27;company-detail/:companyId&#x27;, component: CompanyDetailComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }}, // auth: Admin
+    { path: &#x27;company-update/:companyId&#x27;, component: CompanyUpdateComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }}, // auth: Admin
+    { path: &#x27;company-create&#x27;, component: CompanyCreateComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }}, // auth: Admin
+    { path: &#x27;dashboard&#x27;, component: DashboardComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }}, // auth: Admin
+    // { path: &#x27;dashboard-fake&#x27;, component: DashboardFakeComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }},
+    { path: &#x27;FAQ&#x27;, component: FAQComponent , canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] }}, // auth: Admin
+    { path: &#x27;order-form&#x27;, component: OrderFormComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] } }, // auth: Admin
+    { path: &#x27;order-detail/:orderId&#x27;, component: OrderDetailComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;]} }, // auth: any role for connected users
+    { path: &#x27;order-detail-cocontractor/:orderId&#x27;, component: OrderDetailCocontractorComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;, &#x27;subcontractor&#x27;, &#x27;cocontractor&#x27;] } }, // auth: Admin, subcontractor, coContractor
+    { path: &#x27;manageOrders&#x27;, component: ManageOrdersComponent, data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;, &#x27;subcontractor&#x27;, &#x27;coContractor&#x27;, &#x27;supermanager&#x27;, &#x27;comanager&#x27;] }}, // auth: Admin, subcontractor, coContractor
+    { path: &#x27;order-update/:orderId&#x27;, component: OrderUpdateComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;] } }, // auth: Admin, subcontractor, coContractor
+    { path: &#x27;order-update-cocontractor/:orderId&#x27;, component: OrderUpdateCocontractorComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;superAdmin&#x27;, &#x27;subcontractor&#x27;, &#x27;cocontractor&#x27;] } },
+    { path: &#x27;order-detail-customer/:orderId&#x27;, component: OrderDetailCustomerComponent, canActivate: [RoleGuard], data: { roles: [&#x27;Admin&#x27;, &#x27;customer&#x27;, &#x27;supermanager&#x27;, &#x27;comanager&#x27;] } },
+    // route pour la landing page
+    { path: &#x27;&#x27;, component: LandingPageComponent}
+    // { path: &#x27;&#x27;, }
 ];
 
 @NgModule({

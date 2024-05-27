@@ -1,0 +1,850 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sogapaint-crm documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">sogapaint-crm documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  LoadingComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/ui/loading/loading.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-loading</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./loading.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./loading.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#animationClass" >animationClass</a>
+                            </li>
+                            <li>
+                                <a href="#backupTexts" >backupTexts</a>
+                            </li>
+                            <li>
+                                <a href="#currentText" >currentText</a>
+                            </li>
+                            <li>
+                                <a href="#loadingTexts" >loadingTexts</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#changeText" >changeText</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(elementRef: ElementRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/pages/ui/loading/loading.component.ts:82</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>elementRef</td>
+                                                  
+                                                        <td>
+                                                                    <code>ElementRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeText"></a>
+                    <span class="name">
+                        <span ><b>changeText</b></span>
+                        <a href="#changeText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeText()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="90"
+                                    class="link-to-prism">src/app/pages/ui/loading/loading.component.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/pages/ui/loading/loading.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="animationClass"></a>
+                    <span class="name">
+                        <span ><b>animationClass</b></span>
+                        <a href="#animationClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;typing&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/pages/ui/loading/loading.component.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="backupTexts"></a>
+                    <span class="name">
+                        <span ><b>backupTexts</b></span>
+                        <a href="#backupTexts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[...this.loadingTexts]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/pages/ui/loading/loading.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentText"></a>
+                    <span class="name">
+                        <span ><b>currentText</b></span>
+                        <a href="#currentText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.loadingTexts[0]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/pages/ui/loading/loading.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingTexts"></a>
+                    <span class="name">
+                        <span ><b>loadingTexts</b></span>
+                        <a href="#loadingTexts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;Veuillez patienter pendant que nous récupérons les informations dans la base de données...&#x27;,
+    &#x27;Juste une seconde, nous sommes en train de chercher les informations...&#x27;,
+    &#x27;Un instant, nous sommes en train de préparer les données...&#x27;,
+    &#x27;Avez-vous déjà vu une base de données faire des étirements ? C\&#x27;est ce que nous faisons maintenant...&#x27;,
+    &#x27;Mélangeons ces données pour une expérience utilisateur parfaite...&#x27;,
+    &#x27;Accrochez-vous, nous plongeons profondément dans les données...&#x27;,
+    &#x27;Nous demandons gentiment aux octets de se mettre en rang...&#x27;,
+    &#x27;Nous sommes actuellement en train de dresser les 0 et les 1...&#x27;,
+    &#x27;Faites une pause, prenez un café, nous nous occupons du reste...&#x27;,
+    &#x27;Nous sommes en train de peindre les pixels, juste pour vous...&#x27;,
+    &#x27;Les données se préparent, elles veulent être parfaites pour vous...&#x27;,
+    &#x27;Les petits hamsters de notre serveur se mettent en action...&#x27;,
+    &#x27;Un peu de patience, les étoiles de données s\&#x27;alignent...&#x27;,
+    &#x27;Le chef prépare votre plat de données, ça mijote...&#x27;,
+    &#x27;Nous sommes en train de réveiller les données, elles sont un peu endormies ce matin...&#x27;,
+    &#x27;Les données font leur jogging matinal, elles arrivent bientôt...&#x27;,
+    &#x27;Nous faisons une petite danse pour accélérer les données...&#x27;,
+    &#x27;Les données jouent à cache-cache, nous les trouvons pour vous...&#x27;,
+    &#x27;Un moment de patience pendant que nous téléchargeons le monde...&#x27;,
+    &#x27;Nous sommes en train de construire des ponts de données pour vous...&#x27;,
+    &#x27;Les données se font belles, elles veulent faire bonne impression...&#x27;,
+    &#x27;Les données sont en train de se coiffer, elles veulent être présentables...&#x27;,
+    &#x27;Nous sommes en train de jouer au Tetris avec vos données, alignement parfait en cours...&#x27;,
+    &#x27;Un peu de patience, nous sommes en train de charger le futur...&#x27;,
+    &#x27;Les données se font un petit check-up, sécurité avant tout !&#x27;,
+    &#x27;Nous sommes en train d\&#x27;apprivoiser les octets sauvages...&#x27;,
+    &#x27;Vos données prennent un bain de soleil, elles arrivent rafraîchies et prêtes !&#x27;,
+    &#x27;On entraîne les pixels à se mettre en formation, juste un moment…&#x27;,
+    &#x27;Les données prennent un petit détour par la Lune, patience…&#x27;,
+    &#x27;Nous sommes en train de négocier avec les bits pour qu\&#x27;ils se dépêchent…&#x27;,
+    &#x27;Les octets font de la musculation pour être plus rapides, ça arrive…&#x27;,
+    &#x27;Les données se font une beauté, elles veulent être parfaites pour vous…&#x27;,
+    &#x27;Chut… Les données sont en méditation, elles arrivent zen…&#x27;,
+    &#x27;On vérifie si les 0 et les 1 sont bien alignés, sécurité avant tout !&#x27;,
+    &#x27;On joue à la marelle avec vos données, elles seront là après le ciel…&#x27;,
+    &#x27;Les données font une petite pause thé, elles reviennent bientôt…&#x27;,
+    &#x27;Les bits ont pris le chemin panoramique, mais ils arrivent…&#x27;,
+    &#x27;On fait un petit briefing aux données, elles seront prêtes en un rien de temps…&#x27;,
+    &#x27;Les données font un marathon, dernier kilomètre !&#x27;,
+    &#x27;On est en train de décorer les données, elles veulent être jolies pour vous…&#x27;,
+    &#x27;On chuchote des secrets aux données, elles sont presque prêtes…&#x27;,
+    &#x27;Les données font du yoga, elles seront là, détendues et prêtes…&#x27;,
+    &#x27;Les bits jouent à cache-cache, mais on est les champions de ce jeu !&#x27;,
+    &#x27;Les données font une petite sieste, mais on les réveille juste pour vous…&#x27;,
+    &#x27;Les octets font un tour de magie, et pouf, ils apparaîtront…&#x27;,
+    &#x27;Les données font un tour du monde express, elles ramènent des souvenirs…&#x27;,
+    &#x27;On poli les données pour qu\&#x27;elles brillent de mille feux…&#x27;,
+    &#x27;Nous mélangeons les couleurs des données, pour un résultat éclatant…&#x27;,
+    &#x27;Les données se font repeindre, pour un rendu plus brillant…&#x27;,
+    &#x27;On applique une seconde couche de vérification sur les données…&#x27;,
+    &#x27;Les données prennent un bain de peinture, pour être éclatantes à leur présentation…&#x27;,
+    &#x27;On secoue bien les données avant usage pour un mélange parfait…&#x27;,
+    &#x27;Les octets sont en séance de coloriage, pour des données plus vives…&#x27;,
+    &#x27;On gratte les vieilles couches de données pour une finition impeccable…&#x27;,
+    &#x27;Les données se mettent en tenue de peinture, elles ne veulent pas se tacher…&#x27;,
+    &#x27;On donne un coup de pinceau magique aux données, elles vont briller…&#x27;,
+    &#x27;Les données font un stage de poterie, elles prennent forme…&#x27;,
+    &#x27;Les octets sont en train de poser du papier peint, pour un décor parfait…&#x27;,
+    &#x27;Les données prennent une douche de solvant, elles vont être toutes propres…&#x27;,
+    &#x27;Les bits font un cours de décoration intérieure, pour un résultat harmonieux…&#x27;,
+    &#x27;Les données prennent une leçon de peinture à l’huile, pour un rendu classique…&#x27;,
+    &#x27;On tamise les données pour enlever les grumeaux…&#x27;,
+    &#x27;Les données font un cours de calligraphie, pour une écriture parfaite…&#x27;,
+    &#x27;On équipe les données de petits pinceaux, elles vont peindre votre écran…&#x27;,
+    &#x27;Les octets font un atelier de teinture, pour un affichage coloré…&#x27;,
+    &#x27;On peint les données à la main, pour un rendu artisanal…&#x27;,
+    &#x27;Les données sont en train de choisir leur palette de couleurs, patience…&#x27;
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/pages/ui/loading/loading.component.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { ElementRef } from &#x27;@angular/core&#x27;;
+
+@Component({
+  selector: &#x27;app-loading&#x27;,
+  templateUrl: &#x27;./loading.component.html&#x27;,
+  styleUrls: [&#x27;./loading.component.scss&#x27;]
+})
+export class LoadingComponent implements OnInit {
+  loadingTexts &#x3D; [
+    &#x27;Veuillez patienter pendant que nous récupérons les informations dans la base de données...&#x27;,
+    &#x27;Juste une seconde, nous sommes en train de chercher les informations...&#x27;,
+    &#x27;Un instant, nous sommes en train de préparer les données...&#x27;,
+    &#x27;Avez-vous déjà vu une base de données faire des étirements ? C\&#x27;est ce que nous faisons maintenant...&#x27;,
+    &#x27;Mélangeons ces données pour une expérience utilisateur parfaite...&#x27;,
+    &#x27;Accrochez-vous, nous plongeons profondément dans les données...&#x27;,
+    &#x27;Nous demandons gentiment aux octets de se mettre en rang...&#x27;,
+    &#x27;Nous sommes actuellement en train de dresser les 0 et les 1...&#x27;,
+    &#x27;Faites une pause, prenez un café, nous nous occupons du reste...&#x27;,
+    &#x27;Nous sommes en train de peindre les pixels, juste pour vous...&#x27;,
+    &#x27;Les données se préparent, elles veulent être parfaites pour vous...&#x27;,
+    &#x27;Les petits hamsters de notre serveur se mettent en action...&#x27;,
+    &#x27;Un peu de patience, les étoiles de données s\&#x27;alignent...&#x27;,
+    &#x27;Le chef prépare votre plat de données, ça mijote...&#x27;,
+    &#x27;Nous sommes en train de réveiller les données, elles sont un peu endormies ce matin...&#x27;,
+    &#x27;Les données font leur jogging matinal, elles arrivent bientôt...&#x27;,
+    &#x27;Nous faisons une petite danse pour accélérer les données...&#x27;,
+    &#x27;Les données jouent à cache-cache, nous les trouvons pour vous...&#x27;,
+    &#x27;Un moment de patience pendant que nous téléchargeons le monde...&#x27;,
+    &#x27;Nous sommes en train de construire des ponts de données pour vous...&#x27;,
+    &#x27;Les données se font belles, elles veulent faire bonne impression...&#x27;,
+    &#x27;Les données sont en train de se coiffer, elles veulent être présentables...&#x27;,
+    &#x27;Nous sommes en train de jouer au Tetris avec vos données, alignement parfait en cours...&#x27;,
+    &#x27;Un peu de patience, nous sommes en train de charger le futur...&#x27;,
+    &#x27;Les données se font un petit check-up, sécurité avant tout !&#x27;,
+    &#x27;Nous sommes en train d\&#x27;apprivoiser les octets sauvages...&#x27;,
+    &#x27;Vos données prennent un bain de soleil, elles arrivent rafraîchies et prêtes !&#x27;,
+    &#x27;On entraîne les pixels à se mettre en formation, juste un moment…&#x27;,
+    &#x27;Les données prennent un petit détour par la Lune, patience…&#x27;,
+    &#x27;Nous sommes en train de négocier avec les bits pour qu\&#x27;ils se dépêchent…&#x27;,
+    &#x27;Les octets font de la musculation pour être plus rapides, ça arrive…&#x27;,
+    &#x27;Les données se font une beauté, elles veulent être parfaites pour vous…&#x27;,
+    &#x27;Chut… Les données sont en méditation, elles arrivent zen…&#x27;,
+    &#x27;On vérifie si les 0 et les 1 sont bien alignés, sécurité avant tout !&#x27;,
+    &#x27;On joue à la marelle avec vos données, elles seront là après le ciel…&#x27;,
+    &#x27;Les données font une petite pause thé, elles reviennent bientôt…&#x27;,
+    &#x27;Les bits ont pris le chemin panoramique, mais ils arrivent…&#x27;,
+    &#x27;On fait un petit briefing aux données, elles seront prêtes en un rien de temps…&#x27;,
+    &#x27;Les données font un marathon, dernier kilomètre !&#x27;,
+    &#x27;On est en train de décorer les données, elles veulent être jolies pour vous…&#x27;,
+    &#x27;On chuchote des secrets aux données, elles sont presque prêtes…&#x27;,
+    &#x27;Les données font du yoga, elles seront là, détendues et prêtes…&#x27;,
+    &#x27;Les bits jouent à cache-cache, mais on est les champions de ce jeu !&#x27;,
+    &#x27;Les données font une petite sieste, mais on les réveille juste pour vous…&#x27;,
+    &#x27;Les octets font un tour de magie, et pouf, ils apparaîtront…&#x27;,
+    &#x27;Les données font un tour du monde express, elles ramènent des souvenirs…&#x27;,
+    &#x27;On poli les données pour qu\&#x27;elles brillent de mille feux…&#x27;,
+    &#x27;Nous mélangeons les couleurs des données, pour un résultat éclatant…&#x27;,
+    &#x27;Les données se font repeindre, pour un rendu plus brillant…&#x27;,
+    &#x27;On applique une seconde couche de vérification sur les données…&#x27;,
+    &#x27;Les données prennent un bain de peinture, pour être éclatantes à leur présentation…&#x27;,
+    &#x27;On secoue bien les données avant usage pour un mélange parfait…&#x27;,
+    &#x27;Les octets sont en séance de coloriage, pour des données plus vives…&#x27;,
+    &#x27;On gratte les vieilles couches de données pour une finition impeccable…&#x27;,
+    &#x27;Les données se mettent en tenue de peinture, elles ne veulent pas se tacher…&#x27;,
+    &#x27;On donne un coup de pinceau magique aux données, elles vont briller…&#x27;,
+    &#x27;Les données font un stage de poterie, elles prennent forme…&#x27;,
+    &#x27;Les octets sont en train de poser du papier peint, pour un décor parfait…&#x27;,
+    &#x27;Les données prennent une douche de solvant, elles vont être toutes propres…&#x27;,
+    &#x27;Les bits font un cours de décoration intérieure, pour un résultat harmonieux…&#x27;,
+    &#x27;Les données prennent une leçon de peinture à l’huile, pour un rendu classique…&#x27;,
+    &#x27;On tamise les données pour enlever les grumeaux…&#x27;,
+    &#x27;Les données font un cours de calligraphie, pour une écriture parfaite…&#x27;,
+    &#x27;On équipe les données de petits pinceaux, elles vont peindre votre écran…&#x27;,
+    &#x27;Les octets font un atelier de teinture, pour un affichage coloré…&#x27;,
+    &#x27;On peint les données à la main, pour un rendu artisanal…&#x27;,
+    &#x27;Les données sont en train de choisir leur palette de couleurs, patience…&#x27;
+  ];
+  backupTexts &#x3D; [...this.loadingTexts];
+  
+  currentText &#x3D; this.loadingTexts[0];
+  animationClass &#x3D; &#x27;typing&#x27;;
+  
+  constructor(private elementRef: ElementRef) { }
+  
+  ngOnInit() {
+    setInterval(() &#x3D;&gt; this.changeText(), 7000);
+  }
+  
+  changeText() {
+    if (this.loadingTexts.length &#x3D;&#x3D;&#x3D; 0) {
+      this.loadingTexts &#x3D; [...this.backupTexts];
+    }
+    const randomIndex &#x3D; Math.floor(Math.random() * this.loadingTexts.length);
+    this.animationClass &#x3D; &#x27;&#x27;;
+    setTimeout(() &#x3D;&gt; {
+      void this.elementRef.nativeElement.offsetWidth; // force un reflow
+      this.animationClass &#x3D; &#x27;typing&#x27;;
+      this.currentText &#x3D; this.loadingTexts[randomIndex];
+      this.loadingTexts.splice(randomIndex, 1);
+    }, 50);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;d-flex justify-content-center my-3&quot;&gt;
+    &lt;!-- affiche le texte centré sur une ligne séparée --&gt;
+    &lt;div class&#x3D;&quot;alert alert-primary p-3&quot; role&#x3D;&quot;alert&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+        &lt;div class&#x3D;&quot;veuillez-patienter&quot; [ngClass]&#x3D;&quot;animationClass&quot;&gt;{{ currentText }}&lt;/div&gt;
+        &lt;div class&#x3D;&quot;d-flex justify-content-center align-items-center&quot;&gt;
+            &lt;i class&#x3D;&quot;fas fa-search pulse-icon mr-2&quot;&gt;&lt;/i&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./loading.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.fas.fa-search {
+    font-size: 4vw; /* Taille de l&#x27;icône */
+    color: #007bff; /* Couleur de l&#x27;icône */
+    margin: 4vw; /* Marge autour de l&#x27;icône */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+    }
+    70% {
+        transform: scale(1.5);
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+.pulse-icon {
+    animation: pulse 2s infinite;
+    border-radius: 50%;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+.typing {
+    overflow: hidden;
+    white-space: nowrap;
+    // border-right: .15em solid rgba(0, 123, 255, 0.7);  /* The typwriter cursor */
+    width: 0;
+    animation: typing 2s steps(40, end), blink-caret .75s step-end 5.5s, hide-caret 0.1s 5.5s forwards;
+    animation-fill-mode: forwards;
+}
+
+// @keyframes blink-caret {
+//     from, to { border-color: transparent }
+//     50% { border-color: rgba(0, 123, 255, 0.7); }
+// }
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="d-flex justify-content-center my-3">    <!-- affiche le texte centré sur une ligne séparée -->    <div class="alert alert-primary p-3" role="alert" style="width: 100%;">        <div class="veuillez-patienter" [ngClass]="animationClass">{{ currentText }}</div>        <div class="d-flex justify-content-center align-items-center">            <i class="fas fa-search pulse-icon mr-2"></i>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LoadingComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LoadingComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

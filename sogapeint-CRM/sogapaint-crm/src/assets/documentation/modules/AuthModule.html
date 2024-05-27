@@ -318,6 +318,9 @@ import { LoginComponent } from &#x27;./login/login.component&#x27;;
 import { SignupComponent } from &#x27;./signup/signup.component&#x27;;
 import { PasswordresetComponent } from &#x27;./passwordreset/passwordreset.component&#x27;;
 
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { NgbTooltipModule } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
+
 /**
  * Module d&#x27;authentification.
  *
@@ -343,7 +346,13 @@ import { PasswordresetComponent } from &#x27;./passwordreset/passwordreset.compo
     UiModule,
 
     // AuthRoutingModule pour la gestion des routes liées à l&#x27;authentification
-    AuthRoutingModule
+    AuthRoutingModule,
+
+    // FormsModule pour la gestion des formulaires
+    FormsModule,
+
+    // NgbTooltipModule pour utiliser les tooltips Bootstrap
+    NgbTooltipModule
   ],
 
   // CUSTOM_ELEMENTS_SCHEMA permet l&#x27;utilisation de balises personnalisées

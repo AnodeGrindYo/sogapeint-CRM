@@ -22,13 +22,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateUserComponent implements OnInit {
   breadCrumbItems: Array<{ label: string; url?: string; active?: boolean }> = [];
-  pageTitle: string = 'Créer un utilisateur';
+  pageTitle: string = 'Ajouter un utilisateur';
   userForm: FormGroup;
   roles = [
     { name: 'Super administrateur', value: 'superAdmin' },
     { name: 'Co-contractant', value: 'cocontractor' },
     { name: 'Sous-traitant', value: 'subcontractor' },
-    { name: 'Client', value: 'customer' },
+    // { name: 'Client', value: 'customer' },
     { name: 'Régisseur', value: 'comanager' },
     { name: 'Super Régisseur', value: 'supermanager' }
   ];

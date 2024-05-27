@@ -214,6 +214,9 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
                                 <a href="#companies" >companies</a>
                             </li>
                             <li>
+                                <a href="#companyCheckList" >companyCheckList</a>
+                            </li>
+                            <li>
                                 <a href="#companyInput$" >companyInput$</a>
                             </li>
                             <li>
@@ -265,6 +268,10 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
                                 <a href="#checkPasswordStrength" >checkPasswordStrength</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#companyExists" >companyExists</a>
+                            </li>
+                            <li>
                                 <a href="#filterCompanies" >filterCompanies</a>
                             </li>
                             <li>
@@ -278,6 +285,13 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
                             </li>
                             <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#normalizeCompanyName" >normalizeCompanyName</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#onCompanyInputBlur" >onCompanyInputBlur</a>
                             </li>
                             <li>
                                 <a href="#onSubmit" >onSubmit</a>
@@ -318,7 +332,7 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pages/create-user/create-user.component.ts:43</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pages/create-user/create-user.component.ts:44</a></div>
                             </td>
                         </tr>
 
@@ -433,8 +447,8 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="157"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:157</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="167"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:167</a></div>
                         </td>
                     </tr>
 
@@ -491,6 +505,77 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="companyExists"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>companyExists</b></span>
+                        <a href="#companyExists"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>companyExists(companyName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="227"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:227</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Vérifie si l&#39;entreprise existe déjà dans la liste des entreprises.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>companyName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="filterCompanies"></a>
                     <span class="name">
                         <span ><b>filterCompanies</b></span>
@@ -507,8 +592,8 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="210"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:210</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="220"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:220</a></div>
                         </td>
                     </tr>
 
@@ -582,8 +667,8 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="181"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:181</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="191"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:191</a></div>
                         </td>
                     </tr>
 
@@ -653,8 +738,8 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="200"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:200</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="210"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:210</a></div>
                         </td>
                     </tr>
 
@@ -692,8 +777,8 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="100"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:100</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:102</a></div>
                         </td>
                     </tr>
 
@@ -731,8 +816,8 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="83"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:83</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:85</a></div>
                         </td>
                     </tr>
 
@@ -744,6 +829,152 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="normalizeCompanyName"></a>
+                    <span class="name">
+                        <span ><b>normalizeCompanyName</b></span>
+                        <a href="#normalizeCompanyName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>normalizeCompanyName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="352"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:352</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCompanyInputBlur"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>onCompanyInputBlur</b></span>
+                        <a href="#onCompanyInputBlur"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onCompanyInputBlur(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="249"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:249</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ajoute une nouvelle entreprise à la liste des entreprises si elle n&#39;existe pas déjà.
+Cette fonction est appelée lorsque le champ de recherche perd le focus. et permet
+à l&#39;utilisateur d&#39;ajouter une nouvelle entreprise à la liste, et donc de conserver
+le nom d&#39;une nouvelle entreprise dans le formulaire.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;événement de saisie dans le champ de recherche.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -768,8 +999,8 @@ Utilise le FormBuilder pour la validation de formulaire et UserProfileService po
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="110"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:110</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="112"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:112</a></div>
                         </td>
                     </tr>
 
@@ -808,8 +1039,8 @@ Affiche des erreurs de validation sinon.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="218"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:218</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="295"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:295</a></div>
                         </td>
                     </tr>
 
@@ -882,8 +1113,8 @@ Affiche des erreurs de validation sinon.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="169"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:169</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:179</a></div>
                         </td>
                     </tr>
 
@@ -921,8 +1152,8 @@ Affiche des erreurs de validation sinon.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="193"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:193</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="203"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:203</a></div>
                         </td>
                     </tr>
 
@@ -962,8 +1193,8 @@ Affiche des erreurs de validation sinon.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="233"
-                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:233</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="344"
+                                    class="link-to-prism">src/app/pages/create-user/create-user.component.ts:344</a></div>
                         </td>
                     </tr>
 
@@ -1073,6 +1304,32 @@ Affiche des erreurs de validation sinon.</p>
                     <tr>
                         <td class="col-md-4">
                                 <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/pages/create-user/create-user.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="companyCheckList"></a>
+                    <span class="name">
+                        <span ><b>companyCheckList</b></span>
+                        <a href="#companyCheckList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pages/create-user/create-user.component.ts:44</a></div>
                         </td>
                     </tr>
 
@@ -1201,7 +1458,7 @@ Affiche des erreurs de validation sinon.</p>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;Créer un utilisateur&#x27;</code>
+                        <i>Default value : </i><code>&#x27;Ajouter un utilisateur&#x27;</code>
                     </td>
                 </tr>
                     <tr>
@@ -1286,11 +1543,11 @@ Affiche des erreurs de validation sinon.</p>
                     <td class="col-md-4">
                         <i>Default value : </i><code>[
     { name: &#x27;Super administrateur&#x27;, value: &#x27;superAdmin&#x27; },
-    { name: &#x27;Cocontractant&#x27;, value: &#x27;cocontractor&#x27; },
+    { name: &#x27;Co-contractant&#x27;, value: &#x27;cocontractor&#x27; },
     { name: &#x27;Sous-traitant&#x27;, value: &#x27;subcontractor&#x27; },
     { name: &#x27;Client&#x27;, value: &#x27;customer&#x27; },
-    { name: &#x27;Cogestionnaire&#x27;, value: &#x27;comanager&#x27; },
-    { name: &#x27;Supermanager&#x27;, value: &#x27;supermanager&#x27; }
+    { name: &#x27;Régisseur&#x27;, value: &#x27;comanager&#x27; },
+    { name: &#x27;Super Régisseur&#x27;, value: &#x27;supermanager&#x27; }
   ]</code>
                     </td>
                 </tr>
@@ -1389,7 +1646,7 @@ Affiche des erreurs de validation sinon.</p>
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { FormBuilder, FormGroup, Validators, FormControl } from &#x27;@angular/forms&#x27;;
+import { FormBuilder, FormGroup, Validators, FormControl, ValidationErrors } from &#x27;@angular/forms&#x27;;
 import { UserProfileService } from &#x27;../../core/services/user.service&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 import { zxcvbn, zxcvbnOptions } from &#x27;@zxcvbn-ts/core&#x27;;
@@ -1402,9 +1659,9 @@ import { User } from &#x27;src/app/core/models/auth.models&#x27;;
 import { NgbModal } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
 
 /**
- * Composant pour la création d&#x27;un utilisateur.
- * Utilise le FormBuilder pour la validation de formulaire et UserProfileService pour la gestion des utilisateurs.
- */
+* Composant pour la création d&#x27;un utilisateur.
+* Utilise le FormBuilder pour la validation de formulaire et UserProfileService pour la gestion des utilisateurs.
+*/
 @Component({
   selector: &#x27;app-create-user&#x27;,
   templateUrl: &#x27;./create-user.component.html&#x27;,
@@ -1412,15 +1669,15 @@ import { NgbModal } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
 })
 export class CreateUserComponent implements OnInit {
   breadCrumbItems: Array&lt;{ label: string; url?: string; active?: boolean }&gt; &#x3D; [];
-  pageTitle: string &#x3D; &#x27;Créer un utilisateur&#x27;;
+  pageTitle: string &#x3D; &#x27;Ajouter un utilisateur&#x27;;
   userForm: FormGroup;
   roles &#x3D; [
     { name: &#x27;Super administrateur&#x27;, value: &#x27;superAdmin&#x27; },
-    { name: &#x27;Cocontractant&#x27;, value: &#x27;cocontractor&#x27; },
+    { name: &#x27;Co-contractant&#x27;, value: &#x27;cocontractor&#x27; },
     { name: &#x27;Sous-traitant&#x27;, value: &#x27;subcontractor&#x27; },
     { name: &#x27;Client&#x27;, value: &#x27;customer&#x27; },
-    { name: &#x27;Cogestionnaire&#x27;, value: &#x27;comanager&#x27; },
-    { name: &#x27;Supermanager&#x27;, value: &#x27;supermanager&#x27; }
+    { name: &#x27;Régisseur&#x27;, value: &#x27;comanager&#x27; },
+    { name: &#x27;Super Régisseur&#x27;, value: &#x27;supermanager&#x27; }
   ];
   passwordStrength: any;
   passwordFeedback: string;
@@ -1431,209 +1688,330 @@ export class CreateUserComponent implements OnInit {
   public successMessage: string;
   public errorMessage: string;
   confirmationModal: any;
-
-  constructor(
-      private userProfileService: UserProfileService,
-      private companyService: CompanyService,
-      private formBuilder: FormBuilder, 
-      private modalService: NgbModal,
-      private router: Router
-    ) {
-    this.breadCrumbItems &#x3D; [{ label: &#x27;Sogapeint&#x27; }, { label: this.pageTitle, active: true }];
-    // initialization du formulaire
-    // const phoneRegex &#x3D; /^((\+|00)33\s?|0)[1-9](\s?\d{2}){4}$/;
-    const phoneRegex &#x3D; /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-    this.userForm &#x3D; this.formBuilder.group({
-      firstName: [&#x27;&#x27;, Validators.required],
-      lastName: [&#x27;&#x27;, Validators.required],
-      email: [&#x27;&#x27;, [Validators.required, Validators.email]],
-      password: [&#x27;&#x27;, [Validators.required, Validators.minLength(6)]],
-      role: [&#x27;customer&#x27;, Validators.required], // la valeur par défaut est &#x27;user&#x27;
-      status: true, // la valeur par défaut est &#x27;active&#x27;
-      authorized: true, // la valeur par défaut est &#x27;authorized&#x27;,
-      phone: [&#x27;&#x27;, [Validators.required, Validators.pattern(phoneRegex)]],
-      address: [&#x27;&#x27;], // facultatif
-      company: [&#x27;&#x27;, Validators.required]
-    });
-
-    // Configuration de zxcvbn pour utiliser le package de langue française
-    const options &#x3D; {
-      translations: zxcvbnFrPackage.translations,
-      graphs: zxcvbnCommonPackage.adjacencyGraphs,
-      dictionary: {
-        ...zxcvbnCommonPackage.dictionary,
-        ...zxcvbnFrPackage.dictionary,
-      },
-    };
-
-    zxcvbnOptions.setOptions(options);
-
-  }
-
-  ngOnInit(): void {
-    this.breadCrumbItems &#x3D; [{ label: &#x27;Sogapeint&#x27; }, { label: this.pageTitle, active: true }];
-    // Entreprises
-    this.loadInitialCompanies();
-    this.companyInput$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(term &#x3D;&gt; this.companyService.searchCompanies(term)),
-      takeUntil(this.unsubscribe$)
-    ).subscribe(companies &#x3D;&gt; {
-      this.companies &#x3D; companies;
-    });
-  }
-
-  /**
-   * Nettoie les souscriptions lors de la destruction du composant.
-   */
-  ngOnDestroy() {
-    // Signale que toutes les souscriptions doivent être arrêtées
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
-
-  /**
-   * Soumet le formulaire et crée un utilisateur si les données sont valides.
-   * Affiche des erreurs de validation sinon.
-   */
-  onSubmit(): void {
-    if (this.userForm.valid) {
-      // Crée un user à partir des données du formulaire
-      const user: User &#x3D; {
-        firstName: this.userForm.get(&#x27;firstName&#x27;).value,
-        lastName: this.userForm.get(&#x27;lastName&#x27;).value,
-        email: this.userForm.get(&#x27;email&#x27;).value,
-        password: this.userForm.get(&#x27;password&#x27;).value,
-        role: this.userForm.get(&#x27;role&#x27;).value,
-        active: this.userForm.get(&#x27;status&#x27;).value,
-        authorized_connection: this.userForm.get(&#x27;authorized&#x27;).value,
-        phone: this.userForm.get(&#x27;phone&#x27;).value,
-        address: this.userForm.get(&#x27;address&#x27;).value,
-        company: this.userForm.get(&#x27;company&#x27;).value
-      };
-      console.log(user); 
-      // On peut ici appeler un service pour envoyer les données du formulaire à l&#x27;API
-      this.userProfileService.create(user).subscribe({
-
-        next: (data: any) &#x3D;&gt; {
-          console.log(&#x27;Utilisateur créé avec succès:&#x27;, data);
-          this.successMessage &#x3D; &#x27;Utilisateur créé avec succès&#x27;;
-          // Rediriger l&#x27;utilisateur vers la page de gestion des utilisateurs
-          this.router.navigate([&#x27;/manage-users&#x27;])
-        },
-        error: (error) &#x3D;&gt; {
-          console.error(&#x27;Erreur lors de la création de l\&#x27;utilisateur:&#x27;, error);
-          this.errorMessage &#x3D; &#x27;Erreur lors de la création de l\&#x27;utilisateur&#x27;;
-        },
-        complete: () &#x3D;&gt; {
-          console.log(&#x27;Création de l\&#x27;utilisateur terminée&#x27;);
-        }
-      });
-    } else {
-      // Traiter les erreurs de validation du formulaire
-      console.log(&#x27;Le formulaire n\&#x27;est pas valide&#x27;);
-      // Afficher les erreurs de validation
-      this.userForm.markAllAsTouched();
-      this.errorMessage &#x3D; &#x27;Veuillez corriger les erreurs dans le formulaire avant de soumettre.&#x27;;
-
-    }
-  }
-
-   /**
-   * Vérifie la force du mot de passe en utilisant zxcvbn.
-   * @param password Le mot de passe à évaluer.
-   */
-  checkPasswordStrength(password: string) {
-    const results &#x3D; zxcvbn(password);
-    console.log(&#x27;zxcvbn results:&#x27;, results);
-    this.passwordStrength &#x3D; results;
-    console.log(&#x27;Password score:&#x27;, this.passwordStrength.score);
-    console.log(&#x27;Password feedback:&#x27;, this.passwordStrength.feedback);
-    this.passwordFeedback &#x3D; results.feedback?.suggestions?.join(&#x27;, &#x27;) ?? &#x27;No suggestions available&#x27;;
-  } 
+  companyCheckList: any[];
   
-  /**
-   * Génère un mot de passe aléatoire et le définit comme valeur du champ mot de passe du formulaire.
-   */
-  suggestPassword(): void {
-    const newPassword &#x3D; this.generatePassword(10);
-    this.userForm.get(&#x27;password&#x27;).setValue(newPassword);
-    // Vérifie la force du mot de passe généré
-    this.checkPasswordStrength(newPassword);
-  }
-
-  /**
-   * Génère un mot de passe aléatoire de longueur spécifiée.
-   * @param length La longueur du mot de passe à générer.
-   * @returns Le mot de passe généré.
-   */
-  generatePassword(length) {
-    const charset &#x3D; &#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&amp;*()_+&lt;&gt;?&#x27;;
-    let retVal &#x3D; &#x27;&#x27;;
-    for (let i &#x3D; 0, n &#x3D; charset.length; i &lt; length; ++i) {
-      retVal +&#x3D; charset.charAt(Math.floor(Math.random() * n));
+  
+  constructor(
+    private userProfileService: UserProfileService,
+    private companyService: CompanyService,
+    private formBuilder: FormBuilder, 
+    private modalService: NgbModal,
+    private router: Router
+    ) {
+      this.breadCrumbItems &#x3D; [{ label: &#x27;Sogapeint&#x27; }, { label: this.pageTitle, active: true }];
+      // initialization du formulaire
+      // const phoneRegex &#x3D; /^((\+|00)33\s?|0)[1-9](\s?\d{2}){4}$/;
+      const phoneRegex &#x3D; /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+      this.userForm &#x3D; this.formBuilder.group({
+        firstName: [&#x27;&#x27;, Validators.required],
+        lastName: [&#x27;&#x27;, Validators.required],
+        email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+        password: [&#x27;&#x27;, [Validators.required, Validators.minLength(6)]],
+        role: [&#x27;customer&#x27;, Validators.required], // la valeur par défaut est &#x27;customer&#x27;
+        status: true, // la valeur par défaut est &#x27;active&#x27;
+        authorized: true, // la valeur par défaut est &#x27;authorized&#x27;,
+        phone: [&#x27;&#x27;, [Validators.required, Validators.pattern(phoneRegex)]],
+        address: [&#x27;&#x27;], // facultatif
+        company: [&#x27;&#x27;, Validators.required]
+      });
+      
+      // Configuration de zxcvbn pour utiliser le package de langue française
+      const options &#x3D; {
+        translations: zxcvbnFrPackage.translations,
+        graphs: zxcvbnCommonPackage.adjacencyGraphs,
+        dictionary: {
+          ...zxcvbnCommonPackage.dictionary,
+          ...zxcvbnFrPackage.dictionary,
+        },
+      };
+      
+      zxcvbnOptions.setOptions(options);
+      
     }
-    return retVal;
-  }
-
-  /**
-   * Bascule la visibilité du mot de passe.
-   */
-  togglePasswordVisibility() {
-    this.hidePassword &#x3D; !this.hidePassword;
-  }
-
-  /**
-   * Charge la liste des entreprises.
-   */
-  loadInitialCompanies() {
-    this.companyService.getCompanies() 
-        .subscribe(companies &#x3D;&gt; this.companies &#x3D; companies);
-  }
-
-  /**
-   * Filtre la liste des entreprises en fonction de la valeur saisie dans le champ de recherche.
-   * @param val La valeur saisie dans le champ de recherche.
-   * @returns Un Observable contenant un tableau d&#x27;entreprises filtrées.
-   */
-  filterCompanies(val: string): Observable&lt;any[]&gt; {
-      return this.companyService.searchCompanies(val);
-  }
-
-  /**
-   * Ouvre la fenêtre modale de confirmation de création d&#x27;un utilisateur.
-   * @param content  Le contenu de la fenêtre modale.
-   */
-  openConfirmationModal(content: any) {
-    if (this.userForm.valid) {
-      this.confirmationModal &#x3D; this.modalService.open(content);
-    }
-    else {
-      this.errorMessage &#x3D; &#x27;Veuillez corriger les erreurs dans le formulaire avant de soumettre. Sinon... Exactement!&#x27;;
-      // Si le formulaire n&#x27;est pas valide, touche tous les champs pour afficher les messages d&#x27;erreur
-      this.touchAllFields(this.userForm);
-    }
-  }
-
-  /**
-   * Marque tous les champs d&#x27;un groupe de formulaires comme touchés par le saigneur.
-   * @param formGroup Le groupe de formulaires à valider.
-   */
-  private touchAllFields(formGroup: FormGroup) {
-    for (const key in formGroup.controls) {
-      if (formGroup.controls.hasOwnProperty(key)) {
-        formGroup.controls[key].markAsTouched();
+    
+    ngOnInit(): void {
+      this.breadCrumbItems &#x3D; [{ label: &#x27;Sogapeint&#x27; }, { label: this.pageTitle, active: true }];
+      // Entreprises
+      this.loadInitialCompanies();
+      this.companyInput$.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(term &#x3D;&gt; this.companyService.searchCompanies(term)),
+        takeUntil(this.unsubscribe$)
+        ).subscribe(companies &#x3D;&gt; {
+          this.companies &#x3D; companies;
+        });
       }
+      
+      /**
+      * Nettoie les souscriptions lors de la destruction du composant.
+      */
+      ngOnDestroy() {
+        // Signale que toutes les souscriptions doivent être arrêtées
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+      }
+      
+      /**
+      * Soumet le formulaire et crée un utilisateur si les données sont valides.
+      * Affiche des erreurs de validation sinon.
+      */
+      onSubmit(): void {
+        if (this.userForm.valid) {
+          // // Recherche si l&#x27;entreprise existe dans la liste des entreprises
+          // const companyExists &#x3D; this.companies.includes(this.userForm.get(&#x27;company&#x27;).value);
+          const inputValue &#x3D; this.userForm.get(&#x27;company&#x27;).value;
+          // Vérifie si la valeur saisie n&#x27;est pas vide et n&#x27;est pas déjà dans la liste des entreprises
+
+          
+          // Crée un user à partir des données du formulaire
+          const user: User &#x3D; {
+            firstName: this.userForm.get(&#x27;firstName&#x27;).value,
+            lastName: this.userForm.get(&#x27;lastName&#x27;).value,
+            email: this.userForm.get(&#x27;email&#x27;).value,
+            password: this.userForm.get(&#x27;password&#x27;).value,
+            role: this.userForm.get(&#x27;role&#x27;).value,
+            active: this.userForm.get(&#x27;status&#x27;).value,
+            authorized_connection: this.userForm.get(&#x27;authorized&#x27;).value,
+            phone: this.userForm.get(&#x27;phone&#x27;).value,
+            address: this.userForm.get(&#x27;address&#x27;).value,
+            company: this.userForm.get(&#x27;company&#x27;).value
+          };
+          console.log(user); 
+          // On peut ici appeler un service pour envoyer les données du formulaire à l&#x27;API
+          this.userProfileService.create(user).subscribe({
+            
+            next: (data: any) &#x3D;&gt; {
+              console.log(&#x27;Utilisateur créé avec succès:&#x27;, data);
+              this.successMessage &#x3D; &#x27;Utilisateur créé avec succès&#x27;;
+              // Rediriger l&#x27;utilisateur vers la page de gestion des utilisateurs
+              this.router.navigate([&#x27;/user-detail/&#x27;+data.userId])
+            },
+            error: (error) &#x3D;&gt; {
+              console.error(&#x27;Erreur lors de la création de l\&#x27;utilisateur:&#x27;, error);
+              this.errorMessage &#x3D; &#x27;Erreur lors de la création de l\&#x27;utilisateur : &#x27;+error;
+            },
+            complete: () &#x3D;&gt; {
+              console.log(&#x27;Création de l\&#x27;utilisateur terminée&#x27;);
+            }
+          });
+        } else {
+          // Traiter les erreurs de validation du formulaire
+          console.log(&#x27;Le formulaire n\&#x27;est pas valide&#x27;);
+          // Afficher les erreurs de validation
+          this.userForm.markAllAsTouched();
+          this.errorMessage &#x3D; &#x27;Veuillez corriger les erreurs dans le formulaire avant de soumettre.&#x27;;
+          // affiche la liste des champs invalides
+          console.log(&#x27;Champs invalides:&#x27;, this.userForm.invalid);
+          
+        }
+      }
+      
+      /**
+      * Vérifie la force du mot de passe en utilisant zxcvbn.
+      * @param password Le mot de passe à évaluer.
+      */
+      checkPasswordStrength(password: string) {
+        const results &#x3D; zxcvbn(password);
+        console.log(&#x27;zxcvbn results:&#x27;, results);
+        this.passwordStrength &#x3D; results;
+        console.log(&#x27;Password score:&#x27;, this.passwordStrength.score);
+        console.log(&#x27;Password feedback:&#x27;, this.passwordStrength.feedback);
+        this.passwordFeedback &#x3D; results.feedback?.suggestions?.join(&#x27;, &#x27;) ?? &#x27;No suggestions available&#x27;;
+      } 
+      
+      /**
+      * Génère un mot de passe aléatoire et le définit comme valeur du champ mot de passe du formulaire.
+      */
+      suggestPassword(): void {
+        const newPassword &#x3D; this.generatePassword(10);
+        this.userForm.get(&#x27;password&#x27;).setValue(newPassword);
+        // Vérifie la force du mot de passe généré
+        this.checkPasswordStrength(newPassword);
+      }
+      
+      /**
+      * Génère un mot de passe aléatoire de longueur spécifiée.
+      * @param length La longueur du mot de passe à générer.
+      * @returns Le mot de passe généré.
+      */
+      generatePassword(length) {
+        const charset &#x3D; &#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&amp;*()_+&lt;&gt;?&#x27;;
+        let retVal &#x3D; &#x27;&#x27;;
+        for (let i &#x3D; 0, n &#x3D; charset.length; i &lt; length; ++i) {
+          retVal +&#x3D; charset.charAt(Math.floor(Math.random() * n));
+        }
+        return retVal;
+      }
+      
+      /**
+      * Bascule la visibilité du mot de passe.
+      */
+      togglePasswordVisibility() {
+        this.hidePassword &#x3D; !this.hidePassword;
+      }
+      
+      /**
+      * Charge la liste des entreprises.
+      */
+      loadInitialCompanies() {
+        this.companyService.getCompanies() 
+        .subscribe(companies &#x3D;&gt; this.companies &#x3D; companies);
+      }
+      
+      /**
+      * Filtre la liste des entreprises en fonction de la valeur saisie dans le champ de recherche.
+      * @param val La valeur saisie dans le champ de recherche.
+      * @returns Un Observable contenant un tableau d&#x27;entreprises filtrées.
+      */
+      filterCompanies(val: string): Observable&lt;any[]&gt; {
+        return this.companyService.searchCompanies(val);
+      }
+
+      /**
+       * Vérifie si l&#x27;entreprise existe déjà dans la liste des entreprises.
+       */
+      async companyExists(companyName: string): Promise&lt;boolean&gt; {
+        try {
+            const data &#x3D; await this.companyService.searchCompanies(companyName).toPromise();
+            console.log(&quot;data : &quot;, data);
+            this.companyCheckList &#x3D; data || [];
+            console.log(&quot;company exists : &quot;, this.companyCheckList.length &gt; 0);
+            return this.companyCheckList.length &gt; 0;
+        } catch (err) {
+            console.error(&#x27;Error searching companies:&#x27;, err);
+            this.companyCheckList &#x3D; [];
+            return false;
+        }
     }
-  }
-}
+    
+      
+      /**
+      * Ajoute une nouvelle entreprise à la liste des entreprises si elle n&#x27;existe pas déjà.
+      * Cette fonction est appelée lorsque le champ de recherche perd le focus. et permet
+      * à l&#x27;utilisateur d&#x27;ajouter une nouvelle entreprise à la liste, et donc de conserver
+      * le nom d&#x27;une nouvelle entreprise dans le formulaire.
+      * @param event L&#x27;événement de saisie dans le champ de recherche.
+      */
+      async onCompanyInputBlur(event: any): Promise&lt;void&gt; {
+        console.log(&quot;onCompanyInputBlur&quot;);
+        this.companyExists(this.userForm.get(&#x27;company&#x27;).value);
+        const inputValue &#x3D; this.userForm.get(&#x27;company&#x27;).value;
+        const normalizedInputValue &#x3D; this.normalizeCompanyName(inputValue);
+        // Vérifie si la valeur saisie n&#x27;est pas vide et n&#x27;est pas déjà dans la liste des entreprises
+        const companyExists &#x3D; await this.companyExists(normalizedInputValue);
+        // vérifie si la valeur saisie est déjà dans la liste des entreprises
+        // if (inputValue &amp;&amp; !normalizedCompanies.includes(normalizedInputValue)) {
+        //   // Ajoute inputValue à la liste des entreprises
+        //   this.companies &#x3D; [...this.companies, inputValue];
+        //   // S&#x27;assure que la valeur est sélectionnée
+        //   this.userForm.get(&#x27;company&#x27;).setValue(inputValue);
+        // }
+        // if (inputValue &amp;&amp; !this.companies.includes(inputValue)) {
+        if (inputValue &amp;&amp; companyExists &#x3D;&#x3D;&#x3D; false) {
+          // Ajoute inputValue à la liste des entreprises
+          this.companies &#x3D; [...this.companies, inputValue];
+          // S&#x27;assure que la valeur est sélectionnée
+          this.userForm.get(&#x27;company&#x27;).setValue(inputValue);
+
+          // création de l&#x27;entreprise si elle n&#x27;existe pas
+          console.log(&#x27;Création d\&#x27;une nouvelle entreprise&#x27;);
+          this.companyService.createCompany({&quot;normalized_name&quot;: normalizedInputValue}).subscribe({
+            next: (data: any) &#x3D;&gt; {
+              console.log(&#x27;Entreprise créée avec succès:&#x27;, data);
+              this.successMessage &#x3D; &#x27;Entreprise créée avec succès&#x27;;
+              // Rediriger l&#x27;utilisateur vers la page de gestion des entreprises
+              // this.router.navigate([&#x27;/company-detail/&#x27;+data.companyId])
+            },
+            error: (error) &#x3D;&gt; {
+              console.error(&#x27;Erreur lors de la création de l\&#x27;entreprise:&#x27;, error);
+              this.errorMessage &#x3D; &#x27;Erreur lors de la création de l\&#x27;entreprise : &#x27;+error;
+            },
+            complete: () &#x3D;&gt; {
+              console.log(&#x27;Création de l\&#x27;entreprise terminée&#x27;);
+            }
+          });
+        }
+        
+      }
+      
+      /**
+      * Ouvre la fenêtre modale de confirmation de création d&#x27;un utilisateur.
+      * @param content  Le contenu de la fenêtre modale.
+      */
+      openConfirmationModal(content: any) {
+        if (this.userForm.valid) {
+          this.confirmationModal &#x3D; this.modalService.open(content);
+        }
+        else {
+          let errorMessage &#x3D; &#x27;Veuillez corriger les erreurs dans le formulaire avant de soumettre.&#x27;;
+          let errorFields &#x3D; &#x27;&#x27;;
+          // ajoute la liste des champs invalides (leurs labels) au message d&#x27;erreur    
+          Object.keys(this.userForm.controls).forEach(key &#x3D;&gt; {
+            if (this.userForm.get(key).invalid) {
+              errorFields +&#x3D; key + &#x27;, &#x27;;
+            }
+          });
+          // mappe les noms des champs invalides aux labels correspondants
+          errorFields &#x3D; errorFields.replace(&#x27;firstName&#x27;, &#x27;Prénom&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;lastName&#x27;, &#x27;Nom&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;email&#x27;, &#x27;Email&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;password&#x27;, &#x27;Mot de passe&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;role&#x27;, &#x27;Rôle&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;status&#x27;, &#x27;Statut&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;authorized&#x27;, &#x27;Autorisé&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;phone&#x27;, &#x27;Téléphone&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;address&#x27;, &#x27;Adresse&#x27;);
+          errorFields &#x3D; errorFields.replace(&#x27;company&#x27;, &#x27;Entreprise&#x27;);
+          errorMessage +&#x3D; &#x27;Champs invalides: &#x27; + errorFields;
+          this.errorMessage &#x3D; errorMessage;
+          // Si le formulaire n&#x27;est pas valide, touche tous les champs pour afficher les messages d&#x27;erreur
+          this.touchAllFields(this.userForm);
+          
+          // Affiche les erreurs pour chaque contrôle
+          Object.keys(this.userForm.controls).forEach(key &#x3D;&gt; {
+            const controlErrors: ValidationErrors &#x3D; this.userForm.get(key).errors;
+            if (controlErrors !&#x3D; null) {
+              Object.keys(controlErrors).forEach(keyError &#x3D;&gt; {
+                console.log(&#x27;Key control: &#x27; + key + &#x27;, keyError: &#x27; + keyError + &#x27;, err value: &#x27;, controlErrors[keyError]);
+              });
+            }
+          });
+
+          // affiche tous les champs et leur valeur
+          // console.log(&#x27;Champs:&#x27;, this.userForm.controls);
+
+        }
+      }
+      
+      /**
+      * Marque tous les champs d&#x27;un groupe de formulaires comme touchés par le saigneur.
+      * @param formGroup Le groupe de formulaires à valider.
+      */
+      private touchAllFields(formGroup: FormGroup) {
+        for (const key in formGroup.controls) {
+          if (formGroup.controls.hasOwnProperty(key)) {
+            formGroup.controls[key].markAsTouched();
+          }
+        }
+      }
+
+      normalizeCompanyName(name: string): string {
+        return name
+            .toUpperCase() // Convertir en majuscules
+            .normalize(&quot;NFD&quot;).replace(/[\u0300-\u036f]/g, &quot;&quot;) // Retirer les accents
+            .replace(/\d+/g, &quot;&quot;) // Retirer tous les chiffres
+            .trim() // Retirer les espaces au début et à la fin
+            .replace(/\s{2,}/g, &#x27; &#x27;); // Remplacer les espaces multiples par un seul espace
+      }
+
+    }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
-    &lt;app-pagetitle title&#x3D;&quot;Créer un utilisateur&quot; [breadcrumbItems]&#x3D;&quot;breadCrumbItems&quot;&gt;&lt;/app-pagetitle&gt;
+    &lt;app-pagetitle title&#x3D;&quot;Ajouter un utilisateur&quot; [breadcrumbItems]&#x3D;&quot;breadCrumbItems&quot;&gt;&lt;/app-pagetitle&gt;
     &lt;div class&#x3D;&quot;row mt-4&quot;&gt;
         &lt;div class&#x3D;&quot;col-lg-12&quot;&gt;
             &lt;div class&#x3D;&quot;card&quot;&gt;
@@ -1741,7 +2119,7 @@ export class CreateUserComponent implements OnInit {
                         &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
                             &lt;div class&#x3D;&quot;mb-3&quot;&gt;
                                 &lt;label for&#x3D;&quot;role&quot; class&#x3D;&quot;form-label&quot;&gt;Rôle&lt;/label&gt;
-                                &lt;ng-select id&#x3D;&quot;role&quot; formControlName&#x3D;&quot;role&quot; [items]&#x3D;&quot;roles&quot; bindLabel&#x3D;&quot;name&quot; bindValue&#x3D;&quot;value&quot; placeholder&#x3D;&quot;Sélectionner un rôle&quot; required&gt;&lt;/ng-select&gt;
+                                &lt;ng-select id&#x3D;&quot;role&quot; class&#x3D;&quot;form-control&quot; formControlName&#x3D;&quot;role&quot; [items]&#x3D;&quot;roles&quot; bindLabel&#x3D;&quot;name&quot; bindValue&#x3D;&quot;value&quot; placeholder&#x3D;&quot;Sélectionner un rôle&quot; required&gt;&lt;/ng-select&gt;
                             &lt;/div&gt;
                         &lt;/div&gt;
                         &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
@@ -1777,13 +2155,18 @@ export class CreateUserComponent implements OnInit {
                             &lt;div class&#x3D;&quot;mb-3&quot;&gt;
                                 &lt;label for&#x3D;&quot;company&quot; class&#x3D;&quot;form-label&quot;&gt;Entreprise&lt;/label&gt;
                                 &lt;ng-select id&#x3D;&quot;company&quot; 
-                                           formControlName&#x3D;&quot;company&quot; 
+                                           formControlName&#x3D;&quot;company&quot;  
+                                           [ngClass]&#x3D;&quot;{&#x27;is-invalid&#x27;: userForm.controls.company.invalid &amp;&amp; userForm.controls.company.touched}&quot;
                                            [items]&#x3D;&quot;companies&quot; 
-                                           bindLabel&#x3D;&quot;name&quot; 
-                                           bindValue&#x3D;&quot;id&quot; 
+                                           bindLabel&#x3D;&quot;normalized_name&quot; 
+                                           bindValue&#x3D;&quot;normalized_name&quot; 
                                            placeholder&#x3D;&quot;Sélectionner une entreprise&quot;
                                            [typeahead]&#x3D;&quot;companyInput$&quot;
-                                           [virtualScroll]&#x3D;&quot;true&quot;&gt;
+                                           [virtualScroll]&#x3D;&quot;true&quot; 
+                                           [addTag]&#x3D;&quot;true&quot; 
+                                           addTagText&#x3D;&quot;Ajouter l&#x27;entreprise&quot; 
+                                           typeToSearchText&#x3D;&quot;Tapez pour rechercher&quot;
+                                           (blur)&#x3D;&quot;onCompanyInputBlur($event)&quot;&gt;
                                 &lt;/ng-select&gt;
                             &lt;/div&gt;
                         &lt;/div&gt;
@@ -1893,6 +2276,14 @@ export class CreateUserComponent implements OnInit {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.is-invalid .ng-select-container {
+  border-color: #dc3545;
+}
+
+.is-invalid .ng-select-container:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
 </code></pre>
     </div>
 
@@ -1921,8 +2312,8 @@ export class CreateUserComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">    <app-pagetitle title="Créer un utilisateur" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>    <div class="row mt-4">        <div class="col-lg-12">            <div class="card">                <div class="card-body">                    <h4 class="card-title">Informations de l\'utilisateur</h4>                    <!-- Messages (erreur/succès)-->                    <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = \'\'">                        {{ successMessage }}                      </ngb-alert>                      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = \'\'">                        {{ errorMessage }}                      </ngb-alert>                    <!-- Formulaire -->                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="scrollable-form">                        <div class="row">                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="firstName" class="form-label">Prénom</label>                                    <input                                     type="text"                                     class="form-control"                                     [ngClass]="{\'is-invalid\': userForm.get(\'firstName\').invalid && userForm.get(\'firstName\').touched}"                                     id="firstName"                                     formControlName="firstName"                                     placeholder="Prénom"                                     required>                                    <div *ngIf="userForm.get(\'firstName\').invalid && userForm.get(\'firstName\').touched" class="text-danger">                                        Le prénom est requis.                                    </div>                                </div>                            </div>                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="lastName" class="form-label">Nom</label>                                    <input                                     type="text"                                     class="form-control"                                     [ngClass]="{\'is-invalid\': userForm.get(\'lastName\').invalid && userForm.get(\'lastName\').touched}"                                     id="lastName"                                     formControlName="lastName"                                     placeholder="Nom"                                     required>                                    <div *ngIf="userForm.get(\'lastName\').invalid && userForm.get(\'lastName\').touched" class="text-danger">                                        Le nom est requis.                                    </div>                                </div>                            </div>                        </div>                        <div class="row">                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="email" class="form-label">Adresse email</label>                                    <input                                     type="email"                                     class="form-control"                                     [ngClass]="{\'is-invalid\': userForm.get(\'email\').invalid && userForm.get(\'email\').touched}"                                      id="email"                                     formControlName="email"                                     placeholder="Adresse email"                                     required>                                    <div *ngIf="userForm.get(\'email\').errors?.[\'required\'] && userForm.get(\'email\').touched" class="text-danger">                                        L\'adresse email est requise.                                    </div>                                    <div *ngIf="userForm.get(\'email\').errors?.[\'email\'] && userForm.get(\'email\').touched" class="text-danger">                                        Veuillez saisir une adresse email valide.                                    </div>                                </div>                            </div>                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="password" class="form-label">Mot de passe</label>                                    <div class="input-group">                                        <input                                         [type]="hidePassword ? \'password\' : \'text\'"                                         class="form-control"                                         id="password"                                         formControlName="password"                                         placeholder="Mot de passe"                                         (input)="checkPasswordStrength(userForm.get(\'password\').value)"                                           required>                                        <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">                                            <i [class]="hidePassword ? \'fa fa-eye-slash\' : \'fa fa-eye\'" aria-hidden="true"></i>                                        </button>                                        <button class="btn btn-outline-secondary" type="button" (click)="suggestPassword()">Suggérer un mot de passe</button>                                    </div>                                    <div class="progress mt-2" *ngIf="passwordStrength !== undefined">                                        <div class="progress-bar"                                        role="progressbar"                                        [style.width]="(passwordStrength?.score + 1) * 25 + \'%\'"                                        [ngClass]="{                                            \'bg-success\': passwordStrength?.score === 4,                                            \'bg-info\': passwordStrength?.score === 3,                                            \'bg-warning\': passwordStrength?.score === 2,                                            \'bg-danger\': passwordStrength?.score < 2                                        }">                                    </div>                                </div>                                <div *ngIf="passwordStrength && passwordStrength.feedback">                                    {{ passwordStrength.feedback.suggestions.join(\', \') }}                                </div>                            </div>                        </div>                    </div>                    <div class="row">                        <div class="col-md-6">                            <div class="mb-3">                                <label for="role" class="form-label">Rôle</label>                                <ng-select id="role" formControlName="role" [items]="roles" bindLabel="name" bindValue="value" placeholder="Sélectionner un rôle" required></ng-select>                            </div>                        </div>                        <div class="col-md-6">                            <div class="mb-3">                                <label for="phone" class="form-label">Téléphone</label>                                <input                                 type="text"                                 class="form-control"                                 [ngClass]="{\'is-invalid\': userForm.get(\'phone\').invalid && userForm.get(\'phone\').touched}"                                 id="phone"                                 formControlName="phone"                                 placeholder="Téléphone"                                required>                                <div *ngIf="userForm.get(\'phone\').touched">                                    <div *ngIf="userForm.get(\'phone\').errors?.[\'required\']" class="text-danger">                                        Le numéro de téléphone est requis.                                    </div>                                    <div *ngIf="userForm.get(\'phone\').errors?.[\'pattern\']" class="text-danger">                                        Veuillez saisir un numéro de téléphone valide.                                    </div>                                </div>                            </div>                        </div>                    </div>                    <div class="row">                        <div class="col-md-6">                            <div class="mb-3">                                <label for="address" class="form-label">Adresse</label>                                <input type="text" class="form-control" id="address" formControlName="address" placeholder="Adresse">                            </div>                        </div>                        <div class="col-md-6">                            <div class="mb-3">                                <label for="company" class="form-label">Entreprise</label>                                <ng-select id="company"                                            formControlName="company"                                            [items]="companies"                                            bindLabel="name"                                            bindValue="id"                                            placeholder="Sélectionner une entreprise"                                           [typeahead]="companyInput$"                                           [virtualScroll]="true">                                </ng-select>                            </div>                        </div>                    </div>                    <div class="row">                        <div class="col-md-6">                            <div class="mb-3">                                <label for="status" class="form-label">Statut</label>                                <div class="d-block">                                    <ui-switch id="status-switch" formControlName="status" [checkedLabel]="\'Actif\'" [uncheckedLabel]="\'Inactif\'" size="small"  ariaLabel="Statut"></ui-switch>                                </div>                            </div>                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="authorized" class="form-label">Autorisé à se connecter</label>                                    <div class="d-block">                                        <ui-switch id="authorized" formControlName="authorized" [checkedLabel]="\'Oui\'" [uncheckedLabel]="\'Non\'" size="small" ariaLabel="Autorisé à se connecter"></ui-switch>                                    </div>                                </div>                            </div>                        </div>                    </div>                    <div class="d-flex justify-content-end">                        <!-- <button type="submit" class="btn btn-primary">Créer</button> -->                        <button type="button" class="btn btn-primary" (click)="openConfirmationModal(content)">Créer</button>                    </div>                </form>            </div>        </div>    </div></div></div><!-- Template pour le Modal de Confirmation --><ng-template #confirmationModal #content let-modal>    <div class="modal-dialog" role="document">        <div class="modal-content">            <div class="modal-header">                <h5 class="modal-title">Confirmation</h5>                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(\'Cross click\')">                    <span aria-hidden="true">&times;</span>                </button>            </div>            <div class="modal-body">                <div class="table-responsive">                    <table class="table">                        <tbody>                            <tr>                                <th scope="row">Prénom</th>                                <td>{{ userForm.value.firstName }}</td>                            </tr>                            <tr>                                <th scope="row">Nom</th>                                <td>{{ userForm.value.lastName }}</td>                            </tr>                            <tr>                                <th scope="row">Email</th>                                <td>{{ userForm.value.email }}</td>                            </tr>                            <tr>                                <th scope="row">Téléphone</th>                                <td>{{ userForm.value.phone }}</td>                            </tr>                            <tr>                                <th scope="row">Adresse</th>                                <td>{{ userForm.value.address }}</td>                            </tr>                            <tr>                                <th scope="row">Entreprise</th>                                <td>{{ userForm.value.company }}</td>                            </tr>                            <tr>                                <th scope="row">Rôle</th>                                <td>{{ userForm.value.role }}</td>                             </tr>                            <tr>                                <th scope="row">Statut</th>                                <td>{{ userForm.value.status ? \'Actif\' : \'Inactif\' }}</td>                            </tr>                            <tr>                                <th scope="row">Autorisé à se connecter</th>                                <td>{{ userForm.value.authorized ? \'Oui\' : \'Non\' }}</td>                            </tr>                            <!-- Ajoutez d\'autres lignes pour chaque champ -->                        </tbody>                    </table>                </div>            </div>            <div class="modal-footer">                <button type="button" class="btn btn-secondary" (click)="modal.close(\'Close click\')">Annuler</button>                <button type="button" class="btn btn-primary" (click)="onSubmit(); modal.close()">Confirmer</button>            </div>        </div>    </div></ng-template></div>'
-    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">    <app-pagetitle title="Ajouter un utilisateur" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>    <div class="row mt-4">        <div class="col-lg-12">            <div class="card">                <div class="card-body">                    <h4 class="card-title">Informations de l\'utilisateur</h4>                    <!-- Messages (erreur/succès)-->                    <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = \'\'">                        {{ successMessage }}                      </ngb-alert>                      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = \'\'">                        {{ errorMessage }}                      </ngb-alert>                    <!-- Formulaire -->                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="scrollable-form">                        <div class="row">                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="firstName" class="form-label">Prénom</label>                                    <input                                     type="text"                                     class="form-control"                                     [ngClass]="{\'is-invalid\': userForm.get(\'firstName\').invalid && userForm.get(\'firstName\').touched}"                                     id="firstName"                                     formControlName="firstName"                                     placeholder="Prénom"                                     required>                                    <div *ngIf="userForm.get(\'firstName\').invalid && userForm.get(\'firstName\').touched" class="text-danger">                                        Le prénom est requis.                                    </div>                                </div>                            </div>                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="lastName" class="form-label">Nom</label>                                    <input                                     type="text"                                     class="form-control"                                     [ngClass]="{\'is-invalid\': userForm.get(\'lastName\').invalid && userForm.get(\'lastName\').touched}"                                     id="lastName"                                     formControlName="lastName"                                     placeholder="Nom"                                     required>                                    <div *ngIf="userForm.get(\'lastName\').invalid && userForm.get(\'lastName\').touched" class="text-danger">                                        Le nom est requis.                                    </div>                                </div>                            </div>                        </div>                        <div class="row">                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="email" class="form-label">Adresse email</label>                                    <input                                     type="email"                                     class="form-control"                                     [ngClass]="{\'is-invalid\': userForm.get(\'email\').invalid && userForm.get(\'email\').touched}"                                      id="email"                                     formControlName="email"                                     placeholder="Adresse email"                                     required>                                    <div *ngIf="userForm.get(\'email\').errors?.[\'required\'] && userForm.get(\'email\').touched" class="text-danger">                                        L\'adresse email est requise.                                    </div>                                    <div *ngIf="userForm.get(\'email\').errors?.[\'email\'] && userForm.get(\'email\').touched" class="text-danger">                                        Veuillez saisir une adresse email valide.                                    </div>                                </div>                            </div>                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="password" class="form-label">Mot de passe</label>                                    <div class="input-group">                                        <input                                         [type]="hidePassword ? \'password\' : \'text\'"                                         class="form-control"                                         id="password"                                         formControlName="password"                                         placeholder="Mot de passe"                                         (input)="checkPasswordStrength(userForm.get(\'password\').value)"                                           required>                                        <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">                                            <i [class]="hidePassword ? \'fa fa-eye-slash\' : \'fa fa-eye\'" aria-hidden="true"></i>                                        </button>                                        <button class="btn btn-outline-secondary" type="button" (click)="suggestPassword()">Suggérer un mot de passe</button>                                    </div>                                    <div class="progress mt-2" *ngIf="passwordStrength !== undefined">                                        <div class="progress-bar"                                        role="progressbar"                                        [style.width]="(passwordStrength?.score + 1) * 25 + \'%\'"                                        [ngClass]="{                                            \'bg-success\': passwordStrength?.score === 4,                                            \'bg-info\': passwordStrength?.score === 3,                                            \'bg-warning\': passwordStrength?.score === 2,                                            \'bg-danger\': passwordStrength?.score < 2                                        }">                                    </div>                                </div>                                <div *ngIf="passwordStrength && passwordStrength.feedback">                                    {{ passwordStrength.feedback.suggestions.join(\', \') }}                                </div>                            </div>                        </div>                    </div>                    <div class="row">                        <div class="col-md-6">                            <div class="mb-3">                                <label for="role" class="form-label">Rôle</label>                                <ng-select id="role" class="form-control" formControlName="role" [items]="roles" bindLabel="name" bindValue="value" placeholder="Sélectionner un rôle" required></ng-select>                            </div>                        </div>                        <div class="col-md-6">                            <div class="mb-3">                                <label for="phone" class="form-label">Téléphone</label>                                <input                                 type="text"                                 class="form-control"                                 [ngClass]="{\'is-invalid\': userForm.get(\'phone\').invalid && userForm.get(\'phone\').touched}"                                 id="phone"                                 formControlName="phone"                                 placeholder="Téléphone"                                required>                                <div *ngIf="userForm.get(\'phone\').touched">                                    <div *ngIf="userForm.get(\'phone\').errors?.[\'required\']" class="text-danger">                                        Le numéro de téléphone est requis.                                    </div>                                    <div *ngIf="userForm.get(\'phone\').errors?.[\'pattern\']" class="text-danger">                                        Veuillez saisir un numéro de téléphone valide.                                    </div>                                </div>                            </div>                        </div>                    </div>                    <div class="row">                        <div class="col-md-6">                            <div class="mb-3">                                <label for="address" class="form-label">Adresse</label>                                <input type="text" class="form-control" id="address" formControlName="address" placeholder="Adresse">                            </div>                        </div>                        <div class="col-md-6">                            <div class="mb-3">                                <label for="company" class="form-label">Entreprise</label>                                <ng-select id="company"                                            formControlName="company"                                             [ngClass]="{\'is-invalid\': userForm.controls.company.invalid && userForm.controls.company.touched}"                                           [items]="companies"                                            bindLabel="normalized_name"                                            bindValue="normalized_name"                                            placeholder="Sélectionner une entreprise"                                           [typeahead]="companyInput$"                                           [virtualScroll]="true"                                            [addTag]="true"                                            addTagText="Ajouter l\'entreprise"                                            typeToSearchText="Tapez pour rechercher"                                           (blur)="onCompanyInputBlur($event)">                                </ng-select>                            </div>                        </div>                    </div>                    <div class="row">                        <div class="col-md-6">                            <div class="mb-3">                                <label for="status" class="form-label">Statut</label>                                <div class="d-block">                                    <ui-switch id="status-switch" formControlName="status" [checkedLabel]="\'Actif\'" [uncheckedLabel]="\'Inactif\'" size="small"  ariaLabel="Statut"></ui-switch>                                </div>                            </div>                            <div class="col-md-6">                                <div class="mb-3">                                    <label for="authorized" class="form-label">Autorisé à se connecter</label>                                    <div class="d-block">                                        <ui-switch id="authorized" formControlName="authorized" [checkedLabel]="\'Oui\'" [uncheckedLabel]="\'Non\'" size="small" ariaLabel="Autorisé à se connecter"></ui-switch>                                    </div>                                </div>                            </div>                        </div>                    </div>                    <div class="d-flex justify-content-end">                        <!-- <button type="submit" class="btn btn-primary">Créer</button> -->                        <button type="button" class="btn btn-primary" (click)="openConfirmationModal(content)">Créer</button>                    </div>                </form>            </div>        </div>    </div></div></div><!-- Template pour le Modal de Confirmation --><ng-template #confirmationModal #content let-modal>    <div class="modal-dialog" role="document">        <div class="modal-content">            <div class="modal-header">                <h5 class="modal-title">Confirmation</h5>                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(\'Cross click\')">                    <span aria-hidden="true">&times;</span>                </button>            </div>            <div class="modal-body">                <div class="table-responsive">                    <table class="table">                        <tbody>                            <tr>                                <th scope="row">Prénom</th>                                <td>{{ userForm.value.firstName }}</td>                            </tr>                            <tr>                                <th scope="row">Nom</th>                                <td>{{ userForm.value.lastName }}</td>                            </tr>                            <tr>                                <th scope="row">Email</th>                                <td>{{ userForm.value.email }}</td>                            </tr>                            <tr>                                <th scope="row">Téléphone</th>                                <td>{{ userForm.value.phone }}</td>                            </tr>                            <tr>                                <th scope="row">Adresse</th>                                <td>{{ userForm.value.address }}</td>                            </tr>                            <tr>                                <th scope="row">Entreprise</th>                                <td>{{ userForm.value.company }}</td>                            </tr>                            <tr>                                <th scope="row">Rôle</th>                                <td>{{ userForm.value.role }}</td>                             </tr>                            <tr>                                <th scope="row">Statut</th>                                <td>{{ userForm.value.status ? \'Actif\' : \'Inactif\' }}</td>                            </tr>                            <tr>                                <th scope="row">Autorisé à se connecter</th>                                <td>{{ userForm.value.authorized ? \'Oui\' : \'Non\' }}</td>                            </tr>                            <!-- Ajoutez d\'autres lignes pour chaque champ -->                        </tbody>                    </table>                </div>            </div>            <div class="modal-footer">                <button type="button" class="btn btn-secondary" (click)="modal.close(\'Close click\')">Annuler</button>                <button type="button" class="btn btn-primary" (click)="onSubmit(); modal.close()">Confirmer</button>            </div>        </div>    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'CreateUserComponent'};
 </script>

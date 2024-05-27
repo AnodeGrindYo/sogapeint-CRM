@@ -1,0 +1,1201 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sogapaint-crm documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">sogapaint-crm documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DonutCardComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/dashboard/donut-card/donut-card.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-donut-card</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./donut-card.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./donut-card.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#benefitsMap" >benefitsMap</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadingText" >loadingText</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#periods" >periods</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#salesAnalytics" >salesAnalytics</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectedPeriod" >selectedPeriod</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#generatePeriods" >generatePeriods</a>
+                            </li>
+                            <li>
+                                <a href="#getLabelColor" >getLabelColor</a>
+                            </li>
+                            <li>
+                                <a href="#loadBenefits" >loadBenefits</a>
+                            </li>
+                            <li>
+                                <a href="#loadContracts" >loadContracts</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onPeriodChange" >onPeriodChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient, contractService: <a href="../injectables/ContractService.html" target="_self">ContractService</a>, benefitService: <a href="../injectables/BenefitService.html" target="_self">BenefitService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:26</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>contractService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ContractService.html" target="_self" >ContractService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>benefitService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BenefitService.html" target="_self" >BenefitService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generatePeriods"></a>
+                    <span class="name">
+                        <span ><b>generatePeriods</b></span>
+                        <a href="#generatePeriods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>generatePeriods()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>literal type[]</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getLabelColor"></a>
+                    <span class="name">
+                        <span ><b>getLabelColor</b></span>
+                        <a href="#getLabelColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getLabelColor(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:118</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadBenefits"></a>
+                    <span class="name">
+                        <span ><b>loadBenefits</b></span>
+                        <a href="#loadBenefits"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadBenefits()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadContracts"></a>
+                    <span class="name">
+                        <span ><b>loadContracts</b></span>
+                        <a href="#loadContracts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadContracts()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPeriodChange"></a>
+                    <span class="name">
+                        <span ><b>onPeriodChange</b></span>
+                        <a href="#onPeriodChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPeriodChange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="benefitsMap"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>benefitsMap</b></span>
+                        <a href="#benefitsMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Map&lt;string | string&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingText"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loadingText</b></span>
+                        <a href="#loadingText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Chargement des données sur les contrats en cours...&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="periods"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>periods</b></span>
+                        <a href="#periods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="salesAnalytics"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>salesAnalytics</b></span>
+                        <a href="#salesAnalytics"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#ChartOptions" target="_self" >Partial&lt;ChartOptions&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:21</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedPeriod"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>selectedPeriod</b></span>
+                        <a href="#selectedPeriod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pages/dashboard/donut-card/donut-card.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { ApexChart, ApexNonAxisChartSeries, ApexResponsive } from &#x27;ng-apexcharts&#x27;;
+import { ContractService } from &#x27;../../../core/services/contract.service&#x27;;
+import { BenefitService } from &#x27;../../../core/services/benefit.service&#x27;;
+import moment from &#x27;moment&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
+
+export type ChartOptions &#x3D; {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
+
+@Component({
+  selector: &#x27;app-donut-card&#x27;,
+  templateUrl: &#x27;./donut-card.component.html&#x27;,
+  styleUrls: [&#x27;./donut-card.component.scss&#x27;]
+})
+export class DonutCardComponent implements OnInit {
+  public salesAnalytics: Partial&lt;ChartOptions&gt;;
+  public benefitsMap: Map&lt;string, string&gt; &#x3D; new Map();
+  public periods: { label: string, value: string }[] &#x3D; [];
+  public selectedPeriod: string;
+  public loading: boolean &#x3D; true;
+  public loadingText: string &#x3D; &#x27;Chargement des données sur les contrats en cours...&#x27;;
+
+  constructor(
+    private http: HttpClient,
+    private contractService: ContractService,
+    private benefitService: BenefitService
+  ) {
+    this.salesAnalytics &#x3D; {
+      series: [],
+      chart: {
+        type: &#x27;donut&#x27;
+      },
+      labels: [],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: &#x27;bottom&#x27;
+            }
+          }
+        }
+      ]
+    };
+
+    // Initialize periods (last 12 months)
+    this.periods &#x3D; this.generatePeriods();
+    this.selectedPeriod &#x3D; moment().format(&#x27;YYYY-MM&#x27;); // Default to the current month
+  }
+
+  ngOnInit(): void {
+    this.loadBenefits();
+  }
+
+  generatePeriods(): { label: string, value: string }[] {
+    const periods &#x3D; [];
+    for (let i &#x3D; 0; i &lt; 12; i++) {
+      const date &#x3D; moment().subtract(i, &#x27;months&#x27;);
+      periods.push({ label: date.format(&#x27;MMM YYYY&#x27;), value: date.format(&#x27;YYYY-MM&#x27;) });
+    }
+    return periods;
+  }
+
+  loadBenefits(): void {
+    this.benefitService.getBenefits().subscribe(benefits &#x3D;&gt; {
+      benefits.forEach(benefit &#x3D;&gt; {
+        this.benefitsMap.set(benefit._id, benefit.name);
+      });
+      this.loadContracts();
+    });
+  }
+
+  loadContracts(): void {
+    this.loading &#x3D; true;
+    const month &#x3D; parseInt(this.selectedPeriod.split(&#x27;-&#x27;)[1], 10);
+    this.contractService.getContractsByMonth(month).subscribe(contracts &#x3D;&gt; {
+      const benefitCounts &#x3D; new Map&lt;string, number&gt;();
+
+      contracts.forEach(contract &#x3D;&gt; {
+        const benefitId &#x3D; contract.benefit;
+        if (benefitCounts.has(benefitId)) {
+          benefitCounts.set(benefitId, benefitCounts.get(benefitId)! + 1);
+        } else {
+          benefitCounts.set(benefitId, 1);
+        }
+      });
+
+      const series: number[] &#x3D; [];
+      const labels: string[] &#x3D; [];
+
+      benefitCounts.forEach((count, benefitId) &#x3D;&gt; {
+        const benefitName &#x3D; this.benefitsMap.get(benefitId);
+        if (benefitName) {
+          series.push(count);
+          labels.push(benefitName);
+        }
+      });
+
+      this.salesAnalytics.series &#x3D; series;
+      this.salesAnalytics.labels &#x3D; labels;
+      this.loading &#x3D; false;
+    });
+  }
+
+  onPeriodChange(event: any): void {
+    this.selectedPeriod &#x3D; event.target.value;
+    this.loadContracts();
+  }
+
+  getLabelColor(index: number): string {
+    const colors &#x3D; [&#x27;text-primary&#x27;, &#x27;text-success&#x27;, &#x27;text-warning&#x27;];
+    return colors[index % colors.length];
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- &lt;div class&#x3D;&quot;card&quot;&gt;
+    &lt;div class&#x3D;&quot;card-body&quot;&gt;
+      &lt;div class&#x3D;&quot;float-end&quot;&gt;
+        &lt;select class&#x3D;&quot;custom-select custom-select-sm&quot; (change)&#x3D;&quot;onPeriodChange($event)&quot;&gt;
+          &lt;option *ngFor&#x3D;&quot;let period of periods&quot; [value]&#x3D;&quot;period.value&quot; [selected]&#x3D;&quot;period.value &#x3D;&#x3D;&#x3D; selectedPeriod&quot;&gt;{{ period.label }}&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+      &lt;h4 class&#x3D;&quot;card-title mb-4&quot;&gt;Analyse des commandes&lt;/h4&gt;
+
+      &lt;div *ngIf&#x3D;&quot;loading&quot; class&#x3D;&quot;spinner-container&quot;&gt;
+        &lt;div class&#x3D;&quot;spinner&quot;&gt;&lt;/div&gt;
+        &lt;p&gt;
+            {{ loadingText}}
+        &lt;/p&gt;
+      &lt;/div&gt;
+  &lt;div *ngIf&#x3D;&quot;!loading&quot;&gt;
+      &lt;apx-chart [series]&#x3D;&quot;salesAnalytics.series&quot; [chart]&#x3D;&quot;salesAnalytics.chart&quot;
+        [labels]&#x3D;&quot;salesAnalytics.labels&quot; [responsive]&#x3D;&quot;salesAnalytics.responsive&quot;&gt;
+      &lt;/apx-chart&gt;
+  
+      &lt;div class&#x3D;&quot;row&quot;&gt;
+        &lt;div *ngFor&#x3D;&quot;let label of salesAnalytics.labels; let i &#x3D; index&quot; class&#x3D;&quot;col-4&quot;&gt;
+          &lt;div class&#x3D;&quot;text-center mt-4&quot;&gt;
+            &lt;p class&#x3D;&quot;mb-2 text-truncate&quot;&gt;
+              &lt;i class&#x3D;&quot;mdi mdi-circle&quot; [ngClass]&#x3D;&quot;getLabelColor(i)&quot;&gt;&lt;/i&gt; {{ label }}
+            &lt;/p&gt;
+            &lt;h5&gt;{{ salesAnalytics.series[i] }} %&lt;/h5&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+   --&gt;
+
+
+
+
+   &lt;div class&#x3D;&quot;card&quot;&gt;
+    &lt;div class&#x3D;&quot;card-body&quot;&gt;
+        &lt;div class&#x3D;&quot;float-end&quot;&gt;
+            &lt;select class&#x3D;&quot;custom-select custom-select-sm&quot; (change)&#x3D;&quot;onPeriodChange($event)&quot;&gt;
+                &lt;option *ngFor&#x3D;&quot;let period of periods&quot; [value]&#x3D;&quot;period.value&quot; [selected]&#x3D;&quot;period.value &#x3D;&#x3D;&#x3D; selectedPeriod&quot;&gt;{{ period.label }}&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;h4 class&#x3D;&quot;card-title mb-4&quot;&gt;Analyse des commandes&lt;/h4&gt;
+
+        &lt;div *ngIf&#x3D;&quot;loading&quot; class&#x3D;&quot;spinner-container&quot;&gt;
+            &lt;div class&#x3D;&quot;spinner&quot;&gt;&lt;/div&gt;
+            &lt;p&gt;{{ loadingText }}&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div *ngIf&#x3D;&quot;!loading&quot;&gt;
+            &lt;apx-chart [series]&#x3D;&quot;salesAnalytics.series&quot; [chart]&#x3D;&quot;salesAnalytics.chart&quot;
+                [labels]&#x3D;&quot;salesAnalytics.labels&quot; [responsive]&#x3D;&quot;salesAnalytics.responsive&quot;&gt;
+            &lt;/apx-chart&gt;
+
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+                &lt;div *ngFor&#x3D;&quot;let label of salesAnalytics.labels; let i &#x3D; index&quot; class&#x3D;&quot;col-4&quot;&gt;
+                    &lt;div class&#x3D;&quot;text-center mt-4&quot;&gt;
+                        &lt;p class&#x3D;&quot;mb-2 text-truncate&quot;&gt;
+                            &lt;i class&#x3D;&quot;mdi mdi-circle&quot; [ngClass]&#x3D;&quot;getLabelColor(i)&quot;&gt;&lt;/i&gt; {{ label }}
+                        &lt;/p&gt;
+                        &lt;h5&gt;{{ salesAnalytics.series[i] }} %&lt;/h5&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./donut-card.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">// .spinner-container {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   height: 200px;
+// }
+
+// .spinner {
+//   border: 4px solid rgba(0, 0, 0, 0.1);
+//   width: 36px;
+//   height: 36px;
+//   border-radius: 50%;
+//   border-left-color: #09f;
+//   animation: spin 1s ease infinite;
+// }
+
+// @keyframes spin {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
+
+// .spinner-container p {
+//   margin-top: 10px;
+//   font-size: 14px;
+//   color: #666;
+// }
+
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #09f;
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.spinner-container p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- <div class="card">    <div class="card-body">      <div class="float-end">        <select class="custom-select custom-select-sm" (change)="onPeriodChange($event)">          <option *ngFor="let period of periods" [value]="period.value" [selected]="period.value === selectedPeriod">{{ period.label }}</option>        </select>      </div>      <h4 class="card-title mb-4">Analyse des commandes</h4>      <div *ngIf="loading" class="spinner-container">        <div class="spinner"></div>        <p>            {{ loadingText}}        </p>      </div>  <div *ngIf="!loading">      <apx-chart [series]="salesAnalytics.series" [chart]="salesAnalytics.chart"        [labels]="salesAnalytics.labels" [responsive]="salesAnalytics.responsive">      </apx-chart>        <div class="row">        <div *ngFor="let label of salesAnalytics.labels; let i = index" class="col-4">          <div class="text-center mt-4">            <p class="mb-2 text-truncate">              <i class="mdi mdi-circle" [ngClass]="getLabelColor(i)"></i> {{ label }}            </p>            <h5>{{ salesAnalytics.series[i] }} %</h5>          </div>        </div>      </div>    </div>    </div>  </div>   -->   <div class="card">    <div class="card-body">        <div class="float-end">            <select class="custom-select custom-select-sm" (change)="onPeriodChange($event)">                <option *ngFor="let period of periods" [value]="period.value" [selected]="period.value === selectedPeriod">{{ period.label }}</option>            </select>        </div>        <h4 class="card-title mb-4">Analyse des commandes</h4>        <div *ngIf="loading" class="spinner-container">            <div class="spinner"></div>            <p>{{ loadingText }}</p>        </div>        <div *ngIf="!loading">            <apx-chart [series]="salesAnalytics.series" [chart]="salesAnalytics.chart"                [labels]="salesAnalytics.labels" [responsive]="salesAnalytics.responsive">            </apx-chart>            <div class="row">                <div *ngFor="let label of salesAnalytics.labels; let i = index" class="col-4">                    <div class="text-center mt-4">                        <p class="mb-2 text-truncate">                            <i class="mdi mdi-circle" [ngClass]="getLabelColor(i)"></i> {{ label }}                        </p>                        <h5>{{ salesAnalytics.series[i] }} %</h5>                    </div>                </div>            </div>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DonutCardComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DonutCardComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

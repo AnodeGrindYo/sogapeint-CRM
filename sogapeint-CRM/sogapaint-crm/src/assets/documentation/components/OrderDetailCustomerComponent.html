@@ -1,0 +1,2317 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sogapaint-crm documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">sogapaint-crm documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  OrderDetailCustomerComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/order-detail-customer/order-detail-customer.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-order-detail</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./order-detail-customer.component.scss,<br>../order-detail/order-detail.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./order-detail-customer.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#benefit_name" >benefit_name</a>
+                            </li>
+                            <li>
+                                <a href="#breadCrumbItems" >breadCrumbItems</a>
+                            </li>
+                            <li>
+                                <a href="#coContractor" >coContractor</a>
+                            </li>
+                            <li>
+                                <a href="#contact" >contact</a>
+                            </li>
+                            <li>
+                                <a href="#contract" >contract</a>
+                            </li>
+                            <li>
+                                <a href="#contractId" >contractId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#currentInput" >currentInput</a>
+                            </li>
+                            <li>
+                                <a href="#currentUser" >currentUser</a>
+                            </li>
+                            <li>
+                                <a href="#customer" >customer</a>
+                            </li>
+                            <li>
+                                <a href="#difference_hours" >difference_hours</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#konamiCode" >konamiCode</a>
+                            </li>
+                            <li>
+                                <a href="#showSecretDiv" >showSecretDiv</a>
+                            </li>
+                            <li>
+                                <a href="#sogapeintContact" >sogapeintContact</a>
+                            </li>
+                            <li>
+                                <a href="#status" >status</a>
+                            </li>
+                            <li>
+                                <a href="#subcontractor" >subcontractor</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getBenefitName" >getBenefitName</a>
+                            </li>
+                            <li>
+                                <a href="#getCompanyNameFromUserId" >getCompanyNameFromUserId</a>
+                            </li>
+                            <li>
+                                <a href="#getStatus" >getStatus</a>
+                            </li>
+                            <li>
+                                <a href="#goToEditOrder" >goToEditOrder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#handleKeyDown" >handleKeyDown</a>
+                            </li>
+                            <li>
+                                <a href="#isAdminOrSuperAdmin" >isAdminOrSuperAdmin</a>
+                            </li>
+                            <li>
+                                <a href="#loadContractDetails" >loadContractDetails</a>
+                            </li>
+                            <li>
+                                <a href="#loadUserDetails" >loadUserDetails</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#replaceUsersByTheirCompanies" >replaceUsersByTheirCompanies</a>
+                            </li>
+                            <li>
+                                <a href="#showSecret" >showSecret</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#window:keydown" >window:keydown</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(route: ActivatedRoute, contractService: <a href="../injectables/ContractService.html" target="_self">ContractService</a>, userProfileService: <a href="../injectables/UserProfileService.html" target="_self">UserProfileService</a>, benefitService: <a href="../injectables/BenefitService.html" target="_self">BenefitService</a>, companyService: <a href="../injectables/CompanyService.html" target="_self">CompanyService</a>, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>contractService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ContractService.html" target="_self" >ContractService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userProfileService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserProfileService.html" target="_self" >UserProfileService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>benefitService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BenefitService.html" target="_self" >BenefitService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>companyService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CompanyService.html" target="_self" >CompanyService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:keydown"></a>
+                    <span class="name">
+                        <span ><b>window:keydown</b></span>
+                        <a href="#window:keydown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:keydown(event: <a href="../interfaces/Event.html" target="_self">KeyboardEvent</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="175"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:175</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBenefitName"></a>
+                    <span class="name">
+                        <span ><b>getBenefitName</b></span>
+                        <a href="#getBenefitName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBenefitName(benefitId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="141"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:141</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>benefitId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCompanyNameFromUserId"></a>
+                    <span class="name">
+                        <span ><b>getCompanyNameFromUserId</b></span>
+                        <a href="#getCompanyNameFromUserId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCompanyNameFromUserId(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="204"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:204</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatus"></a>
+                    <span class="name">
+                        <span ><b>getStatus</b></span>
+                        <a href="#getStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatus(value: string | null)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="155"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:155</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                        <code>string | null</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToEditOrder"></a>
+                    <span class="name">
+                        <span ><b>goToEditOrder</b></span>
+                        <a href="#goToEditOrder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToEditOrder()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="198"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:198</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleKeyDown"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>handleKeyDown</b></span>
+                        <a href="#handleKeyDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleKeyDown(event: <a href="../interfaces/Event.html" target="_self">KeyboardEvent</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;window:keydown&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="175"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:175</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Event.html" target="_self" >KeyboardEvent</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAdminOrSuperAdmin"></a>
+                    <span class="name">
+                        <span ><b>isAdminOrSuperAdmin</b></span>
+                        <a href="#isAdminOrSuperAdmin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isAdminOrSuperAdmin()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="192"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:192</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadContractDetails"></a>
+                    <span class="name">
+                        <span ><b>loadContractDetails</b></span>
+                        <a href="#loadContractDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadContractDetails(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="70"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadUserDetails"></a>
+                    <span class="name">
+                        <span ><b>loadUserDetails</b></span>
+                        <a href="#loadUserDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadUserDetails()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:89</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="replaceUsersByTheirCompanies"></a>
+                    <span class="name">
+                        <span ><b>replaceUsersByTheirCompanies</b></span>
+                        <a href="#replaceUsersByTheirCompanies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>replaceUsersByTheirCompanies()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="231"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:231</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showSecret"></a>
+                    <span class="name">
+                        <span ><b>showSecret</b></span>
+                        <a href="#showSecret"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>showSecret()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="185"
+                                    class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:185</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="benefit_name"></a>
+                    <span class="name">
+                        <span ><b>benefit_name</b></span>
+                        <a href="#benefit_name"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="breadCrumbItems"></a>
+                    <span class="name">
+                        <span ><b>breadCrumbItems</b></span>
+                        <a href="#breadCrumbItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;literal type&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { label: &#x27;Accueil&#x27;, url: &#x27;/&#x27;, active: false },
+    { label: &#x27;Liste des commandes&#x27;, url: &#x27;/orders&#x27;, active: false },
+    { label: &#x27;Détail Commande&#x27;, active: true }
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="coContractor"></a>
+                    <span class="name">
+                        <span ><b>coContractor</b></span>
+                        <a href="#coContractor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contact"></a>
+                    <span class="name">
+                        <span ><b>contact</b></span>
+                        <a href="#contact"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contract"></a>
+                    <span class="name">
+                        <span ><b>contract</b></span>
+                        <a href="#contract"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contractId"></a>
+                    <span class="name">
+                        <span ><b>contractId</b></span>
+                        <a href="#contractId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentInput"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>currentInput</b></span>
+                        <a href="#currentInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentUser"></a>
+                    <span class="name">
+                        <span ><b>currentUser</b></span>
+                        <a href="#currentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="customer"></a>
+                    <span class="name">
+                        <span ><b>customer</b></span>
+                        <a href="#customer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="difference_hours"></a>
+                    <span class="name">
+                        <span ><b>difference_hours</b></span>
+                        <a href="#difference_hours"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="konamiCode"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>konamiCode</b></span>
+                        <a href="#konamiCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;ArrowUp&#x27;, &#x27;ArrowUp&#x27;, &#x27;ArrowDown&#x27;, &#x27;ArrowDown&#x27;, &#x27;ArrowLeft&#x27;, &#x27;ArrowRight&#x27;, &#x27;ArrowLeft&#x27;, &#x27;ArrowRight&#x27;, &#x27;b&#x27;, &#x27;a&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showSecretDiv"></a>
+                    <span class="name">
+                        <span ><b>showSecretDiv</b></span>
+                        <a href="#showSecretDiv"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sogapeintContact"></a>
+                    <span class="name">
+                        <span ><b>sogapeintContact</b></span>
+                        <a href="#sogapeintContact"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="status"></a>
+                    <span class="name">
+                        <span ><b>status</b></span>
+                        <a href="#status"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subcontractor"></a>
+                    <span class="name">
+                        <span ><b>subcontractor</b></span>
+                        <a href="#subcontractor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/pages/order-detail-customer/order-detail-customer.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, HostListener, OnInit } from &#x27;@angular/core&#x27;;
+import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { ContractService } from &#x27;../../core/services/contract.service&#x27;;
+import { UserProfileService } from &#x27;src/app/core/services/user.service&#x27;;
+import { BenefitService } from &#x27;src/app/core/services/benefit.service&#x27;;
+import { CompanyService } from &#x27;src/app/core/services/company.service&#x27;;
+import { User } from &#x27;src/app/core/models/auth.models&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { HttpEventType, HttpResponse } from &#x27;@angular/common/http&#x27;;
+import { Observable, catchError, map, of, switchMap } from &#x27;rxjs&#x27;;
+
+
+@Component({
+  selector: &#x27;app-order-detail&#x27;,
+  templateUrl: &#x27;./order-detail-customer.component.html&#x27;,
+  styleUrls: [&#x27;./order-detail-customer.component.scss&#x27;, &#x27;../order-detail/order-detail.component.scss&#x27;]
+})
+export class OrderDetailCustomerComponent implements OnInit {
+  breadCrumbItems: Array&lt;{ label: string; url?: string; active?: boolean }&gt; &#x3D; [
+    { label: &#x27;Accueil&#x27;, url: &#x27;/&#x27;, active: false },
+    { label: &#x27;Liste des commandes&#x27;, url: &#x27;/orders&#x27;, active: false },
+    { label: &#x27;Détail Commande&#x27;, active: true }
+  ];
+  contract: any; // Contiendra les détails de la commande
+  contractId: string &#x3D; &#x27;&#x27;;
+  difference_hours: number &#x3D; 0;
+  status: string &#x3D; &#x27;&#x27;;
+  showSecretDiv: boolean &#x3D; false;
+  private konamiCode: string[] &#x3D; [&#x27;ArrowUp&#x27;, &#x27;ArrowUp&#x27;, &#x27;ArrowDown&#x27;, &#x27;ArrowDown&#x27;, &#x27;ArrowLeft&#x27;, &#x27;ArrowRight&#x27;, &#x27;ArrowLeft&#x27;, &#x27;ArrowRight&#x27;, &#x27;b&#x27;, &#x27;a&#x27;];
+  private currentInput: string[] &#x3D; [];
+  customer: any;
+  coContractor: any;
+  sogapeintContact: any;
+  subcontractor: any;
+  contact: any;
+  currentUser: User;
+  benefit_name: string &#x3D; &#x27;&#x27;;
+  
+
+  constructor(
+    private route: ActivatedRoute,
+    private contractService: ContractService,
+    private userProfileService: UserProfileService,
+    private benefitService: BenefitService,
+    private companyService: CompanyService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.currentUser &#x3D; this.userProfileService.getCurrentUser();
+    console.log(&#x27;currentUser&#x27;, this.currentUser);
+    // extrait l&#x27;identifiant de la commande de l&#x27;URL
+    this.contractId &#x3D; this.route.snapshot.params[&#x27;orderId&#x27;];
+    this.route.params.subscribe(params &#x3D;&gt; {
+      const contractId &#x3D; params[&#x27;orderId&#x27;]; // Vérifier que &#x27;id&#x27; correspond au nom de paramètre défini dans votre route
+      if (contractId) {
+        this.loadContractDetails(contractId);
+      }
+      
+    }).add(() &#x3D;&gt; {
+      const totalPrevisionHours &#x3D; (Number(this.contract.get(&quot;previsionDataDay&quot;).value) * 8) + Number(this.contract.get(&quot;previsionDataHour&quot;).value);
+      const totalExecutionHours &#x3D; (Number(this.contract.get(&quot;executionDataDay&quot;).value) * 8) + Number(this.contract.get(&quot;executionDataHour&quot;).value);
+      this.difference_hours &#x3D; totalExecutionHours - totalPrevisionHours;
+      // this.benefit_name &#x3D; this.getBenefitName(this.contract.get(&quot;benefit&quot;).value);
+      // this.status &#x3D; this.getStatus(this.contract.get(&quot;status&quot;).value);
+      // console.log(&quot;status&quot;, this.contract.get(&quot;status&quot;).value);
+    });
+  }
+
+  loadContractDetails(contractId: string) {
+    this.contractService.getContractById(contractId).subscribe({
+      next: (data) &#x3D;&gt; {
+        this.contract &#x3D; data;
+        // this.files &#x3D; this.contract.file;
+        console.log(&#x27;Détails de la commande chargés&#x27;, this.contract);
+        
+        // si on a réussi à charger le contrat, on va chercher les détails 
+        // du client, du co-traitant, du contact sogapeint et du sous-traitant
+        if (this.contract) {
+          // this.patchExternalContributorInvoiceDate();
+          this.loadUserDetails();
+          this.benefit_name &#x3D; this.getBenefitName(this.contract.benefit);
+        }
+      },
+      error: (error) &#x3D;&gt; console.error(&#x27;Erreur lors du chargement des détails de la commande&#x27;, error)
+    })
+  }
+
+  loadUserDetails(){
+    console.log(&#x27;Chargement des détails des utilisateurs&#x27;);
+        this.userProfileService.getOne(this.contract.customer).subscribe({
+          next: (data) &#x3D;&gt; {
+            this.customer &#x3D; data;
+            console.log(&#x27;Détails du client chargés&#x27;, data);
+          },
+          error: (error) &#x3D;&gt; console.error(&#x27;Erreur lors du chargement des détails du client&#x27;, error)
+        });
+        if (this.contract.external_contributor){
+          this.userProfileService.getOne(this.contract.external_contributor).subscribe({
+            next: (data) &#x3D;&gt; {
+              this.coContractor &#x3D; data;
+              console.log(&#x27;Détails du co-traitant chargés&#x27;, data);
+            },
+            error: (error) &#x3D;&gt; console.error(&#x27;Erreur lors du chargement des détails du co-traitant&#x27;, error)
+          });
+        }
+          
+        if (this.contract.internal_contributor) {
+          this.userProfileService.getOne(this.contract.internal_contributor).subscribe({
+            next: (data) &#x3D;&gt; {
+              this.sogapeintContact &#x3D; data;
+              console.log(&#x27;Détails du contact Sogapeint chargés&#x27;, data);
+            },
+            error: (error) &#x3D;&gt; console.error(&#x27;Erreur lors du chargement des détails du contact Sogapeint&#x27;, error)
+          });
+        }
+        
+        if (this.contract.subcontractor) {
+          this.userProfileService.getOne(this.contract.subcontractor).subscribe({
+            next: (data) &#x3D;&gt; {
+              this.subcontractor &#x3D; data;
+              console.log(&#x27;Détails du sous-traitant chargés&#x27;, data);
+            },
+            error: (error) &#x3D;&gt; console.error(&#x27;Erreur lors du chargement des détails du sous-traitant&#x27;, error)
+          });
+        }
+
+        if (this.contract.contact) {
+          this.userProfileService.getOne(this.contract.contact).subscribe({
+            next: (data) &#x3D;&gt; {
+              this.contact &#x3D; data;
+              console.log(&#x27;Détails du contact chargés&#x27;, data);
+            },
+            error: (error) &#x3D;&gt; console.error(&#x27;Erreur lors du chargement des détails du contact&#x27;, error)
+          });
+        }
+        
+  }
+
+  // la méthode getBenefits du service BenefitService retourne la liste des prestations avec deux clés: _id et name
+  getBenefitName(benefitId: string): string {
+    // Récupérer la liste des prestations
+    this.benefitService.getBenefits().subscribe({
+      next: (benefits) &#x3D;&gt; {
+        // Trouver la prestation correspondant à l&#x27;identifiant
+        const benefit &#x3D; benefits.find(benefit &#x3D;&gt; benefit._id &#x3D;&#x3D;&#x3D; benefitId);
+        // Retourner le nom de la prestation si trouvée, sinon une chaîne vide
+        this.benefit_name &#x3D; benefit ? benefit.name : &#x27;&#x27;;
+      },
+      error: (error) &#x3D;&gt; console.error(&#x27;Erreur lors de la récupération des prestations&#x27;, error)
+    });
+    return this.benefit_name;
+  }
+
+  getStatus(value: string | null): string {
+    // Dictionnaire de statuts
+    const statusDict: { [key: string]: string } &#x3D; {
+      &#x27;in_progress&#x27;: &#x27;En cours&#x27;,
+      &#x27;null&#x27;: &#x27;En cours&#x27;, // Utiliser &#x27;null&#x27; comme chaîne pour représenter la valeur null
+      &#x27;achieve&#x27;: &#x27;Réalisé&#x27;,
+      &#x27;canceled&#x27;: &#x27;Annulé&#x27;,
+      &#x27;invoiced&#x27;: &#x27;Facturé&#x27;,
+      &#x27;anomaly&#x27;: &#x27;Anomalie&#x27;
+    };
+  
+    // Convertir la valeur null en chaîne &#x27;null&#x27; pour la recherche dans le dictionnaire
+    const keyValue &#x3D; value &#x3D;&#x3D;&#x3D; null ? &#x27;null&#x27; : value;
+  
+    // Retourner le nom du statut correspondant ou &#x27;Statut inconnu&#x27; si non trouvé
+    return statusDict[keyValue] || &#x27;Statut inconnu&#x27;;
+  }
+  
+
+  @HostListener(&#x27;window:keydown&#x27;, [&#x27;$event&#x27;])
+  handleKeyDown(event: KeyboardEvent) {
+    this.currentInput.push(event.key);
+    if (this.currentInput.length &gt; this.konamiCode.length) {
+      this.currentInput.shift();
+    }
+    if (this.konamiCode.every((code, index) &#x3D;&gt; code &#x3D;&#x3D;&#x3D; this.currentInput[index])) {
+      this.showSecret();
+    }
+  }
+
+  showSecret() {
+    // scrolle automatiquement vers le haut de la page
+    window.scrollTo(0, 0);
+    this.showSecretDiv &#x3D; true;
+    setTimeout(() &#x3D;&gt; this.showSecretDiv &#x3D; false, 5000);
+  }
+
+  isAdminOrSuperAdmin(): boolean {
+    const result &#x3D; this.currentUser &amp;&amp; (this.currentUser.role &#x3D;&#x3D;&#x3D; &#x27;admin&#x27; || this.currentUser.role &#x3D;&#x3D;&#x3D; &#x27;superAdmin&#x27;);
+    // console.log(&#x27;isAdminOrSuperAdmin:&#x27;, result);
+    return result;
+  }
+
+  goToEditOrder() {
+    // Rediriger vers la page de mise à jour de la commande
+    // &#x27;order-update/:orderId&#x27;
+    this.router.navigate([&#x60;/order-update-cocontractor/${this.contract._id}&#x60;]);
+  }
+
+  getCompanyNameFromUserId(userId: string): Observable&lt;string&gt; {
+    return this.userProfileService.getOne(userId).pipe(
+        switchMap(user &#x3D;&gt; {
+            console.log(&#x27;User data:&#x27;, user);
+            if (!user.company) return of(&#x27;&#x27;); // Retourner une chaîne vide si aucun identifiant de l&#x27;entreprise n&#x27;est trouvé
+            return this.companyService.searchCompanies(user.company).pipe(
+                map(companies &#x3D;&gt; {
+                    if (companies.length &gt; 0) {
+                        console.log(&#x27;Company data:&#x27;, companies);
+                        return companies[0][&quot;normalized_name&quot;];
+                    } else {
+                        return &#x27;&#x27;; // Retourner une chaîne vide si aucune entreprise n&#x27;est trouvée
+                    }
+                }),
+                catchError(error &#x3D;&gt; {
+                    console.error(&quot;Erreur lors de la récupération de l&#x27;entreprise&quot;, error);
+                    return of(&#x27;&#x27;); // Retourner une chaîne vide en cas d&#x27;erreur
+                })
+            );
+        }),
+        catchError(error &#x3D;&gt; {
+            console.error(&quot;Erreur lors de la récupération de l&#x27;utilisateur&quot;, error);
+            return of(&#x27;&#x27;); // Retourner une chaîne vide en cas d&#x27;erreur
+        })
+    );
+  }
+
+  replaceUsersByTheirCompanies(): void {
+    // external contributor
+    this.contract.get(&#x27;external_contributor&#x27;).valueChanges.subscribe((userId: string) &#x3D;&gt; {
+      this.getCompanyNameFromUserId(userId).subscribe(companyName &#x3D;&gt; {
+        console.log(&#x27;external contributor company name:&#x27;, companyName);
+        this.contract.patchValue({ external_contributor: companyName }, { emitEvent: false });
+      });
+    });
+
+    // subcontractor
+    this.contract.get(&#x27;subcontractor&#x27;).valueChanges.subscribe((userId: string) &#x3D;&gt; {
+      this.getCompanyNameFromUserId(userId).subscribe(companyName &#x3D;&gt; {
+        console.log(&#x27;subcontractor company name:&#x27;, companyName);
+        this.contract.patchValue({ subcontractor: companyName }, { emitEvent: false });
+      });
+    });
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div *ngIf&#x3D;&quot;showSecretDiv&quot; class&#x3D;&quot;secret-div&quot;&gt;
+    &lt;div class&#x3D;&quot;machine-wrap&quot;&gt;
+        &lt;div class&#x3D;&quot;machine&quot;&gt;
+            &lt;div class&#x3D;&quot;machine-roof&quot;&gt;
+                &lt;div class&#x3D;&quot;machine-silencer&quot;&gt;
+                    &lt;div class&#x3D;&quot;machine-smoke&quot;&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;machine-main&quot;&gt;
+                &lt;div class&#x3D;&quot;machine-body&quot;&gt;&lt;/div&gt;
+                &lt;div class&#x3D;&quot;machine-back&quot;&gt;&lt;/div&gt;
+                &lt;div class&#x3D;&quot;machine-front&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;	
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;road&quot;&gt;
+            &lt;div class&#x3D;&quot;mud-wrap clearfix&quot;&gt;
+                &lt;div class&#x3D;&quot;mud&quot;&gt;&lt;/div&gt;
+                &lt;div class&#x3D;&quot;mud&quot;&gt;&lt;/div&gt;
+                &lt;div class&#x3D;&quot;mud&quot;&gt;&lt;/div&gt;
+                &lt;div class&#x3D;&quot;mud&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+      &lt;app-pagetitle title&#x3D;&quot;Détails de la Commande&quot; [breadcrumbItems]&#x3D;&quot;breadCrumbItems&quot;&gt;&lt;/app-pagetitle&gt;
+      &lt;div class&#x3D;&quot;row mb-3&quot;&gt;
+        &lt;div class&#x3D;&quot;col-12 mb-2&quot;&gt;
+          &lt;div class&#x3D;&quot;text-end&quot;&gt;
+            &lt;button class&#x3D;&quot;btn btn-primary ms-2&quot; (click)&#x3D;&quot;goToEditOrder()&quot; *ngIf&#x3D;&quot;isAdminOrSuperAdmin()&quot;&gt;Editer&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;hr&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+          &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot;&gt;Référence commande&lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-body&quot;&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;internal_number&quot; class&#x3D;&quot;form-label&quot;&gt;Numéro Interne&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;internal_number&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.internal_number }}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;date_cde&quot; class&#x3D;&quot;form-label&quot;&gt;Date de Commande&lt;/label&gt;
+                &lt;input type&#x3D;&quot;date&quot; id&#x3D;&quot;date_cde&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.date_cde | date:&#x27;yyyy-MM-dd&#x27; }}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;customer&quot; class&#x3D;&quot;form-label&quot;&gt;Client&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;customer&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ customer?.firstname+&#x27; &#x27;+customer?.lastname }}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;contact&quot; class&#x3D;&quot;form-label&quot;&gt;Contact&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;contact&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contact?.firstname+&#x27; &#x27;+contact?.lastname}}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;benefit&quot; class&#x3D;&quot;form-label&quot;&gt;Prestation&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;benefit&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ benefit_name }}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;status&quot; class&#x3D;&quot;form-label&quot;&gt;Statut&lt;/label&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                  &lt;td class&#x3D;&quot;cell-centered&quot;&gt;
+                      &lt;span 
+                      class&#x3D;&quot;badge&quot; 
+                      [ngClass]&#x3D;&quot;{
+                          &#x27;bg-success&#x27;: contract?.status &#x3D;&#x3D;&#x3D; &#x27;achieve&#x27;,
+                          &#x27;bg-warning&#x27;: contract?.status &#x3D;&#x3D;&#x3D; &#x27;invoiced&#x27;,
+                          &#x27;bg-danger&#x27;: contract?.status &#x3D;&#x3D;&#x3D; &#x27;anomaly&#x27;,
+                          &#x27;bg-secondary&#x27;: contract?.status &#x3D;&#x3D;&#x3D; &#x27;in_progress&#x27;,
+                          &#x27;bg-pink&#x27;: contract?.status &#x3D;&#x3D;&#x3D; null,
+                          &#x27;bg-info&#x27;: contract?.status &#x3D;&#x3D;&#x3D; &#x27;canceled&#x27;
+                      }&quot;&gt;
+                      {{ getStatus(contract?.status) }}
+                      
+                  &lt;/span&gt;
+                  &lt;/td&gt;
+                  
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+          &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot;&gt;Résidence/Adresse&lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-body&quot;&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;address&quot; class&#x3D;&quot;form-label&quot;&gt;Adresse&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;address&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.address }}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;appartment_number&quot; class&#x3D;&quot;form-label&quot;&gt;N° appart&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;appartment_number&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.appartment_number }}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;occupied&quot; class&#x3D;&quot;form-label&quot;&gt;Occupé&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;occupied&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.occupied ? &#x27;Oui&#x27; : &#x27;Non&#x27; }}&quot; disabled&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;row mb-3&quot;&gt;
+        &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+          &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot;&gt;Intervenants&lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-body&quot;&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;internal_contributor&quot; class&#x3D;&quot;form-label&quot;&gt;Intervenant Sogapeint&lt;/label&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;internal_contributor&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ sogapeintContact?.firstname + &#x27; &#x27; + sogapeintContact?.lastname }}&quot; disabled&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;label for&#x3D;&quot;external_contributor&quot; class&#x3D;&quot;form-label&quot;&gt;Co-traitant&lt;/label&gt;
+                &lt;!-- &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;external_contributor&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ coContractor?.firstname + &#x27; &#x27; + coContractor?.lastname }}&quot; disabled&gt; --&gt;
+                &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;external_contributor&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;&#x27;SOGAPEINT&#x27;&quot; disabled&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+          &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+            &lt;div class&#x3D;&quot;card&quot;&gt;
+              &lt;div class&#x3D;&quot;card-header&quot;&gt;Montants&lt;/div&gt;
+              &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot;&gt;Montant de la commande HT&lt;/label&gt;
+                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.amount_ht | currency:&#x27;EUR&#x27; }}&quot; disabled&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                    &lt;label class&#x3D;&quot;form-label&quot;&gt;Montant de la prestation HT&lt;/label&gt;
+                    &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.benefit_ht | currency:&#x27;EUR&#x27; }}&quot; disabled&gt;
+                  &lt;/div&gt;
+                &lt;!-- &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot;&gt;Montant co-traitant&lt;/label&gt;
+                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.external_contributor_amount | currency:&#x27;EUR&#x27; }}&quot; disabled&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                  &lt;label for&#x3D;&quot;external_contributor_invoice_date&quot; class&#x3D;&quot;form-label&quot;&gt;Date de réception de la facture co-traitant&lt;/label&gt;
+                  &lt;input type&#x3D;&quot;date&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.external_contributor_invoice_date | date:&#x27;yyyy-MM-dd&#x27; }}&quot; disabled&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot;&gt;Montant sous-traitant&lt;/label&gt;
+                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.subcontractor_amount | currency:&#x27;EUR&#x27; }}&quot; disabled&gt;
+                &lt;/div&gt; --&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          
+          &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+            &lt;div class&#x3D;&quot;card&quot;&gt;
+              &lt;div class&#x3D;&quot;card-header&quot;&gt;Dates&lt;/div&gt;
+              &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot;&gt;Début des travaux&lt;/label&gt;
+                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.start_date_works | date:&#x27;shortDate&#x27; }}&quot; disabled&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot;&gt;Fin des travaux&lt;/label&gt;
+                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.end_date_works | date:&#x27;shortDate&#x27; }}&quot; disabled&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot;&gt;Date de fin client&lt;/label&gt;
+                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; value&#x3D;&quot;{{ contract?.end_date_customer | date:&#x27;shortDate&#x27; }}&quot; disabled&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+  
+          &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+            &lt;app-order-files-management [isReadOnly]&#x3D;&quot;true&quot; [contractId]&#x3D;&quot;contractId&quot;&gt;&lt;/app-order-files-management&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;row mb-3&quot;&gt;
+          &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                &lt;app-contract-activity [isReadOnly]&#x3D;&quot;true&quot; [contractId]&#x3D;&quot;contractId&quot; [userId]&#x3D;&quot;currentUser[&#x27;userId&#x27;]&quot;&gt;&lt;/app-contract-activity&gt;
+              &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+  
+    </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./order-detail-customer.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+                <p class="comment">
+                    <code>../order-detail/order-detail.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.secret-div {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    *,:after,:before{box-sizing:border-box}
+    .pull-left{float:left}
+    .pull-right{float:right}
+    .clearfix:after,.clearfix:before{content:&#x27;&#x27;;display:table}
+    .clearfix:after{clear:both;display:block}
+    
+    .machine-wrap{
+        top:50%;
+        left:50%;
+        width:475px;
+        height:145px;
+        position:absolute;
+        margin-top:-72.5px;
+        margin-left:-237.5px;
+        border-bottom:5px solid #252B3B; 
+    }
+    .machine{
+        width:475px;
+        height:145px;
+        padding-bottom:20px;
+    }
+    .machine .machine-roof,
+    .machine .machine-main{
+        margin:auto;
+    }
+    .machine-wrap .road .mud:before,
+    .machine-wrap .road .mud:after,
+    .machine .machine-roof .machine-silencer:before,
+    .machine .machine-roof .machine-silencer:after,
+    .machine .machine-body:before,
+    .machine .machine-body:after,
+    .machine .machine-main .machine-back:before,
+    .machine .machine-main .machine-back:after,
+    .machine .machine-main .machine-front:after{
+        content:&#x27;&#x27;;
+        position:absolute;
+    }
+    .machine .machine-roof{
+        width:80px;
+        height:60px;
+        bottom:-1px;
+        position:relative;
+        background:transparent;
+        border:15px solid #252B3B;
+        border-bottom:none;
+    }
+    .machine .machine-roof .machine-silencer{
+        width:14px;
+        left:-50px;
+        height:12px;
+        bottom:-1px;
+        position:absolute;
+        background:#252B3B;
+    }
+    .machine .machine-roof .machine-silencer:before{
+        height:0;
+        bottom:100%;
+        width:inherit;
+        border:6px solid #252B3B;
+        border-top:4px solid transparent;
+        border-left:8px solid transparent;
+    }
+    .machine .machine-roof .machine-silencer:after{
+        left:4px;
+        width:5px;
+        height:12px;
+        bottom:100%;
+        background:inherit;
+        transform:skewY(-35deg);
+    }
+    .machine .machine-roof .machine-silencer .machine-smoke{
+        left:-5px;
+        width:16px;
+        height:16px;
+        bottom:20px;
+        border-radius:50%;
+        position:absolute;
+        background:#252B3B;
+        transform:scale(0);
+        animation:moveSmoke .5s linear infinite;
+    }
+    .machine-main{
+        height:60px;
+        width:185px;
+        position:relative;
+    }
+    .machine .machine-main .machine-body{
+        height:inherit;
+        width:inherit;
+        position:relative;
+        background:#252B3B;
+    }
+    .machine .machine-main .machine-body:before{
+        left:-15px;
+        width:30px;
+        height:inherit;
+        background:inherit;
+        transform:skewX(-20deg);
+    }
+    .machine .machine-main .machine-body:after{
+        bottom:0;
+        right:15px;
+        width:35px;
+        height:41px;
+        background:#252B3B;
+    }
+    .machine .machine-main .machine-back{
+        bottom:-1px;
+        width:75px;
+        height:45px;
+        position:absolute;
+    }
+    .machine .machine-main .machine-back:before{
+        width:75px;
+        height:45px;
+        background:#252B3B;
+        border-radius:50% 50% 0 0 / 85% 85% 0 0;
+    }
+    .machine .machine-main .machine-back:after{
+        top:50%;
+        left:50%;
+        width:60px;
+        height:60px;
+        border-radius:50%;
+        margin-top:-15px;
+        margin-left:-30px;
+        background:transparent;
+        border:15px solid #252B3B;
+    }
+    .machine .machine-main .machine-front{
+        z-index:1;
+        width:60px;
+        height:60px;
+        right:-24px;
+        bottom:-20px;
+        border-radius:50%;
+        position:absolute;
+        background:#252B3B;
+        border-top:2px solid #252B3B;
+    }
+    .machine .machine-main .machine-front:after{
+        top:50%;
+        left:50%;
+        width:80px;
+        height:20px;
+        margin-top:-10px;
+        margin-left:-40px;
+        background:inherit;
+        border:2px solid #252B3B;
+    }
+    .machine-wrap .road{
+        right:0;
+        bottom:0;
+        height:15px;
+        width:140px;
+        overflow:hidden;
+        position:absolute;
+    }
+    .machine-wrap .road .mud-wrap{
+        width:160px;
+        position:absolute;
+        animation:moveRoad .4s linear infinite;
+    }
+    .machine-wrap .road .mud{
+        bottom:0;
+        width:40px;
+        float:left;
+        height:15px;
+        position:relative;
+        display:inline-block;
+    }
+    .machine-wrap .road .mud:before,
+    .machine-wrap .road .mud:after{
+        width:20px;
+        height:20px;
+        border-radius:4px;
+        background:#252B3B;
+        transform:rotate(45deg);
+    }
+    .machine-wrap .road .mud:before{
+        left:0;
+        bottom:-17px;
+    }
+    .machine-wrap .road .mud:after{
+        right:0;
+        bottom:-20px;
+    }
+    
+    .machine-wrap .machine-roof,
+    .machine-wrap .machine-body,
+    .machine-wrap .machine-silencer,
+    .machine-wrap .machine-back:before,
+    .machine-wrap .machine-front{
+        animation:upDown .6s linear infinite;
+    }
+    .machine-wrap .machine-silencer{
+        animation-duration:.4s;
+    }
+    .machine-wrap .machine-front{
+        animation-duration:.3s;
+    }
+    .machine-wrap .machine-back{
+        animation:upDown .8s linear infinite;
+    }
+    @keyframes moveRoad{
+        0%{
+            right:-40px;
+        }
+        100%{
+            right:0;
+        }
+    }
+    @keyframes moveSmoke{
+        0%{
+            opacity:0;
+            transform:scale(0) translate(0);
+        }
+        60%{
+            transform:scale(.5) translate(0);
+        }
+        100%{
+            opacity:.6;
+            transform:scale(1) translate(-10px,-40px);
+        }
+    }
+    @keyframes upDown{
+        0%{
+            transform:translateY(0);
+        }
+        50%{
+            transform:translateY(2px);
+        }
+        100%{
+            transform:translateY(0);
+        }
+    }
+    
+    
+    
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+}
+
+.cell-centered {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+.badge{
+    font-size: medium;
+}
+
+.card-header {
+    background-color: #e9ecef; /* Light grey header */
+    font-weight: bold;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="showSecretDiv" class="secret-div">    <div class="machine-wrap">        <div class="machine">            <div class="machine-roof">                <div class="machine-silencer">                    <div class="machine-smoke"></div>                </div>            </div>            <div class="machine-main">                <div class="machine-body"></div>                <div class="machine-back"></div>                <div class="machine-front"></div>            </div>	        </div>        <div class="road">            <div class="mud-wrap clearfix">                <div class="mud"></div>                <div class="mud"></div>                <div class="mud"></div>                <div class="mud"></div>            </div>        </div>    </div>  </div>    <div class="container-fluid">      <app-pagetitle title="Détails de la Commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>      <div class="row mb-3">        <div class="col-12 mb-2">          <div class="text-end">            <button class="btn btn-primary ms-2" (click)="goToEditOrder()" *ngIf="isAdminOrSuperAdmin()">Editer</button>          </div>          <hr>        </div>        <div class="col-md-6">          <div class="card">            <div class="card-header">Référence commande</div>            <div class="card-body">              <div class="mb-3">                <label for="internal_number" class="form-label">Numéro Interne</label>                <input type="text" id="internal_number" class="form-control" value="{{ contract?.internal_number }}" disabled>              </div>              <div class="mb-3">                <label for="date_cde" class="form-label">Date de Commande</label>                <input type="date" id="date_cde" class="form-control" value="{{ contract?.date_cde | date:\'yyyy-MM-dd\' }}" disabled>              </div>              <div class="mb-3">                <label for="customer" class="form-label">Client</label>                <input type="text" id="customer" class="form-control" value="{{ customer?.firstname+\' \'+customer?.lastname }}" disabled>              </div>              <div class="mb-3">                <label for="contact" class="form-label">Contact</label>                <input type="text" id="contact" class="form-control" value="{{ contact?.firstname+\' \'+contact?.lastname}}" disabled>              </div>              <div class="mb-3">                <label for="benefit" class="form-label">Prestation</label>                <input type="text" id="benefit" class="form-control" value="{{ benefit_name }}" disabled>              </div>              <div class="mb-3">                <label for="status" class="form-label">Statut</label>                <div class="row">                  <td class="cell-centered">                      <span                       class="badge"                       [ngClass]="{                          \'bg-success\': contract?.status === \'achieve\',                          \'bg-warning\': contract?.status === \'invoiced\',                          \'bg-danger\': contract?.status === \'anomaly\',                          \'bg-secondary\': contract?.status === \'in_progress\',                          \'bg-pink\': contract?.status === null,                          \'bg-info\': contract?.status === \'canceled\'                      }">                      {{ getStatus(contract?.status) }}                                        </span>                  </td>                                  </div>              </div>            </div>          </div>        </div>        <div class="col-md-6">          <div class="card">            <div class="card-header">Résidence/Adresse</div>            <div class="card-body">              <div class="mb-3">                <label for="address" class="form-label">Adresse</label>                <input type="text" id="address" class="form-control" value="{{ contract?.address }}" disabled>              </div>              <div class="mb-3">                <label for="appartment_number" class="form-label">N° appart</label>                <input type="text" id="appartment_number" class="form-control" value="{{ contract?.appartment_number }}" disabled>              </div>              <div class="mb-3">                <label for="occupied" class="form-label">Occupé</label>                <input type="text" id="occupied" class="form-control" value="{{ contract?.occupied ? \'Oui\' : \'Non\' }}" disabled>              </div>            </div>          </div>        </div>      </div>      <div class="row mb-3">        <div class="col-md-6">          <div class="card">            <div class="card-header">Intervenants</div>            <div class="card-body">              <div class="mb-3">                <label for="internal_contributor" class="form-label">Intervenant Sogapeint</label>                <input type="text" id="internal_contributor" class="form-control" value="{{ sogapeintContact?.firstname + \' \' + sogapeintContact?.lastname }}" disabled>              </div>              <div class="mb-3">                <label for="external_contributor" class="form-label">Co-traitant</label>                <!-- <input type="text" id="external_contributor" class="form-control" value="{{ coContractor?.firstname + \' \' + coContractor?.lastname }}" disabled> -->                <input type="text" id="external_contributor" class="form-control" value="\'SOGAPEINT\'" disabled>              </div>            </div>          </div>        </div>          <div class="col-md-6">            <div class="card">              <div class="card-header">Montants</div>              <div class="card-body">                <div class="mb-3">                  <label class="form-label">Montant de la commande HT</label>                  <input type="text" class="form-control" value="{{ contract?.amount_ht | currency:\'EUR\' }}" disabled>                </div>                <div class="mb-3">                    <label class="form-label">Montant de la prestation HT</label>                    <input type="text" class="form-control" value="{{ contract?.benefit_ht | currency:\'EUR\' }}" disabled>                  </div>                <!-- <div class="mb-3">                  <label class="form-label">Montant co-traitant</label>                  <input type="text" class="form-control" value="{{ contract?.external_contributor_amount | currency:\'EUR\' }}" disabled>                </div>                <div class="mb-3">                  <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>                  <input type="date" class="form-control" value="{{ contract?.external_contributor_invoice_date | date:\'yyyy-MM-dd\' }}" disabled>                </div>                <div class="mb-3">                  <label class="form-label">Montant sous-traitant</label>                  <input type="text" class="form-control" value="{{ contract?.subcontractor_amount | currency:\'EUR\' }}" disabled>                </div> -->              </div>            </div>          </div>                    <div class="col-md-6">            <div class="card">              <div class="card-header">Dates</div>              <div class="card-body">                <div class="mb-3">                  <label class="form-label">Début des travaux</label>                  <input type="text" class="form-control" value="{{ contract?.start_date_works | date:\'shortDate\' }}" disabled>                </div>                <div class="mb-3">                  <label class="form-label">Fin des travaux</label>                  <input type="text" class="form-control" value="{{ contract?.end_date_works | date:\'shortDate\' }}" disabled>                </div>                <div class="mb-3">                  <label class="form-label">Date de fin client</label>                  <input type="text" class="form-control" value="{{ contract?.end_date_customer | date:\'shortDate\' }}" disabled>                </div>              </div>            </div>          </div>            <div class="col-md-6">            <app-order-files-management [isReadOnly]="true" [contractId]="contractId"></app-order-files-management>          </div>        </div>        <div class="row mb-3">          <div class="col-md-6">                <app-contract-activity [isReadOnly]="true" [contractId]="contractId" [userId]="currentUser[\'userId\']"></app-contract-activity>              </div>    </div>    </div>      </div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'OrderDetailCustomerComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'OrderDetailCustomerComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

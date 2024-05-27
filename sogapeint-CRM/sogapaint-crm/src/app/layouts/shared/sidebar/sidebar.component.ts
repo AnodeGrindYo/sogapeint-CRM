@@ -64,16 +64,71 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   /**
   * Activate the parent dropdown
   */
+  // _activateMenuDropdown() {
+  //   this._removeAllClass('mm-active');
+  //   this._removeAllClass('mm-show');
+  //   const links = document.getElementsByClassName('side-nav-link-ref');
+  //   let menuItemEl = null;
+    
+  //   const paths = [];
+  //   // tslint:disable-next-line: prefer-for-of
+  //   for (let i = 0; i < links.length; i++) {
+  //     // tslint:disable-next-line: no-string-literal
+  //     paths.push(links[i]['pathname']);
+  //   }
+  //   const itemIndex = paths.indexOf(window.location.pathname);
+  //   if (itemIndex === -1) {
+  //     const strIndex = window.location.pathname.lastIndexOf('/');
+  //     const item = window.location.pathname.substr(0, strIndex).toString();
+  //     menuItemEl = links[paths.indexOf(item)];
+  //   } else {
+  //     menuItemEl = links[itemIndex];
+  //   }
+    
+  //   if (menuItemEl) {
+  //     menuItemEl.classList.add('active');
+  //     const parentEl = menuItemEl.parentElement;
+      
+  //     if (parentEl) {
+  //       parentEl.classList.add('mm-active');
+        
+  //       const parent2El = parentEl.parentElement.closest('ul');
+  //       if (parent2El && parent2El.id !== 'side-menu') {
+  //         parent2El.classList.add('mm-show');
+  //         const parent3El = parent2El.parentElement;
+          
+  //         if (parent3El && parent3El.id !== 'side-menu') {
+  //           parent3El.classList.add('mm-active');
+  //           const childAnchor = parent3El.querySelector('.has-arrow');
+  //           const childDropdown = parent3El.querySelector('.has-dropdown');
+            
+  //           if (childAnchor) { childAnchor.classList.add('mm-active'); }
+  //           if (childDropdown) { childDropdown.classList.add('mm-active'); }
+            
+  //           const parent4El = parent3El.parentElement;
+  //           if (parent4El && parent4El.id !== 'side-menu') {
+  //             parent4El.classList.add('mm-show');
+  //             const parent5El = parent4El.parentElement;
+  //             if (parent5El && parent5El.id !== 'side-menu') {
+  //               parent5El.classList.add('mm-active');
+  //               const childanchor = parent5El.querySelector('.is-parent');
+  //               if (childanchor && parent5El.id !== 'side-menu') { childanchor.classList.add('mm-active'); }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   _activateMenuDropdown() {
     this._removeAllClass('mm-active');
     this._removeAllClass('mm-show');
     const links = document.getElementsByClassName('side-nav-link-ref');
     let menuItemEl = null;
-    
+  
     const paths = [];
-    // tslint:disable-next-line: prefer-for-of
+  
     for (let i = 0; i < links.length; i++) {
-      // tslint:disable-next-line: no-string-literal
       paths.push(links[i]['pathname']);
     }
     const itemIndex = paths.indexOf(window.location.pathname);
@@ -84,27 +139,27 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     } else {
       menuItemEl = links[itemIndex];
     }
-    
+  
     if (menuItemEl) {
       menuItemEl.classList.add('active');
       const parentEl = menuItemEl.parentElement;
-      
+  
       if (parentEl) {
         parentEl.classList.add('mm-active');
-        
+  
         const parent2El = parentEl.parentElement.closest('ul');
         if (parent2El && parent2El.id !== 'side-menu') {
           parent2El.classList.add('mm-show');
           const parent3El = parent2El.parentElement;
-          
+  
           if (parent3El && parent3El.id !== 'side-menu') {
             parent3El.classList.add('mm-active');
             const childAnchor = parent3El.querySelector('.has-arrow');
             const childDropdown = parent3El.querySelector('.has-dropdown');
-            
+  
             if (childAnchor) { childAnchor.classList.add('mm-active'); }
             if (childDropdown) { childDropdown.classList.add('mm-active'); }
-            
+  
             const parent4El = parent3El.parentElement;
             if (parent4El && parent4El.id !== 'side-menu') {
               parent4El.classList.add('mm-show');
@@ -121,6 +176,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
   
+  
   /**
   * Initialize
   */
@@ -133,7 +189,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.menuItems = [
         {
           id: 1,
-          label: 'Dashboard',
+          label: 'Tableau de bord',
           icon: 'ri-dashboard-line',
           link: '/dashboard'
         },
@@ -145,13 +201,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         // },
         {
           id: 2,
-          label: 'Gestion des contacts',
+          label: 'Gestion des utilisateurs',
           icon: 'ri-contacts-book-fill',
           link: '/manageUsers'
         },
         {
           id: 3,
-          label: 'Ajouter un contact',
+          label: 'Ajouter un utilisateur',
           icon: 'ri-contacts-book-upload-line',
           link: '/createUser'
         },

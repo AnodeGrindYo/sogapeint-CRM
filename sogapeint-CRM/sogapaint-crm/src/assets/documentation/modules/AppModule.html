@@ -360,7 +360,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BrowserModule } from &#x27;@angular/platform-browser&#x27;;
-import { NgModule } from &#x27;@angular/core&#x27;;
+import { LOCALE_ID, NgModule } from &#x27;@angular/core&#x27;;
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from &#x27;@angular/common/http&#x27;;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
 
@@ -379,6 +379,14 @@ import { AuthenticationService } from &#x27;./core/services/auth.service&#x27;;
 
 import { ProtectedDocumentationComponent } from &quot;./protected-documentation/protected-documentation.component&quot;;
 
+import { PickerModule } from &#x27;@ctrl/ngx-emoji-mart&#x27;;
+
+import { registerLocaleData } from &#x27;@angular/common&#x27;;
+import localeFr from &#x27;@angular/common/locales/fr&#x27;;
+
+// the second parameter &#x27;fr&#x27; is optional
+registerLocaleData(localeFr, &#x27;fr&#x27;);
+
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, &#x27;assets/i18n/&#x27;, &#x27;.json&#x27;);
 }
@@ -395,6 +403,7 @@ export function createTranslateLoader(http: HttpClient): any {
     PagesModule,
     LayoutsModule,
     FormsModule,
+    PickerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -404,6 +413,7 @@ export function createTranslateLoader(http: HttpClient): any {
     }),
   ],
   providers: [
+    {provide: LOCALE_ID, useValue: &#x27;fr&#x27; },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AuthenticationService

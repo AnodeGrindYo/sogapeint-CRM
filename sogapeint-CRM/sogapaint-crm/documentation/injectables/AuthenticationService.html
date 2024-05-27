@@ -162,6 +162,10 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getToken" >getToken</a>
+                            </li>
+                            <li>
                                 <a href="#login" >login</a>
                             </li>
                             <li>
@@ -251,6 +255,45 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getToken"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>getToken</b></span>
+                        <a href="#getToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getToken()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/app/core/services/auth.service.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="login"></a>
                     <span class="name">
                         <span ><b>login</b></span>
@@ -260,7 +303,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>login(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>login(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, rememberMe: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                 </td>
             </tr>
 
@@ -304,6 +347,18 @@
                                                 <td>password</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>rememberMe</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
                                             </td>
 
                                             <td>
@@ -470,31 +525,38 @@ import { User } from &#x27;../models/auth.models&#x27;;
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject&lt;User&gt;;
     public currentUser: Observable&lt;User&gt;;
-
+    
     constructor(private http: HttpClient) {
         this.currentUserSubject &#x3D; new BehaviorSubject&lt;User&gt;(JSON.parse(localStorage.getItem(&#x27;currentUser&#x27;)));
         this.currentUser &#x3D; this.currentUserSubject.asObservable();
     }
-
+    
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
-
-    login(email: string, password: string) {
-        return this.http.post&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/login&#x60;, { email, password })
-            .pipe(map(user &#x3D;&gt; {
-                // stocker les détails de l&#x27;utilisateur et le jeton jwt dans le stockage local pour garder l&#x27;utilisateur connecté entre les rafraîchissements de page
-                localStorage.setItem(&#x27;currentUser&#x27;, JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                return user;
-            }));
+    
+    login(email: string, password: string, rememberMe: boolean) {
+        return this.http.post&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/login&#x60;, { email, password, rememberMe })
+        .pipe(map(user &#x3D;&gt; {
+            // stocker les détails de l&#x27;utilisateur et le jeton jwt dans le stockage local pour garder l&#x27;utilisateur connecté entre les rafraîchissements de page
+            localStorage.setItem(&#x27;currentUser&#x27;, JSON.stringify(user));
+            this.currentUserSubject.next(user);
+            return user;
+        }));
     }
-
+    
     logout() {
         // supprimer l&#x27;utilisateur du stockage local pour déconnecter l&#x27;utilisateur
         localStorage.removeItem(&#x27;currentUser&#x27;);
         this.currentUserSubject.next(null);
     }
+    
+    // Méthode pour récupérer le jeton JWT
+    public getToken(): string {
+        const currentUser &#x3D; this.currentUserValue;
+        return currentUser ? currentUser.token : null; // Assurez-vous que le jeton est stocké dans la propriété &#x27;token&#x27;
+    }
+    
 }
 </code></pre>
     </div>

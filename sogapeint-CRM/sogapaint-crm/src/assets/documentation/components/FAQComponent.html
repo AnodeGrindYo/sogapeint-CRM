@@ -1,0 +1,545 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sogapaint-crm documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">sogapaint-crm documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  FAQComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/faq/faq.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-faq</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">Standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./faq.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./faq.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+
+@Component({
+  selector: &#x27;app-faq&#x27;,
+  standalone: true,
+  imports: [],
+  templateUrl: &#x27;./faq.component.html&#x27;,
+  styleUrl: &#x27;./faq.component.scss&#x27;
+})
+export class FAQComponent {
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">
+
+
+&lt;div class&#x3D;&quot;container mt-5&quot;&gt;
+    &lt;h1&gt;Foire aux questions&lt;/h1&gt;
+    &lt;div id&#x3D;&quot;accordion&quot;&gt;
+
+      &lt;div class&#x3D;&quot;card&quot;&gt;
+        &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingSeven&quot;&gt;
+          &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+            &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseSeven&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseSeven&quot;&gt;
+              Quand est-ce qu&#x27;une vraie FAQ sera disponible ?
+            &lt;/button&gt;
+          &lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div id&#x3D;&quot;collapseSeven&quot;  aria-labelledby&#x3D;&quot;headingSeven&quot;&gt;
+          &lt;div class&#x3D;&quot;card-body&quot;&gt;
+            Prochainement.
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseSeven&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseSeven&quot;&gt;
+                  Comment faire pour ajouter un nouveau contact ?
+                &lt;/button&gt;
+              &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseSeven&quot;  aria-labelledby&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                Pour ajouter un nouveau contact, cliquez sur le bouton &quot;Ajouter un contact&quot; dans le menu de gauche. Vous pouvez ensuite saisir les informations du contact dans le formulaire. N&#x27;oubliez pas de cliquer sur &quot;Enregistrer&quot; lorsque vous avez terminé !
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseSeven&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseSeven&quot;&gt;
+                  Comment faire pour rechercher un contact ?
+                &lt;/button&gt;
+              &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseSeven&quot;  aria-labelledby&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                Utilisez des jumelles.
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseSeven&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseSeven&quot;&gt;
+                  Comment faire pour supprimer un contact ?
+                &lt;/button&gt;
+              &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseSeven&quot;  aria-labelledby&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                Contactez l&#x27;agent 47.
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseSeven&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseSeven&quot;&gt;
+                  Tout nombre pair supérieur à 2 est-il la somme de deux nombres premiers ?
+                &lt;/button&gt;
+              &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseSeven&quot;  aria-labelledby&#x3D;&quot;headingSeven&quot;&gt;
+              &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                Ceci n&#x27;a encore jamais été prouvé, mais nous y travaillons.
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+&lt;div class&#x3D;&quot;card&quot;&gt;
+    &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingSeven&quot;&gt;
+      &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+        &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseSeven&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseSeven&quot;&gt;
+          Le CRM est-il capable de choisir automatiquement les couleurs de peinture pour mes projets en fonction de mon humeur ?
+        &lt;/button&gt;
+      &lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div id&#x3D;&quot;collapseSeven&quot;  aria-labelledby&#x3D;&quot;headingSeven&quot;&gt;
+      &lt;div class&#x3D;&quot;card-body&quot;&gt;
+        Absolument ! Notre CRM avancé intègre une IA qui analyse votre humeur via votre historique de navigation, vos emails, vos expressions faciales, votre rythme cardiaque et le taux de midichloriens dans votre sang, sélectionnant ainsi les nuances de peinture qui correspondent le mieux à votre état émotionnel actuel. Parfait pour ces jours où vous vous sentez &quot;bleu outremer&quot; ou &quot;rouge vermillon&quot;.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class&#x3D;&quot;card&quot;&gt;
+    &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingEight&quot;&gt;
+      &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+        &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseEight&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseEight&quot;&gt;
+          Est-ce que le CRM peut utiliser la réalité augmentée pour montrer à quoi ressembleraient les travaux de peinture avant qu&#x27;ils ne soient réalisés ?
+        &lt;/button&gt;
+      &lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div id&#x3D;&quot;collapseEight&quot;  aria-labelledby&#x3D;&quot;headingEight&quot;&gt;
+      &lt;div class&#x3D;&quot;card-body&quot;&gt;
+        Oui, notre CRM futuriste inclut une fonctionnalité de réalité augmentée qui vous permet de visualiser virtuellement les travaux de peinture sur vos murs avant même de commencer, mais vous pouvez uniquement voir le rendu en l&#x27;absence totale de lumière. Pour accéder à cette fonctionnalité, appuyez longuement sur le bouton &quot;power&quot; de votre ordinateur.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class&#x3D;&quot;card&quot;&gt;
+    &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingNine&quot;&gt;
+      &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+        &lt;button class&#x3D;&quot;btn btn-link collapsed&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseNine&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;collapseNine&quot;&gt;
+          Le CRM peut-il orchestrer une symphonie de couleurs pour mes projets de peinture extérieure ?
+        &lt;/button&gt;
+        &lt;/h2&gt;
+        
+          &lt;/div&gt;
+          &lt;div id&#x3D;&quot;collapseNine&quot;  aria-labelledby&#x3D;&quot;headingNine&quot;&gt;
+            &lt;div class&#x3D;&quot;card-body&quot;&gt;
+              Oui, notre CRM révolutionnaire intègre une fonctionnalité &#x27;Symphonie de Couleurs&#x27; qui, grâce à une IA avancée, crée des harmonies de couleurs personnalisées pour vos projets de peinture extérieure. Il prend en compte les tendances de la mode, la météo locale, et même le feng shui pour garantir une esthétique parfaite.
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+  
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingOne&quot;&gt;
+                &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                    &lt;button class&#x3D;&quot;btn btn-link&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseOne&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;collapseOne&quot;&gt;
+                        Le CRM peut-il prédire l&#x27;avenir ?
+                    &lt;/button&gt;
+                &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseOne&quot; class&#x3D;&quot;collapse show&quot; aria-labelledby&#x3D;&quot;headingOne&quot;&gt;
+                &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                    Bien sûr que non, mais il prétend parfois le faire lors des réunions du lundi matin. En réalité, il se base sur des données et des analyses pour faire des prédictions commerciales, mais il ne remplacera pas votre horoscope.
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingTwo&quot;&gt;
+                &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                    &lt;button class&#x3D;&quot;btn btn-link&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseTwo&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;collapseTwo&quot;&gt;
+                        Est-ce que le CRM peut automatiser mes rendez-vous chez le coiffeur ?
+                    &lt;/button&gt;
+                &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseTwo&quot;  aria-labelledby&#x3D;&quot;headingTwo&quot;&gt;
+                &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                    Malheureusement non, le CRM ne gère pas les rendez-vous personnels. Cependant, il peut envoyer des rappels automatiques pour vos réunions d&#x27;affaires, ce qui est presque aussi important que de ne pas rater votre coupe de cheveux.
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingThree&quot;&gt;
+                &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                    &lt;button class&#x3D;&quot;btn btn-link&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseThree&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;collapseThree&quot;&gt;
+                        Le CRM peut-il organiser ma fête d&#x27;anniversaire ?
+                    &lt;/button&gt;
+                &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseThree&quot;  aria-labelledby&#x3D;&quot;headingThree&quot;&gt;
+                &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                    Tandis que le CRM est doué pour
+                    
+                    gérer les relations client et les données de vente, il ne s&#x27;occupe pas des célébrations personnelles. Cependant, si vous entrez la date de votre anniversaire dans le CRM, il pourrait vous envoyer un email automatique pour vous le rappeler. Malheureusement, cette fonctionnalité ne sera disponnible que le 31 février. Et pour les ballons et les gâteaux, vous devrez probablement vous en occuper vous-même.
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingFour&quot;&gt;
+                &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                    &lt;button class&#x3D;&quot;btn btn-link&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseFour&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;collapseFour&quot;&gt;
+                        Le CRM peut-il m&#x27;aider à gérer ma collection de timbres ?
+                    &lt;/button&gt;
+                &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseFour&quot;  aria-labelledby&#x3D;&quot;headingFour&quot;&gt;
+                &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                    Bien que le CRM soit doué pour gérer les données, il n&#x27;est pas encore prêt pour trier et classer votre précieuse collection de timbres. Cependant, il peut suivre vos interactions avec d&#x27;autres philatélistes!
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingFive&quot;&gt;
+                &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                    &lt;button class&#x3D;&quot;btn btn-link&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseFive&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;collapseFive&quot;&gt;
+                        Le CRM est-il capable de préparer le café ?
+                    &lt;/button&gt;
+                &lt;/h2&gt;
+                
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseFive&quot;  aria-labelledby&#x3D;&quot;headingFive&quot;&gt;
+                &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                    Malheureusement, non. Même si le CRM est très utile, il ne peut pas encore remplacer votre machine à café. Mais il peut vous rappeler de prendre une pause café après votre cinquième réunion Zoom de la journée !
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot; id&#x3D;&quot;headingSix&quot;&gt;
+                &lt;h2 class&#x3D;&quot;mb-0&quot;&gt;
+                    &lt;button class&#x3D;&quot;btn btn-link&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#collapseSix&quot; aria-expanded&#x3D;&quot;true&quot; aria-controls&#x3D;&quot;collapseSix&quot;&gt;
+                        Est-ce que le CRM peut choisir ma tenue du jour ?
+                    &lt;/button&gt;
+                &lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id&#x3D;&quot;collapseSix&quot;  aria-labelledby&#x3D;&quot;headingSix&quot;&gt;
+                &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                    Non, le CRM ne peut pas choisir vos vêtements. Mais il peut vous aider à organiser votre emploi du temps, ce qui pourrait vous laisser plus de temps pour réfléchir à votre style du jour.
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="container mt-5">    <h1>Foire aux questions</h1>    <div id="accordion">      <div class="card">        <div class="card-header" id="headingSeven">          <h2 class="mb-0">            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">              Quand est-ce qu\'une vraie FAQ sera disponible ?            </button>          </h2>        </div>        <div id="collapseSeven"  aria-labelledby="headingSeven">          <div class="card-body">            Prochainement.          </div>        </div>      </div>        <div class="card">            <div class="card-header" id="headingSeven">              <h2 class="mb-0">                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">                  Comment faire pour ajouter un nouveau contact ?                </button>              </h2>            </div>            <div id="collapseSeven"  aria-labelledby="headingSeven">              <div class="card-body">                Pour ajouter un nouveau contact, cliquez sur le bouton "Ajouter un contact" dans le menu de gauche. Vous pouvez ensuite saisir les informations du contact dans le formulaire. N\'oubliez pas de cliquer sur "Enregistrer" lorsque vous avez terminé !              </div>            </div>          </div>          <div class="card">            <div class="card-header" id="headingSeven">              <h2 class="mb-0">                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">                  Comment faire pour rechercher un contact ?                </button>              </h2>            </div>            <div id="collapseSeven"  aria-labelledby="headingSeven">              <div class="card-body">                Utilisez des jumelles.              </div>            </div>          </div>          <div class="card">            <div class="card-header" id="headingSeven">              <h2 class="mb-0">                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">                  Comment faire pour supprimer un contact ?                </button>              </h2>            </div>            <div id="collapseSeven"  aria-labelledby="headingSeven">              <div class="card-body">                Contactez l\'agent 47.              </div>            </div>          </div>          <div class="card">            <div class="card-header" id="headingSeven">              <h2 class="mb-0">                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">                  Tout nombre pair supérieur à 2 est-il la somme de deux nombres premiers ?                </button>              </h2>            </div>            <div id="collapseSeven"  aria-labelledby="headingSeven">              <div class="card-body">                Ceci n\'a encore jamais été prouvé, mais nous y travaillons.              </div>            </div>          </div><div class="card">    <div class="card-header" id="headingSeven">      <h2 class="mb-0">        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">          Le CRM est-il capable de choisir automatiquement les couleurs de peinture pour mes projets en fonction de mon humeur ?        </button>      </h2>    </div>    <div id="collapseSeven"  aria-labelledby="headingSeven">      <div class="card-body">        Absolument ! Notre CRM avancé intègre une IA qui analyse votre humeur via votre historique de navigation, vos emails, vos expressions faciales, votre rythme cardiaque et le taux de midichloriens dans votre sang, sélectionnant ainsi les nuances de peinture qui correspondent le mieux à votre état émotionnel actuel. Parfait pour ces jours où vous vous sentez "bleu outremer" ou "rouge vermillon".      </div>    </div>  </div>    <div class="card">    <div class="card-header" id="headingEight">      <h2 class="mb-0">        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">          Est-ce que le CRM peut utiliser la réalité augmentée pour montrer à quoi ressembleraient les travaux de peinture avant qu\'ils ne soient réalisés ?        </button>      </h2>    </div>    <div id="collapseEight"  aria-labelledby="headingEight">      <div class="card-body">        Oui, notre CRM futuriste inclut une fonctionnalité de réalité augmentée qui vous permet de visualiser virtuellement les travaux de peinture sur vos murs avant même de commencer, mais vous pouvez uniquement voir le rendu en l\'absence totale de lumière. Pour accéder à cette fonctionnalité, appuyez longuement sur le bouton "power" de votre ordinateur.      </div>    </div>  </div>    <div class="card">    <div class="card-header" id="headingNine">      <h2 class="mb-0">        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">          Le CRM peut-il orchestrer une symphonie de couleurs pour mes projets de peinture extérieure ?        </button>        </h2>                  </div>          <div id="collapseNine"  aria-labelledby="headingNine">            <div class="card-body">              Oui, notre CRM révolutionnaire intègre une fonctionnalité \'Symphonie de Couleurs\' qui, grâce à une IA avancée, crée des harmonies de couleurs personnalisées pour vos projets de peinture extérieure. Il prend en compte les tendances de la mode, la météo locale, et même le feng shui pour garantir une esthétique parfaite.            </div>          </div>        </div>          <div class="card">            <div class="card-header" id="headingOne">                <h2 class="mb-0">                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">                        Le CRM peut-il prédire l\'avenir ?                    </button>                </h2>            </div>            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">                <div class="card-body">                    Bien sûr que non, mais il prétend parfois le faire lors des réunions du lundi matin. En réalité, il se base sur des données et des analyses pour faire des prédictions commerciales, mais il ne remplacera pas votre horoscope.                </div>            </div>        </div>        <div class="card">            <div class="card-header" id="headingTwo">                <h2 class="mb-0">                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">                        Est-ce que le CRM peut automatiser mes rendez-vous chez le coiffeur ?                    </button>                </h2>            </div>            <div id="collapseTwo"  aria-labelledby="headingTwo">                <div class="card-body">                    Malheureusement non, le CRM ne gère pas les rendez-vous personnels. Cependant, il peut envoyer des rappels automatiques pour vos réunions d\'affaires, ce qui est presque aussi important que de ne pas rater votre coupe de cheveux.                </div>            </div>        </div>        <div class="card">            <div class="card-header" id="headingThree">                <h2 class="mb-0">                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">                        Le CRM peut-il organiser ma fête d\'anniversaire ?                    </button>                </h2>            </div>            <div id="collapseThree"  aria-labelledby="headingThree">                <div class="card-body">                    Tandis que le CRM est doué pour                                        gérer les relations client et les données de vente, il ne s\'occupe pas des célébrations personnelles. Cependant, si vous entrez la date de votre anniversaire dans le CRM, il pourrait vous envoyer un email automatique pour vous le rappeler. Malheureusement, cette fonctionnalité ne sera disponnible que le 31 février. Et pour les ballons et les gâteaux, vous devrez probablement vous en occuper vous-même.                </div>            </div>        </div>                <div class="card">            <div class="card-header" id="headingFour">                <h2 class="mb-0">                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">                        Le CRM peut-il m\'aider à gérer ma collection de timbres ?                    </button>                </h2>            </div>            <div id="collapseFour"  aria-labelledby="headingFour">                <div class="card-body">                    Bien que le CRM soit doué pour gérer les données, il n\'est pas encore prêt pour trier et classer votre précieuse collection de timbres. Cependant, il peut suivre vos interactions avec d\'autres philatélistes!                </div>            </div>        </div>                <div class="card">            <div class="card-header" id="headingFive">                <h2 class="mb-0">                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">                        Le CRM est-il capable de préparer le café ?                    </button>                </h2>                            </div>            <div id="collapseFive"  aria-labelledby="headingFive">                <div class="card-body">                    Malheureusement, non. Même si le CRM est très utile, il ne peut pas encore remplacer votre machine à café. Mais il peut vous rappeler de prendre une pause café après votre cinquième réunion Zoom de la journée !                </div>            </div>        </div>        <div class="card">            <div class="card-header" id="headingSix">                <h2 class="mb-0">                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">                        Est-ce que le CRM peut choisir ma tenue du jour ?                    </button>                </h2>            </div>            <div id="collapseSix"  aria-labelledby="headingSix">                <div class="card-body">                    Non, le CRM ne peut pas choisir vos vêtements. Mais il peut vous aider à organiser votre emploi du temps, ce qui pourrait vous laisser plus de temps pour réfléchir à votre style du jour.                </div>            </div>        </div>    </div>    </div></div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FAQComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FAQComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

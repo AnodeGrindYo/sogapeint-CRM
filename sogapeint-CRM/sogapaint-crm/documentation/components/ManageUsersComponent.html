@@ -131,6 +131,14 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Component pour la gestion des utilisateurs.
+Utilise UserProfileService pour récupérer les données des utilisateurs et Router pour la navigation.</p>
+
+    </p>
 
 
     <p class="comment">
@@ -240,6 +248,9 @@
                                 <a href="#_fetchData" >_fetchData</a>
                             </li>
                             <li>
+                                <a href="#formatPhoneNumber" >formatPhoneNumber</a>
+                            </li>
+                            <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                             <li>
@@ -249,8 +260,14 @@
                                 <a href="#onSort" >onSort</a>
                             </li>
                             <li>
+                                <a href="#selectUser" >selectUser</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Private</span>
                                 <a href="#sortUsers" >sortUsers</a>
+                            </li>
+                            <li>
+                                <a href="#translateRole" >translateRole</a>
                             </li>
                         </ul>
                     </td>
@@ -270,17 +287,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(userProfileService: <a href="../injectables/UserProfileService.html" target="_self">UserProfileService</a>)</code>
+<code>constructor(userProfileService: <a href="../injectables/UserProfileService.html" target="_self">UserProfileService</a>, router: Router)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:41</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Constructeur du composant.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -289,6 +308,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -303,6 +323,26 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Service pour gérer les profils utilisateurs.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service Router pour la navigation.</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -344,8 +384,48 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="37"
-                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:37</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère les données des utilisateurs depuis le service.
+Gère la réception des données et les erreurs.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatPhoneNumber"></a>
+                    <span class="name">
+                        <span ><b>formatPhoneNumber</b></span>
+                        <a href="#formatPhoneNumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatPhoneNumber(phoneNumber: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="143"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:143</a></div>
                         </td>
                     </tr>
 
@@ -353,10 +433,40 @@
             <tr>
                 <td class="col-md-4">
 
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>phoneNumber</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -381,14 +491,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="31"
-                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:31</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="57"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:57</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Initialisation du composant.
+Configure le fil d&#39;Ariane et charge les données des utilisateurs.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -418,14 +531,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="77"
-                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:77</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:118</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Filtre les utilisateurs en fonction du terme de recherche.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -455,14 +570,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="52"
-                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:52</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:87</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Trie les utilisateurs en fonction de la colonne et de la direction de tri.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -473,6 +590,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -487,6 +605,84 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>La colonne à utiliser pour le tri.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectUser"></a>
+                    <span class="name">
+                        <span ><b>selectUser</b></span>
+                        <a href="#selectUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectUser(user: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Gère la sélection d&#39;un utilisateur.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;utilisateur sélectionné.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -524,8 +720,47 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="63"
-                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:63</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Trie les utilisateurs en fonction de la colonne et de la direction de tri.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translateRole"></a>
+                    <span class="name">
+                        <span ><b>translateRole</b></span>
+                        <a href="#translateRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>translateRole(role: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:156</a></div>
                         </td>
                     </tr>
 
@@ -533,10 +768,40 @@
             <tr>
                 <td class="col-md-4">
 
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>role</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -571,7 +836,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:18</a></div>
                         </td>
                     </tr>
 
@@ -604,13 +869,14 @@
     { name: &#x27;role&#x27;, displayName: &#x27;Rôle&#x27; },
     { name: &#x27;company&#x27;, displayName: &#x27;Entreprise&#x27; },
     { name: &#x27;phone&#x27;, displayName: &#x27;Téléphone&#x27; },
+    { name: &#x27;active&#x27;, displayName: &#x27;Actif&#x27; },
     // Ajoutez d&#x27;autres colonnes au besoin
   ]</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -641,7 +907,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:28</a></div>
                         </td>
                     </tr>
 
@@ -672,7 +938,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:30</a></div>
                         </td>
                     </tr>
 
@@ -703,7 +969,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:20</a></div>
                         </td>
                     </tr>
 
@@ -734,7 +1000,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:24</a></div>
                         </td>
                     </tr>
 
@@ -765,7 +1031,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:26</a></div>
                         </td>
                     </tr>
 
@@ -796,7 +1062,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/pages/manage-users/manage-users.component.ts:22</a></div>
                         </td>
                     </tr>
 
@@ -811,7 +1077,13 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { UserProfileService } from &#x27;../../core/services/user.service&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
+
+/**
+ * Component pour la gestion des utilisateurs.
+ * Utilise UserProfileService pour récupérer les données des utilisateurs et Router pour la navigation.
+ */
 @Component({
   selector: &#x27;app-manage-users&#x27;,
   templateUrl: &#x27;./manage-users.component.html&#x27;,
@@ -819,13 +1091,21 @@ import { UserProfileService } from &#x27;../../core/services/user.service&#x27;;
 })
 export class ManageUsersComponent implements OnInit {
 
+  // Items pour le fil d&#x27;Ariane
   breadCrumbItems: Array&lt;{ label: string; url?: string; active?: boolean }&gt; &#x3D; [];
+  // Titre de la page
   pageTitle: string &#x3D; &#x27;Gestion des contacts&#x27;;
+  // Liste des utilisateurs
   users: any[] &#x3D; [];
+  // Colonne de tri
   sortColumn: string &#x3D; &#x27;&#x27;;
+  // Direction du tri
   sortDirection: &#x27;asc&#x27; | &#x27;desc&#x27; &#x3D; &#x27;asc&#x27;;
-  filter: string &#x3D; &#x27;&#x27;; // La chaîne de recherche
-  filteredUsers: any[] &#x3D; []; // Les utilisateurs filtrés affichés dans la vue
+  // Filtre de recherche
+  filter: string &#x3D; &#x27;&#x27;; 
+  // Utilisateurs filtrés pour l&#x27;affichage
+  filteredUsers: any[] &#x3D; [];
+  // Colonnes pour l&#x27;affichage dans le tableau
   columns &#x3D; [
     { name: &#x27;firstname&#x27;, displayName: &#x27;Prénom&#x27; },
     { name: &#x27;lastname&#x27;, displayName: &#x27;Nom&#x27; },
@@ -833,33 +1113,54 @@ export class ManageUsersComponent implements OnInit {
     { name: &#x27;role&#x27;, displayName: &#x27;Rôle&#x27; },
     { name: &#x27;company&#x27;, displayName: &#x27;Entreprise&#x27; },
     { name: &#x27;phone&#x27;, displayName: &#x27;Téléphone&#x27; },
+    { name: &#x27;active&#x27;, displayName: &#x27;Actif&#x27; },
     // Ajoutez d&#x27;autres colonnes au besoin
   ];
 
-
-  constructor(private userProfileService: UserProfileService){}
-
+  /**
+   * Constructeur du composant.
+   * @param userProfileService Service pour gérer les profils utilisateurs.
+   * @param router Service Router pour la navigation.
+   */
+  constructor(
+    private userProfileService: UserProfileService,
+    private router: Router
+  ){}
+  
+  /**
+   * Initialisation du composant.
+   * Configure le fil d&#x27;Ariane et charge les données des utilisateurs.
+   */
   ngOnInit(): void {
     this.breadCrumbItems &#x3D; [{ label: &#x27;Sogapeint&#x27; }, { label: this.pageTitle, active: true }];
     this._fetchData();
 
   }
 
+  /**
+   * Récupère les données des utilisateurs depuis le service.
+   * Gère la réception des données et les erreurs.
+   */
   private _fetchData(): void {
-    // Use UserProfileService to fetch user data
+    // Récupérer les données des utilisateurs depuis le service
     this.userProfileService.getAll().subscribe({
       next: (data: any) &#x3D;&gt; {
-        this.users &#x3D; data; // Store users for display
+        // console.log(&#x27;Données reçues:&#x27;, data);
+        this.users &#x3D; data; // Initialiser les utilisateurs
         this.filteredUsers &#x3D; data; // Initialiser les utilisateurs filtrés
         console.log(&#x27;Utilisateurs reçus:&#x27;, this.users);
       },
       error: (error) &#x3D;&gt; {
         console.error(&#x27;Erreur lors de la récupération des utilisateurs:&#x27;, error);
       },
-      // Usually, for HTTP calls you don&#x27;t need to use the complete callback, as they complete immediately after emitting a response
+      // 
     });
   }
 
+  /**
+   * Trie les utilisateurs en fonction de la colonne et de la direction de tri.
+   * @param column La colonne à utiliser pour le tri.
+   */
   onSort(column: string): void {
     if (this.sortColumn &#x3D;&#x3D;&#x3D; column) {
       this.sortDirection &#x3D; this.sortDirection &#x3D;&#x3D;&#x3D; &#x27;asc&#x27; ? &#x27;desc&#x27; : &#x27;asc&#x27;;
@@ -871,6 +1172,9 @@ export class ManageUsersComponent implements OnInit {
     this.sortUsers();
   }
 
+  /**
+   * Trie les utilisateurs en fonction de la colonne et de la direction de tri.
+   */
   private sortUsers(): void {
     this.users.sort((a, b) &#x3D;&gt; {
       const valA &#x3D; a[this.sortColumn];
@@ -885,7 +1189,11 @@ export class ManageUsersComponent implements OnInit {
     });
   }
 
+  /**
+   * Filtre les utilisateurs en fonction du terme de recherche.
+   */
   onSearch(): void {
+    console.log(&quot;onSearch&quot;);
     if (!this.filter) {
       this.filteredUsers &#x3D; this.users; // Pas de filtre, affiche tous les utilisateurs
     } else {
@@ -893,10 +1201,45 @@ export class ManageUsersComponent implements OnInit {
         const searchTerm &#x3D; this.filter.toLowerCase();
         return this.columns.some(column &#x3D;&gt; {
           const userData &#x3D; user[column.name];
-          return userData &amp;&amp; userData.toLowerCase().includes(searchTerm);
+          // Convertit toutes les valeurs en chaînes avant de les comparer
+          return String(userData).toLowerCase().includes(searchTerm);
         });
       });
     }
+  }
+
+  /**
+   * Gère la sélection d&#x27;un utilisateur.
+   * @param user L&#x27;utilisateur sélectionné.
+   */
+  selectUser(user: any) {
+    console.log(&#x27;Utilisateur sélectionné:&#x27;, user);
+    this.router.navigate([&#x27;/user-detail&#x27;, user._id]);
+  }
+  
+  formatPhoneNumber(phoneNumber: string): string {
+    // Supprime tout caractère non numérique, sauf le signe plus pour les indicatifs internationaux
+    const cleaned &#x3D; (&#x27;&#x27; + phoneNumber).replace(/\D/g, &#x27;&#x27;);
+    // Format de base: suppose qu&#x27;il s&#x27;agit d&#x27;un numéro français sans l&#x27;indicatif international
+    let formatted &#x3D; cleaned.match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+    if (formatted) {
+      // Retourne le numéro formaté (par exemple, &quot;01 23 45 67 89&quot;)
+      return &#x60;${formatted[1]} ${formatted[2]} ${formatted[3]} ${formatted[4]} ${formatted[5]}&#x60;;
+    }
+    // Si le format ne correspond pas, retourne le numéro original
+    return phoneNumber;
+  }
+
+  translateRole(role: string): string {
+    const roleTranslationMap &#x3D; {
+      &#x27;superAdmin&#x27;: &#x27;superAdmin&#x27;,
+      &#x27;cocontractor&#x27;: &#x27;co-traitant&#x27;,
+      &#x27;subcontractor&#x27;: &#x27;sous-traitant&#x27;,
+      &#x27;customer&#x27;: &#x27;client&#x27;,
+      &#x27;comanager&#x27;: &#x27;régisseur&#x27;,
+      &#x27;supermanager&#x27;: &#x27;chef régisseur&#x27;
+    };
+    return roleTranslationMap[role] || role;
   }
   
 }
@@ -904,8 +1247,8 @@ export class ManageUsersComponent implements OnInit {
     </div>
 
     <div class="tab-pane fade " id="templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
-  &lt;app-pagetitle title&#x3D;&quot;Contacts&quot; [breadcrumbItems]&#x3D;&quot;breadCrumbItems&quot;&gt;&lt;/app-pagetitle&gt;
+        <pre class="line-numbers"><code class="language-html"> &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+  &lt;app-pagetitle title&#x3D;&quot;Gestion des utilisateurs&quot; [breadcrumbItems]&#x3D;&quot;breadCrumbItems&quot;&gt;&lt;/app-pagetitle&gt;
   &lt;div class&#x3D;&quot;container mt-4&quot;&gt;
     &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control mb-3&quot; placeholder&#x3D;&quot;Rechercher...&quot; [(ngModel)]&#x3D;&quot;filter&quot; (input)&#x3D;&quot;onSearch()&quot; /&gt;
     &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
@@ -921,17 +1264,36 @@ export class ManageUsersComponent implements OnInit {
           &lt;/tr&gt;
         &lt;/thead&gt;
         &lt;tbody class&#x3D;&quot;tbody-scrollable&quot;&gt;
-          &lt;tr *ngFor&#x3D;&quot;let user of filteredUsers&quot;&gt;
-            &lt;td *ngFor&#x3D;&quot;let column of columns&quot; title&#x3D;&quot;{{ user[column.name] }}&quot;&gt;
-              {{ user[column.name] }}
-            &lt;/td&gt;            
+          &lt;tr *ngFor&#x3D;&quot;let user of filteredUsers&quot; (click)&#x3D;&quot;selectUser(user)&quot;&gt;
+            &lt;td *ngFor&#x3D;&quot;let column of columns&quot; [ngClass]&#x3D;&quot;{&#x27;cell-centered&#x27;: column.name &#x3D;&#x3D;&#x3D; &#x27;active&#x27; || column.name &#x3D;&#x3D;&#x3D; &#x27;role&#x27;}&quot;&gt;
+              &lt;ng-container *ngIf&#x3D;&quot;column.name &#x3D;&#x3D;&#x3D; &#x27;role&#x27;&quot;&gt;
+                &lt;span class&#x3D;&quot;role-badge&quot; [ngClass]&#x3D;&quot;{
+                  &#x27;badge-superadmin&#x27;: user.role &#x3D;&#x3D;&#x3D; &#x27;superAdmin&#x27;,
+                  &#x27;badge-cocontractor&#x27;: user.role &#x3D;&#x3D;&#x3D; &#x27;cocontractor&#x27;,
+                  &#x27;badge-subcontractor&#x27;: user.role &#x3D;&#x3D;&#x3D; &#x27;subcontractor&#x27;,
+                  &#x27;badge-customer&#x27;: user.role &#x3D;&#x3D;&#x3D; &#x27;customer&#x27;,
+                  &#x27;badge-comanager&#x27;: user.role &#x3D;&#x3D;&#x3D; &#x27;comanager&#x27;,
+                  &#x27;badge-supermanager&#x27;: user.role &#x3D;&#x3D;&#x3D; &#x27;supermanager&#x27;
+                }&quot;&gt;{{ translateRole(user.role) | titlecase }}&lt;/span&gt;
+              &lt;/ng-container&gt;
+              &lt;ng-container *ngIf&#x3D;&quot;column.name &#x3D;&#x3D;&#x3D; &#x27;phone&#x27;&quot;&gt;
+                {{ formatPhoneNumber(user.phone) }}
+              &lt;/ng-container&gt;
+              &lt;ng-container *ngIf&#x3D;&quot;column.name &#x3D;&#x3D;&#x3D; &#x27;active&#x27;; else defaultCell&quot;&gt;
+                &lt;i class&#x3D;&quot;fas active-icon&quot; [ngClass]&#x3D;&quot;{&#x27;fa-check-circle text-success&#x27;: user.active, &#x27;fa-times-circle text-danger&#x27;: !user.active}&quot;&gt;&lt;/i&gt;
+              &lt;/ng-container&gt;
+              &lt;ng-template #defaultCell&gt;
+                &lt;ng-container *ngIf&#x3D;&quot;column.name !&#x3D;&#x3D; &#x27;role&#x27; &amp;&amp; column.name !&#x3D;&#x27;active&#x27; &amp;&amp; column.name !&#x3D;&#x3D; &#x27;phone&#x27;&quot;&gt;
+                  {{ user[column.name] }}
+                &lt;/ng-container&gt;
+              &lt;/ng-template&gt;
+            &lt;/td&gt;
           &lt;/tr&gt;
         &lt;/tbody&gt;
       &lt;/table&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-
 </code></pre>
     </div>
 
@@ -965,6 +1327,34 @@ table &gt; tbody &gt; tr &gt; td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.cell-centered {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.active-icon {
+  font-size: 25px;
+}
+
+.role-badge {
+  padding: 2px 5px;
+  border-radius: 15px;
+  color: var(--bs-white);
+  font-weight: bold;
+  
+  &amp;.badge-superadmin { background-color: #e74c3c; } // Rouge pour superAdmin
+  &amp;.badge-cocontractor { background-color: #3498db; } // Bleu pour cocontractor
+  &amp;.badge-subcontractor { background-color: #2ecc71; } // Vert pour subcontractor
+  &amp;.badge-customer { background-color: #f1c40f; } // Jaune pour customer
+  &amp;.badge-comanager { background-color: #9b59b6; } // Violet pour comanager
+  &amp;.badge-supermanager { background-color: #95a5a6; } // Gris pour supermanager
+}
+
+td {
+  // vertical-align: middle;
+  cursor: pointer;
 }</code></pre>
     </div>
 
@@ -993,8 +1383,8 @@ table &gt; tbody &gt; tr &gt; td {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">  <app-pagetitle title="Contacts" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>  <div class="container mt-4">    <input type="text" class="form-control mb-3" placeholder="Rechercher..." [(ngModel)]="filter" (input)="onSearch()" />    <div class="table-responsive">      <table class="table table-striped table-hover">        <thead class="thead-dark">          <tr>            <th scope="col" *ngFor="let column of columns" (click)="onSort(column.name)">              {{ column.displayName }}              <i class="fas fa-sort float-end" *ngIf="sortColumn !== column.name"></i>              <i class="fas fa-sort-up float-end" *ngIf="sortColumn === column.name && sortDirection === \'asc\'"></i>              <i class="fas fa-sort-down float-end" *ngIf="sortColumn === column.name && sortDirection === \'desc\'"></i>            </th>          </tr>        </thead>        <tbody class="tbody-scrollable">          <tr *ngFor="let user of filteredUsers">            <td *ngFor="let column of columns" title="{{ user[column.name] }}">              {{ user[column.name] }}            </td>                      </tr>        </tbody>      </table>    </div>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+        var COMPONENT_TEMPLATE = '<div> <div class="container-fluid">  <app-pagetitle title="Gestion des utilisateurs" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>  <div class="container mt-4">    <input type="text" class="form-control mb-3" placeholder="Rechercher..." [(ngModel)]="filter" (input)="onSearch()" />    <div class="table-responsive">      <table class="table table-striped table-hover">        <thead class="thead-dark">          <tr>            <th scope="col" *ngFor="let column of columns" (click)="onSort(column.name)">              {{ column.displayName }}              <i class="fas fa-sort float-end" *ngIf="sortColumn !== column.name"></i>              <i class="fas fa-sort-up float-end" *ngIf="sortColumn === column.name && sortDirection === \'asc\'"></i>              <i class="fas fa-sort-down float-end" *ngIf="sortColumn === column.name && sortDirection === \'desc\'"></i>            </th>          </tr>        </thead>        <tbody class="tbody-scrollable">          <tr *ngFor="let user of filteredUsers" (click)="selectUser(user)">            <td *ngFor="let column of columns" [ngClass]="{\'cell-centered\': column.name === \'active\' || column.name === \'role\'}">              <ng-container *ngIf="column.name === \'role\'">                <span class="role-badge" [ngClass]="{                  \'badge-superadmin\': user.role === \'superAdmin\',                  \'badge-cocontractor\': user.role === \'cocontractor\',                  \'badge-subcontractor\': user.role === \'subcontractor\',                  \'badge-customer\': user.role === \'customer\',                  \'badge-comanager\': user.role === \'comanager\',                  \'badge-supermanager\': user.role === \'supermanager\'                }">{{ translateRole(user.role) | titlecase }}</span>              </ng-container>              <ng-container *ngIf="column.name === \'phone\'">                {{ formatPhoneNumber(user.phone) }}              </ng-container>              <ng-container *ngIf="column.name === \'active\'; else defaultCell">                <i class="fas active-icon" [ngClass]="{\'fa-check-circle text-success\': user.active, \'fa-times-circle text-danger\': !user.active}"></i>              </ng-container>              <ng-template #defaultCell>                <ng-container *ngIf="column.name !== \'role\' && column.name !=\'active\' && column.name !== \'phone\'">                  {{ user[column.name] }}                </ng-container>              </ng-template>            </td>          </tr>        </tbody>      </table>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ManageUsersComponent'};
 </script>

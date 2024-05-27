@@ -1,0 +1,1582 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sogapaint-crm documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">sogapaint-crm documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ContractActivityComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/contract-activity/contract-activity.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-contract-activity</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./contract-activity.component.scss,<br>../order-detail/order-detail.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./contract-activity.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#activities" >activities</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#activityInput" >activityInput</a>
+                            </li>
+                            <li>
+                                <a href="#placeholderText" >placeholderText</a>
+                            </li>
+                            <li>
+                                <a href="#selectedType" >selectedType</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addActivity" >addActivity</a>
+                            </li>
+                            <li>
+                                <a href="#deleteActivity" >deleteActivity</a>
+                            </li>
+                            <li>
+                                <a href="#loadActivities" >loadActivities</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onTypeChange" >onTypeChange</a>
+                            </li>
+                            <li>
+                                <a href="#updatePlaceholder" >updatePlaceholder</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#contractId" >contractId</a>
+                            </li>
+                            <li>
+                                <a href="#isReadOnly" >isReadOnly</a>
+                            </li>
+                            <li>
+                                <a href="#userId" >userId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(contractService: <a href="../injectables/ContractService.html" target="_self">ContractService</a>, userProfileService: <a href="../injectables/UserProfileService.html" target="_self">UserProfileService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>contractService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ContractService.html" target="_self" >ContractService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userProfileService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserProfileService.html" target="_self" >UserProfileService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="contractId"></a>
+                        <b>contractId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:13</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isReadOnly"></a>
+                        <b>isReadOnly</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:15</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userId"></a>
+                        <b>userId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:14</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addActivity"></a>
+                    <span class="name">
+                        <span ><b>addActivity</b></span>
+                        <a href="#addActivity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addActivity(comment: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>comment</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteActivity"></a>
+                    <span class="name">
+                        <span ><b>deleteActivity</b></span>
+                        <a href="#deleteActivity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteActivity(activityId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, event: <a href="../interfaces/Event.html" target="_self">MouseEvent</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>activityId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Event.html" target="_self" >MouseEvent</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadActivities"></a>
+                    <span class="name">
+                        <span ><b>loadActivities</b></span>
+                        <a href="#loadActivities"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadActivities()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="26"
+                                    class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTypeChange"></a>
+                    <span class="name">
+                        <span ><b>onTypeChange</b></span>
+                        <a href="#onTypeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onTypeChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePlaceholder"></a>
+                    <span class="name">
+                        <span ><b>updatePlaceholder</b></span>
+                        <a href="#updatePlaceholder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updatePlaceholder(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activities"></a>
+                    <span class="name">
+                        <span ><b>activities</b></span>
+                        <a href="#activities"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activityInput"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>activityInput</b></span>
+                        <a href="#activityInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;activityInput&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="placeholderText"></a>
+                    <span class="name">
+                        <span ><b>placeholderText</b></span>
+                        <a href="#placeholderText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Ajouter une activité...&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedType"></a>
+                    <span class="name">
+                        <span ><b>selectedType</b></span>
+                        <a href="#selectedType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Observation&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/pages/contract-activity/contract-activity.component.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ElementRef, Input, OnInit, ViewChild } from &#x27;@angular/core&#x27;;
+import { Observable, combineLatest, forkJoin, of } from &#x27;rxjs&#x27;;
+import { catchError, map } from &#x27;rxjs/operators&#x27;;
+import { ContractService } from &#x27;../../core/services/contract.service&#x27;;
+import { UserProfileService } from &#x27;src/app/core/services/user.service&#x27;;
+
+@Component({
+  selector: &#x27;app-contract-activity&#x27;,
+  templateUrl: &#x27;./contract-activity.component.html&#x27;,
+  styleUrls: [&#x27;./contract-activity.component.scss&#x27;, &#x27;../order-detail/order-detail.component.scss&#x27;]
+})
+export class ContractActivityComponent implements OnInit {
+  @Input() contractId: string;
+  @Input() userId: string;
+  @Input() isReadOnly: boolean &#x3D; false;
+  activities: any[] &#x3D; [];
+  selectedType: string &#x3D; &#x27;Observation&#x27;;
+  placeholderText: string &#x3D; &#x27;Ajouter une activité...&#x27;;
+  @ViewChild(&#x27;activityInput&#x27;) activityInput: ElementRef;
+  
+  constructor(
+    private contractService: ContractService,
+    private userProfileService: UserProfileService
+    ) {}
+  
+  ngOnInit() {
+    if (this.contractId) {
+      this.loadActivities();
+    }
+    console.log(&quot;userId&quot;, this.userId);
+    console.log(&quot;contractId&quot;, this.contractId);
+    this.updatePlaceholder(&#x27;Observation&#x27;);
+  }
+  
+
+  loadActivities() {
+    const observations &#x3D; this.contractService.getObservations(this.contractId).pipe(catchError(() &#x3D;&gt; of([])));
+    const incidents &#x3D; this.contractService.getIncidents(this.contractId).pipe(catchError(() &#x3D;&gt; of([])));
+    console.log(&quot;observations&quot;, observations);
+    console.log(&quot;incidents&quot;, incidents);
+    forkJoin({
+      observations: observations,
+      incidents: incidents
+    }).pipe(
+      map(({ observations, incidents }) &#x3D;&gt; {
+        let formattedObservations &#x3D; [];
+        let formattedIncidents &#x3D; [];
+        if (observations &amp;&amp; observations.length !&#x3D;&#x3D; 0 &amp;&amp; observations !&#x3D;&#x3D; undefined &amp;&amp; observations !&#x3D;&#x3D; null) {
+          formattedObservations &#x3D; observations.map(o &#x3D;&gt; ({...o, type: &#x27;Observation&#x27;}));
+        } 
+        if (incidents &amp;&amp; incidents.length !&#x3D;&#x3D; 0 &amp;&amp; incidents !&#x3D;&#x3D; undefined &amp;&amp; incidents !&#x3D;&#x3D; null) {
+          formattedIncidents &#x3D; incidents.map(i &#x3D;&gt; ({...i, type: &#x27;Incident&#x27;}));
+        } 
+        return [...formattedObservations, ...formattedIncidents]
+        .sort((a, b) &#x3D;&gt; new Date(b.dateAdd).getTime() - new Date(a.dateAdd).getTime());
+      })
+      ).subscribe(combinedActivities &#x3D;&gt; {
+        this.activities &#x3D; combinedActivities;
+        console.log(&quot;combinedActivities&quot;, combinedActivities);
+      });
+    }
+
+    onTypeChange() {
+      this.placeholderText &#x3D; this.selectedType &#x3D;&#x3D;&#x3D; &#x27;Observation&#x27; 
+        ? &#x27;Ajouter une observation...&#x27; 
+        : &#x27;Ajouter un incident...&#x27;;
+    }
+
+    updatePlaceholder(type: string) {
+      if (type &#x3D;&#x3D;&#x3D; &#x27;Observation&#x27;) {
+        this.placeholderText &#x3D; &#x27;Ajouter une observation...&#x27;;
+      } else if (type &#x3D;&#x3D;&#x3D; &#x27;Incident&#x27;) {
+        this.placeholderText &#x3D; &#x27;Ajouter un incident...&#x27;;
+      }
+    }
+    
+    addActivity(comment: string, type: string) {
+      const dateToConvert &#x3D; new Date();
+      // convertit la date au format 2022-01-04T06:51:13.464+00:00
+      const dateAdd &#x3D; dateToConvert.toISOString();
+      if (type &#x3D;&#x3D;&#x3D; &#x27;Observation&#x27;) {
+        this.contractService.addObservation(this.contractId, comment, dateAdd, this.userId).subscribe(() &#x3D;&gt; {
+          this.loadActivities();
+        });
+      } else if (type &#x3D;&#x3D;&#x3D; &#x27;Incident&#x27;) {
+        this.contractService.addIncident(this.contractId, comment, dateAdd, this.userId).subscribe(() &#x3D;&gt; {
+          this.loadActivities();
+        });
+      }
+      this.activityInput.nativeElement.value &#x3D; &#x27;&#x27;;
+      this.updatePlaceholder(type);
+    }
+    
+    deleteActivity(activityId: string, type: string, event: MouseEvent) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log(&quot;activityId&quot;, activityId);
+      if (type &#x3D;&#x3D;&#x3D; &#x27;Observation&#x27;) {
+        this.contractService.deleteObservation(this.contractId, activityId).subscribe(() &#x3D;&gt; {
+          this.loadActivities();
+        });
+      } else if (type &#x3D;&#x3D;&#x3D; &#x27;Incident&#x27;) {
+        this.contractService.deleteIncident(this.contractId, activityId).subscribe(() &#x3D;&gt; {
+          this.loadActivities();
+        });
+      }
+    }
+  }
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;card&quot;&gt;
+    &lt;div class&#x3D;&quot;card-header&quot;&gt;
+        Activités du contrat
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;contract-activity-component&quot; *ngIf&#x3D;&quot;contractId; else selectContractMessage&quot;&gt;
+        &lt;!-- &lt;div class&#x3D;&quot;contract-activity-component container&quot; *ngIf&#x3D;&quot;contractId; else selectContractMessage&quot;&gt; --&gt;
+            &lt;!-- Section Activités --&gt;
+            
+            &lt;div class&#x3D;&quot;list-group&quot;&gt;
+                &lt;ng-container *ngFor&#x3D;&quot;let activity of activities&quot;&gt;
+                    &lt;div class&#x3D;&quot;list-group-item list-group-item-action&quot; [ngClass]&#x3D;&quot;activity.type&quot;&gt;
+                        &lt;h5&gt;{{ activity.user.firstname }} {{ activity.user.lastname }}&lt;/h5&gt;
+                        &lt;small&gt;{{ activity.dateAdd | date:&#x27;short&#x27; }}&lt;/small&gt;
+                        &lt;p&gt;{{ activity.comment }}&lt;/p&gt;
+                        
+                        &lt;button *ngIf&#x3D;&quot;!isReadOnly&quot; (click)&#x3D;&quot;deleteActivity(activity._id, activity.type, $event)&quot; class&#x3D;&quot;btn btn-outline-danger&quot;&gt;
+                            &lt;i class&#x3D;&quot;fas fa-trash-alt&quot;&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/ng-container&gt;
+            &lt;/div&gt;
+            &lt;form *ngIf&#x3D;&quot;!isReadOnly&quot; (submit)&#x3D;&quot;addActivity(activityInput.value, typeSelect.value)&quot; class&#x3D;&quot;add-activity-form mt-3&quot;&gt;
+                &lt;select #typeSelect class&#x3D;&quot;form-control&quot;(change)&#x3D;&quot;updatePlaceholder(typeSelect.value)&quot;&gt;
+                    &lt;option value&#x3D;&quot;Observation&quot;&gt;Observation&lt;/option&gt;
+                    &lt;option value&#x3D;&quot;Incident&quot;&gt;Incident&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;input #activityInput type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; [placeholder]&#x3D;&quot;placeholderText&quot; required&gt;
+                &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;
+                    &lt;i class&#x3D;&quot;fas fa-paper-plane&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;
+            &lt;/form&gt;
+        &lt;!-- &lt;/div&gt; --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;ng-template #selectContractMessage&gt;
+    &lt;div class&#x3D;&quot;alert alert-warning&quot; role&#x3D;&quot;alert&quot;&gt;
+        Veuillez sélectionner un contrat pour voir les activités.
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./contract-activity.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">  
+  .contract-activity-component {
+    .list-group {
+        height: 306px;
+        max-height: 306px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        
+        .list-group-item {
+            display: block;
+            background: #f7f7f7;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 18px;
+            border: none;
+            transition: background-color 0.3s;
+            
+            &amp;:hover {
+                background-color: #eaeaea;
+            }
+            
+            h5 {
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #5a5a5a;
+            }
+            
+            small {
+                display: block;
+                text-align: right;
+                color: #666666;
+            }
+            
+            p {
+                font-size: 0.9rem;
+                margin: 0;
+                color: #333333;
+            }
+            
+            .btn {
+                float: right;
+                padding: 5px;
+                margin: -5px -5px -5px 10px;
+                font-size: 0.8rem;
+                
+                i {
+                    margin: auto;
+                }
+            }
+        }
+        
+        .list-group-item-action {
+            &amp;.Observation {
+                background-color: #e3f2fd;
+            }
+            
+            &amp;.Incident {
+                background-color: #ffebee;
+            }
+        }
+    }
+    
+    .add-activity-form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        
+        input, select {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            flex-grow: 1;
+        }
+
+        select.form-control {
+            flex-grow: 0; // Prevent the select from growing
+            width: auto; // Allow the select to size according to its content
+            &amp;.Observation { background-color: #e3f2fd; }
+            &amp;.Incident { background-color: #ffebee; }
+        }
+
+        input.form-control {
+            flex-grow: 3; // Give more room to the input
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        
+        button {
+            background-color: #5664D2;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            
+            &amp;:hover {
+                background-color: darken(#5664D2, 5%);
+            }
+            
+            i {
+                margin:auto;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+    }
+    
+    .alert {
+        border-radius: 15px;
+    }
+}
+
+// ng-select.form-control {
+//     width: 150px !important;
+//   }
+
+</code></pre>
+                <p class="comment">
+                    <code>../order-detail/order-detail.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.secret-div {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    *,:after,:before{box-sizing:border-box}
+    .pull-left{float:left}
+    .pull-right{float:right}
+    .clearfix:after,.clearfix:before{content:&#x27;&#x27;;display:table}
+    .clearfix:after{clear:both;display:block}
+    
+    .machine-wrap{
+        top:50%;
+        left:50%;
+        width:475px;
+        height:145px;
+        position:absolute;
+        margin-top:-72.5px;
+        margin-left:-237.5px;
+        border-bottom:5px solid #252B3B; 
+    }
+    .machine{
+        width:475px;
+        height:145px;
+        padding-bottom:20px;
+    }
+    .machine .machine-roof,
+    .machine .machine-main{
+        margin:auto;
+    }
+    .machine-wrap .road .mud:before,
+    .machine-wrap .road .mud:after,
+    .machine .machine-roof .machine-silencer:before,
+    .machine .machine-roof .machine-silencer:after,
+    .machine .machine-body:before,
+    .machine .machine-body:after,
+    .machine .machine-main .machine-back:before,
+    .machine .machine-main .machine-back:after,
+    .machine .machine-main .machine-front:after{
+        content:&#x27;&#x27;;
+        position:absolute;
+    }
+    .machine .machine-roof{
+        width:80px;
+        height:60px;
+        bottom:-1px;
+        position:relative;
+        background:transparent;
+        border:15px solid #252B3B;
+        border-bottom:none;
+    }
+    .machine .machine-roof .machine-silencer{
+        width:14px;
+        left:-50px;
+        height:12px;
+        bottom:-1px;
+        position:absolute;
+        background:#252B3B;
+    }
+    .machine .machine-roof .machine-silencer:before{
+        height:0;
+        bottom:100%;
+        width:inherit;
+        border:6px solid #252B3B;
+        border-top:4px solid transparent;
+        border-left:8px solid transparent;
+    }
+    .machine .machine-roof .machine-silencer:after{
+        left:4px;
+        width:5px;
+        height:12px;
+        bottom:100%;
+        background:inherit;
+        transform:skewY(-35deg);
+    }
+    .machine .machine-roof .machine-silencer .machine-smoke{
+        left:-5px;
+        width:16px;
+        height:16px;
+        bottom:20px;
+        border-radius:50%;
+        position:absolute;
+        background:#252B3B;
+        transform:scale(0);
+        animation:moveSmoke .5s linear infinite;
+    }
+    .machine-main{
+        height:60px;
+        width:185px;
+        position:relative;
+    }
+    .machine .machine-main .machine-body{
+        height:inherit;
+        width:inherit;
+        position:relative;
+        background:#252B3B;
+    }
+    .machine .machine-main .machine-body:before{
+        left:-15px;
+        width:30px;
+        height:inherit;
+        background:inherit;
+        transform:skewX(-20deg);
+    }
+    .machine .machine-main .machine-body:after{
+        bottom:0;
+        right:15px;
+        width:35px;
+        height:41px;
+        background:#252B3B;
+    }
+    .machine .machine-main .machine-back{
+        bottom:-1px;
+        width:75px;
+        height:45px;
+        position:absolute;
+    }
+    .machine .machine-main .machine-back:before{
+        width:75px;
+        height:45px;
+        background:#252B3B;
+        border-radius:50% 50% 0 0 / 85% 85% 0 0;
+    }
+    .machine .machine-main .machine-back:after{
+        top:50%;
+        left:50%;
+        width:60px;
+        height:60px;
+        border-radius:50%;
+        margin-top:-15px;
+        margin-left:-30px;
+        background:transparent;
+        border:15px solid #252B3B;
+    }
+    .machine .machine-main .machine-front{
+        z-index:1;
+        width:60px;
+        height:60px;
+        right:-24px;
+        bottom:-20px;
+        border-radius:50%;
+        position:absolute;
+        background:#252B3B;
+        border-top:2px solid #252B3B;
+    }
+    .machine .machine-main .machine-front:after{
+        top:50%;
+        left:50%;
+        width:80px;
+        height:20px;
+        margin-top:-10px;
+        margin-left:-40px;
+        background:inherit;
+        border:2px solid #252B3B;
+    }
+    .machine-wrap .road{
+        right:0;
+        bottom:0;
+        height:15px;
+        width:140px;
+        overflow:hidden;
+        position:absolute;
+    }
+    .machine-wrap .road .mud-wrap{
+        width:160px;
+        position:absolute;
+        animation:moveRoad .4s linear infinite;
+    }
+    .machine-wrap .road .mud{
+        bottom:0;
+        width:40px;
+        float:left;
+        height:15px;
+        position:relative;
+        display:inline-block;
+    }
+    .machine-wrap .road .mud:before,
+    .machine-wrap .road .mud:after{
+        width:20px;
+        height:20px;
+        border-radius:4px;
+        background:#252B3B;
+        transform:rotate(45deg);
+    }
+    .machine-wrap .road .mud:before{
+        left:0;
+        bottom:-17px;
+    }
+    .machine-wrap .road .mud:after{
+        right:0;
+        bottom:-20px;
+    }
+    
+    .machine-wrap .machine-roof,
+    .machine-wrap .machine-body,
+    .machine-wrap .machine-silencer,
+    .machine-wrap .machine-back:before,
+    .machine-wrap .machine-front{
+        animation:upDown .6s linear infinite;
+    }
+    .machine-wrap .machine-silencer{
+        animation-duration:.4s;
+    }
+    .machine-wrap .machine-front{
+        animation-duration:.3s;
+    }
+    .machine-wrap .machine-back{
+        animation:upDown .8s linear infinite;
+    }
+    @keyframes moveRoad{
+        0%{
+            right:-40px;
+        }
+        100%{
+            right:0;
+        }
+    }
+    @keyframes moveSmoke{
+        0%{
+            opacity:0;
+            transform:scale(0) translate(0);
+        }
+        60%{
+            transform:scale(.5) translate(0);
+        }
+        100%{
+            opacity:.6;
+            transform:scale(1) translate(-10px,-40px);
+        }
+    }
+    @keyframes upDown{
+        0%{
+            transform:translateY(0);
+        }
+        50%{
+            transform:translateY(2px);
+        }
+        100%{
+            transform:translateY(0);
+        }
+    }
+    
+    
+    
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+}
+
+.cell-centered {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+.badge{
+    font-size: medium;
+}
+
+.card-header {
+    background-color: #e9ecef; /* Light grey header */
+    font-weight: bold;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="card">    <div class="card-header">        Activités du contrat    </div>    <div class="contract-activity-component" *ngIf="contractId; else selectContractMessage">        <!-- <div class="contract-activity-component container" *ngIf="contractId; else selectContractMessage"> -->            <!-- Section Activités -->                        <div class="list-group">                <ng-container *ngFor="let activity of activities">                    <div class="list-group-item list-group-item-action" [ngClass]="activity.type">                        <h5>{{ activity.user.firstname }} {{ activity.user.lastname }}</h5>                        <small>{{ activity.dateAdd | date:\'short\' }}</small>                        <p>{{ activity.comment }}</p>                                                <button *ngIf="!isReadOnly" (click)="deleteActivity(activity._id, activity.type, $event)" class="btn btn-outline-danger">                            <i class="fas fa-trash-alt"></i>                        </button>                    </div>                </ng-container>            </div>            <form *ngIf="!isReadOnly" (submit)="addActivity(activityInput.value, typeSelect.value)" class="add-activity-form mt-3">                <select #typeSelect class="form-control"(change)="updatePlaceholder(typeSelect.value)">                    <option value="Observation">Observation</option>                    <option value="Incident">Incident</option>                </select>                <input #activityInput type="text" class="form-control" [placeholder]="placeholderText" required>                <button type="submit" class="btn btn-primary">                    <i class="fas fa-paper-plane"></i>                </button>            </form>        <!-- </div> -->    </div></div><ng-template #selectContractMessage>    <div class="alert alert-warning" role="alert">        Veuillez sélectionner un contrat pour voir les activités.    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ContractActivityComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ContractActivityComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

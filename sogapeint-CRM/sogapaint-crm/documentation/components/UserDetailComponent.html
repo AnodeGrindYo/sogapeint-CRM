@@ -1,0 +1,2764 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sogapaint-crm documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">sogapaint-crm documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  UserDetailComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/user-detail/user-detail.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-user-detail</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./user-detail.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./user-detail.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#breadCrumbItems" >breadCrumbItems</a>
+                            </li>
+                            <li>
+                                <a href="#companies" >companies</a>
+                            </li>
+                            <li>
+                                <a href="#companyInput$" >companyInput$</a>
+                            </li>
+                            <li>
+                                <a href="#companyName" >companyName</a>
+                            </li>
+                            <li>
+                                <a href="#compareWithFn" >compareWithFn</a>
+                            </li>
+                            <li>
+                                <a href="#confirmationInput" >confirmationInput</a>
+                            </li>
+                            <li>
+                                <a href="#currentUser" >currentUser</a>
+                            </li>
+                            <li>
+                                <a href="#editMode" >editMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#errorMessage" >errorMessage</a>
+                            </li>
+                            <li>
+                                <a href="#id" >id</a>
+                            </li>
+                            <li>
+                                <a href="#pageTitle" >pageTitle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#successMessage" >successMessage</a>
+                            </li>
+                            <li>
+                                <a href="#unsubscribe$" >unsubscribe$</a>
+                            </li>
+                            <li>
+                                <a href="#user" >user</a>
+                            </li>
+                            <li>
+                                <a href="#userForm" >userForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_fetchData" >_fetchData</a>
+                            </li>
+                            <li>
+                                <a href="#confirmDeletion" >confirmDeletion</a>
+                            </li>
+                            <li>
+                                <a href="#disableEditMode" >disableEditMode</a>
+                            </li>
+                            <li>
+                                <a href="#enableEditMode" >enableEditMode</a>
+                            </li>
+                            <li>
+                                <a href="#filterCompanies" >filterCompanies</a>
+                            </li>
+                            <li>
+                                <a href="#getRoleClass" >getRoleClass</a>
+                            </li>
+                            <li>
+                                <a href="#isAdminOrSuperAdmin" >isAdminOrSuperAdmin</a>
+                            </li>
+                            <li>
+                                <a href="#isTextMatching" >isTextMatching</a>
+                            </li>
+                            <li>
+                                <a href="#loadInitialCompanies" >loadInitialCompanies</a>
+                            </li>
+                            <li>
+                                <a href="#loadUserData" >loadUserData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onCompanyInputBlur" >onCompanyInputBlur</a>
+                            </li>
+                            <li>
+                                <a href="#openConfirmationModalForModification" >openConfirmationModalForModification</a>
+                            </li>
+                            <li>
+                                <a href="#openDeleteConfirmationModal" >openDeleteConfirmationModal</a>
+                            </li>
+                            <li>
+                                <a href="#openResetPasswordModal" >openResetPasswordModal</a>
+                            </li>
+                            <li>
+                                <a href="#resetDirty" >resetDirty</a>
+                            </li>
+                            <li>
+                                <a href="#resetField" >resetField</a>
+                            </li>
+                            <li>
+                                <a href="#resetPassword" >resetPassword</a>
+                            </li>
+                            <li>
+                                <a href="#validateUserModification" >validateUserModification</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(route: ActivatedRoute, userProfileService: <a href="../injectables/UserProfileService.html" target="_self">UserProfileService</a>, companyService: <a href="../injectables/CompanyService.html" target="_self">CompanyService</a>, modalService: NgbModal, fb: FormBuilder, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userProfileService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserProfileService.html" target="_self" >UserProfileService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>companyService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CompanyService.html" target="_self" >CompanyService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>modalService</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgbModal</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_fetchData"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>_fetchData</b></span>
+                        <a href="#_fetchData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>_fetchData(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="163"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:163</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirmDeletion"></a>
+                    <span class="name">
+                        <span ><b>confirmDeletion</b></span>
+                        <a href="#confirmDeletion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>confirmDeletion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="268"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:268</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="disableEditMode"></a>
+                    <span class="name">
+                        <span ><b>disableEditMode</b></span>
+                        <a href="#disableEditMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>disableEditMode()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="143"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:143</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enableEditMode"></a>
+                    <span class="name">
+                        <span ><b>enableEditMode</b></span>
+                        <a href="#enableEditMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>enableEditMode()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:137</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterCompanies"></a>
+                    <span class="name">
+                        <span ><b>filterCompanies</b></span>
+                        <a href="#filterCompanies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filterCompanies(val: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="213"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:213</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filtre la liste des entreprises en fonction de la valeur saisie dans le champ de recherche.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>val</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>La valeur saisie dans le champ de recherche.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau d&#39;entreprises filtrées.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getRoleClass"></a>
+                    <span class="name">
+                        <span ><b>getRoleClass</b></span>
+                        <a href="#getRoleClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getRoleClass(role: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="188"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:188</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>role</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAdminOrSuperAdmin"></a>
+                    <span class="name">
+                        <span ><b>isAdminOrSuperAdmin</b></span>
+                        <a href="#isAdminOrSuperAdmin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isAdminOrSuperAdmin()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="133"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTextMatching"></a>
+                    <span class="name">
+                        <span ><b>isTextMatching</b></span>
+                        <a href="#isTextMatching"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isTextMatching()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="291"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:291</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadInitialCompanies"></a>
+                    <span class="name">
+                        <span ><b>loadInitialCompanies</b></span>
+                        <a href="#loadInitialCompanies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadInitialCompanies()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="203"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:203</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Charge la liste des entreprises.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadUserData"></a>
+                    <span class="name">
+                        <span ><b>loadUserData</b></span>
+                        <a href="#loadUserData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadUserData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:92</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCompanyInputBlur"></a>
+                    <span class="name">
+                        <span ><b>onCompanyInputBlur</b></span>
+                        <a href="#onCompanyInputBlur"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCompanyInputBlur(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="224"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:224</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ajoute une nouvelle entreprise à la liste des entreprises si elle n&#39;existe pas déjà.
+Cette fonction est appelée lorsque le champ de recherche perd le focus. et permet
+à l&#39;utilisateur d&#39;ajouter une nouvelle entreprise à la liste, et donc de conserver
+le nom d&#39;une nouvelle entreprise dans le formulaire.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;événement de saisie dans le champ de recherche.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openConfirmationModalForModification"></a>
+                    <span class="name">
+                        <span ><b>openConfirmationModalForModification</b></span>
+                        <a href="#openConfirmationModalForModification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openConfirmationModalForModification(content: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="239"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:239</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>content</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDeleteConfirmationModal"></a>
+                    <span class="name">
+                        <span ><b>openDeleteConfirmationModal</b></span>
+                        <a href="#openDeleteConfirmationModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDeleteConfirmationModal(deleteModal: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="263"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:263</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>deleteModal</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openResetPasswordModal"></a>
+                    <span class="name">
+                        <span ><b>openResetPasswordModal</b></span>
+                        <a href="#openResetPasswordModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openResetPasswordModal(resetPasswordModal: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="333"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:333</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>resetPasswordModal</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetDirty"></a>
+                    <span class="name">
+                        <span ><b>resetDirty</b></span>
+                        <a href="#resetDirty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetDirty(controlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="147"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>controlName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetField"></a>
+                    <span class="name">
+                        <span ><b>resetField</b></span>
+                        <a href="#resetField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetField(controlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="155"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:155</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>controlName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetPassword"></a>
+                    <span class="name">
+                        <span ><b>resetPassword</b></span>
+                        <a href="#resetPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetPassword()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="344"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:344</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateUserModification"></a>
+                    <span class="name">
+                        <span ><b>validateUserModification</b></span>
+                        <a href="#validateUserModification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateUserModification()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="296"
+                                    class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:296</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="breadCrumbItems"></a>
+                    <span class="name">
+                        <span ><b>breadCrumbItems</b></span>
+                        <a href="#breadCrumbItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;literal type&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="companies"></a>
+                    <span class="name">
+                        <span ><b>companies</b></span>
+                        <a href="#companies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="companyInput$"></a>
+                    <span class="name">
+                        <span ><b>companyInput$</b></span>
+                        <a href="#companyInput$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subject&lt;string&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="companyName"></a>
+                    <span class="name">
+                        <span ><b>companyName</b></span>
+                        <a href="#companyName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="compareWithFn"></a>
+                    <span class="name">
+                        <span ><b>compareWithFn</b></span>
+                        <a href="#compareWithFn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirmationInput"></a>
+                    <span class="name">
+                        <span ><b>confirmationInput</b></span>
+                        <a href="#confirmationInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentUser"></a>
+                    <span class="name">
+                        <span ><b>currentUser</b></span>
+                        <a href="#currentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editMode"></a>
+                    <span class="name">
+                        <span ><b>editMode</b></span>
+                        <a href="#editMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>errorMessage</b></span>
+                        <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="id"></a>
+                    <span class="name">
+                        <span ><b>id</b></span>
+                        <a href="#id"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageTitle"></a>
+                    <span class="name">
+                        <span ><b>pageTitle</b></span>
+                        <a href="#pageTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Détail utilisateur&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="successMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>successMessage</b></span>
+                        <a href="#successMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unsubscribe$"></a>
+                    <span class="name">
+                        <span ><b>unsubscribe$</b></span>
+                        <a href="#unsubscribe$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subject&lt;void&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="user"></a>
+                    <span class="name">
+                        <span ><b>user</b></span>
+                        <a href="#user"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userForm"></a>
+                    <span class="name">
+                        <span ><b>userForm</b></span>
+                        <a href="#userForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/pages/user-detail/user-detail.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { UserProfileService } from &#x27;../../core/services/user.service&#x27;;
+import { User } from &#x27;src/app/core/models/auth.models&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { Subject } from &#x27;rxjs/internal/Subject&#x27;;
+import { Observable } from &#x27;rxjs/internal/Observable&#x27;;
+import { CompanyService } from &#x27;../../core/services/company.service&#x27;;
+import { debounceTime } from &#x27;rxjs/internal/operators/debounceTime&#x27;;
+import { distinctUntilChanged } from &#x27;rxjs/internal/operators/distinctUntilChanged&#x27;;
+import { switchMap } from &#x27;rxjs/internal/operators/switchMap&#x27;;
+import { takeUntil } from &#x27;rxjs/internal/operators/takeUntil&#x27;;
+import { NgbModal } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+
+
+
+@Component({
+  selector: &#x27;app-user-detail&#x27;,
+  templateUrl: &#x27;./user-detail.component.html&#x27;,
+  styleUrls: [&#x27;./user-detail.component.scss&#x27;],
+})
+export class UserDetailComponent implements OnInit {
+  // Items pour le fil d&#x27;Ariane
+  breadCrumbItems: Array&lt;{ label: string; url?: string; active?: boolean }&gt; &#x3D; [];
+  // Titre de la page
+  pageTitle: string &#x3D; &#x27;Détail utilisateur&#x27;;
+  user: User;
+  id: string;
+  currentUser: User;
+  userForm: FormGroup;
+  editMode: boolean &#x3D; false;
+  companies: any[];
+  companyInput$ &#x3D; new Subject&lt;string&gt;();
+  unsubscribe$ &#x3D; new Subject&lt;void&gt;();
+  public successMessage: string; // TODO
+  public errorMessage: string; // TODO
+  confirmationInput: string &#x3D; &#x27;&#x27;;
+  companyName: string &#x3D; &#x27;&#x27;;
+  
+  constructor(
+    private route: ActivatedRoute,
+    private userProfileService: UserProfileService,
+    private companyService: CompanyService,
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private router: Router
+    ) {
+      this.route.params.subscribe(params &#x3D;&gt; {
+        this.id &#x3D; params[&#x27;userId&#x27;];
+        console.log(&quot;UserId : &quot;+this.id);
+        // NMaintenant, nous avons l&#x27;identifiant de l&#x27;utilisateur, 
+        // nous pouvons le charger depuis le backend
+        
+      });
+      
+      const phoneRegex &#x3D; /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+      this.userForm &#x3D; this.fb.group({
+        firstName: [&#x27;&#x27;, Validators.required],
+        lastName: [&#x27;&#x27;, Validators.required],
+        email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+        role: [&#x27;customer&#x27;, Validators.required], // la valeur par défaut est &#x27;user&#x27;
+        status: true, // la valeur par défaut est &#x27;active&#x27;
+        authorized_connection: true, // la valeur par défaut est &#x27;authorized&#x27;,
+        phone: [&#x27;&#x27;, [Validators.required, Validators.pattern(phoneRegex)]],
+        address: [&#x27;&#x27;], // facultatif
+        company: [&#x27;&#x27;, Validators.required]
+      });
+    }
+    
+    async ngOnInit(): Promise&lt;void&gt; {
+      this.breadCrumbItems &#x3D; [{ label: &#x27;Sogapeint&#x27; }, { label: this.pageTitle, active: true }];
+      this.currentUser &#x3D; this.userProfileService.getCurrentUser();
+      try {
+        await this._fetchData(this.id);
+        this.loadUserData();
+      } catch (error) {
+        console.error(&quot;Une erreur a eu lieu lors de la récupération des données de l&#x27;utilisateur&quot;, error);
+      }
+      this.loadInitialCompanies();
+      this.companyInput$.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(term &#x3D;&gt; this.companyService.searchCompanies(term)),
+        takeUntil(this.unsubscribe$)
+        ).subscribe(companies &#x3D;&gt; {
+          this.companies &#x3D; companies;
+        });
+      }
+      
+      loadUserData() {
+        
+        
+        // this.userForm.patchValue({
+        //   firstName: this.user.firstName ?? &#x27;&#x27;,
+        //   lastName: this.user.lastName ?? &#x27;&#x27;,
+        //   role: this.user.role ?? &#x27;&#x27;,
+        //   email: this.user.email ?? &#x27;&#x27;,
+        //   company: this.user.company ?? &#x27;&#x27;, 
+        //   // company: company ?? &#x27;&#x27;,
+        //   phone: this.user.phone ?? &#x27;&#x27;, // facultatif
+        //   status: this.user.active ?? &#x27;&#x27;,
+        //   authorized_connection: this.user.authorized_connection ?? &#x27;&#x27;,
+        //   address: this.user.address ?? &#x27;&#x27; // facultatif  
+        // });
+        const company &#x3D; this.companyService.searchCompanies(this.user.company).subscribe(company &#x3D;&gt; {
+          // this.userForm.get(&#x27;company&#x27;).setValue(company[0]);
+          // console.log(&quot;Entreprise trouvée: &quot;, company[0]);
+          this.userForm.patchValue({
+            firstName: this.user.firstName ?? &#x27;&#x27;,
+            lastName: this.user.lastName ?? &#x27;&#x27;,
+            role: this.user.role ?? &#x27;&#x27;,
+            email: this.user.email ?? &#x27;&#x27;,
+            // company: company[0] ?? &#x27;&#x27;, 
+            company: this.user.company ?? &#x27;&#x27;,
+            // company: company ?? &#x27;&#x27;,
+            phone: this.user.phone ?? &#x27;&#x27;, // facultatif
+            status: this.user.active ?? &#x27;&#x27;,
+            authorized_connection: this.user.authorized_connection ?? &#x27;&#x27;,
+            address: this.user.address ?? &#x27;&#x27; // facultatif  
+          });
+        }
+        );
+      }
+
+      compareWithFn &#x3D; (o1, o2) &#x3D;&gt; {
+        return (o1._id &#x3D;&#x3D;&#x3D; o2._id) &amp;&amp; (o1.normalized_name &#x3D;&#x3D;&#x3D; o2.normalized_name);
+      }
+
+
+      
+      isAdminOrSuperAdmin(): boolean {
+        return this.currentUser &amp;&amp; (this.currentUser.role &#x3D;&#x3D;&#x3D; &#x27;admin&#x27; || this.currentUser.role &#x3D;&#x3D;&#x3D; &#x27;superAdmin&#x27;);
+      }
+      
+      enableEditMode() {
+        if (this.isAdminOrSuperAdmin()) {
+          this.editMode &#x3D; true;
+        }
+      }
+      
+      disableEditMode() {
+        this.editMode &#x3D; false;
+      }
+      
+      resetDirty(controlName: string) {
+        let control &#x3D; this.userForm.get(controlName);
+        if (control.value &#x3D;&#x3D;&#x3D; this.user[controlName]) {
+          control.markAsPristine();
+          control.markAsUntouched();
+        }
+      }
+      
+      resetField(controlName: string) {
+        const originalValue &#x3D; this.user[controlName];
+        this.userForm.get(controlName).setValue(originalValue);
+        this.userForm.get(controlName).markAsPristine();
+        this.userForm.get(controlName).markAsUntouched();
+      }
+      
+      
+      private _fetchData(id: string): Promise&lt;void&gt; {
+        return new Promise((resolve, reject) &#x3D;&gt; {
+          this.userProfileService.getOne(id).subscribe(
+            (data: any) &#x3D;&gt; {
+              this.user &#x3D; new User();
+              this.user.active &#x3D; data.active;
+              this.user.authorized_connection &#x3D; data.authorized_connection;
+              this.user.company &#x3D; data.company;
+              this.user.email &#x3D; data.email;
+              this.user.firstName &#x3D; data.firstname
+              this.user.lastName &#x3D; data.lastname;
+              this.user.phone &#x3D; data.phone;
+              this.user.role &#x3D; data.role;
+              this.user.id &#x3D; id;
+              console.log(&quot;Utilisateur récupéré: &quot;, this.user);
+              resolve();
+            },
+            (error: any) &#x3D;&gt; {
+              console.log(&quot;Erreur pendant la récupération de l&#x27;utilisateur: &quot;, error);
+              reject(error);
+            }
+            );
+          });
+        }
+        
+        getRoleClass(role: string): string {
+          const roleClassMap &#x3D; {
+            &#x27;superAdmin&#x27;: &#x27;badge-superadmin&#x27;,
+            &#x27;cocontractor&#x27;: &#x27;badge-cocontractor&#x27;,
+            &#x27;subcontractor&#x27;: &#x27;badge-subcontractor&#x27;,
+            &#x27;customer&#x27;: &#x27;badge-customer&#x27;,
+            &#x27;comanager&#x27;: &#x27;badge-comanager&#x27;,
+            &#x27;supermanager&#x27;: &#x27;badge-supermanager&#x27;
+          };
+          return roleClassMap[role] || &#x27;badge-default&#x27;;
+        }
+        
+        /**
+        * Charge la liste des entreprises.
+        */
+        loadInitialCompanies() {
+          this.companyService.getCompanies() 
+          .subscribe(companies &#x3D;&gt; this.companies &#x3D; companies);
+        }
+        
+        /**
+        * Filtre la liste des entreprises en fonction de la valeur saisie dans le champ de recherche.
+        * @param val La valeur saisie dans le champ de recherche.
+        * @returns Un Observable contenant un tableau d&#x27;entreprises filtrées.
+        */
+        filterCompanies(val: string): Observable&lt;any[]&gt; {
+          return this.companyService.searchCompanies(val);
+        }
+        
+        /**
+        * Ajoute une nouvelle entreprise à la liste des entreprises si elle n&#x27;existe pas déjà.
+        * Cette fonction est appelée lorsque le champ de recherche perd le focus. et permet
+        * à l&#x27;utilisateur d&#x27;ajouter une nouvelle entreprise à la liste, et donc de conserver
+        * le nom d&#x27;une nouvelle entreprise dans le formulaire.
+        * @param event L&#x27;événement de saisie dans le champ de recherche.
+        */
+        onCompanyInputBlur(event: any): void {
+          console.log(&quot;onCompanyInputBlur&quot;);
+          console.log(&quot;Entreprises: &quot;, this.companies);
+          console.log(&quot;Valeur saisie: &quot;, this.userForm.get(&#x27;company&#x27;).value);
+          this.companyName &#x3D; this.userForm.get(&#x27;company&#x27;).value;
+          const inputValue &#x3D; event.target.value;
+          if (inputValue &amp;&amp; !this.companies.includes(inputValue)) {
+            // Ajoute inputValue à la liste des entreprises
+            this.companies &#x3D; [...this.companies, inputValue];
+            // S&#x27;assure que la valeur est sélectionnée
+            this.userForm.get(&#x27;company&#x27;).setValue(inputValue);
+            console.log(&quot;Entreprise ajoutée: &quot;, inputValue);
+          }
+        }
+
+        openConfirmationModalForModification(content: any) {
+          console.log(&quot;openConfirmationModalForModification for content: &quot;, content);
+          if (this.userForm.valid) {
+            // log de tout l&#x27;userForm
+            // for (const value in this.userForm.value) {
+            //   console.log(value + &#x27;: &#x27; + this.userForm.value[value]);
+            //   if (value &#x3D;&#x3D;&#x3D; &#x27;company&#x27;) {
+            //     console.log(&#x27;company: &#x27; + this.userForm.value[value].value);
+            //     console.log(&#x27;this user company: &#x27; + this.user.company); 
+            //     console.log(&#x27;this user lastname: &#x27; + this.user.lastName);
+            //   }
+            // }
+            const modalRef &#x3D; this.modalService.open(content);
+            modalRef.result.then((result) &#x3D;&gt; {
+              if (result &#x3D;&#x3D;&#x3D; &#x27;Confirm&#x27;) {
+                // Logique de confirmation (par exemple, enregistrer les modifications)
+                this.validateUserModification();
+              }
+            }, (reason) &#x3D;&gt; {
+              // Logique en cas d&#x27;annulation ou de fermeture du modal
+            });
+          }
+        }
+
+        openDeleteConfirmationModal(deleteModal: any) {
+          this.confirmationInput &#x3D; &#x27;&#x27;; // Réinitialiser le texte de confirmation
+          this.modalService.open(deleteModal);
+        }
+      
+        confirmDeletion() {
+          if (this.confirmationInput &#x3D;&#x3D;&#x3D; (this.user?.firstName + &#x27; &#x27; + this.user?.lastName)) {
+            // Logique de suppression de l&#x27;utilisateur
+            // Par exemple: this.userProfileService.deleteUser(this.user.id).subscribe(...);
+            this.userProfileService.delete(this.user.id).subscribe(
+              response &#x3D;&gt; {
+                console.log(&#x27;Suppression réussie&#x27;, response);
+                this.successMessage &#x3D; &#x27;Utilisateur supprimé avec succès.&#x27;;
+                // Rediriger vers la liste des utilisateurs ici
+                this.router.navigate([&#x27;/manageUsers&#x27;]);
+
+              },
+              error &#x3D;&gt; {
+                console.error(&#x27;Erreur lors de la suppression&#x27;, error);
+                this.errorMessage &#x3D; &#x27;Erreur lors de la suppression de l’utilisateur.&#x27;;
+              }
+            );
+            console.log(&#x27;Utilisateur supprimé&#x27;);
+          } else {
+            console.log(&#x27;Texte de confirmation incorrect&#x27;);
+          }
+        }
+
+        isTextMatching(): boolean {
+          return this.confirmationInput &#x3D;&#x3D;&#x3D; (this.user?.firstName + &#x27; &#x27; + this.user?.lastName);
+        }
+        
+        
+        validateUserModification() {
+          console.log(&quot;validateUserModification&quot;);
+          if (this.userForm.valid) {
+            let updatedUser &#x3D; new User();
+            updatedUser.id &#x3D; this.user.id;
+            updatedUser.firstName &#x3D; this.userForm.get(&#x27;firstName&#x27;).value;
+            updatedUser.lastName &#x3D; this.userForm.get(&#x27;lastName&#x27;).value;
+            updatedUser.email &#x3D; this.userForm.get(&#x27;email&#x27;).value;
+            updatedUser.role &#x3D; this.userForm.get(&#x27;role&#x27;).value;
+            updatedUser.company &#x3D; this.userForm.get(&#x27;company&#x27;).value;
+            updatedUser.phone &#x3D; this.userForm.get(&#x27;phone&#x27;).value;
+            updatedUser.active &#x3D; this.userForm.get(&#x27;status&#x27;).value;
+            updatedUser.authorized_connection &#x3D; this.userForm.get(&#x27;authorized_connection&#x27;).value;
+            updatedUser.address &#x3D; this.userForm.get(&#x27;address&#x27;).value;
+            console.log(&quot;Utilisateur prêt à être mis à jour: &quot;, updatedUser);
+            this.userProfileService.update(this.user.id, updatedUser).subscribe(
+              response &#x3D;&gt; {
+                console.log(&#x27;Mise à jour réussie&#x27;, response);
+                this.successMessage &#x3D; &#x27;Utilisateur mis à jour avec succès.&#x27;;
+                // this.editMode &#x3D; false;
+                this._fetchData(this.user.id);
+                this.disableEditMode();
+                
+              },
+              error &#x3D;&gt; {
+                console.error(&#x27;Erreur lors de la mise à jour&#x27;, error);
+                this.errorMessage &#x3D; &#x27;Erreur lors de la mise à jour de l’utilisateur.&#x27;;
+              }
+            );
+          } else {
+            this.errorMessage &#x3D; &#x27;Veuillez remplir correctement le formulaire.&#x27;;
+          }
+        }
+        
+
+        
+
+        openResetPasswordModal(resetPasswordModal: any) {
+          const modalRef &#x3D; this.modalService.open(resetPasswordModal);
+          modalRef.result.then((result) &#x3D;&gt; {
+            if (result &#x3D;&#x3D;&#x3D; &#x27;Confirm&#x27;) {
+              this.resetPassword();
+            }
+          }, (reason) &#x3D;&gt; {
+            // Modal dismissed
+          });
+        }
+
+        resetPassword() {
+          console.log(&quot;resetPassword&quot;);
+          console.log(&quot;Utilisateur à réinitialiser: &quot;, this.user);
+          console.log(&quot;user id: &quot;, this.user.id );
+          this.userProfileService.resetPasswordByAdmin(this.user.id).subscribe({
+            next: (response) &#x3D;&gt; {
+              // Affiche un message de succès :
+              this.successMessage &#x3D; &#x27;Mot de passe réinitialisé avec succès et e-mail envoyé.&#x27;;
+              this.modalService.dismissAll();
+              this.disableEditMode();
+            },
+            error: (error) &#x3D;&gt; {
+              // Affiche un message d&#x27;erreur:
+              this.errorMessage &#x3D; &#x27;Erreur lors de la réinitialisation du mot de passe: &#x27; + error?.error?.message ?? &#x27; &#x27;;
+              
+            }
+          });
+        }
+      }
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;app-pagetitle title&#x3D;&quot;Contact&quot; [breadcrumbItems]&#x3D;&quot;breadCrumbItems&quot;&gt;&lt;/app-pagetitle&gt;
+    &lt;div class&#x3D;&quot;container mt-4&quot;&gt;
+        
+        &lt;!-- &lt;div class&#x3D;&quot;alert alert-danger&quot; role&#x3D;&quot;alert&quot;&gt;
+            &lt;strong&gt;Attention !&lt;/strong&gt; Ce composant est encore en construction. Portez un casque de sécurité !
+        &lt;/div&gt; --&gt;
+        &lt;!-- Messages (erreur/succès)--&gt;
+        &lt;ngb-alert *ngIf&#x3D;&quot;successMessage&quot; type&#x3D;&quot;success&quot; (close)&#x3D;&quot;successMessage &#x3D; &#x27;&#x27;&quot;&gt;
+            {{ successMessage }}
+          &lt;/ngb-alert&gt;
+          &lt;ngb-alert *ngIf&#x3D;&quot;errorMessage&quot; type&#x3D;&quot;danger&quot; (close)&#x3D;&quot;errorMessage &#x3D; &#x27;&#x27;&quot;&gt;
+            {{ errorMessage }}
+          &lt;/ngb-alert&gt;
+
+        &lt;div class&#x3D;&quot;card&quot;&gt;
+            &lt;div class&#x3D;&quot;card-header&quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;  *ngIf&#x3D;&quot;isAdminOrSuperAdmin()&quot;&gt;
+                    &lt;div class&#x3D;&quot;text-end&quot;&gt;
+                        &lt;button class&#x3D;&quot;btn btn-primary ms-2&quot; (click)&#x3D;&quot;enableEditMode()&quot; *ngIf&#x3D;&quot;!editMode&quot;&gt;Editer&lt;/button&gt;
+                        &lt;button class&#x3D;&quot;btn btn-danger ms-2&quot; (click)&#x3D;&quot;disableEditMode()&quot; *ngIf&#x3D;&quot;editMode&quot;&gt;Annuler&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;h5 class&#x3D;&quot;card-title mb-0&quot; *ngIf&#x3D;&quot;!editMode&quot;&gt;
+                        {{ user?.firstName }} {{ user?.lastName }}
+                        &lt;small class&#x3D;&quot;text-muted role-badge&quot; [ngClass]&#x3D;&quot;getRoleClass(user?.role)&quot;&gt;{{ user?.role }}&lt;/small&gt;
+                    &lt;/h5&gt;
+                    &lt;div *ngIf&#x3D;&quot;editMode&quot;&gt;
+                        &lt;form [formGroup]&#x3D;&quot;userForm&quot;&gt;
+                            &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                &lt;label for&#x3D;&quot;firstName&quot;&gt;Prénom&lt;/label&gt;
+                                &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                    &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;firstName&quot; formControlName&#x3D;&quot;firstName&quot; (blur)&#x3D;&quot;resetDirty(&#x27;firstName&#x27;)&quot;&gt;
+                                    &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;firstName&#x27;].dirty&quot;&gt;
+                                        &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;firstName&#x27;)&quot;&gt;
+                                            &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser le prénom&quot;&gt;&lt;/i&gt;
+                                        &lt;/span&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                &lt;label for&#x3D;&quot;lastName&quot;&gt;Nom&lt;/label&gt;
+                                &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                    &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;lastName&quot; formControlName&#x3D;&quot;lastName&quot; (blur)&#x3D;&quot;resetDirty(&#x27;lastName&#x27;)&quot;&gt;
+                                    &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;lastName&#x27;].dirty&quot;&gt;
+                                        &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;lastName&#x27;)&quot;&gt;
+                                            &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser le nom&quot;&gt;&lt;/i&gt;
+                                        &lt;/span&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;form-group&quot;&gt;
+                                &lt;label for&#x3D;&quot;role&quot;&gt;Rôle&lt;/label&gt;
+                                &lt;select class&#x3D;&quot;form-control&quot; id&#x3D;&quot;role&quot; formControlName&#x3D;&quot;role&quot; (blur)&#x3D;&quot;resetDirty(&#x27;role&#x27;)&quot;&gt;
+                                    &lt;option value&#x3D;&quot;superAdmin&quot;&gt;superAdmin&lt;/option&gt;
+                                    &lt;option value&#x3D;&quot;cocontractor&quot;&gt;co-traitant&lt;/option&gt;
+                                    &lt;option value&#x3D;&quot;subcontractor&quot;&gt;sous-traitant&lt;/option&gt;
+                                    &lt;option value&#x3D;&quot;comanager&quot;&gt;régisseur&lt;/option&gt;
+                                    &lt;option value&#x3D;&quot;supermanager&quot;&gt;super régisseur&lt;/option&gt;
+                                    &lt;option value&#x3D;&quot;customer&quot;&gt;client&lt;/option&gt;
+                                &lt;/select&gt;
+                            &lt;/div&gt;
+                        &lt;/form&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;card-body&quot;&gt;
+                    &lt;div class&#x3D;&quot;row mb-3&quot;&gt;
+                        &lt;div class&#x3D;&quot;col-sm-6&quot;&gt;
+                            &lt;strong&gt;Email&lt;/strong&gt;
+                            &lt;!-- Champ éditable si en mode édition --&gt;
+                            &lt;div *ngIf&#x3D;&quot;editMode&quot;&gt;
+                                &lt;form [formGroup]&#x3D;&quot;userForm&quot;&gt;
+                                    &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                        &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                            &lt;input type&#x3D;&quot;email&quot; class&#x3D;&quot;form-control&quot; formControlName&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Email&quot; (blur)&#x3D;&quot;resetDirty(&#x27;email&#x27;)&quot;&gt;
+                                            &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;email&#x27;].dirty&quot;&gt;
+                                                &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;email&#x27;)&quot;&gt;
+                                                    &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser l&#x27;email&quot;&gt;&lt;/i&gt;
+                                                &lt;/span&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                    &lt;/div&gt;
+                                &lt;/form&gt;
+                            &lt;/div&gt;
+                            &lt;!-- Affichage en mode lecture seul --&gt;
+                            &lt;p class&#x3D;&quot;text-muted&quot; *ngIf&#x3D;&quot;!editMode &amp;&amp; user?.email&quot;&gt;
+                                &lt;a href&#x3D;&quot;mailto:{{ user.email }}&quot;&gt;{{ user?.email }}&lt;/a&gt;
+                            &lt;/p&gt;
+                        &lt;/div&gt;
+                        &lt;div class&#x3D;&quot;col-sm-6&quot;&gt;
+                            &lt;strong&gt;Entreprise&lt;/strong&gt;
+                            &lt;!-- Champ éditable si en mode édition --&gt;
+                            &lt;div *ngIf&#x3D;&quot;editMode&quot;&gt;
+                                &lt;form [formGroup]&#x3D;&quot;userForm&quot;&gt;
+                                    &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                        &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                            &lt;div class&#x3D;&quot;col&quot;&gt;
+                                                &lt;ng-select id&#x3D;&quot;company&quot; 
+                                                formControlName&#x3D;&quot;company&quot; 
+                                                [items]&#x3D;&quot;companies&quot; 
+                                                bindLabel&#x3D;&quot;normalized_name&quot; 
+                                                bindValue&#x3D;&quot;normalized_name&quot; 
+                                                placeholder&#x3D;&quot;Sélectionner une entreprise&quot;
+                                                [typeahead]&#x3D;&quot;companyInput$&quot;
+                                                [virtualScroll]&#x3D;&quot;true&quot; 
+                                                [compareWith]&#x3D;&quot;compareWithFn&quot;
+                                                [addTag]&#x3D;&quot;true&quot;
+                                                addTagText&#x3D;&quot;Ajoutez l&#x27;entreprise&quot;
+                                                (blur)&#x3D;&quot;onCompanyInputBlur($event); resetDirty(&#x27;company&#x27;)&quot;&gt;
+                                            &lt;/ng-select&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class&#x3D;&quot;col-auto&quot;&gt;
+                                            &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;company&#x27;].dirty&quot;&gt;
+                                                &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;company&#x27;)&quot;&gt;
+                                                    &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser l&#x27;entreprise&quot;&gt;&lt;/i&gt;
+                                                &lt;/span&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Affichage en mode lecture seule --&gt;
+                        &lt;p class&#x3D;&quot;text-muted&quot; *ngIf&#x3D;&quot;!editMode &amp;&amp; user?.company&quot;&gt;{{ user?.company }}&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row mb-3&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-sm-6&quot;&gt;
+                        &lt;strong&gt;Numéro de téléphone&lt;/strong&gt;
+                        &lt;!-- Champ éditable si en mode édition --&gt;
+                        &lt;div *ngIf&#x3D;&quot;editMode&quot;&gt;
+                            &lt;form [formGroup]&#x3D;&quot;userForm&quot;&gt;
+                                &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                    &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                        &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; formControlName&#x3D;&quot;phone&quot; placeholder&#x3D;&quot;Numéro de téléphone&quot; (blur)&#x3D;&quot;resetDirty(&#x27;phone&#x27;)&quot;&gt;
+                                        &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;phone&#x27;].dirty&quot;&gt;
+                                            &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;phone&#x27;)&quot;&gt;
+                                                &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser le numéro de téléphone&quot;&gt;&lt;/i&gt;
+                                            &lt;/span&gt;
+                                        &lt;/div&gt;                                          
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Affichage en mode lecture seule --&gt;
+                        &lt;p class&#x3D;&quot;text-muted&quot; *ngIf&#x3D;&quot;!editMode &amp;&amp; user?.phone&quot;&gt;{{ user?.phone }}&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-sm-6&quot;&gt;
+                        &lt;strong&gt;Adresse&lt;/strong&gt;
+                        &lt;!-- Champ éditable si en mode édition --&gt;
+                        &lt;div *ngIf&#x3D;&quot;editMode&quot;&gt;
+                            &lt;form [formGroup]&#x3D;&quot;userForm&quot;&gt;
+                                &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                    &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                        &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; formControlName&#x3D;&quot;address&quot; placeholder&#x3D;&quot;Adresse&quot; (blur)&#x3D;&quot;resetDirty(&#x27;address&#x27;)&quot;&gt;
+                                        &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;address&#x27;].dirty&quot;&gt;
+                                            &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;address&#x27;)&quot;&gt;
+                                                &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser l&#x27;adresse&quot;&gt;&lt;/i&gt;
+                                            &lt;/span&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Affichage en mode lecture seule --&gt;
+                        &lt;p class&#x3D;&quot;text-muted&quot; *ngIf&#x3D;&quot;!editMode &amp;&amp; user?.address; else notProvided&quot;&gt;{{ user?.address}}&lt;/p&gt;
+                        &lt;ng-template #notProvided&gt;&lt;p class&#x3D;&quot;text-muted&quot;&gt;Non renseigné&lt;/p&gt;&lt;/ng-template&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-sm-6&quot;&gt;
+                        &lt;strong&gt;Autorisé à se connecter&lt;/strong&gt;
+                        &lt;!-- Champ éditable si en mode édition --&gt;
+                        &lt;div *ngIf&#x3D;&quot;editMode&quot;&gt;
+                            &lt;form [formGroup]&#x3D;&quot;userForm&quot;&gt;
+                                &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                    &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                        &lt;div class&#x3D;&quot;d-block&quot;&gt;
+                                            &lt;ui-switch 
+                                            id&#x3D;&quot;authorized-connection-switch&quot; 
+                                            formControlName&#x3D;&quot;authorized_connection&quot; 
+                                            [checkedLabel]&#x3D;&quot;&#x27;Oui&#x27;&quot; 
+                                            [uncheckedLabel]&#x3D;&quot;&#x27;Non&#x27;&quot; 
+                                            size&#x3D;&quot;small&quot;  
+                                            ariaLabel&#x3D;&quot;Autorisé à se connecter&quot; 
+                                            (blur)&#x3D;&quot;resetDirty(&#x27;authorized_connection&#x27;)&quot;
+                                            &gt;&lt;/ui-switch&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;authorized_connection&#x27;].dirty&quot;&gt;
+                                            &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;authorized_connection&#x27;)&quot;&gt;
+                                                &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser l&#x27;autorisation de connexion&quot;&gt;&lt;/i&gt;
+                                            &lt;/span&gt;
+                                        &lt;/div&gt;                                          
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Affichage en mode lecture seule --&gt;
+                        &lt;p class&#x3D;&quot;text-muted&quot; *ngIf&#x3D;&quot;!editMode &amp;&amp; user?.authorized_connection&quot;&gt;{{ user?.authorized_connection ? &#x27;Oui&#x27; : &#x27;Non&#x27; }}&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-sm-6&quot;&gt;
+                        &lt;strong&gt;Statut&lt;/strong&gt;
+                        &lt;!-- Champ éditable si en mode édition --&gt;
+                        &lt;div *ngIf&#x3D;&quot;editMode&quot;&gt;
+                            &lt;form [formGroup]&#x3D;&quot;userForm&quot;&gt;
+                                &lt;div class&#x3D;&quot;form-group position-relative&quot;&gt;
+                                    &lt;div class&#x3D;&quot;input-group&quot;&gt;
+                                        &lt;div class&#x3D;&quot;d-block&quot;&gt;
+                                            &lt;ui-switch 
+                                            id&#x3D;&quot;status-switch&quot; 
+                                            formControlName&#x3D;&quot;status&quot; 
+                                            [checkedLabel]&#x3D;&quot;&#x27;Actif&#x27;&quot; 
+                                            [uncheckedLabel]&#x3D;&quot;&#x27;Inactif&#x27;&quot; 
+                                            size&#x3D;&quot;small&quot;  
+                                            ariaLabel&#x3D;&quot;Statut&quot;
+                                            (blur)&#x3D;&quot;resetDirty(&#x27;status&#x27;)&quot;
+                                            &gt;&lt;/ui-switch&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class&#x3D;&quot;input-group-append&quot; *ngIf&#x3D;&quot;userForm.controls[&#x27;status&#x27;].dirty&quot;&gt;
+                                        &lt;span class&#x3D;&quot;input-group-text&quot; style&#x3D;&quot;cursor: pointer;&quot; (click)&#x3D;&quot;resetField(&#x27;status&#x27;)&quot;&gt;
+                                            &lt;i class&#x3D;&quot;fas fa-undo&quot; title&#x3D;&quot;Réinitialiser le statut&quot;&gt;&lt;/i&gt;
+                                        &lt;/span&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Affichage en mode lecture seule --&gt;
+                        &lt;p class&#x3D;&quot;text-muted&quot; *ngIf&#x3D;&quot;!editMode &amp;&amp; user?.active&quot;&gt;{{ user?.active ? &#x27;Actif&#x27; : &#x27;Inactif&#x27; }}&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-footer text-end&quot; *ngIf&#x3D;&quot;editMode&quot;&gt;
+                &lt;button class&#x3D;&quot;btn btn-danger ms-2&quot; ngbTooltip&#x3D;&quot;Les données de l&#x27;utilisateur seront conservées, mais nous mandaterons un tueur à gage&quot; (click)&#x3D;&quot;openDeleteConfirmationModal(deleteModal)&quot;&gt;Supprimer l&#x27;utilisateur&lt;/button&gt;
+                &lt;button class&#x3D;&quot;btn btn-outline-secondary ms-2&quot; (click)&#x3D;&quot;openResetPasswordModal(resetPasswordModal)&quot;&gt;Réinitialiser le mot de passe&lt;/button&gt;
+                &lt;button class&#x3D;&quot;btn btn-primary ms-2&quot; (click)&#x3D;&quot;openConfirmationModalForModification(content)&quot; *ngIf&#x3D;&quot;!userForm.pristine&quot;&gt;Valider la modification&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Template pour le Modal de Confirmation --&gt;
+&lt;ng-template #confirmationModalForModification #content let-modal&gt;
+    &lt;div class&#x3D;&quot;modal-dialog&quot; role&#x3D;&quot;document&quot;&gt;
+        &lt;div class&#x3D;&quot;modal-content&quot;&gt;
+            &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+                &lt;h5 class&#x3D;&quot;modal-title&quot;&gt;Confirmation&lt;/h5&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; aria-label&#x3D;&quot;Close&quot; (click)&#x3D;&quot;modal.dismiss(&#x27;Cross click&#x27;)&quot;&gt;
+                    &lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+                &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
+                    &lt;!-- &lt;pre&gt;{{ userForm?.value }}&lt;/pre&gt;
+                    &lt;pre *ngFor&#x3D;&quot;let control of userForm.controls | keyvalue&quot;&gt;{{ control.key }}: {{ control.value.value.value }}&lt;/pre&gt; --&gt;
+                    &lt;table class&#x3D;&quot;table&quot;&gt;
+                        &lt;tbody&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;firstName&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Prénom&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.firstName }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;lastName&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Nom&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.lastName }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;email&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Email&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.email }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;phone&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Numéro de téléphone&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.phone }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;address&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Adresse&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.address }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;company&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Entreprise&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.company }}&lt;/td&gt;
+                                &lt;!-- &lt;td&gt;{{ user.company }}&lt;/td&gt; --&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;role&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Rôle&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.role }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;status&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Statut&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.status ? &#x27;Actif&#x27; : &#x27;Inactif&#x27; }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr [ngClass]&#x3D;&quot;{&#x27;modified-field&#x27;: userForm.controls[&#x27;authorized_connection&#x27;].dirty}&quot;&gt;
+                                &lt;th scope&#x3D;&quot;row&quot;&gt;Autorisé à se connecter&lt;/th&gt;
+                                &lt;td&gt;{{ userForm.value.authorized_connection ? &#x27;Oui&#x27; : &#x27;Non&#x27; }}&lt;/td&gt;
+                            &lt;/tr&gt;
+                        &lt;/tbody&gt;
+                    &lt;/table&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;modal-footer&quot;&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-secondary&quot; (click)&#x3D;&quot;modal.close(&#x27;Close click&#x27;)&quot;&gt;Annuler&lt;/button&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; (click)&#x3D;&quot;validateUserModification();modal.close()&quot;&gt;Confirmer&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;!-- Template pour le Modal de Suppression --&gt;
+&lt;ng-template #deleteModal let-modal&gt;
+    &lt;div class&#x3D;&quot;modal-dialog&quot; role&#x3D;&quot;document&quot;&gt;
+        &lt;div class&#x3D;&quot;modal-content&quot;&gt;
+            &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+                &lt;h5 class&#x3D;&quot;modal-title&quot;&gt;Confirmation de Suppression&lt;/h5&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; aria-label&#x3D;&quot;Close&quot; (click)&#x3D;&quot;modal.dismiss(&#x27;Cross click&#x27;)&quot;&gt;
+                    &lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+                &lt;p&gt;Êtes-vous sûr de vouloir supprimer l&#x27;utilisateur &lt;strong&gt;{{ user?.firstName }} {{ user?.lastName }}&lt;/strong&gt; ?&lt;/p&gt;
+                &lt;p class&#x3D;&quot;text-muted&quot;&gt;Pour confirmer, veuillez saisir le nom complet de l&#x27;utilisateur ci-dessous :&lt;/p&gt;
+                &lt;input 
+                    type&#x3D;&quot;text&quot; 
+                    class&#x3D;&quot;form-control&quot; 
+                    [(ngModel)]&#x3D;&quot;confirmationInput&quot; 
+                    placeholder&#x3D;&quot;Prénom Nom&quot; 
+                    [class.is-invalid]&#x3D;&quot;!isTextMatching()&quot;
+                &gt;
+                &lt;p class&#x3D;&quot;text-muted&quot;&gt;Cette action est irréversible.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;modal-footer&quot;&gt;
+                &lt;button 
+                    type&#x3D;&quot;button&quot; 
+                    class&#x3D;&quot;btn btn-secondary&quot; 
+                    (click)&#x3D;&quot;modal.close(&#x27;Close click&#x27;)&quot;
+                &gt;Annuler&lt;/button&gt;
+                &lt;button 
+                    type&#x3D;&quot;button&quot; 
+                    class&#x3D;&quot;btn btn-danger&quot; 
+                    (click)&#x3D;&quot;confirmDeletion();modal.close()&quot; 
+                    ngbTooltip&#x3D;&quot;Un petit clic pour une grande conséquence...&quot; 
+                    *ngIf&#x3D;&quot;isTextMatching()&quot;
+                &gt;Confirmer la Suppression&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;!-- Template pour le Modal de Réinitialisation du mot de passe --&gt;
+&lt;ng-template #resetPasswordModal let-modal&gt;
+    &lt;div class&#x3D;&quot;modal-dialog&quot; role&#x3D;&quot;document&quot;&gt;
+        &lt;div class&#x3D;&quot;modal-content&quot;&gt;
+            &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+                &lt;h5 class&#x3D;&quot;modal-title&quot;&gt;Confirmation de Réinitialisation du Mot de Passe&lt;/h5&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; aria-label&#x3D;&quot;Close&quot; (click)&#x3D;&quot;modal.dismiss(&#x27;Cross click&#x27;)&quot;&gt;
+                    &lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+                Êtes-vous sûr de vouloir réinitialiser le mot de passe de cet utilisateur ?
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;modal-footer&quot;&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-secondary&quot; (click)&#x3D;&quot;modal.dismiss(&#x27;Cancel click&#x27;)&quot;&gt;Annuler&lt;/button&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-danger&quot; (click)&#x3D;&quot;resetPassword()&quot;&gt;Confirmer la Réinitialisation&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./user-detail.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.ng-dirty:not(form) {
+    border: 2px solid #007bff; /* couleur bleue de Bootstrap pour &#x27;info&#x27; */
+}
+
+.ng-dirty.ng-invalid:not(form) {
+    border-color: #dc3545; /* couleur rouge de Bootstrap pour &#x27;danger&#x27; */
+}
+
+.role-badge {
+    padding: 2px 5px;
+    border-radius: 15px;
+    color: var(--bs-white);
+    font-weight: bold;
+    
+    &amp;.badge-superadmin { background-color: #e74c3c; } // Rouge pour superAdmin
+    &amp;.badge-cocontractor { background-color: #3498db; } // Bleu pour cocontractor
+    &amp;.badge-subcontractor { background-color: #2ecc71; } // Vert pour subcontractor
+    &amp;.badge-customer { background-color: #f1c40f; } // Jaune pour customer
+    &amp;.badge-comanager { background-color: #9b59b6; } // Violet pour comanager
+    &amp;.badge-supermanager { background-color: #95a5a6; } // Gris pour supermanager
+}
+
+.input-group .input-group-append .input-group-text {
+    padding: 0.75rem 0.75rem; /* Ajuster cette valeur pour correspondre à la hauteur du champ */
+    height: auto; /* Permettre au bouton de s&#x27;ajuster à la hauteur du champ */
+}
+
+.input-group .form-control {
+    height: auto; /* Assurez-vous que la hauteur du champ de saisie s&#x27;ajuste au contenu */
+}
+
+.modified-field,
+.modified-field th,
+.modified-field td {
+    font-weight: bold;
+    color: #ffffff !important;
+    background-color: #dc3545;
+}
+
+
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">    <app-pagetitle title="Contact" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>    <div class="container mt-4">                <!-- <div class="alert alert-danger" role="alert">            <strong>Attention !</strong> Ce composant est encore en construction. Portez un casque de sécurité !        </div> -->        <!-- Messages (erreur/succès)-->        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = \'\'">            {{ successMessage }}          </ngb-alert>          <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = \'\'">            {{ errorMessage }}          </ngb-alert>        <div class="card">            <div class="card-header">                <div class="row"  *ngIf="isAdminOrSuperAdmin()">                    <div class="text-end">                        <button class="btn btn-primary ms-2" (click)="enableEditMode()" *ngIf="!editMode">Editer</button>                        <button class="btn btn-danger ms-2" (click)="disableEditMode()" *ngIf="editMode">Annuler</button>                    </div>                </div>                <div class="row">                    <h5 class="card-title mb-0" *ngIf="!editMode">                        {{ user?.firstName }} {{ user?.lastName }}                        <small class="text-muted role-badge" [ngClass]="getRoleClass(user?.role)">{{ user?.role }}</small>                    </h5>                    <div *ngIf="editMode">                        <form [formGroup]="userForm">                            <div class="form-group position-relative">                                <label for="firstName">Prénom</label>                                <div class="input-group">                                    <input type="text" class="form-control" id="firstName" formControlName="firstName" (blur)="resetDirty(\'firstName\')">                                    <div class="input-group-append" *ngIf="userForm.controls[\'firstName\'].dirty">                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'firstName\')">                                            <i class="fas fa-undo" title="Réinitialiser le prénom"></i>                                        </span>                                    </div>                                </div>                            </div>                            <div class="form-group position-relative">                                <label for="lastName">Nom</label>                                <div class="input-group">                                    <input type="text" class="form-control" id="lastName" formControlName="lastName" (blur)="resetDirty(\'lastName\')">                                    <div class="input-group-append" *ngIf="userForm.controls[\'lastName\'].dirty">                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'lastName\')">                                            <i class="fas fa-undo" title="Réinitialiser le nom"></i>                                        </span>                                    </div>                                </div>                            </div>                            <div class="form-group">                                <label for="role">Rôle</label>                                <select class="form-control" id="role" formControlName="role" (blur)="resetDirty(\'role\')">                                    <option value="superAdmin">superAdmin</option>                                    <option value="cocontractor">co-traitant</option>                                    <option value="subcontractor">sous-traitant</option>                                    <option value="comanager">régisseur</option>                                    <option value="supermanager">super régisseur</option>                                    <option value="customer">client</option>                                </select>                            </div>                        </form>                    </div>                </div>                <div class="card-body">                    <div class="row mb-3">                        <div class="col-sm-6">                            <strong>Email</strong>                            <!-- Champ éditable si en mode édition -->                            <div *ngIf="editMode">                                <form [formGroup]="userForm">                                    <div class="form-group position-relative">                                        <div class="input-group">                                            <input type="email" class="form-control" formControlName="email" placeholder="Email" (blur)="resetDirty(\'email\')">                                            <div class="input-group-append" *ngIf="userForm.controls[\'email\'].dirty">                                                <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'email\')">                                                    <i class="fas fa-undo" title="Réinitialiser l\'email"></i>                                                </span>                                            </div>                                        </div>                                                                            </div>                                </form>                            </div>                            <!-- Affichage en mode lecture seul -->                            <p class="text-muted" *ngIf="!editMode && user?.email">                                <a href="mailto:{{ user.email }}">{{ user?.email }}</a>                            </p>                        </div>                        <div class="col-sm-6">                            <strong>Entreprise</strong>                            <!-- Champ éditable si en mode édition -->                            <div *ngIf="editMode">                                <form [formGroup]="userForm">                                    <div class="form-group position-relative">                                        <div class="input-group">                                            <div class="col">                                                <ng-select id="company"                                                 formControlName="company"                                                 [items]="companies"                                                 bindLabel="normalized_name"                                                 bindValue="normalized_name"                                                 placeholder="Sélectionner une entreprise"                                                [typeahead]="companyInput$"                                                [virtualScroll]="true"                                                 [compareWith]="compareWithFn"                                                [addTag]="true"                                                addTagText="Ajoutez l\'entreprise"                                                (blur)="onCompanyInputBlur($event); resetDirty(\'company\')">                                            </ng-select>                                        </div>                                        <div class="col-auto">                                            <div class="input-group-append" *ngIf="userForm.controls[\'company\'].dirty">                                                <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'company\')">                                                    <i class="fas fa-undo" title="Réinitialiser l\'entreprise"></i>                                                </span>                                            </div>                                        </div>                                    </div>                                </div>                            </form>                        </div>                        <!-- Affichage en mode lecture seule -->                        <p class="text-muted" *ngIf="!editMode && user?.company">{{ user?.company }}</p>                    </div>                </div>                <div class="row mb-3">                    <div class="col-sm-6">                        <strong>Numéro de téléphone</strong>                        <!-- Champ éditable si en mode édition -->                        <div *ngIf="editMode">                            <form [formGroup]="userForm">                                <div class="form-group position-relative">                                    <div class="input-group">                                        <input type="text" class="form-control" formControlName="phone" placeholder="Numéro de téléphone" (blur)="resetDirty(\'phone\')">                                        <div class="input-group-append" *ngIf="userForm.controls[\'phone\'].dirty">                                            <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'phone\')">                                                <i class="fas fa-undo" title="Réinitialiser le numéro de téléphone"></i>                                            </span>                                        </div>                                                                              </div>                                </div>                            </form>                        </div>                        <!-- Affichage en mode lecture seule -->                        <p class="text-muted" *ngIf="!editMode && user?.phone">{{ user?.phone }}</p>                    </div>                    <div class="col-sm-6">                        <strong>Adresse</strong>                        <!-- Champ éditable si en mode édition -->                        <div *ngIf="editMode">                            <form [formGroup]="userForm">                                <div class="form-group position-relative">                                    <div class="input-group">                                        <input type="text" class="form-control" formControlName="address" placeholder="Adresse" (blur)="resetDirty(\'address\')">                                        <div class="input-group-append" *ngIf="userForm.controls[\'address\'].dirty">                                            <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'address\')">                                                <i class="fas fa-undo" title="Réinitialiser l\'adresse"></i>                                            </span>                                        </div>                                    </div>                                </div>                            </form>                        </div>                        <!-- Affichage en mode lecture seule -->                        <p class="text-muted" *ngIf="!editMode && user?.address; else notProvided">{{ user?.address}}</p>                        <ng-template #notProvided><p class="text-muted">Non renseigné</p></ng-template>                    </div>                </div>                <div class="row">                    <div class="col-sm-6">                        <strong>Autorisé à se connecter</strong>                        <!-- Champ éditable si en mode édition -->                        <div *ngIf="editMode">                            <form [formGroup]="userForm">                                <div class="form-group position-relative">                                    <div class="input-group">                                        <div class="d-block">                                            <ui-switch                                             id="authorized-connection-switch"                                             formControlName="authorized_connection"                                             [checkedLabel]="\'Oui\'"                                             [uncheckedLabel]="\'Non\'"                                             size="small"                                              ariaLabel="Autorisé à se connecter"                                             (blur)="resetDirty(\'authorized_connection\')"                                            ></ui-switch>                                        </div>                                        <div class="input-group-append" *ngIf="userForm.controls[\'authorized_connection\'].dirty">                                            <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'authorized_connection\')">                                                <i class="fas fa-undo" title="Réinitialiser l\'autorisation de connexion"></i>                                            </span>                                        </div>                                                                              </div>                                </div>                            </form>                        </div>                        <!-- Affichage en mode lecture seule -->                        <p class="text-muted" *ngIf="!editMode && user?.authorized_connection">{{ user?.authorized_connection ? \'Oui\' : \'Non\' }}</p>                    </div>                    <div class="col-sm-6">                        <strong>Statut</strong>                        <!-- Champ éditable si en mode édition -->                        <div *ngIf="editMode">                            <form [formGroup]="userForm">                                <div class="form-group position-relative">                                    <div class="input-group">                                        <div class="d-block">                                            <ui-switch                                             id="status-switch"                                             formControlName="status"                                             [checkedLabel]="\'Actif\'"                                             [uncheckedLabel]="\'Inactif\'"                                             size="small"                                              ariaLabel="Statut"                                            (blur)="resetDirty(\'status\')"                                            ></ui-switch>                                        </div>                                    </div>                                    <div class="input-group-append" *ngIf="userForm.controls[\'status\'].dirty">                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField(\'status\')">                                            <i class="fas fa-undo" title="Réinitialiser le statut"></i>                                        </span>                                    </div>                                </div>                            </form>                        </div>                        <!-- Affichage en mode lecture seule -->                        <p class="text-muted" *ngIf="!editMode && user?.active">{{ user?.active ? \'Actif\' : \'Inactif\' }}</p>                    </div>                </div>            </div>            <div class="card-footer text-end" *ngIf="editMode">                <button class="btn btn-danger ms-2" ngbTooltip="Les données de l\'utilisateur seront conservées, mais nous mandaterons un tueur à gage" (click)="openDeleteConfirmationModal(deleteModal)">Supprimer l\'utilisateur</button>                <button class="btn btn-outline-secondary ms-2" (click)="openResetPasswordModal(resetPasswordModal)">Réinitialiser le mot de passe</button>                <button class="btn btn-primary ms-2" (click)="openConfirmationModalForModification(content)" *ngIf="!userForm.pristine">Valider la modification</button>            </div>        </div>    </div></div><!-- Template pour le Modal de Confirmation --><ng-template #confirmationModalForModification #content let-modal>    <div class="modal-dialog" role="document">        <div class="modal-content">            <div class="modal-header">                <h5 class="modal-title">Confirmation</h5>                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(\'Cross click\')">                    <span aria-hidden="true">&times;</span>                </button>            </div>            <div class="modal-body">                <div class="table-responsive">                    <!-- <pre>{{ userForm?.value }}</pre>                    <pre *ngFor="let control of userForm.controls | keyvalue">{{ control.key }}: {{ control.value.value.value }}</pre> -->                    <table class="table">                        <tbody>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'firstName\'].dirty}">                                <th scope="row">Prénom</th>                                <td>{{ userForm.value.firstName }}</td>                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'lastName\'].dirty}">                                <th scope="row">Nom</th>                                <td>{{ userForm.value.lastName }}</td>                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'email\'].dirty}">                                <th scope="row">Email</th>                                <td>{{ userForm.value.email }}</td>                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'phone\'].dirty}">                                <th scope="row">Numéro de téléphone</th>                                <td>{{ userForm.value.phone }}</td>                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'address\'].dirty}">                                <th scope="row">Adresse</th>                                <td>{{ userForm.value.address }}</td>                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'company\'].dirty}">                                <th scope="row">Entreprise</th>                                <td>{{ userForm.value.company }}</td>                                <!-- <td>{{ user.company }}</td> -->                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'role\'].dirty}">                                <th scope="row">Rôle</th>                                <td>{{ userForm.value.role }}</td>                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'status\'].dirty}">                                <th scope="row">Statut</th>                                <td>{{ userForm.value.status ? \'Actif\' : \'Inactif\' }}</td>                            </tr>                            <tr [ngClass]="{\'modified-field\': userForm.controls[\'authorized_connection\'].dirty}">                                <th scope="row">Autorisé à se connecter</th>                                <td>{{ userForm.value.authorized_connection ? \'Oui\' : \'Non\' }}</td>                            </tr>                        </tbody>                    </table>                </div>            </div>            <div class="modal-footer">                <button type="button" class="btn btn-secondary" (click)="modal.close(\'Close click\')">Annuler</button>                <button type="button" class="btn btn-primary" (click)="validateUserModification();modal.close()">Confirmer</button>            </div>        </div>    </div></ng-template><!-- Template pour le Modal de Suppression --><ng-template #deleteModal let-modal>    <div class="modal-dialog" role="document">        <div class="modal-content">            <div class="modal-header">                <h5 class="modal-title">Confirmation de Suppression</h5>                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(\'Cross click\')">                    <span aria-hidden="true">&times;</span>                </button>            </div>            <div class="modal-body">                <p>Êtes-vous sûr de vouloir supprimer l\'utilisateur <strong>{{ user?.firstName }} {{ user?.lastName }}</strong> ?</p>                <p class="text-muted">Pour confirmer, veuillez saisir le nom complet de l\'utilisateur ci-dessous :</p>                <input                     type="text"                     class="form-control"                     [(ngModel)]="confirmationInput"                     placeholder="Prénom Nom"                     [class.is-invalid]="!isTextMatching()"                >                <p class="text-muted">Cette action est irréversible.</p>            </div>            <div class="modal-footer">                <button                     type="button"                     class="btn btn-secondary"                     (click)="modal.close(\'Close click\')"                >Annuler</button>                <button                     type="button"                     class="btn btn-danger"                     (click)="confirmDeletion();modal.close()"                     ngbTooltip="Un petit clic pour une grande conséquence..."                     *ngIf="isTextMatching()"                >Confirmer la Suppression</button>            </div>        </div>    </div></ng-template><!-- Template pour le Modal de Réinitialisation du mot de passe --><ng-template #resetPasswordModal let-modal>    <div class="modal-dialog" role="document">        <div class="modal-content">            <div class="modal-header">                <h5 class="modal-title">Confirmation de Réinitialisation du Mot de Passe</h5>                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(\'Cross click\')">                    <span aria-hidden="true">&times;</span>                </button>            </div>            <div class="modal-body">                Êtes-vous sûr de vouloir réinitialiser le mot de passe de cet utilisateur ?            </div>            <div class="modal-footer">                <button type="button" class="btn btn-secondary" (click)="modal.dismiss(\'Cancel click\')">Annuler</button>                <button type="button" class="btn btn-danger" (click)="resetPassword()">Confirmer la Réinitialisation</button>            </div>        </div>    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AlertsComponent', 'selector': 'app-alerts'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonsComponent', 'selector': 'app-buttons'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'CarouselComponent', 'selector': 'app-carousel'},{'name': 'ChartCardComponent', 'selector': 'app-chart-card'},{'name': 'ChatCardComponent', 'selector': 'app-chat-card'},{'name': 'CompanyCreateComponent', 'selector': 'app-company-create'},{'name': 'CompanyDetailComponent', 'selector': 'app-company-detail'},{'name': 'CompanyUpdateComponent', 'selector': 'app-company-update'},{'name': 'ContractActivityComponent', 'selector': 'app-contract-activity'},{'name': 'CreateUserComponent', 'selector': 'app-create-user'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardFakeComponent', 'selector': 'app-dashboard-fake'},{'name': 'DonutCardComponent', 'selector': 'app-donut-card'},{'name': 'DripiconsComponent', 'selector': 'app-dripicons'},{'name': 'DropdownsComponent', 'selector': 'app-dropdowns'},{'name': 'FAQComponent', 'selector': 'app-faq'},{'name': 'FontawesomeComponent', 'selector': 'app-fontawesome'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'GridComponent', 'selector': 'app-grid'},{'name': 'HorizontalComponent', 'selector': 'app-horizontal'},{'name': 'HorizontalnavbarComponent', 'selector': 'app-horizontalnavbar'},{'name': 'HorizontaltopbarComponent', 'selector': 'app-horizontaltopbar'},{'name': 'ImagesComponent', 'selector': 'app-images'},{'name': 'InvoicesManagementComponent', 'selector': 'app-invoices-management'},{'name': 'KpiCardComponent', 'selector': 'app-kpi-card'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageCompaniesComponent', 'selector': 'app-manage-companies'},{'name': 'ManageOrdersComponent', 'selector': 'app-manage-orders'},{'name': 'ManageUsersComponent', 'selector': 'app-manage-users'},{'name': 'MapCardComponent', 'selector': 'app-map-card'},{'name': 'MaterialdesignComponent', 'selector': 'app-materialdesign'},{'name': 'ModalsComponent', 'selector': 'app-modals'},{'name': 'OrderDetailCocontractorComponent', 'selector': 'app-order-detail-cocontractor'},{'name': 'OrderDetailComponent', 'selector': 'app-order-detail'},{'name': 'OrderDetailCustomerComponent', 'selector': 'app-order-detail'},{'name': 'OrderFilesManagementComponent', 'selector': 'app-order-files-management'},{'name': 'OrderFormComponent', 'selector': 'app-order-form'},{'name': 'OrderUpdateCocontractorComponent', 'selector': 'app-order-update-cocontractor'},{'name': 'OrderUpdateComponent', 'selector': 'app-order-update'},{'name': 'PagetitleComponent', 'selector': 'app-pagetitle'},{'name': 'PasswordresetComponent', 'selector': 'app-passwordreset'},{'name': 'PickerCardComponent', 'selector': 'app-picker-card'},{'name': 'ProgressbarComponent', 'selector': 'app-progressbar'},{'name': 'ProtectedDocumentationComponent', 'selector': 'app-protected-documentation'},{'name': 'RangesliderComponent', 'selector': 'app-rangeslider'},{'name': 'RemixComponent', 'selector': 'app-remix'},{'name': 'RightsidebarComponent', 'selector': 'app-rightsidebar'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignupComponent', 'selector': 'app-signup'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'StatSummaryCardComponent', 'selector': 'app-stat-summary-card'},{'name': 'SweetalertComponent', 'selector': 'app-sweetalert'},{'name': 'TableCardComponent', 'selector': 'app-table-card'},{'name': 'TabsComponent', 'selector': 'app-tabs'},{'name': 'TimelineCardComponent', 'selector': 'app-timeline-card'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypographyComponent', 'selector': 'app-typography'},{'name': 'UserDetailComponent', 'selector': 'app-user-detail'},{'name': 'UserInfoBarComponent', 'selector': 'app-user-info-bar'},{'name': 'VerticalComponent', 'selector': 'app-vertical'},{'name': 'VideoComponent', 'selector': 'app-video'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'UserDetailComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UserDetailComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

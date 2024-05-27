@@ -1,0 +1,18 @@
+/* Define your colors */
+$primary-color: #252b3b;
+$secondary-color: #6d778b;
+
+/* Active link styles */
+#side-menu .active {
+  background-color: $secondary-color !important; /* Inverse background color */
+  color: $primary-color !important; /* Inverse text color */
+}
+
+/* Ensure icons also change color if necessary */
+#side-menu .active i {
+  color: $primary-color !important;
+}
+
+#side-menu .active:hover {
+  background-color: #f1f5f7 !important;
+}

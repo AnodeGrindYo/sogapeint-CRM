@@ -155,10 +155,34 @@ telles que l&#39;obtention de la liste des utilisateurs et l&#39;enregistrement 
                                 <a href="#create" >create</a>
                             </li>
                             <li>
+                                <a href="#delete" >delete</a>
+                            </li>
+                            <li>
                                 <a href="#getAll" >getAll</a>
                             </li>
                             <li>
                                 <a href="#getCurrentUser" >getCurrentUser</a>
+                            </li>
+                            <li>
+                                <a href="#getOne" >getOne</a>
+                            </li>
+                            <li>
+                                <a href="#requestPasswordReset" >requestPasswordReset</a>
+                            </li>
+                            <li>
+                                <a href="#resetPassword" >resetPassword</a>
+                            </li>
+                            <li>
+                                <a href="#resetPasswordByAdmin" >resetPasswordByAdmin</a>
+                            </li>
+                            <li>
+                                <a href="#searchUsers" >searchUsers</a>
+                            </li>
+                            <li>
+                                <a href="#update" >update</a>
+                            </li>
+                            <li>
+                                <a href="#verifyResetCode" >verifyResetCode</a>
                             </li>
                         </ul>
                     </td>
@@ -327,6 +351,82 @@ telles que l&#39;obtention de la liste des utilisateurs et l&#39;enregistrement 
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <span ><b>delete</b></span>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>delete(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="96"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:96</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Supprime un utilisateur.</p>
+<p>Envoie une requête DELETE pour supprimer un utilisateur.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant de l&#39;utilisateur à supprimer.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable pour la réponse de la requête.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getAll"></a>
                     <span class="name">
                         <span ><b>getAll</b></span>
@@ -404,6 +504,584 @@ telles que l&#39;obtention de la liste des utilisateurs et l&#39;enregistrement 
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOne"></a>
+                    <span class="name">
+                        <span ><b>getOne</b></span>
+                        <a href="#getOne"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOne(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="64"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère un utilisateur par son identifiant.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant de l&#39;utilisateur à récupérer.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant l&#39;utilisateur.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="requestPasswordReset"></a>
+                    <span class="name">
+                        <span ><b>requestPasswordReset</b></span>
+                        <a href="#requestPasswordReset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>requestPasswordReset(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:132</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Méthode pour demander la réinitialisation du mot de passe</p>
+<p>Envoie une requête POST au backend pour demander la réinitialisation du mot de passe</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;email de l&#39;utilisateur</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable pour la réponse de la requête.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetPassword"></a>
+                    <span class="name">
+                        <span ><b>resetPassword</b></span>
+                        <a href="#resetPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetPassword(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, code: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, newPassword: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>code</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>newPassword</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetPasswordByAdmin"></a>
+                    <span class="name">
+                        <span ><b>resetPasswordByAdmin</b></span>
+                        <a href="#resetPasswordByAdmin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetPasswordByAdmin(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Réinitialise le mot de passe d&#39;un utilisateur par un administrateur.</p>
+<p>Envoie une requête POST au backend pour réinitialiser le mot de passe d&#39;un utilisateur spécifique.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant de l&#39;utilisateur dont le mot de passe doit être réinitialisé.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable pour la réponse de la requête.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchUsers"></a>
+                    <span class="name">
+                        <span ><b>searchUsers</b></span>
+                        <a href="#searchUsers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>searchUsers(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="107"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Recherche des utilisateurs par nom, prénom ou email.</p>
+<p>Envoie une requête GET avec un paramètre de requête pour rechercher des utilisateurs.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>La chaîne de caractères pour filtrer les utilisateurs.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau d&#39;utilisateurs filtrés.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>update(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Met à jour un utilisateur.</p>
+<p>Envoie une requête PUT pour mettre à jour un utilisateur avec les données fournies.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant de l&#39;utilisateur à mettre à jour.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Les données de l&#39;utilisateur à mettre à jour.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable pour la réponse de la requête.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="verifyResetCode"></a>
+                    <span class="name">
+                        <span ><b>verifyResetCode</b></span>
+                        <a href="#verifyResetCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>verifyResetCode(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, code: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/core/services/user.service.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Méthode pour vérifier le code de réinitialisation</p>
+<p>Envoie une requête POST au backend pour vérifier le code de réinitialisation</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;email de l&#39;utilisateur</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>code</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Le code de réinitialisation reçu par email</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable pour la réponse de la requête.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
     </div>
@@ -466,6 +1144,101 @@ export class UserProfileService {
             active: user.active,
             authorized_connection: user.authorized_connection
         });
+    }
+
+    /**
+    * Récupère un utilisateur par son identifiant.
+    * @param userId L&#x27;identifiant de l&#x27;utilisateur à récupérer.
+    * @returns Un Observable contenant l&#x27;utilisateur.
+    */
+    getOne(userId: string) {
+        return this.http.get&lt;User&gt;(&#x60;${environment.apiUrl}/api/auth/user/${userId}&#x60;);
+    }
+
+    /**
+     * Met à jour un utilisateur.
+     *
+     * Envoie une requête PUT pour mettre à jour un utilisateur avec les données fournies.
+     * @param userId L&#x27;identifiant de l&#x27;utilisateur à mettre à jour.
+     * @param user Les données de l&#x27;utilisateur à mettre à jour.
+     * @returns Un Observable pour la réponse de la requête.
+     */
+    update(userId: string, user: User) {
+        return this.http.put(&#x60;${environment.apiUrl}/api/auth/user/${userId}&#x60;, {
+            email: user.email, 
+            firstname: user.firstName, 
+            lastname: user.lastName, 
+            phone: user.phone,
+            company: user.company,
+            role: user.role,
+            active: user.active,
+            authorized_connection: user.authorized_connection
+        });
+    }
+
+    /**
+     * Supprime un utilisateur.
+     *
+     * Envoie une requête DELETE pour supprimer un utilisateur.
+     * @param userId L&#x27;identifiant de l&#x27;utilisateur à supprimer.
+     * @returns Un Observable pour la réponse de la requête.
+     */
+    delete(userId: string) {
+        return this.http.delete(&#x60;${environment.apiUrl}/api/auth/user/${userId}&#x60;);
+    }
+
+    /**
+     * Recherche des utilisateurs par nom, prénom ou email.
+     * 
+     * Envoie une requête GET avec un paramètre de requête pour rechercher des utilisateurs.
+     * @param query La chaîne de caractères pour filtrer les utilisateurs.
+     * @returns Un Observable contenant un tableau d&#x27;utilisateurs filtrés.
+     */
+    searchUsers(query: string) {
+        console.log(&#x27;searchUsers&#x27;, query);
+        console.log(&#x27;searchUsers&#x27;, &#x60;${environment.apiUrl}/api/auth/user/search&#x60;);
+        return this.http.get&lt;User[]&gt;(&#x60;${environment.apiUrl}/api/auth/user-search&#x60;, { params: { q: query } });
+    }
+
+    /**
+     * Réinitialise le mot de passe d&#x27;un utilisateur par un administrateur.
+     *
+     * Envoie une requête POST au backend pour réinitialiser le mot de passe d&#x27;un utilisateur spécifique.
+     * @param userId L&#x27;identifiant de l&#x27;utilisateur dont le mot de passe doit être réinitialisé.
+     * @returns Un Observable pour la réponse de la requête.
+     */
+    resetPasswordByAdmin(userId: string) {
+        return this.http.post(&#x60;${environment.apiUrl}/api/auth/resetPasswordFromAdmin&#x60;, { userId });
+    }
+
+    
+    /**
+     * Méthode pour demander la réinitialisation du mot de passe
+     * 
+     * Envoie une requête POST au backend pour demander la réinitialisation du mot de passe
+     * @param email L&#x27;email de l&#x27;utilisateur
+     * @returns Un Observable pour la réponse de la requête.
+     */
+    requestPasswordReset(email: string) {
+        return this.http.post(&#x60;${environment.apiUrl}/api/auth/forgotPassword&#x60;, { email });
+    }
+
+    
+    /**
+     * Méthode pour vérifier le code de réinitialisation
+     * 
+     * Envoie une requête POST au backend pour vérifier le code de réinitialisation
+     * @param email L&#x27;email de l&#x27;utilisateur
+     * @param code Le code de réinitialisation reçu par email
+     * @returns Un Observable pour la réponse de la requête.
+     */
+    verifyResetCode(email: string, code: string) {
+        return this.http.post(&#x60;${environment.apiUrl}/api/auth/verifyResetCode&#x60;, { email, code });
+    }
+
+    // Méthode pour réinitialiser le mot de passe avec le code de vérification
+    resetPassword(email: string, code: string, newPassword: string) {
+        return this.http.post(&#x60;${environment.apiUrl}/api/auth/resetPassword&#x60;, { email, code, newPassword });
     }
 }
 </code></pre>

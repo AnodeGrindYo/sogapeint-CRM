@@ -152,10 +152,31 @@ telles que l&#39;obtention de la liste des entreprises et la recherche d&#39;ent
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#createCompany" >createCompany</a>
+                            </li>
+                            <li>
                                 <a href="#getCompanies" >getCompanies</a>
                             </li>
                             <li>
+                                <a href="#getCompaniesAbbreviations" >getCompaniesAbbreviations</a>
+                            </li>
+                            <li>
+                                <a href="#getCompaniesNames" >getCompaniesNames</a>
+                            </li>
+                            <li>
+                                <a href="#getCompanyById" >getCompanyById</a>
+                            </li>
+                            <li>
+                                <a href="#scrapeCompanyData" >scrapeCompanyData</a>
+                            </li>
+                            <li>
+                                <a href="#scrapeCompanyList" >scrapeCompanyList</a>
+                            </li>
+                            <li>
                                 <a href="#searchCompanies" >searchCompanies</a>
+                            </li>
+                            <li>
+                                <a href="#updateCompany" >updateCompany</a>
                             </li>
                         </ul>
                     </td>
@@ -234,6 +255,82 @@ telles que l&#39;obtention de la liste des entreprises et la recherche d&#39;ent
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="createCompany"></a>
+                    <span class="name">
+                        <span ><b>createCompany</b></span>
+                        <a href="#createCompany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createCompany(companyData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crée une entreprise.</p>
+<p>Envoie une requête POST pour créer une nouvelle entreprise.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>companyData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Les données de la nouvelle entreprise.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant la réponse de la requête.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getCompanies"></a>
                     <span class="name">
                         <span ><b>getCompanies</b></span>
@@ -278,6 +375,336 @@ telles que l&#39;obtention de la liste des entreprises et la recherche d&#39;ent
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getCompaniesAbbreviations"></a>
+                    <span class="name">
+                        <span ><b>getCompaniesAbbreviations</b></span>
+                        <a href="#getCompaniesAbbreviations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCompaniesAbbreviations()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère la liste des abbreviations des entreprises.</p>
+<p>Envoie une requête GET pour obtenir une liste de toutes les abréviations d&#39;entreprises.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau d&#39;abréviations d&#39;entreprises.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCompaniesNames"></a>
+                    <span class="name">
+                        <span ><b>getCompaniesNames</b></span>
+                        <a href="#getCompaniesNames"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCompaniesNames()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="39"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>récupère tous les noms des entreprises.</p>
+<p>Envoie une requête GET pour obtenir une liste de tous les noms d&#39;entreprises.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant un tableau de noms d&#39;entreprises.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCompanyById"></a>
+                    <span class="name">
+                        <span ><b>getCompanyById</b></span>
+                        <a href="#getCompanyById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCompanyById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère une entreprise par son identifiant.</p>
+<p>Envoie une requête GET pour obtenir une entreprise par son identifiant.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant de l&#39;entreprise.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant l&#39;entreprise.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scrapeCompanyData"></a>
+                    <span class="name">
+                        <span ><b>scrapeCompanyData</b></span>
+                        <a href="#scrapeCompanyData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>scrapeCompanyData(companyName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, postalCode: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:105</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Utilise la route backend de scraping des entreprises pour récupérer les données des entreprises.
+la route backend du scraping est: ${environment.apiUrl}/api/scrape/enriched-company/:companyName/:postalCode</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>companyName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Le nom de l&#39;entreprise à enrichir.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>postalCode</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Le code postal de l&#39;entreprise à enrichir.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scrapeCompanyList"></a>
+                    <span class="name">
+                        <span ><b>scrapeCompanyList</b></span>
+                        <a href="#scrapeCompanyList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>scrapeCompanyList(companyName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="115"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Scraping de la liste des entreprises sur l&#39;endpoint ${environment.apiUrl}/api/scrape/company-list/:companyName</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>companyName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Le nom de l&#39;entreprise à rechercher.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant la liste des entreprises trouvées.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="searchCompanies"></a>
                     <span class="name">
                         <span ><b>searchCompanies</b></span>
@@ -294,8 +721,8 @@ telles que l&#39;obtention de la liste des entreprises et la recherche d&#39;ent
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="40"
-                                    class="link-to-prism">src/app/core/services/company.service.ts:40</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:50</a></div>
                         </td>
                     </tr>
 
@@ -350,6 +777,98 @@ telles que l&#39;obtention de la liste des entreprises et la recherche d&#39;ent
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateCompany"></a>
+                    <span class="name">
+                        <span ><b>updateCompany</b></span>
+                        <a href="#updateCompany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateCompany(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, companyData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="73"
+                                    class="link-to-prism">src/app/core/services/company.service.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Met à jour une entreprise.</p>
+<p>Envoie une requête PUT pour mettre à jour une entreprise.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;identifiant de l&#39;entreprise.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>companyData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Les données de l&#39;entreprise à mettre à jour.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Un Observable contenant la réponse de la requête.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
     </div>
@@ -359,7 +878,7 @@ telles que l&#39;obtention de la liste des entreprises et la recherche d&#39;ent
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { HttpClient } from &#x27;@angular/common/http&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
-import { environment } from &#x27;../../../environments/environment&#x27;; // Assurez-vous que le chemin est correct
+import { environment } from &#x27;../../../environments/environment&#x27;;
 
 /**
  * Service pour la gestion des entreprises.
@@ -385,7 +904,17 @@ export class CompanyService {
    * @returns Un Observable contenant un tableau d&#x27;entreprises.
    */
   getCompanies(): Observable&lt;any[]&gt; {
-    return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/entreprises&#x60;);
+    return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/companies&#x60;);
+  }
+
+  /**
+   * récupère tous les noms des entreprises.
+   * 
+   * Envoie une requête GET pour obtenir une liste de tous les noms d&#x27;entreprises.
+   * @returns Un Observable contenant un tableau de noms d&#x27;entreprises.
+   */
+  getCompaniesNames(): Observable&lt;any[]&gt; {
+    return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/companiesNames&#x60;);
   }
 
   /**
@@ -396,7 +925,72 @@ export class CompanyService {
    * @returns Un Observable contenant un tableau d&#x27;entreprises filtrées.
    */
   searchCompanies(query: string): Observable&lt;any[]&gt; {
-    return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/entreprises/search&#x60;, { params: { q: query } });
+    return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/company/search&#x60;, { params: { q: query } });
+  }
+
+  /**
+   * Récupère une entreprise par son identifiant.
+   *
+   * Envoie une requête GET pour obtenir une entreprise par son identifiant.
+   * @param id L&#x27;identifiant de l&#x27;entreprise.
+   * @returns Un Observable contenant l&#x27;entreprise.
+   */
+  getCompanyById(id: string): Observable&lt;any&gt; {
+    return this.http.get&lt;any&gt;(&#x60;${environment.apiUrl}/api/auth/company/${id}&#x60;);
+  }
+
+  /**
+   * Met à jour une entreprise.
+   *
+   * Envoie une requête PUT pour mettre à jour une entreprise.
+   * @param id L&#x27;identifiant de l&#x27;entreprise.
+   * @param companyData Les données de l&#x27;entreprise à mettre à jour.
+   * @returns Un Observable contenant la réponse de la requête.
+   */
+  updateCompany(id: string, companyData: any): Observable&lt;any&gt; {
+    return this.http.put(&#x60;${environment.apiUrl}/api/auth/company/${id}&#x60;, companyData);
+  }
+  
+  /**
+   * Crée une entreprise.
+   *
+   * Envoie une requête POST pour créer une nouvelle entreprise.
+   * @param companyData Les données de la nouvelle entreprise.
+   * @returns Un Observable contenant la réponse de la requête.
+   */
+  createCompany(companyData: any): Observable&lt;any&gt; {
+    return this.http.post(&#x60;${environment.apiUrl}/api/auth/company&#x60;, companyData);
+  }
+
+  /**
+   * Récupère la liste des abbreviations des entreprises.
+   * 
+   * Envoie une requête GET pour obtenir une liste de toutes les abréviations d&#x27;entreprises.
+   * @returns Un Observable contenant un tableau d&#x27;abréviations d&#x27;entreprises.
+   */
+  getCompaniesAbbreviations(): Observable&lt;any[]&gt; {
+    return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/auth/companiesAbbreviations&#x60;);
+  }
+
+  /**
+   * Utilise la route backend de scraping des entreprises pour récupérer les données des entreprises.
+   * la route backend du scraping est: ${environment.apiUrl}/api/scrape/enriched-company/:companyName/:postalCode
+   * 
+   * @param companyName Le nom de l&#x27;entreprise à enrichir.
+   * @param postalCode Le code postal de l&#x27;entreprise à enrichir.
+   */
+  scrapeCompanyData(companyName: string, postalCode: string): Observable&lt;any&gt; {
+    return this.http.get&lt;any&gt;(&#x60;${environment.apiUrl}/api/scrape/enriched-company/${companyName}/${postalCode}&#x60;);
+  }
+
+  /**
+   * Scraping de la liste des entreprises sur l&#x27;endpoint ${environment.apiUrl}/api/scrape/company-list/:companyName
+   * 
+   * @param companyName Le nom de l&#x27;entreprise à rechercher.
+   * @returns Un Observable contenant la liste des entreprises trouvées.
+   */
+  scrapeCompanyList(companyName: string): Observable&lt;any[]&gt; {
+    return this.http.get&lt;any[]&gt;(&#x60;${environment.apiUrl}/api/scrape/company-list/${companyName}&#x60;);
   }
 }
 </code></pre>
