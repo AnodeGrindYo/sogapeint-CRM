@@ -20,7 +20,7 @@ import { OrderUpdateComponent } from './order-update/order-update.component';
 import { OrderUpdateCocontractorComponent } from './order-update-cocontractor/order-update-cocontractor.component';
 import { RoleGuard } from '../core/guards/role.guard';
 import { AuthGuard } from '../core/guards/auth.guard';
-
+import { EndlessAscensionComponent } from './endless-ascension/endless-ascension.component';
 
 
 const routes: Routes = [
@@ -43,7 +43,8 @@ const routes: Routes = [
     { path: 'order-update-cocontractor/:orderId', component: OrderUpdateCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'cocontractor'] } },
     { path: 'order-detail-customer/:orderId', component: OrderDetailCustomerComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'customer', 'supermanager', 'comanager'] } },
     // route pour la landing page
-    { path: '', component: LandingPageComponent}
+    { path: '', component: LandingPageComponent},
+    { path: 'endless-ascension', component: EndlessAscensionComponent, canActivate: [AuthGuard] }
     // { path: '', }
 ];
 

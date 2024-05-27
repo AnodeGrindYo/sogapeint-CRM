@@ -34,10 +34,10 @@
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="user-info-bar" *ngIf="currentUser">
-            <a routerLink="" class="logo">
+            <a routerLink="" class="logo" (click)="onLogoClick()">
                 <!-- <img id="logo" src="assets/images/sogapeint-logo.png" alt="logo"> -->
                 <div class="logo-container">
-                    <img src="assets/images/sogapeint-logo.png" alt="Logo" class="logo">
+                    <img src="assets/images/sogapeint-logo-white-bckgrnd.png" alt="Logo" class="logo">
                 </div>
                 
             </a>

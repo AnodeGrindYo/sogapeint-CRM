@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class UserInfoBarComponent implements OnInit {
   currentUser: User;
   randomTooltip: string;
+  clickCount = 0;
+  clickThreshold = 3; // Number of clicks needed to navigate
 
   tooltips = [
     "Un grand pouvoir implique de grandes responsabilités",
@@ -59,8 +61,8 @@ export class UserInfoBarComponent implements OnInit {
   }
 
   getRandomTooltip(): string {
-      const randomIndex = Math.floor(Math.random() * this.tooltips.length);
-      return this.tooltips[randomIndex];
+    const randomIndex = Math.floor(Math.random() * this.tooltips.length);
+    return this.tooltips[randomIndex];
   }
 
   translateRole(role: string): string {
@@ -73,5 +75,13 @@ export class UserInfoBarComponent implements OnInit {
       'supermanager': 'chef régisseur'
     };
     return roleTranslationMap[role] || role;
+  }
+
+  onLogoClick() {
+    this.clickCount++;
+    if (this.clickCount >= this.clickThreshold) {
+      this.router.navigate(['/endless-ascension']);
+      this.clickCount = 0; // Reset the counter after navigation
+    }
   }
 }

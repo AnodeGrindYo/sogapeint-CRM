@@ -9,6 +9,9 @@ import { environment } from './environments/environment';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
+// hammerjs
+import 'hammerjs';
+
 registerLocaleData(localeFr);
 
 

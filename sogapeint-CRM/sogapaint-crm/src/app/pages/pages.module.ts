@@ -56,7 +56,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
 
-
+import { EndlessAscensionComponent } from './endless-ascension/endless-ascension.component';
 
 
 @NgModule({
@@ -80,6 +80,7 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
     OrderUpdateComponent,
     OrderUpdateCocontractorComponent,
     FileSizePipe,
+    EndlessAscensionComponent
     // InvoicesManagementComponent,
     // DashboardComponent
     // LandingPageComponent
