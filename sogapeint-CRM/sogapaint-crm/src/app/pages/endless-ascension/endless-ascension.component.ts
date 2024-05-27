@@ -35,6 +35,7 @@ export class EndlessAscensionComponent implements OnInit, AfterViewInit {
   private glow = 0;
   private glowDirection = 1;
   private hammer: HammerManager;
+  isGameVisible: boolean = false;
 
   constructor() {}
 
@@ -59,6 +60,7 @@ export class EndlessAscensionComponent implements OnInit, AfterViewInit {
   }
 
   startGame(): void {
+    this.isGameVisible = true;
     if (this.canvas.requestFullscreen) {
       this.canvas.requestFullscreen();
     } 
@@ -69,7 +71,7 @@ export class EndlessAscensionComponent implements OnInit, AfterViewInit {
     // } else if (this.canvas.msRequestFullscreen) {
     //   this.canvas.requestFullscreen();
     // }
-
+    // this.isGameVisible = true;
     this.resetGame();
     this.gameRunning = true;
     this.animate();

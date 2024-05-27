@@ -12,7 +12,7 @@ export class UserInfoBarComponent implements OnInit {
   currentUser: User;
   randomTooltip: string;
   clickCount = 0;
-  clickThreshold = 3; // Number of clicks needed to navigate
+  clickThreshold = 10; // Number of clicks needed to navigate
 
   tooltips = [
     "Un grand pouvoir implique de grandes responsabilités",
