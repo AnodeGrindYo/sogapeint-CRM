@@ -536,8 +536,8 @@ exports.resetPasswordFromAdmin = async (req, res) => {
   // Fonction pour obtenir un contrat par son id
   exports.getContractById = async (req, res) => {
     try {
-      // // console.log('Fetching contract by id');
-      // // console.log('Request :', req);
+      console.log('Fetching contract by id');
+      console.log('Request :', req);
       const { contractId } = req.params;
       // // console.log('Contract id:', contractId);
       const contract = await ContractModel.findById(contractId);

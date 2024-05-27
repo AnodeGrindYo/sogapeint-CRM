@@ -30,7 +30,15 @@ export class ManageCompaniesComponent implements OnInit {
         { name: 'contractsCompleted', displayName: 'Terminés', class: 'contrat termine' },
         { name: 'contractsUpcoming', displayName: 'À Venir', class: 'contrat avenir' }
     ];
-    tags: string[] = ['En cours', 'Non attribué', 'Réalisé', 'Facturé', 'Anomalie', 'Annulé', 'Incident'];
+    tags: string[] = [
+        'En cours', 
+        // 'Non attribué', 
+        'Réalisé', 
+        'Facturé', 
+        'Anomalie', 
+        'Annulé', 
+        'Incident'
+    ];
     availableTags: string[] = [];
     activeTags: string[] = [];
     
@@ -392,15 +400,18 @@ export class ManageCompaniesComponent implements OnInit {
         if (tag === 'En cours') {
             return company.contractsAsCustomer.some(contract => this.getContractStatus(contract) === 'in_progress') ||
             company.contractsAsContact.some(contract => this.getContractStatus(contract) === 'in_progress') ||
-            company.contractsAsExternalContributor.some(contract => this.getContractStatus(contract) === 'in_progress');
+            company.contractsAsExternalContributor.some(contract => this.getContractStatus(contract) === 'in_progress') ||
+            company.contractsAsCustomer.some(contract => contract.status === null) ||
+            company.contractsAsContact.some(contract => contract.status === null) ||
+            company.contractsAsExternalContributor.some(contract => contract.status === null); // les contrats non-attribués sont maintenant des contrats "en cours"
         }
         
         // If tag is 'Non attribué', check for contracts without status
-        if (tag === 'Non attribué') {
-            return company.contractsAsCustomer.some(contract => contract.status === null) ||
-            company.contractsAsContact.some(contract => contract.status === null) ||
-            company.contractsAsExternalContributor.some(contract => contract.status === null);
-        }
+        // if (tag === 'Non attribué') {
+        //     return company.contractsAsCustomer.some(contract => contract.status === null) ||
+        //     company.contractsAsContact.some(contract => contract.status === null) ||
+        //     company.contractsAsExternalContributor.some(contract => contract.status === null);
+        // }
         
         return false; // If none of the above conditions are met
     }
@@ -412,8 +423,8 @@ export class ManageCompaniesComponent implements OnInit {
      */
     mapTagToStatus(tag: string): string | null {
         const tagStatusMapping = {
-            'En cours': 'in_progress',
-            'Non attribué': null,
+            'En cours': 'in_progress' || null,
+            // 'Non attribué': null,
             'Réalisé': 'achieve',
             'Facturé': 'invoiced',
             'Anomalie': 'anomaly',

@@ -1,6 +1,3 @@
-<!-- <pre>{{ this.company|json }}</pre> -->
-
-
 <div class="container-fluid">
     <app-pagetitle title="Détails de l'Entreprise" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
     <div class="container mt-4">
@@ -11,7 +8,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">{{ company?.normalized_name }}</h5>
-                <div class="row"  *ngIf="isAdminOrSuperAdmin()">
+                <div class="row" *ngIf="isAdminOrSuperAdmin()">
                     <div class="text-end">
                         <button class="btn btn-primary ms-2" (click)="editCompany()">Editer</button>
                     </div>
@@ -19,13 +16,10 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <!-- Industries -->
                     <div class="col-md-6">
                         <h6><i class="fas fa-industry"></i> Industries</h6>
                         <p>{{ company?.industry?.join(', ') || 'Non renseigné' }}</p>
                     </div>
-                    
-                    <!-- Sites Web -->
                     <div class="col-md-6">
                         <h6><i class="fas fa-globe"></i> Sites Web</h6>
                         <p *ngIf="!company?.websites?.length">Non renseigné</p>
@@ -36,7 +30,6 @@
                 </div>
                 
                 <div class="row">
-                    <!-- Téléphones -->
                     <div class="col-md-6">
                         <h6><i class="fas fa-phone"></i> Téléphones</h6>
                         <p *ngIf="!company?.phone?.length">Non renseigné</p>
@@ -44,8 +37,6 @@
                             <li *ngFor="let phone of company?.phone">{{ phone }}</li>
                         </ul>
                     </div>
-                    
-                    <!-- Emails -->
                     <div class="col-md-6">
                         <h6><i class="fas fa-envelope"></i> Emails</h6>
                         <p *ngIf="!company?.email?.length">Non renseigné</p>
@@ -56,12 +47,10 @@
                 </div>
                 
                 <div class="row">
-                    <!-- Adresse -->
                     <div class="col-md-6">
                         <h6><i class="fas fa-map-marker-alt"></i> Adresse</h6>
                         <p>{{ company?.address || 'Non renseigné' }}</p>
                     </div>
-                    <!-- Documents -->
                     <div class="col-md-6">
                         <h6><i class="fas fa-file-alt"></i> Documents</h6>
                         <p *ngIf="!company?.documents?.length">Non renseigné</p>
@@ -69,16 +58,6 @@
                             <li *ngFor="let document of company?.documents">{{ document }}</li>
                         </ul>
                     </div>
-                    
-                    <!-- Champs supplémentaires -->
-                    <!-- <div class="col-md-6" *ngIf="company?.additionalFields?.length">
-                        <h6><i class="fas fa-plus-square"></i> Champs supplémentaires</h6>
-                        <ul>
-                            <li *ngFor="let field of company?.additionalFields">{{ field.key }}: {{ field.value }}</li>
-                        </ul>
-                    </div> -->
-                    
-                    
                 </div>
             </div>
         </div>
@@ -87,12 +66,6 @@
             <div class="col-md-6" *ngIf="company?.additionalFields?.length">
                 <h6><i class="fas fa-plus-square"></i> Champs supplémentaires</h6>
                 <table class="table table-striped">
-                    <!-- <thead>
-                        <tr>
-                            <th>Clé</th>
-                            <th>Valeur</th>
-                        </tr>
-                    </thead> -->
                     <tbody>
                         <tr *ngFor="let field of company?.additionalFields">
                             <td><b>{{ field.key }}</b></td>
@@ -103,13 +76,13 @@
             </div>
         </div>
         
-        
-        <!-- Liste des employés avec tbody scrollable -->
         <br/>
+        
         <div class="card">
             <div *ngIf="company?.employees?.length">
                 <div class="card-header">
                     <h6>Liste des employés</h6>
+                    <input type="text" class="form-control" placeholder="Rechercher un employé..." [(ngModel)]="employeeFilter" (input)="filterEmployees()" />
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -123,43 +96,36 @@
                                     <th>Rôle</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr *ngFor="let employee of filteredEmployees" (click)="selectUser(employee)" class="hand-pointer">
+                                    <td>{{ employee.firstName }}</td>
+                                    <td>{{ employee.lastName }}</td>
+                                    <td>
+                                        <a href="mailto:{{ employee.email }}">
+                                            {{ employee.email }}
+                                        </a>
+                                    </td>
+                                    <td>{{ employee.phone }}</td>
+                                    <td>
+                                        <small class="role-badge" [ngClass]="getRoleClass(employee?.role)">
+                                            {{ translateRole(employee.role) }}
+                                        </small>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <div class="scrollable-tbody">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr *ngFor="let employee of company?.employees" (click)="selectUser(employee)" class="hand-pointer">
-                                        <td>{{ employee.firstName }}</td>
-                                        <td>{{ employee.lastName }}</td>
-                                        <td>
-                                            <a href="mailto:{{ employee.email }}">
-                                                {{ employee.email }}
-                                            </a>
-                                        </td>
-                                        <td>{{ employee.phone }}</td>
-                                        <td>
-                                            <small class="role-badge" [ngClass]="getRoleClass(employee?.role)">
-                                                {{ translateRole(employee.role) }}
-                                            </small>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        
-        
-        
-        <!-- Contrats en tant que client avec tbody scrollable -->
         <br/>
+        
         <div class="card">
             <div *ngIf="company?.contractsAsCustomer?.length">
                 <div class="card-header">
                     <h6>Contrats en tant que client</h6>
-                    
+                    <input type="text" class="form-control" placeholder="Rechercher un contrat..." [(ngModel)]="contractCustomerFilter" (input)="filterContracts('contractsAsCustomer')" />
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -174,34 +140,29 @@
                                     <th>Montant HT</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr *ngFor="let contract of filteredContractsAsCustomer">
+                                    <td>{{ contract?.internal_number }}</td>
+                                    <td>{{ contract?.benefit }}</td>
+                                    <td>{{ contract?.address }}</td>
+                                    <td>{{ contract?.quote_number }}</td>
+                                    <td>{{ contract?.start_date_customer }}</td>
+                                    <td>{{ contract?.amount_ht | currency:'EUR' }}</td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <div class="scrollable-tbody">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr *ngFor="let contract of company?.contractsAsCustomer">
-                                        <td>{{ contract.internal_number }}</td>
-                                        <td>{{ contract.benefit }}</td>
-                                        <td>{{ contract.address }}</td>
-                                        <td>{{ contract.quote_number }}</td>
-                                        <td>{{ contract.start_date_customer | date }}</td>
-                                        <td>{{ contract.amount_ht | currency:'EUR' }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        
-        
-        <!-- Contrats en tant que contact avec tbody scrollable -->
         <br/>
+        
         <div class="card">
             <div *ngIf="company?.contractsAsContact?.length">
                 <div class="card-header">
                     <h6>Contrats en tant que contact</h6>
+                    <input type="text" class="form-control" placeholder="Rechercher un contrat..." [(ngModel)]="contractContactFilter" (input)="filterContracts('contractsAsContact')" />
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -216,33 +177,29 @@
                                     <th>Montant HT</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr *ngFor="let contract of filteredContractsAsContact">
+                                    <td>{{ contract?.internal_number }}</td>
+                                    <td>{{ contract?.benefit }}</td>
+                                    <td>{{ contract?.address }}</td>
+                                    <td>{{ contract?.quote_number }}</td>
+                                    <td>{{ contract?.start_date_works }}</td>
+                                    <td>{{ contract?.amount_ht | currency:'EUR' }}</td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <div class="scrollable-tbody">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr *ngFor="let contract of company?.contractsAsContact">
-                                        <td>{{ contract.internal_number }}</td>
-                                        <td>{{ contract.benefit }}</td>
-                                        <td>{{ contract.address }}</td>
-                                        <td>{{ contract.quote_number }}</td>
-                                        <td>{{ contract.start_date_works | date }}</td>
-                                        <td>{{ contract.amount_ht | currency:'EUR' }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        
-        <!-- Contrats en tant que contributeur externe avec tbody scrollable -->
         <br/>
+        
         <div class="card">
             <div *ngIf="company?.contractsAsExternalContributor?.length">
                 <div class="card-header">
                     <h6>Contrats en tant que contributeur externe</h6>
+                    <input type="text" class="form-control" placeholder="Rechercher un contrat..." [(ngModel)]="contractExternalContributorFilter" (input)="filterContracts('contractsAsExternalContributor')" />
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -257,30 +214,20 @@
                                     <th>Montant HT</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr *ngFor="let contract of filteredContractsAsExternalContributor">
+                                    <td>{{ contract?.internal_number }}</td>
+                                    <td>{{ contract?.benefit }}</td>
+                                    <td>{{ contract?.address }}</td>
+                                    <td>{{ contract?.quote_number }}</td>
+                                    <td>{{ contract?.start_date_works }}</td>
+                                    <td>{{ contract?.amount_ht | currency:'EUR' }}</td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <div class="scrollable-tbody">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr *ngFor="let contract of company?.contractsAsExternalContributor">
-                                        <td>{{ contract.internal_number }}</td>
-                                        <td>{{ contract.benefit }}</td>
-                                        <td>{{ contract.address }}</td>
-                                        <td>{{ contract.quote_number }}</td>
-                                        <td>{{ contract.start_date_works | date }}</td>
-                                        <td>{{ contract.amount_ht | currency:'EUR' }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-    <!-- <div class="card-footer text-end">
-        <button class="btn btn-outline-secondary" (click)="editCompany()">Modifier</button>
-    </div> -->
 </div>
-
-
