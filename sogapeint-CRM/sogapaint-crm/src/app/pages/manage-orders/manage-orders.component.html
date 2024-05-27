@@ -92,12 +92,20 @@
                               <i class="fas fa-sort-down" *ngIf="sortColumn === 'benefit' && sortDirection === 'desc'"></i>
                             </div>
                           </th>
-                          <th scope="col">
+                          <!-- <th scope="col">
                             <div class="cell-centered">Date commande</div>
                             <div class="sort-icons float-end" (click)="onSort('date_cde')">
                               <i class="fas fa-sort" *ngIf="sortColumn !== 'date_cde'"></i>
                               <i class="fas fa-sort-up" *ngIf="sortColumn === 'date_cde' && sortDirection === 'asc'"></i>
                               <i class="fas fa-sort-down" *ngIf="sortColumn === 'date_cde' && sortDirection === 'desc'"></i>
+                            </div>
+                          </th> -->
+                          <th scope="col">
+                            <div class="cell-centered">Montant</div>
+                            <div class="sort-icons float-end" (click)="onSort('amount_ht')">
+                              <i class="fas fa-sort" *ngIf="sortColumn !== 'amount_ht'"></i>
+                              <i class="fas fa-sort-up" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'asc'"></i>
+                              <i class="fas fa-sort-down" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'desc'"></i>
                             </div>
                           </th>
                           <th scope="col">
@@ -186,14 +194,21 @@
                                 </div>
                             </td>
                             <td class="cell-centered">
-                                <div [ngbTooltip]="order?.date_cde">
+                                <!-- <div [ngbTooltip]="order?.date_cde">
                                     {{ order?.date_cde | date: 'shortDate' }}
-                                </div>
+                                </div> -->
+                                <div [ngbTooltip]="order?.amount_ht">
+                                  {{ order?.amount_ht }}
+                              </div>
                             </td>
                             <td class="cell-centered">
                                 <div [ngbTooltip]="order?.external_contributor?.firstname+' '+order?.external_contributor?.lastname">
                                     {{ order?.external_contributor?.firstname }}<br>
                                     {{ order?.external_contributor?.lastname }}
+                                    <!-- ligne de séparation -->
+                                    <div class="separator"></div>
+                                    {{ order?.subcontractor?.firstname }}<br>
+                                    {{ order?.subcontractor?.lastname }}
                                 </div>
                             </td>
                             <td class="cell-centered">

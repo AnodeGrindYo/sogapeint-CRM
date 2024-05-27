@@ -308,7 +308,7 @@ export class OrderFormComponent implements OnInit {
           });
 
           // initialise la date de facturation du contributeur externe (deux jours après dateCde)
-          this.initializeExternalContributorInvoiceDate();
+          // this.initializeExternalContributorInvoiceDate();
         }
 
         // initialise la date de facturation du contributeur externe (deux jours après dateCde)
