@@ -13,7 +13,7 @@ import { UserProfileService } from '../../../core/services/user.service';
   styleUrls: ['./invoices-management.component.scss']
 })
 export class InvoicesManagementComponent implements OnInit {
-  files: Invoice[] = [];
+  files: any[] = [];
   currentUser: any;
 
   constructor(
@@ -44,9 +44,9 @@ export class InvoicesManagementComponent implements OnInit {
     });
   }
 
-  onFileDownload(file: Invoice) {
+  onFileDownload(file: any) {
     console.log("Téléchargement du fichier", file);
-    this.invoicesService.getFile(file.path).subscribe({
+    this.invoicesService.getFile(file._id, file.contractId).subscribe({
       next: (data) => {
         console.log("Fichier téléchargé", data);
         const url = window.URL.createObjectURL(data);
@@ -59,5 +59,30 @@ export class InvoicesManagementComponent implements OnInit {
   removeFile(file: any) {
     console.log("Suppression du fichier", file);
     // Appeler le service pour supprimer le fichier
+  }
+
+  onFilePrint(file: any) {
+    console.log("Impression du fichier", file);
+    this.invoicesService.getFile(file._id, file.contractId).subscribe({
+      next: (data) => {
+        console.log("Fichier téléchargé pour impression", data);
+        const url = window.URL.createObjectURL(data);
+        const iframe = document.createElement('iframe');
+        iframe.style.position = 'absolute';
+        iframe.style.width = '0';
+        iframe.style.height = '0';
+        iframe.src = url;
+        document.body.appendChild(iframe);
+        iframe.contentWindow?.print();
+        document.body.removeChild(iframe);
+      },
+      error: (error) => console.error("Erreur lors de l'impression du fichier", error)
+    });
+  }
+
+  onFileCheckbox(
+    event: any,
+    file: any){
+    console.log("Checkbox checked", event, file);
   }
 }

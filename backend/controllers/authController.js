@@ -1865,6 +1865,8 @@ exports.addIncident = async (req, res) => {
                         path: file.path, // Chemin incluant le dossier spécifié si applicable
                         name: 'invoice_'+file.originalname,
                         size: file.size,
+                        contractId: contractId,
+                        processed: false
                     }));
                   } else {
                     filesPaths = req.files.map((file) => ({
@@ -1904,10 +1906,12 @@ exports.addIncident = async (req, res) => {
                       const { contractId, fileId } = req.query;
                       
                       if (!mongoose.Types.ObjectId.isValid(contractId)) {
+                        console.log("ID de contrat invalide : ", contractId);
                         return res.status(400).send('ID de contrat invalide.');
                       }
                       
                       if (!mongoose.Types.ObjectId.isValid(fileId)) {
+                        console.log("ID de fichier invalide : ", fileId);
                         return res.status(400).send('ID de fichier invalide.');
                       }
                       
