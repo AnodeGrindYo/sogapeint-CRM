@@ -111,7 +111,7 @@ table > tbody > tr > td {
 // }
 
 table td {
-  font-size: calc(0.30vw + 0.75vmin); // ajuster la formule selon  besoins
+  font-size: calc(0.28vw + 0.73vmin); // ajuster la formule selon  besoins
 }
 
 table th {
@@ -119,7 +119,7 @@ table th {
 }
 
 .adapt-fontsize {
-  font-size: calc(0.35vw + 0.75vmin); // ajuster la formule selon vos besoins
+  font-size: calc(0.33vw + 0.73vmin); // ajuster la formule selon vos besoins
 
 }
 
@@ -148,4 +148,8 @@ table th {
 .separator {
   border-top: 1px solid white;
   margin: 1rem 0;
+}
+
+.smaller-fontsize {
+  font-size: calc(0.26vw + 0.66vmin) !important;
 }

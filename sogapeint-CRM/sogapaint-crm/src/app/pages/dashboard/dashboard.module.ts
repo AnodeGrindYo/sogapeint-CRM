@@ -21,6 +21,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { InvoicesManagementComponent } from './invoices-management/invoices-management.component';
 // Import NgbTooltipModule
 // import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { InvoicesManagementComponent } from './invoices-management/invoices-mana
     InvoicesManagementComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
     UiModule,
     ReactiveFormsModule,

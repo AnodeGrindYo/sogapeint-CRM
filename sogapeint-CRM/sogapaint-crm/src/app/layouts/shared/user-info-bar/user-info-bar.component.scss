@@ -1,166 +1,91 @@
-// .user-info-bar {
-//     width: 100%;
-//     // background-color: var(--bs-primary);
-//     background-color: rgb(169, 169, 169);
-//     color: var(--bs-white);
-//     padding: 20px;
-//     box-shadow: var(--bs-box-shadow);
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     z-index: 1000;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     margin-bottom: 0 !important;
-//     // margin: 0 auto;
-    
-//     .user-details {
-//         flex: 1; // Permet de prendre l'espace disponible et pousse les autres éléments à droite
-//         display: flex;
-//         // align-items: center;
-//         align-items: left;
-//         // margin-left: 0px !important;
+#page-topbar {
+    .navbar-header {
+        padding: 0; // Assurez-vous qu'il n'y a pas de padding
 
-//         span {
-//             // margin-right: 10px;
-//             // color: var(--bs-light);
-//             color: #000;
-//             // color: #0A7C24;
-//         }
-//     }
-    
-//     .role-badge {
-//         padding: 5px 10px;
-//         border-radius: 15px;
-//         color: var(--bs-white);
-//         font-weight: bold;
-//         margin-right: 5px;
-        
-//         &.badge-superadmin { background-color: #e74c3c; } // Rouge pour superAdmin
-//         &.badge-cocontractor { background-color: #3498db; } // Bleu pour cocontractor
-//         &.badge-subcontractor { background-color: #2ecc71; } // Vert pour subcontractor
-//         &.badge-customer { background-color: #f1c40f; } // Jaune pour customer
-//         &.badge-comanager { background-color: #9b59b6; } // Violet pour comanager
-//         &.badge-supermanager { background-color: #95a5a6; } // Gris pour supermanager
-//     }
+        .user-info-bar {
+            width: 100%;
+            background-color: #4b9b11;
+            color: var(--bs-white);
+            padding: 0; // Assurez-vous qu'il n'y a pas de padding
+            box-shadow: var(--bs-box-shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px; // Fixer la hauteur pour éviter la bande blanche
+            flex-wrap: nowrap; // Changer de wrap à nowrap
 
-//     .logout-button {
-//         background: none;
-//         border: none;
-//         color: var(--bs-white);
-//         cursor: pointer;
+            .logo {
+                display: flex;
+                align-items: center;
+                // margin-right: 20px;
+                // margin-left: 20px;
+                margin: auto;
 
-//         &:hover {
-//             color: var(--bs-light);
-//         }
+                img {
+                    width: auto;
+                    height: 50px; 
+                    display: block;
+                }
+            }
 
-//         i {
-//             font-size: 1.5rem; // Taille de l'icône
-//         }
-//     }
+            .user-details {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                margin-right: 20px;
+                margin-left: 20px;
 
-//     #logo {
-//         margin-left: 40px;
-//         width: 33%;
-//         height: 33%;
-//     }
+                span {
+                    margin-right: 10px;
+                    // color: #000;
+                    color: var(--bs-white);
+                }
+            }
 
-//     // background-color hue rotation effect
-//     animation: hue 20s infinite;
-//     @keyframes hue {
-//         // 0% { filter: hue-rotate(0deg); }
-//         // 100% { filter: hue-rotate(360deg); }
-//     }
+            .role-badge {
+                padding: 5px 10px;
+                border-radius: 15px;
+                color: var(--bs-white);
+                font-weight: bold;
+                margin-right: 10px;
 
-    
-// }
+                &.badge-superadmin { background-color: #e74c3c; }
+                &.badge-cocontractor { background-color: #3498db; }
+                &.badge-subcontractor { background-color: #2ecc71; }
+                &.badge-customer { background-color: #f1c40f; }
+                &.badge-comanager { background-color: #9b59b6; }
+                &.badge-supermanager { background-color: #95a5a6; }
+            }
 
+            .logout-button {
+                background: none;
+                border: none;
+                color: var(--bs-white);
+                cursor: pointer;
+                margin-right: 8px;
 
-.user-info-bar {
-    width: 100%;
-    background-color: #4b9b11;
-    // background-color: #0a7c24;
-    color: var(--bs-white);
-    padding: 10px 20px;
-    box-shadow: var(--bs-box-shadow);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+                &:hover {
+                    color: var(--bs-light);
+                }
 
-    .logo {
-        display: flex;
-        align-items: center;
-        margin-right: 20px;
-        margin-left: 10px;
+                i {
+                    font-size: 1.5rem;
+                }
+            }
 
-        img {
-            width: auto;
-            height: 50px; // Adjust the height as necessary
-            display: block;
-        }
-    }
-
-    .user-details {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        margin-right: 20px;
-        margin-left: 12px;
-
-        span {
-            margin-right: 10px;
-            color: #000;
-        }
-    }
-
-    .role-badge {
-        padding: 5px 10px;
-        border-radius: 15px;
-        color: var(--bs-white);
-        font-weight: bold;
-        margin-right: 10px;
-        
-        &.badge-superadmin { background-color: #e74c3c; }
-        &.badge-cocontractor { background-color: #3498db; }
-        &.badge-subcontractor { background-color: #2ecc71; }
-        &.badge-customer { background-color: #f1c40f; }
-        &.badge-comanager { background-color: #9b59b6; }
-        &.badge-supermanager { background-color: #95a5a6; }
-    }
-
-    .logout-button {
-        background: none;
-        border: none;
-        color: var(--bs-white);
-        cursor: pointer;
-
-        &:hover {
-            color: var(--bs-light);
-        }
-
-        i {
-            font-size: 1.5rem;
+            .white-rectangle {
+                background-color: #f1f5f7;
+                height: 100%; // Assurer que le rectangle blanc occupe toute la hauteur de la barre
+                display: flex;
+                align-items: center; // Centrer le contenu verticalement
+                width: 240px;
+                margin: 0; // Enlever toutes les marges
+                padding: 0; // Enlever tous les padding
+            }
         }
     }
 }
-
-
-
-// .logo-container {
-//     display: inline-block;
-//     position: relative;
-//     background-color: white; /* White background */
-//     padding: 5px; /* Adjust padding as needed */
-//     /* Adjust dimensions as needed */
-// }
-
-// .logo {
-//     display: block;
-// }
-

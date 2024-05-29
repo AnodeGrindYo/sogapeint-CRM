@@ -100,14 +100,14 @@
                               <i class="fas fa-sort-down" *ngIf="sortColumn === 'date_cde' && sortDirection === 'desc'"></i>
                             </div>
                           </th> -->
-                          <th scope="col">
+                          <!-- <th scope="col">
                             <div class="cell-centered">Montant</div>
                             <div class="sort-icons float-end" (click)="onSort('amount_ht')">
                               <i class="fas fa-sort" *ngIf="sortColumn !== 'amount_ht'"></i>
                               <i class="fas fa-sort-up" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'asc'"></i>
                               <i class="fas fa-sort-down" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'desc'"></i>
                             </div>
-                          </th>
+                          </th> -->
                           <th scope="col">
                             <div class="cell-centered">Intervenant</div>
                             <div class="sort-icons float-end" (click)="onSort('external_contributor')">
@@ -149,6 +149,32 @@
                               <i class="fas fa-sort" *ngIf="sortColumn !== 'invoice_received'"></i>
                               <i class="fas fa-sort-up" *ngIf="sortColumn === 'invoice_received' && sortDirection === 'asc'"></i>
                               <i class="fas fa-sort-down" *ngIf="sortColumn === 'invoice_received' && sortDirection === 'desc'"></i>
+                            </div>
+                          </th>
+                          <!-- montant prestataire (external_contributor_amount)-->
+                          <th scope="col">
+                            <div class="cell-centered">Montant sous-traitant/co-traitant</div>
+                            <div class="sort-icons float-end" (click)="onSort('external_contributor_amount')">
+                              <i class="fas fa-sort" *ngIf="sortColumn !== 'external_contributor_amount'"></i>
+                              <i class="fas fa-sort-up" *ngIf="sortColumn === 'external_contributor_amount' && sortDirection === 'asc'"></i>
+                              <i class="fas fa-sort-down" *ngIf="sortColumn === 'external_contributor_amount' && sortDirection === 'desc'"></i>
+                            </div>
+                          </th>
+                          <!-- montant prestation (benefit_ht) -->
+                          <th scope="col">
+                            <div class="cell-centered">Montant prestation</div>
+                            <div class="sort-icons float-end" (click)="onSort('benefit_ht')">
+                              <i class="fas fa-sort" *ngIf="sortColumn !== 'benefit_ht'"></i>
+                              <i class="fas fa-sort-up" *ngIf="sortColumn === 'benefit_ht' && sortDirection === 'asc'"></i>
+                              <i class="fas fa-sort-down" *ngIf="sortColumn === 'benefit_ht' && sortDirection === 'desc'"></i>
+                            </div>
+                          </th>
+                          <th scope="col">
+                            <div class="cell-centered">Montant</div>
+                            <div class="sort-icons float-end" (click)="onSort('amount_ht')">
+                              <i class="fas fa-sort" *ngIf="sortColumn !== 'amount_ht'"></i>
+                              <i class="fas fa-sort-up" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'asc'"></i>
+                              <i class="fas fa-sort-down" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'desc'"></i>
                             </div>
                           </th>
                         </tr>
@@ -194,14 +220,6 @@
                                 </div>
                             </td>
                             <td class="cell-centered">
-                                <!-- <div [ngbTooltip]="order?.date_cde">
-                                    {{ order?.date_cde | date: 'shortDate' }}
-                                </div> -->
-                                <div [ngbTooltip]="order?.amount_ht">
-                                  {{ order?.amount_ht }}
-                              </div>
-                            </td>
-                            <td class="cell-centered">
                                 <div [ngbTooltip]="order?.external_contributor?.firstname+' '+order?.external_contributor?.lastname">
                                     {{ order?.external_contributor?.firstname }}<br>
                                     {{ order?.external_contributor?.lastname }}
@@ -217,7 +235,7 @@
                                 </div>
                             </td>
                             <td class="cell-centered">
-                                <div [ngbTooltip]="order?.end_date_customer">
+                                <div [ngbTooltip]="order?.end_date_customer" class="smaller-fontsize">
                                     {{ order?.end_date_customer | date: 'shortDate' }}
                                 </div>
                             </td>
@@ -255,6 +273,28 @@
                                 <ng-container *ngSwitchCase="false">Non</ng-container>
                                 <ng-container *ngSwitchDefault>Non attribué</ng-container>
                             </span>
+                        </td>
+                        <!-- external_contributor_amount -->
+                        <td class="cell-centered">
+                            <div [ngbTooltip]="order?.external_contributor_amount">
+                                {{ order?.external_contributor_amount }}€
+                            </div>
+                        </td>
+                        <!-- benefit_ht -->
+                        <td class="cell-centered">
+                            <div [ngbTooltip]="order?.benefit_ht">
+                                {{ order?.benefit_ht }}€
+                            </div>
+                        </td>
+                        <!-- amount_ht -->
+                        <td class="cell-centered">
+                          <!-- <div [ngbTooltip]="order?.date_cde">
+                              {{ order?.date_cde | date: 'shortDate' }}
+                          </div> -->
+                          <div [ngbTooltip]="order?.amount_ht">
+                            {{ order?.amount_ht }}€
+                        </div>
+                      </td>
                     </tr>
                 </tbody>
             </table>

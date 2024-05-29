@@ -1,96 +1,3 @@
-// .file-item {
-//     transition: transform 0.1s ease-in-out;
-// }
-
-// .file-item:hover {
-//     transform: scale(1.02);
-//     background-color: #f8f9fa; /* ou toute nuance claire pour la mise en évidence */
-// }
-
-// .file-description {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-// }
-
-// .file-name {
-//     font-weight: bold;
-//     font-size: small;
-//     margin-right: 8px; /* Ajuster l'espace entre l'icône et le nom du fichier */
-//     width: 1.6em;
-// }
-
-// .file-size {
-//     margin-left: auto; /* Pousse la taille du fichier pour l'aligner à la fin */
-//     white-space: nowrap; /* Empêche la taille du fichier de retourner à la ligne */
-//     font-size: smaller;
-//     // width: 1em;
-// }
-
-// .file-list {
-//     height: 100%; /* Ajuster au besoin */
-//     // max-height: 100%; /* Ajuster au besoin */
-//     overflow-y: auto;
-//     overflow-x: hidden;
-//   }
-
-// .btn-download {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     width: 30px; /* Ajustement de la largeur pour le bouton de téléchargement */
-//     height: 30px; /* Ajustement de la hauteur pour le bouton de téléchargement */
-//     border-radius: 20px; /* Forme circulaire ajustée */
-//     margin-left: 12px; /* Espacement à gauche conservé */
-//     margin-right: 5px;
-//     background-color: transparent;
-//     color: #17a2b8; /* Couleur Bootstrap pour l'information */
-//     border: 1px solid #17a2b8; /* Couleur de bordure Bootstrap pour l'information */
-// }
-
-// .btn-download:hover {
-//     background-color: #17a2b8; /* Couleur d'arrière-plan au survol */
-//     color: white; /* Couleur du texte au survol */
-//     border-color: transparent; /* Bordure transparente au survol */
-// }
-
-// .btn-download i {
-//     pointer-events: none; /* Empêche l'icône de bloquer l'événement de clic sur le bouton */
-// }
-
-// .btn-delete {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     width: 30px; /* Ajustement de la largeur pour le bouton de suppression */
-//     height: 30px;
-//     border-radius: 15px; /* Forme circulaire */
-//     margin-left: 12px;
-//     background-color: transparent;
-//     color: #dc3545; /* Couleur de danger Bootstrap */
-//     border: 1px solid #dc3545; /* Couleur de danger Bootstrap */
-// }
-
-// .btn-delete:hover {
-//     background-color: #dc3545;
-//     color: white;
-//     border-color: transparent;
-// }
-
-// .btn-delete i {
-//     pointer-events: none; /* Prevents the icon from blocking the click event on the button */
-// }
-
-// .card {
-//     margin-top: 12px; /* Espacement entre les cartes */
-//     height: 400px;
-//     width:18em;
-// }
-
-
-
-
-
 .file-item {
     transition: transform 0.1s ease-in-out;
 }
@@ -124,7 +31,7 @@
     overflow-x: hidden;
 }
 
-.btn-download {
+.btn-download, .btn-print {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,8 +44,16 @@
     border: 1px solid #17a2b8;
 }
 
-.btn-download:hover {
+.btn-download:hover, .btn-print:hover {
     background-color: #17a2b8;
     color: white;
     border-color: transparent;
+}
+
+// .card {
+//     width: 406px;
+// }
+
+input[type="checkbox"] {
+    margin-right: 10px;
 }

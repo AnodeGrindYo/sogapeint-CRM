@@ -26,6 +26,7 @@ export class KpiCardComponent implements OnInit, OnDestroy {
   kpi_value: number;
   kpi_evolution_percent: number;
   kpi_title: string;
+  kpi_subtitle: string;
   private ngUnsubscribe = new Subject<void>();
   
   
