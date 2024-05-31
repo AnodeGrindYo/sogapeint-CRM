@@ -1,30 +1,28 @@
 const mongoose = require('mongoose');
 
 const contractSchema = new mongoose.Schema({
-    // _id: mongoose.Schema.Types.ObjectId,
-    // file: [mongoose.Schema.Types.Mixed], // Assuming mixed types in the array
     file: [{ 
         path: String, 
         name: String, 
         size: String, 
         processed: Boolean, 
         contractId: { type: mongoose.Schema.Types.ObjectId, ref: 'Contract' }
-    }], // Un tableau d'objets contenant des informations de fichier
+    }], 
     trash: Boolean,
     date_cde: Date,
-    // customer: mongoose.Schema.Types.ObjectId,
+
     customer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     internal_number: String,
-    // contact: mongoose.Schema.Types.ObjectId,
+
     contact: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     benefit: String,
     status: String,
-    // external_contributor: mongoose.Schema.Types.ObjectId,
+
     external_contributor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    observation: [mongoose.Schema.Types.Mixed], // Assuming mixed types in the array
-    // observation: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Observation' }],
-    incident: [mongoose.Schema.Types.Mixed], // Assuming mixed types in the array
-    // incident: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Incident' }],
+    observation: [mongoose.Schema.Types.Mixed], 
+
+    incident: [mongoose.Schema.Types.Mixed], 
+
     dateUpd: Date,
     dateAdd: Date,
     __v: Number,
@@ -41,9 +39,9 @@ const contractSchema = new mongoose.Schema({
     execution_data_day: Number,
     execution_data_hour: Number,
     external_contributor_invoice_date: Date,
-    // internal_contributor: String,
+
     internal_contributor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    // subcontractor: String,
+
     subcontractor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     external_contributor_amount: Number,
     subcontractor_amount: Number,
@@ -60,7 +58,12 @@ const contractSchema = new mongoose.Schema({
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
             date: Date
         }
-    ] // tableau d'ObjectId d'Users avec horodatage
+    ] ,
+    invoiceStatus: {
+        type: String,
+        enum: ['received', 'processed', 'pending'],
+        default: 'pending'
+    }
 });
 
 module.exports = mongoose.model('Contract', contractSchema, 'orderforms');

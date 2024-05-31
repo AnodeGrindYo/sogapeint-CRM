@@ -1902,6 +1902,8 @@ exports.addIncident = async (req, res) => {
                   
                   // Fonction pour envoyer un fichier au client
                   exports.downloadFile = async (req, res) => {
+                    console.log('Tentative de téléchargement du fichier');
+                    console.log('Requête:', req.query);
                     try {
                       const { contractId, fileId } = req.query;
                       
@@ -1932,12 +1934,14 @@ exports.addIncident = async (req, res) => {
                           return res.status(404).send('Fichier non trouvé sur le serveur.');
                         }
                         // Envoi du fichier au client
+                        res.setHeader('Access-Control-Allow-Origin', '*');
                         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // HTTP 1.1.
                         res.setHeader('Pragma', 'no-cache'); // HTTP 1.0.
                         res.setHeader('cache', 'no-cache'); // Proxies.
                         res.setHeader('Expires', '0'); // Proxies.
                         
                         res.download(file.path, file.name, (downloadErr) => {
+                          console.log('Envoi du fichier au client');
                           if (downloadErr) {
                             console.error('Erreur lors de l\'envoi du fichier:', downloadErr);
                             // Si l'erreur est autre que l'annulation du téléchargement par l'utilisateur
@@ -1997,6 +2001,44 @@ exports.addIncident = async (req, res) => {
                         res.status(500).json({ error: error.message });
                       }
                     };
+
+  // Fonction pour mettre à jour les infos d'un fichier
+exports.updateFile = async (req, res) => {
+  try {
+    const { fileId, updateData } = req.body;
+    console.log('Mise à jour du fichier avec l\'ID:', fileId);
+    console.log('Données de mise à jour:', updateData);
+
+    // Vérification de la validité de l'ID du fichier
+    if (!mongoose.Types.ObjectId.isValid(fileId)) {
+      return res.status(400).send('ID de fichier invalide.');
+    }
+
+    // Construire l'objet de mise à jour
+    const updateFields = {};
+    for (const [key, value] of Object.entries(updateData)) {
+      updateFields[`file.$.${key}`] = value;
+    }
+
+    // Trouver et mettre à jour le fichier
+    const updatedContract = await ContractModel.findOneAndUpdate(
+      { 'file._id': fileId },
+      { $set: updateFields },
+      { new: true }
+    );
+
+    if (!updatedContract) {
+      return res.status(404).send('Fichier non trouvé.');
+    }
+
+    res.status(200).send({ message: 'Fichier mis à jour avec succès.', contract: updatedContract });
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour du fichier:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
                     
                     // Fonction pour avoir le nom d'une prestation par son _id
                     exports.getBenefitNameById = async (req, res) => {

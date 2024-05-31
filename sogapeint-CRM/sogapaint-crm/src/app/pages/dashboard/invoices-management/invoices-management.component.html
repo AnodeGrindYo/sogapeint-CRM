@@ -1,20 +1,55 @@
 <div class="card rounded-lg">
     <div class="card-header">Factures</div>
     <div class="card-body">
+      <div *ngIf="errorMessages.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          <li *ngFor="let errorMessage of errorMessages">{{ errorMessage }}</li>
+        </ul>
+        <button type="button" class="btn-close" aria-label="Close" (click)="clearErrorMessages()"></button>
+      </div>
+      <!-- Boutons de filtre pour basculer entre les catégories de factures -->
+      <!-- <div class="d-flex justify-content-between mb-3" role="group" aria-label="Filter invoices">
+        <button type="button" class="btn btn-outline-primary" [class.active]="filter === 'unprocessed'" (click)="setFilter('unprocessed')">Factures non traitées</button>
+        <button type="button" class="btn btn-outline-primary" [class.active]="filter === 'processed'" (click)="setFilter('processed')">Factures traitées</button>
+        <button type="button" class="btn btn-outline-primary" [class.active]="filter === 'all'" (click)="setFilter('all')">Toutes les factures</button>
+      </div> -->
+      <!-- Boutons de filtre pour basculer entre les catégories de factures -->
+      <div class="filter-buttons">
+        <button type="button" class="filter-button" [class.active]="filter === 'unprocessed'" (click)="setFilter('unprocessed')">Factures non traitées</button>
+        <button type="button" class="filter-button" [class.active]="filter === 'processed'" (click)="setFilter('processed')">Factures traitées</button>
+        <button type="button" class="filter-button" [class.active]="filter === 'all'" (click)="setFilter('all')">Toutes les factures</button>
+      </div>
+      <!-- Bouton de filtre pour basculer entre les catégories de factures -->
+    <!-- <div class="filter-toggle">
+      <button (click)="toggleFilter()">{{ filterText }}</button>
+    </div> -->
+    <!-- <div class="filter-toggle">
+      <div class="cube" (click)="toggleFilter()">
+        <div class="face unprocessed" [class.active]="filter === 'unprocessed'">Factures non traitées</div>
+        <div class="face processed" [class.active]="filter === 'processed'">Factures traitées</div>
+        <div class="face all" [class.active]="filter === 'all'">Toutes les factures</div>
+      </div>
+    </div> -->
         <div *ngIf="files && files.length > 0" class="mt-2">
             <div class="card">
                 <div class="card-header">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="selectAll" (change)="onSelectAll($event)">
+                    <label for="selectAll" class="form-check-label">Tout sélectionner</label>
+                </div>
                     Fichiers:
-                    <span class="align-right">{{ files.length }}</span>
+                    <span class="align-right">{{ filteredFiles.length }}</span>
+                    <br>
+                    <span class="align-right">Sélectionnés: {{ selectedFiles.length }}</span>
                 </div>
                 <div class="file-list">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item file-item" *ngFor="let file of files; let i = index">
+                        <li class="list-group-item file-item" *ngFor="let file of filteredFiles; let i = index">
                             <div class="file-description d-flex align-items-center">
                                 <!-- checkbox -->
-                                <input type="checkbox" class="form-check-input" [id]="'file-' + i" [name]="'file-' + i" [value]="file" (change)="onFileCheckbox($event, file)">
+                                <input type="checkbox" class="form-check-input" [id]="'file-' + i" [name]="'file-' + i" [(ngModel)]="file.selected" (change)="onFileCheckbox($event, file)">
                                 <i class="fas fa-file-alt me-2"></i>
-                                <span class="file-name flex-grow-1">{{ file.name }}</span>
+                                <span class="file-name flex-grow-1" (click)="openInvoiceDetailsModal(invoiceDetailsModal, file.contractId, file)">{{ file.name }}</span>
                                 <span class="file-size me-2">{{ file.size }}</span>
                                 <button type="button" class="btn btn-download ms-auto" (click)="onFileDownload(file)">
                                     <i class="fas fa-download"></i>
@@ -28,6 +63,331 @@
                 </div>
             </div>
         </div>
+      <div class="d-flex justify-content-between mt-3">
+        <button class="btn btn-primary" [disabled]="selectedFiles.length === 0" (click)="validateSelectedInvoices()">
+            <i class="fas fa-check-circle me-2"></i>
+            Valider {{ selectedFiles.length > 1 ? 'les factures' : 'la facture' }}
+        </button>
+        <button class="btn btn-secondary" (click)="printAllSelectedFiles()">
+            <i class="fas fa-print me-2"></i>
+            Imprimer sélection
+        </button>
+    </div>
     </div>
 </div>
+
+<ng-template #invoiceDetailsModal let-modal>
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Détails de la commande</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="float-end ms-auto myButtonsContainer">
+        <button class="btn btn-outline-primary btn-sm myButton" (click)="openInvoiceInNewTab()">
+          <i class="fas fa-external-link-alt"></i>
+        </button>
+        <button class="btn btn-outline-primary btn-sm mybutton" (click)="printInvoice()">
+          <i class="fas fa-print"></i>
+        </button>
+      </div>
+      <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+        
+        <ng-scrollbar>
+          <div *ngIf="contract">
+            <table class="table table-striped">
+              <tbody>
+                <tr *ngIf="contract?._id">
+                  <th scope="row">ID du contrat</th>
+                  <td>
+                    {{ contract?._id }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?._id)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.internal_number">
+                  <th scope="row">Numéro interne</th>
+                  <td>
+                    <i class="fas fa-hashtag"></i> {{ contract?.internal_number }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.internal_number)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.date_cde">
+                  <th scope="row">Date de commande</th>
+                  <td>
+                    {{ contract?.date_cde | date:'d MMMM y' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.date_cde)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="customer?.firstname">
+                  <th scope="row">Client</th>
+                  <td>
+                    <a class="email-link" [href]="'mailto:' + customer?.email">{{ customer?.firstname }} {{ customer?.lastname }}</a>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(customer?.name)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contact?.firstname">
+                  <th scope="row">Contact</th>
+                  <td>
+                    <a class="email-link" [href]="'mailto:' + contact?.email">{{ contact?.firstname }} {{ contact?.lastname }}</a>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contact?.name)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="cocontractor?.firstname">
+                  <th scope="row">Co-traitant</th>
+                  <td>
+                    <a class="email-link" [href]="'mailto:' + cocontractor?.email">{{ cocontractor?.firstname }} {{ cocontractor?.lastname }}</a>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(cocontractor?.name)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="subcontractor?.firstname">
+                  <th scope="row">Sous-traitant</th>
+                  <td>
+                    <a class="email-link" [href]="'mailto:' + subcontractor?.email">{{ subcontractor?.firstname }} {{ subcontractor?.lastname }}</a>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(subcontractor?.lastname)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.address">
+                  <th scope="row">Adresse</th>
+                  <td>
+                    {{ contract?.address }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.address)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.appartment_number">
+                  <th scope="row">Numéro d'appartement</th>
+                  <td>
+                    <div class="apartment-number">
+                      {{ contract?.appartment_number }}
+                    </div>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.appartment_number)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.quote_number">
+                  <th scope="row">Numéro de devis</th>
+                  <td>
+                    {{ contract?.quote_number }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.quote_number)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.invoice_number">
+                  <th scope="row">Numéro de facture</th>
+                  <td>
+                    {{ contract?.invoice_number }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.invoice_number)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.status">
+                  <th scope="row">Statut</th>
+                  <td>
+                    <span class="badge" [ngClass]="{
+                      'bg-success': contract?.status === 'achieve',
+                      'bg-warning': contract?.status === 'in_progress',
+                      'bg-danger': contract?.status === 'canceled',
+                      'bg-info': contract?.status === 'invoiced',
+                      'bg-secondary': contract?.status === 'anomaly'
+                    }">{{ getStatus(contract?.status) }}</span>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(getStatus(contract?.status))">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="benefit_name">
+                  <th scope="row">Prestation</th>
+                  <td>
+                    {{ benefit_name }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(benefit_name)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.amount_ht">
+                  <th scope="row">Montant HT</th>
+                  <td>
+                    {{ contract?.amount_ht | currency:'EUR' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.amount_ht)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.benefit_ht">
+                  <th scope="row">Prestation HT</th>
+                  <td>
+                    {{ contract?.benefit_ht | currency:'EUR' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.benefit_ht)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.prevision_data_day !== undefined">
+                  <th scope="row">Prévision (jours)</th>
+                  <td>
+                    <i class="fas fa-calendar-day"></i> {{ contract?.prevision_data_day }} jours
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.prevision_data_day)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.prevision_data_hour !== undefined">
+                  <th scope="row">Prévision (heures)</th>
+                  <td>
+                    <i class="fas fa-clock"></i> {{ contract?.prevision_data_hour }} heures
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.prevision_data_hour)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.execution_data_day !== undefined">
+                  <th scope="row">Exécution (jours)</th>
+                  <td>
+                    <i class="fas fa-calendar-day"></i> {{ contract?.execution_data_day }} jours
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.execution_data_day)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.execution_data_hour !== undefined">
+                  <th scope="row">Exécution (heures)</th>
+                  <td>
+                    <i class="fas fa-clock"></i> {{ contract?.execution_data_hour }} heures
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.execution_data_hour)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.external_contributor_amount">
+                  <th scope="row">Montant du co-traitant externe</th>
+                  <td>
+                    {{ contract?.external_contributor_amount | currency:'EUR' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.external_contributor_amount)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.subcontractor_amount">
+                  <th scope="row">Montant du sous-traitant</th>
+                  <td>
+                    {{ contract?.subcontractor_amount | currency:'EUR' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.subcontractor_amount)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.start_date_works">
+                  <th scope="row">Date de début des travaux</th>
+                  <td>
+                    {{ contract?.start_date_works | date:'d MMMM y' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.start_date_works)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.end_date_works">
+                  <th scope="row">Date de fin des travaux</th>
+                  <td>
+                    {{ contract?.end_date_works | date:'d MMMM y' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.end_date_works)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.end_date_customer">
+                  <th scope="row">Date de fin pour le client</th>
+                  <td>
+                    {{ contract?.end_date_customer | date:'d MMMM y' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.end_date_customer)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.billing_amount">
+                  <th scope="row">Montant de facturation</th>
+                  <td>
+                    {{ contract?.billing_amount | currency:'EUR' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.billing_amount)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.mail_sended !== undefined">
+                  <th scope="row">Mail envoyé</th>
+                  <td>
+                    <i [ngClass]="{'fas fa-check text-success': contract?.mail_sended, 'fas fa-times text-danger': !contract?.mail_sended}"></i>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.mail_sended)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.occupied !== undefined">
+                  <th scope="row">Occupé</th>
+                  <td>
+                    <i [ngClass]="{'fas fa-check text-success': contract?.occupied, 'fas fa-times text-danger': !contract?.occupied}"></i>
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.occupied)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.dateAdd">
+                  <th scope="row">Date d'ajout</th>
+                  <td>
+                    {{ contract?.dateAdd | date:'d MMMM y' }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.dateAdd)">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.observation?.length">
+                  <th scope="row">Observations</th>
+                  <td>
+                    {{ contract?.observation.join(', ') }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.observation.join(', '))">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="contract?.incident?.length">
+                  <th scope="row">Incidents</th>
+                  <td>
+                    {{ contract?.incident.join(', ') }}
+                    <button class="btn btn-outline-secondary btn-sm float-end" (click)="copyToClipboard(contract?.incident.join(', '))">
+                      <i class="fas fa-copy copy-button"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-scrollbar>
+        <div *ngIf="!contract">
+          <p>Chargement des détails du contrat...</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="validateInvoice()">Valider facture</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.close()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
 

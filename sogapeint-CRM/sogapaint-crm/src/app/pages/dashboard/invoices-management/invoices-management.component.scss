@@ -17,6 +17,7 @@
     font-weight: bold;
     font-size: small;
     margin-right: 8px;
+    cursor: pointer;
 }
 
 .file-size {
@@ -26,7 +27,8 @@
 }
 
 .file-list {
-    height: 100%;
+    height: 30vh;
+    max-height: 30vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -50,10 +52,270 @@
     border-color: transparent;
 }
 
-// .card {
-//     width: 406px;
-// }
 
 input[type="checkbox"] {
     margin-right: 10px;
 }
+
+.form-check-input {
+    border: 2px solid #6c757d; /* Unchecked border color */
+    width: 20px;
+    height: 20px;
+    box-shadow: none; /* Remove default shadow */
+    transition: box-shadow 0.3s ease; /* Smooth transition for the glow effect */
+}
+
+.form-check-input:checked {
+    border-color: #0d6efd; /* Checked border color */
+}
+
+/* Rainbow glow effect */
+.form-check-input:hover:nth-of-type(1) {
+    box-shadow: 0 0 10px #17a2b8;
+}
+.form-check-input:hover:nth-of-type(2) {
+    box-shadow: 0 0 10px orange;
+}
+.form-check-input:hover:nth-of-type(3) {
+    box-shadow: 0 0 10px yellow;
+}
+.form-check-input:hover:nth-of-type(4) {
+    box-shadow: 0 0 10px green;
+}
+.form-check-input:hover:nth-of-type(5) {
+    box-shadow: 0 0 10px blue;
+}
+.form-check-input:hover:nth-of-type(6) {
+    box-shadow: 0 0 10px indigo;
+}
+.form-check-input:hover:nth-of-type(7) {
+    box-shadow: 0 0 10px violet;
+}
+
+
+.myButtonsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-right:10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+// .myButtonsContainer button {
+//     // margin-right: 20px;
+//     // margin-left: 10px;
+// }
+
+.modal {
+    display: block; /* Necessary for proper positioning */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90vh; /* Ensure the modal does not exceed 90% of the viewport height */
+    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
+    width: 80%; /* Adjust width as needed */
+    background-color: white; /* Background color */
+    padding: 20px; /* Padding for content */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0,0,0,.5); /* Shadow for a modal effect */
+}
+
+.modal-content {
+    max-height: calc(90vh - 40px); /* Adjust for padding and any other content */
+    overflow-y: auto; /* Scrollable content */
+}
+
+.email-link {
+    color: #17a2b8;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.right-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.button-align-right {
+    margin-left: auto;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  
+    .filter-button {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+  
+      &:hover {
+        background-color: #ddd;
+      }
+  
+      &.active {
+        background-color: #5664d2;
+        color: #fff;
+      }
+    }
+  }
+
+// .filter-toggle {
+//     display: flex;
+//     justify-content: center;
+//     margin-bottom: 1.5rem;
+  
+//     button {
+//       padding: 0.75rem 2rem;
+//       font-size: 1.25rem;
+//       font-weight: bold;
+//       color: #fff;
+//       background: linear-gradient(90deg, #ff8a00, #e52e71);
+//       border: none;
+//       border-radius: 30px;
+//       cursor: pointer;
+//       transition: background 0.5s, transform 0.3s;
+  
+//       &:hover {
+//         background: linear-gradient(90deg, #e52e71, #ff8a00);
+//         transform: scale(1.05);
+//       }
+  
+//       &:active {
+//         transform: scale(0.95);
+//       }
+  
+//       &.unprocessed {
+//         background: linear-gradient(90deg, #ff8a00, #e52e71);
+//       }
+  
+//       &.processed {
+//         background: linear-gradient(90deg, #00c6ff, #0072ff);
+//       }
+  
+//       &.all {
+//         background: linear-gradient(90deg, #8e2de2, #4a00e0);
+//       }
+//     }
+//   }
+
+.filter-toggle {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  
+    .cube {
+      width: 200px;
+      height: 50px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(var(--rotate, 0deg));
+      transition: transform 1s;
+  
+      .face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #007bff;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 10px;
+        backface-visibility: hidden;
+        font-size: 1rem;
+        transition: background 0.5s;
+  
+        &.unprocessed {
+          background: --bs-warning;
+        }
+  
+        &.processed {
+          background: --bs-success;
+          transform: rotateY(120deg);
+        }
+  
+        &.all {
+          background: --bs-primary;
+          transform: rotateY(240deg);
+        }
+  
+        // &.active {
+        //   background: --bs-light;
+        // }
+      }
+    }
+  }
+  
+// Define keyframes for the coin rain effect
+@keyframes coin-rain {
+    0% {
+      transform: translateY(-100%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+  }
+  
+  // Style for the button when it's active
+  .btn-primary {
+    position: relative;
+    overflow: visible;
+  
+    .fa-check-circle {
+      position: relative;
+      z-index: 1;
+    }
+    
+    &:active .fa-check-circle {
+      // Trigger the coin rain animation
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        // background: radial-gradient(circle, rgba(255, 215, 0, 0.8), rgba(255, 215, 0, 0.1));
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        animation: sonic-rings 1s ease-out infinite;
+      }
+      // Coins falling effect
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        background: gold;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        pointer-events: none;
+        animation: coin-rain 1s linear infinite;
+      }
+    }
+  }
+  
+  // Prevent animation when the button is disabled
+  .btn-primary[disabled] .fa-check-circle {
+    animation: none;
+  }
+  

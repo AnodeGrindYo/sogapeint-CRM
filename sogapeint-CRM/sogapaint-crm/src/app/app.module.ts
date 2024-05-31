@@ -23,6 +23,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
+
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
 

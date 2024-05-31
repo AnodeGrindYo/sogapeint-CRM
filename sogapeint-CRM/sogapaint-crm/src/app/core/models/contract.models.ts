@@ -45,8 +45,10 @@ export class Contract {
             user: string;
             date: Date;
         }
-    ]
+    ];
+    invoiceStatus: string;
     constructor() {
         // Initialiser les valeurs par défaut ici si nécessaire
+        this.invoiceStatus = 'pending';
     }
 }

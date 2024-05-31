@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthenticationService } from './auth.service';
 import { Inject } from '@angular/core';
@@ -33,7 +33,15 @@ export class ContractService {
          * @returns Un Observable contenant un tableau de contrats.
          */
         getContracts(): Observable<any[]> {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contracts`);
+            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contracts`).pipe(
+                map(contracts => contracts.map(contract => {
+                    // Initialiser invoiceStatus s'il est absent
+                    if (!contract.invoiceStatus) {
+                      contract.invoiceStatus = 'pending';
+                    }
+                    return contract;
+                  }))
+                );
         }
 
         /**
@@ -103,6 +111,7 @@ export class ContractService {
         updateContract(contractId: string, contractData: any): Observable<any> {
             return this.http.put<any>(`${environment.apiUrl}/api/auth/contract/${contractId}`, contractData);
         }
+  
         
         /**
         * Récupère les contrats en cours
@@ -226,8 +235,20 @@ export class ContractService {
          * @returns un Observable contenant la réponse du serveur
          */
         deleteFile(fileId: string, contractId: string): Observable<any>{
-            return this.http.delete<any>(`${environment.apiUrl}/api/auth//deleteFile`, { params: { contractId: contractId, fileId: fileId } });
+            return this.http.delete<any>(`${environment.apiUrl}/api/auth/deleteFile`, { params: { contractId: contractId, fileId: fileId } });
         }
+
+        /**
+         * Met à jour les données additionnelles d'un fichier
+         * 
+         * @param fileId, l'id du fichier
+         * @param updateData, les données à mettre à jour
+         * @returns un Observable contenant la réponse du serveur
+         */
+        updateFile(fileId: string, updateData: any): Observable<any> {
+            const body = { fileId, updateData };
+            return this.http.put<any>(`${environment.apiUrl}/api/auth/updateFile`, body);
+          }
 
         /** 
          * Permet de récupérer un fichier par son id. La route est ${environment.apiUrl}/api/auth/download
@@ -237,7 +258,15 @@ export class ContractService {
          * @returns un Observable contenant le fichier
          **/
         getFile(fileId: string, contractId: string): Observable<any> {
-            return this.http.get<any>(`${environment.apiUrl}/api/auth/download`, { params: { fileId: fileId, contractId: contractId }, responseType: 'blob' as 'json' });
+            // return this.http.get<any>(`${environment.apiUrl}/api/auth/download`, { params: { fileId: fileId, contractId: contractId }, responseType: 'blob' as 'json' });
+            const options = {
+                params: { fileId: fileId, contractId: contractId },
+                responseType: 'blob' as 'json',
+                headers: new HttpHeaders({
+                    'Access-Control-Allow-Origin': '*',
+                })
+            };
+            return this.http.get<Blob>(`${environment.apiUrl}/api/auth/download`, options);
         }
 
         /**

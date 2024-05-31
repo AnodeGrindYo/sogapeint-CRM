@@ -131,6 +131,9 @@ router.get('/download', isConnected, authController.downloadFile);
 // Route pour supprimer un fichier (protégée par le middleware isAdminOrSuperAdmin)
 router.delete('/deleteFile', isAdminOrSuperAdmin, authController.deleteFile);
 
+// Route pour updateFile (protégée par le middleware isAdminOrSuperAdmin)
+router.put('/updateFile', isAdminOrSuperAdmin, authController.updateFile);
+
 // Route pour obtenir le nom d'une prestation par son id
 router.get('/benefit/:benefitId', isConnected, authController.getBenefitNameById);
 
