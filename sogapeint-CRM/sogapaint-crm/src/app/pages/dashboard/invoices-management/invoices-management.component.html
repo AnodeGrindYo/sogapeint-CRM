@@ -8,28 +8,11 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="clearErrorMessages()"></button>
       </div>
       <!-- Boutons de filtre pour basculer entre les catégories de factures -->
-      <!-- <div class="d-flex justify-content-between mb-3" role="group" aria-label="Filter invoices">
-        <button type="button" class="btn btn-outline-primary" [class.active]="filter === 'unprocessed'" (click)="setFilter('unprocessed')">Factures non traitées</button>
-        <button type="button" class="btn btn-outline-primary" [class.active]="filter === 'processed'" (click)="setFilter('processed')">Factures traitées</button>
-        <button type="button" class="btn btn-outline-primary" [class.active]="filter === 'all'" (click)="setFilter('all')">Toutes les factures</button>
-      </div> -->
-      <!-- Boutons de filtre pour basculer entre les catégories de factures -->
       <div class="filter-buttons">
         <button type="button" class="filter-button" [class.active]="filter === 'unprocessed'" (click)="setFilter('unprocessed')">Factures non traitées</button>
         <button type="button" class="filter-button" [class.active]="filter === 'processed'" (click)="setFilter('processed')">Factures traitées</button>
         <button type="button" class="filter-button" [class.active]="filter === 'all'" (click)="setFilter('all')">Toutes les factures</button>
       </div>
-      <!-- Bouton de filtre pour basculer entre les catégories de factures -->
-    <!-- <div class="filter-toggle">
-      <button (click)="toggleFilter()">{{ filterText }}</button>
-    </div> -->
-    <!-- <div class="filter-toggle">
-      <div class="cube" (click)="toggleFilter()">
-        <div class="face unprocessed" [class.active]="filter === 'unprocessed'">Factures non traitées</div>
-        <div class="face processed" [class.active]="filter === 'processed'">Factures traitées</div>
-        <div class="face all" [class.active]="filter === 'all'">Toutes les factures</div>
-      </div>
-    </div> -->
         <div *ngIf="files && files.length > 0" class="mt-2">
             <div class="card">
                 <div class="card-header">
@@ -384,7 +367,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="validateInvoice()">Valider facture</button>
+        <button *ngIf="contract.invoiceStatus == 'pending' || contract.invoiceStatus == undefined" type="button" class="btn btn-primary" (click)="validateInvoice()">Valider facture</button>
         <button type="button" class="btn btn-secondary" (click)="modal.close()">Fermer</button>
       </div>
     </div>

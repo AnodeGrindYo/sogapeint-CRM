@@ -280,7 +280,7 @@ export class InvoicesManagementComponent implements OnInit {
 
     console.log('Validation de la facture...');
     if (this.contract && this.contract._id) {
-      this.contractService.updateContract(this.contract._id, { status: 'processed' }).subscribe({
+      this.contractService.updateContract(this.contract._id, { invoiceStatus: 'processed' }).subscribe({
         next: (data) => {
           console.log('Contrat mis à jour avec succès', data);
           this.contract = data;
@@ -305,23 +305,7 @@ export class InvoicesManagementComponent implements OnInit {
     }
   }
 
-  // validateSelectedInvoices(): void {
-  //   console.log('Factures sélectionnées pour validation:', this.selectedFiles);
-  //   // Implement validation logic here
 
-  //   // pluie de pièces
-  //   const button = document.querySelector('.btn-primary');
-  //   if (button) {
-  //     for (let i = 0; i < 30; i++) {
-  //       const coin = document.createElement('div');
-  //       coin.className = 'coin';
-  //       coin.style.left = `${Math.random() * 100}%`;
-  //       coin.style.animationDelay = `${Math.random()}s`;
-  //       button.appendChild(coin);
-  //       setTimeout(() => coin.remove(), 1500); // Adjust the timeout to match the animation duration
-  //     }
-  //   }
-  // }
   validateSelectedInvoices(): void {
     console.log('Factures sélectionnées pour validation:', this.selectedFiles);
     if (this.selectedFiles.length === 0) {
@@ -331,7 +315,7 @@ export class InvoicesManagementComponent implements OnInit {
 
     const updateInvoice = (invoice: any) => {
         return new Promise((resolve, reject) => {
-            this.contractService.updateFile(invoice._id, { processed: true }).subscribe({
+            this.contractService.updateFile(invoice._id, { processed: true}).subscribe({
                 next: (data) => {
                     console.log('Facture marquée comme traitée', data);
                     resolve(data);
