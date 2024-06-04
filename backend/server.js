@@ -21,13 +21,21 @@ const io = socketIo(server, {
     // origin:"http://localhost:4200", // frontend Angular
     origin: `http://${frontendUrl}:${frontendPort}`, // frontend Angular
     methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
   }
 });
+console.log('cors', cors);
 
 // Configuration des middlewares
-app.use(cors());
+app.use(cors(
+  {
+    origin: `http://${frontendUrl}:${frontendPort}`,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+  }
+));
 app.use(express.json());
 
 // Connexion à MongoDB
