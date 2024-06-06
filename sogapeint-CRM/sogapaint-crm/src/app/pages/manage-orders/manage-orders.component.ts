@@ -45,7 +45,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
 
   benefits = [];
 
-  currentUser: User;
+  currentUser: any;
 
   constructor(
     private contractService: ContractService,
@@ -112,86 +112,247 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   //     },
   //   });
   // }
+  // loadNotOnGoingContracts() {
+  //   console.log("loadNotOnGoingContracts");
+  //   this.isLoading = true;
+  //   this.contractService.getNotOnGoingContracts().subscribe({
+  //       next: (notOnGoingContracts) => {
+  //           const filteredContracts = notOnGoingContracts.filter(contract => {
+              
+  //                 if (this.currentUser.role === "superAdmin") {
+  //                     return true;
+  //                 } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
+  //                     const user_company = this.normalizeString(this.currentUser.company);
+  //                     return this.checkCompanyInContract(contract, user_company);
+  //                 } else if (this.currentUser.role === "customer") {
+  //                   if (contract.customer) {
+  //                     return this.currentUser.userId === contract.customer._id
+  //                       && this.currentUser.userId === contract.customer._id;
+  //                   }
+  //                 } else if (this.currentUser.role === "comanager") {
+  //                   return (this.currentUser.userId == contract.customer._id ||
+  //                     this.currentUser.userId == contract.contact._id ||
+  //                     this.currentUser.userId == contract.external_contributor._id ||
+  //                     this.currentUser.userId == contract.internal_contributor._id ||
+  //                     this.currentUser.userId == contract.subcontractor._id);
+  //                 }
+  //                 return false;
+  //           });
+
+  //           // this.orders = [...this.orders, ...filteredContracts];
+  //           this.sortfilteredOrdersByMostRecent();
+  //           this.updateOrdersToShow();
+  //           this.isLoading = false;
+  //       },
+  //       error: (error) => {
+  //           console.error("Erreur lors du chargement des contrats non en cours", error);
+  //           this.isLoading = false;
+  //       }
+  //   });
+  // }
   loadNotOnGoingContracts() {
     console.log("loadNotOnGoingContracts");
     this.isLoading = true;
     this.contractService.getNotOnGoingContracts().subscribe({
-        next: (notOnGoingContracts) => {
-            const filteredContracts = notOnGoingContracts.filter(contract => {
-              
-                  if (this.currentUser.role === "superAdmin") {
-                      return true;
-                  } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
-                      const user_company = this.normalizeString(this.currentUser.company);
-                      return this.checkCompanyInContract(contract, user_company);
-                  } else if (this.currentUser.role === "customer") {
-                    if (contract.customer) {
-                      return this.currentUser.firstName.toLowerCase() === contract.customer.firstname.toLowerCase()
-                        && this.currentUser.lastName.toLowerCase() === contract.customer.lastname.toLowerCase();
-                    }
-                  }
-                  return false;
-            });
+      next: (notOnGoingContracts) => {
+        const filteredContracts = notOnGoingContracts.filter(contract => {
+          if (!contract || !contract._id) return false;  // Add null check here
+  
+          if (this.currentUser.role === "superAdmin") {
+            return true;
+          } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
+            const user_company = this.normalizeString(this.currentUser.company);
+            return this.checkCompanyInContract(contract, user_company);
+          } else if (this.currentUser.role === "customer") {
+            if (contract.customer) {
+              return this.currentUser.userId === contract.customer._id
+                && this.currentUser.userId === contract.customer._id;
+            }
+          } else if (this.currentUser.role === "comanager") {
+            let returnedContract;
+            if (contract.customer && 
+                contract.customer._id && 
+                this.currentUser.userId == contract.customer._id
 
-            // this.orders = [...this.orders, ...filteredContracts];
-            this.sortfilteredOrdersByMostRecent();
-            this.updateOrdersToShow();
-            this.isLoading = false;
-        },
-        error: (error) => {
-            console.error("Erreur lors du chargement des contrats non en cours", error);
-            this.isLoading = false;
-        }
+            ) {
+              returnedContract = contract;
+            }
+            if (contract.contact && 
+                contract.contact._id && 
+                this.currentUser.userId == contract.contact._id
+
+            ) {
+              returnedContract = contract;
+            }
+            if (contract.external_contributor && 
+                contract.external_contributor._id && 
+                this.currentUser.userId == contract.external_contributor._id
+            ) {
+              returnedContract = contract;
+            }
+            if (contract.internal_contributor && 
+                contract.internal_contributor._id && 
+                this.currentUser.userId == contract.internal_contributor._id
+            ) {
+              returnedContract = contract;
+            }
+            if (contract.subcontractor && 
+                contract.subcontractor._id && 
+                this.currentUser.userId == contract.subcontractor._id
+            ) {
+              returnedContract = contract;
+            }
+
+            return returnedContract;
+            // return (this.currentUser.userId == contract.customer._id ||
+            //   this.currentUser.userId == contract.contact._id ||
+            //   this.currentUser.userId == contract.external_contributor._id ||
+            //   this.currentUser.userId == contract.internal_contributor._id ||
+            //   this.currentUser.userId == contract.subcontractor._id);
+          }
+          return false;
+        });
+  
+        this.sortfilteredOrdersByMostRecent();
+        this.updateOrdersToShow();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error("Erreur lors du chargement des contrats non en cours", error);
+        this.isLoading = false;
+      }
     });
   }
-
-
-  loadOnGoingContractsStream() {
-    this.isLoading = true; // Indique le début du chargement
   
+
+
+  // loadOnGoingContractsStream() {
+  //   this.isLoading = true; // Indique le début du chargement
+  //   console.log("current user: ", this.currentUser);
+  //   this.contractService
+  //     .getOnGoingContractsStream()
+  //     .pipe(takeUntil(this.destroy$))
+  //     .subscribe({
+  //       next: (contract: any) => {
+  //         // console.log("Contrat en cours reçu", contract);
+  //         if (this.currentUser.role === "superAdmin") {
+  //           this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+  //           this.filteredOrders.push(contract);
+  //         } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor" || this.currentUser.role === "supermanager") {
+  //           // filtre les contrats pour les co-traitants et sous-traitants : ils ne peuvent voir que les contrats où leur entreprise est impliquée
+  //           // console.log("coContractor/subcontractor contract :", contract);
+  //           const user_company = this.normalizeString(this.currentUser.company);
+  //           if (this.checkCompanyInContract(contract, user_company)) {
+  //             this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+  //             this.filteredOrders.push(contract);
+  //           }
+  //         } else if (this.currentUser.role === "customer") {
+  //           if (
+  //             (this.currentUser.userId == contract.customer._id)
+  //           ){
+  //             this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+  //             this.filteredOrders.push(contract);
+  //           }
+  //         } else if (this.currentUser.role === "comanager") {
+  //           if (
+  //             this.currentUser.userId == contract.customer._id ||
+  //             this.currentUser.userId == contract.contact._id ||
+  //             this.currentUser.userId == contract._id ||
+  //             this.currentUser.userId == contract._id ||
+  //             this.currentUser.userId == contract._id
+  //           ){
+  //             this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+  //             this.filteredOrders.push(contract);
+  //           }
+  //         }
+  
+  //         // Trier les commandes par date_cde en ordre décroissant
+  //         this.sortfilteredOrdersByMostRecent();
+  //         // this.updateOrdersToShow(); // Met à jour les contrats à afficher
+  
+  //         // Vérifie si le nombre de contrats affichés est inférieur à itemsPerPage
+  //         if (this.totalOrdersToShow.length < this.itemsPerPage) {
+  //           this.sortfilteredOrdersByMostRecent();
+  //           this.updateOrdersToShow(); // Met à jour les contrats à afficher
+  
+  //           if (this.totalOrdersToShow.length === 1) {
+  //             this.sortfilteredOrdersByMostRecent();
+  //             this.isLoading = false; // Arrête le chargement une fois itemsPerPage atteint
+  //           }
+  //         }
+  //         this.sortfilteredOrdersByMostRecent();
+  //         // Si itemsPerPage contrats sont affichés, les contrats suivants seront chargés en mémoire mais pas immédiatement affichés
+  //       },
+  //       error: (error) => {
+  //         console.error("Erreur lors du chargement des contrats en cours", error);
+  //         this.isLoading = false; // Arrête le chargement en cas d'erreur
+  //       },
+  //       complete: () => {
+  //         console.log("complete");
+  //         this.sortfilteredOrdersByMostRecent();
+  //         this.updateOrdersToShow();
+  //       }
+  //     });
+  // }
+  
+  // Fonction pour trier les contrats par date_cde
+  loadOnGoingContractsStream() {
+    this.isLoading = true; 
+    console.log("current user: ", this.currentUser);
     this.contractService
       .getOnGoingContractsStream()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (contract: any) => {
+          if (!contract || !contract._id) return;  // Add null check here
+  
           if (this.currentUser.role === "superAdmin") {
-            this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+            this.orders.push(contract); 
             this.filteredOrders.push(contract);
           } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor" || this.currentUser.role === "supermanager") {
-            // filtre les contrats pour les co-traitants et sous-traitants : ils ne peuvent voir que les contrats où leur entreprise est impliquée
-            // console.log("coContractor/subcontractor contract :", contract);
+  
             const user_company = this.normalizeString(this.currentUser.company);
             if (this.checkCompanyInContract(contract, user_company)) {
-              this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+              this.orders.push(contract); 
               this.filteredOrders.push(contract);
             }
-          } else if (this.currentUser.role === "customer" || this.currentUser.role === "comanager") {
-            if (this.currentUser.firstName.toLowerCase() == contract.customer.firstname.toLowerCase() && this.currentUser.lastName.toLowerCase() == contract.customer.lastname.toLowerCase()){
-              this.orders.push(contract); // Ajoute chaque contrat reçu à la liste totale des commandes
+          } else if (this.currentUser.role === "customer") {
+            if (
+              (this.currentUser.userId == contract.customer?._id)
+            ){
+              this.orders.push(contract); 
+              this.filteredOrders.push(contract);
+            }
+          } else if (this.currentUser.role === "comanager") {
+            if (
+              this.currentUser.userId == contract.customer?._id ||
+              this.currentUser.userId == contract.contact?._id ||
+              this.currentUser.userId == contract.external_contributor?._id ||
+              this.currentUser.userId == contract.internal_contributor?._id ||
+              this.currentUser.userId == contract.subcontractor?._id
+            ){
+              this.orders.push(contract); 
               this.filteredOrders.push(contract);
             }
           }
   
-          // Trier les commandes par date_cde en ordre décroissant
           this.sortfilteredOrdersByMostRecent();
-          // this.updateOrdersToShow(); // Met à jour les contrats à afficher
   
-          // Vérifie si le nombre de contrats affichés est inférieur à itemsPerPage
           if (this.totalOrdersToShow.length < this.itemsPerPage) {
             this.sortfilteredOrdersByMostRecent();
-            this.updateOrdersToShow(); // Met à jour les contrats à afficher
+            this.updateOrdersToShow(); 
   
             if (this.totalOrdersToShow.length === 1) {
               this.sortfilteredOrdersByMostRecent();
-              this.isLoading = false; // Arrête le chargement une fois itemsPerPage atteint
+              this.isLoading = false; 
             }
           }
           this.sortfilteredOrdersByMostRecent();
-          // Si itemsPerPage contrats sont affichés, les contrats suivants seront chargés en mémoire mais pas immédiatement affichés
+  
         },
         error: (error) => {
           console.error("Erreur lors du chargement des contrats en cours", error);
-          this.isLoading = false; // Arrête le chargement en cas d'erreur
+          this.isLoading = false; 
         },
         complete: () => {
           console.log("complete");
@@ -201,7 +362,8 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
       });
   }
   
-  // Fonction pour trier les contrats par date_cde
+  
+  
   sortOrdersByDateCde() {
     this.filteredOrders.sort((a, b) => {
       return new Date(b.date_cde).getTime() - new Date(a.date_cde).getTime();
@@ -404,24 +566,113 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     return dateStr;
   }
 
+  // loadOldOrders() {
+  //   console.log("Chargement des anciens contrats");
+  //   this.isLoading = true;
+  //   this.filteredOrders = [];
+  //   this.contractService.getContracts().subscribe({
+  //     next: (oldContracts) => {
+  //       console.log("Anciens contrats chargés", oldContracts);
+  //       console.log("rôle de l'utilisateur : ", this.currentUser.role)
+  //       let filteredOldContracts;
+  //       if (this.currentUser.role === "superAdmin") {
+  //         filteredOldContracts = oldContracts;
+  //       } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
+  //         const user_company = this.normalizeString(this.currentUser.company);
+  //         filteredOldContracts = oldContracts.filter(contract => this.checkCompanyInContract(contract, user_company));
+  //       } else if (this.currentUser.role === "customer") {
+  //         filteredOldContracts = oldContracts.filter(contract => {
+  //           return (this.currentUser.userId == contract.customer._id
+  //             && this.currentUser.userId == contract.customer._id);
+  //         });
+  //       } else if (this.currentUser.role === "comanager") {
+  //         filteredOldContracts = oldContracts.filter(contract => {
+  //           return (this.currentUser.userId == contract.customer._id
+  //             && this.currentUser.userId == contract.customer._id) ||
+  //             (this.currentUser.userId == contract.contact._id &&
+  //               this.currentUser.userId == contract.contact._id) ||
+  //             (this.currentUser.userId == contract.external_contributor._id &&
+  //               this.currentUser.userId == contract.external_contributor._id) ||
+  //               (this.currentUser.userId == contract.internal_contributor._id &&
+  //                 this.currentUser.userId == contract.internal_contributor._id) ||
+  //                 (this.currentUser.userId == contract.subcontractor._id &&
+  //                   this.currentUser.userId == contract.subcontractor._id);
+  //         });
+  //       }
+  //       console.log("filteredOldContracts : ", filteredOldContracts);
+  //       this.orders = [...this.orders, ...filteredOldContracts];
+  //       // this.orders = [...this.orders, ...oldContracts];
+  //       this.filteredOrders = [...this.filteredOrders, ...filteredOldContracts];
+  //       // this.filteredOrders = [...this.filteredOrders, ...oldContracts];
+
+  //       console.log("orders : ", this.orders);
+  //       console.log("filtered orders : ", this.filteredOrders)
+
+
+  //       this.sortfilteredOrdersByMostRecent();
+  //       // this.sortOrdersByMostRecent();
+  //       this.isLoading = false;
+  //       this.updateOrdersToShow();
+  //     },
+  //     error: (error) => {
+  //       console.error("Erreur lors du chargement des anciens contrats", error);
+  //     },
+  //   });
+  // }
   loadOldOrders() {
     console.log("Chargement des anciens contrats");
     this.isLoading = true;
     this.filteredOrders = [];
     this.contractService.getContracts().subscribe({
       next: (oldContracts) => {
-        this.orders = [...this.orders, ...oldContracts];
-        this.filteredOrders = [...this.filteredOrders, ...oldContracts];
+        console.log("Anciens contrats chargés", oldContracts);
+        console.log("rôle de l'utilisateur : ", this.currentUser.role)
+        let filteredOldContracts;
+        if (this.currentUser.role === "superAdmin") {
+          filteredOldContracts = oldContracts;
+        } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
+          const user_company = this.normalizeString(this.currentUser.company);
+          filteredOldContracts = oldContracts.filter(contract => contract && contract._id && this.checkCompanyInContract(contract, user_company));
+        } else if (this.currentUser.role === "customer") {
+          filteredOldContracts = oldContracts.filter(contract => {
+            return contract && contract._id && (this.currentUser.userId == contract.customer?._id
+              && this.currentUser.userId == contract.customer?._id);
+          });
+        } else if (this.currentUser.role === "comanager") {
+          filteredOldContracts = oldContracts.filter(contract => {
+            return contract && contract._id && 
+              (this.currentUser.userId == contract.customer?._id
+                && this.currentUser.userId == contract.customer?._id) ||
+              (this.currentUser.userId == contract.contact?._id &&
+                this.currentUser.userId == contract.contact?._id) ||
+              (this.currentUser.userId == contract.external_contributor?._id &&
+                this.currentUser.userId == contract.external_contributor?._id) ||
+              (this.currentUser.userId == contract.internal_contributor?._id &&
+                this.currentUser.userId == contract.internal_contributor?._id) ||
+              (this.currentUser.userId == contract.subcontractor?._id &&
+                this.currentUser.userId == contract.subcontractor?._id);
+          });
+        }
+        console.log("filteredOldContracts : ", filteredOldContracts);
+        this.orders = [...this.orders, ...filteredOldContracts];
+  
+        this.filteredOrders = [...this.filteredOrders, ...filteredOldContracts];
+  
+        console.log("orders : ", this.orders);
+        console.log("filtered orders : ", this.filteredOrders)
+  
         this.sortfilteredOrdersByMostRecent();
-        // this.sortOrdersByMostRecent();
+  
         this.isLoading = false;
         this.updateOrdersToShow();
       },
       error: (error) => {
         console.error("Erreur lors du chargement des anciens contrats", error);
+        this.isLoading = false;
       },
     });
   }
+  
 
   normalizeString(str: string): string {
     return str.replace(/[^a-zA-Z]/g, '').toLowerCase();

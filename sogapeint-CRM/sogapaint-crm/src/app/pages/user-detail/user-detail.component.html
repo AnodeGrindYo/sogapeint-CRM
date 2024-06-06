@@ -24,7 +24,7 @@
                 <div class="row">
                     <h5 class="card-title mb-0" *ngIf="!editMode">
                         {{ user?.firstName }} {{ user?.lastName }}
-                        <small class="text-muted role-badge" [ngClass]="getRoleClass(user?.role)">{{ user?.role }}</small>
+                        <small class="text-muted role-badge" [ngClass]="getRoleClass(user?.role)">{{ translateRole(user?.role) }}</small>
                     </h5>
                     <div *ngIf="editMode">
                         <form [formGroup]="userForm">
@@ -284,7 +284,7 @@
                             </tr>
                             <tr [ngClass]="{'modified-field': userForm.controls['role'].dirty}">
                                 <th scope="row">Rôle</th>
-                                <td>{{ userForm.value.role }}</td>
+                                <td>{{  translateRole(userForm.value.role) }}</td>
                             </tr>
                             <tr [ngClass]="{'modified-field': userForm.controls['status'].dirty}">
                                 <th scope="row">Statut</th>

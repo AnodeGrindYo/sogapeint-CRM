@@ -63,7 +63,7 @@ export class UserDetailComponent implements OnInit {
         role: ['customer', Validators.required], // la valeur par défaut est 'user'
         status: true, // la valeur par défaut est 'active'
         authorized_connection: true, // la valeur par défaut est 'authorized',
-        phone: ['', [Validators.required, Validators.pattern(phoneRegex)]],
+        phone: ['',  Validators.pattern(phoneRegex)],
         address: [''], // facultatif
         company: ['', Validators.required]
       });
@@ -92,18 +92,6 @@ export class UserDetailComponent implements OnInit {
       loadUserData() {
         
         
-        // this.userForm.patchValue({
-        //   firstName: this.user.firstName ?? '',
-        //   lastName: this.user.lastName ?? '',
-        //   role: this.user.role ?? '',
-        //   email: this.user.email ?? '',
-        //   company: this.user.company ?? '', 
-        //   // company: company ?? '',
-        //   phone: this.user.phone ?? '', // facultatif
-        //   status: this.user.active ?? '',
-        //   authorized_connection: this.user.authorized_connection ?? '',
-        //   address: this.user.address ?? '' // facultatif  
-        // });
         const company = this.companyService.searchCompanies(this.user.company).subscribe(company => {
           // this.userForm.get('company').setValue(company[0]);
           // console.log("Entreprise trouvée: ", company[0]);
@@ -358,5 +346,17 @@ export class UserDetailComponent implements OnInit {
               
             }
           });
+        }
+
+        translateRole(role: string): string {
+          const roleTranslationMap = {
+            'superAdmin': 'superAdmin',
+            'cocontractor': 'co-traitant',
+            'subcontractor': 'sous-traitant',
+            'customer': 'client',
+            'comanager': 'régisseur',
+            'supermanager': 'chef régisseur'
+          };
+          return roleTranslationMap[role] || role;
         }
       }

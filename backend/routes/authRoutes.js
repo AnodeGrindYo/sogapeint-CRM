@@ -9,10 +9,10 @@ const extractFolderName = require('../middlewares/extractFolderName');
 
 console.log('authController', authController);
 
-// Limiter pour la route de connexion
+// Limiter pour la route de connexion // limite tentatives de connexion
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // Limite chaque IP à 5 tentatives de connexion
+    max: 15, // Limite chaque IP à 15 tentatives de connexion
     message: 'Trop de tentatives de connexion depuis cette IP, veuillez réessayer après 15 minutes'
   });
 
