@@ -14,7 +14,7 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = ['./routes/*.js']; // Chemins vers vos fichiers de routes
+const endpointsFiles = ['./server.js']; // Chemins vers vos fichiers de routes
 
 const outputDir = path.join(__dirname, 'swagger-docs');
 
@@ -81,4 +81,6 @@ swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
     fs.writeFileSync(path.join(outputDir, 'index.html'), indexHtml);
 
     console.log('Swagger documentation generated successfully in', outputDir);
+}).catch(error => {
+    console.error('Error generating Swagger documentation:', error);
 });
