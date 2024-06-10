@@ -3,6 +3,8 @@ const http = require('http');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const socketIo = require('socket.io');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
 
 // Importation des routes
@@ -37,9 +39,40 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 app.use('/api', apiRoutes);
 app.use('/api/chat', chatRoutes(io));
 
-// Importer et configurer Swagger
-const configureSwagger = require('./swagger');
-configureSwagger(app);
+// Configuration Swagger
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Sogapeint',
+      version: '1.0.0',
+      description: 'API backend de l\'application Sogapeint',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server',
+      },
+    ],
+  };
+  
+  const options = {
+    swaggerDefinition,
+    apis: ['./routes/*.js'],
+  };
+  
+  const swaggerSpec = swaggerJsdoc(options);
+  
+  const customCss = `
+    .swagger-ui .topbar { display: none; }
+  `;
+  
+  app.use('/api-docs', swaggerUi.serve, (req, res, next) => {
+    res.set('Content-Security-Policy', "script-src 'self' 'unsafe-inline';");
+    next();
+  }, swaggerUi.setup(swaggerSpec, {
+    customCss,
+    customSiteTitle: "API Sogapeint Documentation"
+  }));
 
 // Middleware pour la gestion des erreurs
 app.use((err, req, res, next) => {
