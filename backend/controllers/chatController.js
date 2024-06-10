@@ -8,6 +8,8 @@ const getAllMessages = async (req, res) => {
   const startDate = new Date();
   startDate.setDate(endDate.getDate() - days);
 
+  console.log('getAllMessages:', { days, startDate, endDate });
+
   try {
     const messages = await ChatMessage.find({ time: { $gte: startDate, $lte: endDate } })
       .sort({ time: 1 })
@@ -29,6 +31,7 @@ const addMessage = (io) => async (req, res) => {
       },
       message: req.body.message
     });
+    console.log('addMessage:', chatMessage);
 
     const newMessage = await chatMessage.save();
     io.emit('chatMessage', newMessage);

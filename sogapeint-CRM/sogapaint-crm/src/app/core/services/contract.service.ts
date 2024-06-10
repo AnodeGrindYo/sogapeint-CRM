@@ -27,13 +27,13 @@ export class ContractService {
         ) {}
 
         /**
-         * obtient tous les contrats (endpoint /api/auth/contracts)
+         * obtient tous les contrats (endpoint /api/contracts/contracts)
          * 
          * Envoie une requête GET pour obtenir une liste de tous les contrats.
          * @returns Un Observable contenant un tableau de contrats.
          */
         getContracts(): Observable<any[]> {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contracts`).pipe(
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/contracts`).pipe(
                 map(contracts => contracts.map(contract => {
                     // Initialiser invoiceStatus s'il est absent
                     if (!contract.invoiceStatus) {
@@ -45,14 +45,14 @@ export class ContractService {
         }
 
         /**
-         * obtient les contrats par mois (endpoint /api/auth/contractsByMonth)
+         * obtient les contrats par mois (endpoint /api/contracts/contractsByMonth)
          * 
          * Envoie une requête GET pour obtenir une liste de tous les contrats par mois.
          * @param month, le mois
          * @returns Un Observable contenant un tableau de contrats.
          * */
         getContractsByMonth(month: number): Observable<any[]> {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contractsByMonth`, { params: { month: month.toString() } });
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/contractsByMonth`, { params: { month: month.toString() } });
         }
         
         
@@ -64,7 +64,7 @@ export class ContractService {
         * @returns Un Observable contenant un tableau de contrats filtrés.
         */
         searchContracts(query: string): Observable<any[]> {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/contract/search`, { params: { q: query } });
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/contract/search`, { params: { q: query } });
         }
         
         /**
@@ -75,7 +75,7 @@ export class ContractService {
         * @returns Un Observable contenant le contrat.
         */
         getContractById(contractId: string): Observable<any> {
-            return this.http.get<any>(`${environment.apiUrl}/api/auth/contract/${contractId}`);
+            return this.http.get<any>(`${environment.apiUrl}/api/contracts/contract/${contractId}`);
         }
         
         /**
@@ -86,7 +86,7 @@ export class ContractService {
         * @returns Un Observable contenant la réponse du serveur.
         */
         addContract(contractData: any): Observable<any> {
-            return this.http.post<any>(`${environment.apiUrl}/api/auth/contract`, contractData);
+            return this.http.post<any>(`${environment.apiUrl}/api/contracts/contract`, contractData);
         }
 
         /**
@@ -97,7 +97,7 @@ export class ContractService {
          * @returns Un Observable contenant la réponse du serveur.
          */
         deleteContract(contractId: string): Observable<any> {
-            return this.http.delete<any>(`${environment.apiUrl}/api/auth/contract/${contractId}`);
+            return this.http.delete<any>(`${environment.apiUrl}/api/contracts/contract/${contractId}`);
         }
         
         /**
@@ -109,7 +109,7 @@ export class ContractService {
         * @returns Un Observable contenant la réponse du serveur.
         */ 
         updateContract(contractId: string, contractData: any): Observable<any> {
-            return this.http.put<any>(`${environment.apiUrl}/api/auth/contract/${contractId}`, contractData);
+            return this.http.put<any>(`${environment.apiUrl}/api/contracts/contract/${contractId}`, contractData);
         }
   
         
@@ -120,7 +120,7 @@ export class ContractService {
         * @returns Un Observable contenant un tableau de contrats.
         */
         getOnGoingContracts(): Observable<any[]> {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/onGoingContracts`);
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/onGoingContracts`);
         }
         
         /**
@@ -130,7 +130,7 @@ export class ContractService {
         * @returns Un Observable contenant un tableau de contrats.
         */
         getNotOnGoingContracts(): Observable<any[]> {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/notOnGoingContracts`);
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/notOnGoingContracts`);
         }
         
         /**
@@ -140,12 +140,12 @@ export class ContractService {
         * @returns Un Observable contenant un tableau de contrats.
         */
         // getOnGoingContractsStream(): Observable<any[]> {
-        //     return this.http.get<any[]>(`${environment.apiUrl}/api/auth/streamOnGoingContracts`);
+        //     return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/streamOnGoingContracts`);
         // }
         getOnGoingContractsStream(): Observable<any[]> {
             const contractsSubject = new Subject<any[]>();
             
-            const eventSource = new EventSource(`${environment.apiUrl}/api/auth/streamOnGoingContracts`);
+            const eventSource = new EventSource(`${environment.apiUrl}/api/contracts/streamOnGoingContracts`);
             eventSource.onmessage = event => {
                 contractsSubject.next(JSON.parse(event.data));
             };
@@ -164,12 +164,12 @@ export class ContractService {
         * @returns Un Observable contenant un tableau de contrats.
         */
         // getNotOnGoingContractsStream(): Observable<any[]> {
-        //     return this.http.get<any[]>(`${environment.apiUrl}/api/auth/streamNotOnGoingContracts`);
+        //     return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/streamNotOnGoingContracts`);
         // }
         getNotOnGoingContractsStream(): Observable<any[]> {
             const contractsSubject = new Subject<any[]>();
             
-            const eventSource = new EventSource(`${environment.apiUrl}/api/auth/streamNotOnGoingContracts`);
+            const eventSource = new EventSource(`${environment.apiUrl}/api/contracts/streamNotOnGoingContracts`);
             eventSource.onmessage = event => {
                 contractsSubject.next(JSON.parse(event.data));
             };
@@ -194,7 +194,7 @@ export class ContractService {
         * @returns Un Observable contenant un tableau de numéros internes des contrats.
         */
         getInternalNumbers(): Observable<any[]> {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/internalNumbers`);
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/internalNumbers`);
         }
         
         /**
@@ -216,7 +216,7 @@ export class ContractService {
                 formData.append('contractId', contractId);
             });
         
-            const url = `${environment.apiUrl}/api/auth/upload` + (folderName ? `?folderName=${folderName}` : '');
+            const url = `${environment.apiUrl}/api/files/upload` + (folderName ? `?folderName=${folderName}` : '');
             const req = new HttpRequest('POST', url, formData, {
                 reportProgress: true,
                 responseType: 'json'
@@ -235,7 +235,7 @@ export class ContractService {
          * @returns un Observable contenant la réponse du serveur
          */
         deleteFile(fileId: string, contractId: string): Observable<any>{
-            return this.http.delete<any>(`${environment.apiUrl}/api/auth/deleteFile`, { params: { contractId: contractId, fileId: fileId } });
+            return this.http.delete<any>(`${environment.apiUrl}/api/files/deleteFile`, { params: { contractId: contractId, fileId: fileId } });
         }
 
         /**
@@ -247,18 +247,18 @@ export class ContractService {
          */
         updateFile(fileId: string, updateData: any): Observable<any> {
             const body = { fileId, updateData };
-            return this.http.put<any>(`${environment.apiUrl}/api/auth/updateFile`, body);
+            return this.http.put<any>(`${environment.apiUrl}/api/files/updateFile`, body);
           }
 
         /** 
-         * Permet de récupérer un fichier par son id. La route est ${environment.apiUrl}/api/auth/download
+         * Permet de récupérer un fichier par son id. La route est ${environment.apiUrl}/api/contracts/download
          * et les paramètres sont le contractId et le fileId
          * @param fileId, l'id du fichier
          * @param contractId, l'id du contrat
          * @returns un Observable contenant le fichier
          **/
         getFile(fileId: string, contractId: string): Observable<any> {
-            // return this.http.get<any>(`${environment.apiUrl}/api/auth/download`, { params: { fileId: fileId, contractId: contractId }, responseType: 'blob' as 'json' });
+            // return this.http.get<any>(`${environment.apiUrl}/api/files/download`, { params: { fileId: fileId, contractId: contractId }, responseType: 'blob' as 'json' });
             const options = {
                 params: { fileId: fileId, contractId: contractId },
                 responseType: 'blob' as 'json',
@@ -266,7 +266,7 @@ export class ContractService {
                     'Access-Control-Allow-Origin': '*',
                 })
             };
-            return this.http.get<Blob>(`${environment.apiUrl}/api/auth/download`, options);
+            return this.http.get<Blob>(`${environment.apiUrl}/api/files/download`, options);
         }
 
         /**
@@ -275,7 +275,7 @@ export class ContractService {
          * @returns Un observable contenant le nom de la prestation
          */
         getBenefitById(benefitId: string): Observable<any>{
-            return this.http.get<any>(`${environment.apiUrl}/api/auth/benefit/${benefitId}`);
+            return this.http.get<any>(`${environment.apiUrl}/api/benefits/benefit/${benefitId}`);
         }
 
         /**
@@ -286,7 +286,7 @@ export class ContractService {
          * @returns Un observable contenant la réponse du serveur
          */
         addObservation(contractId: string, observation: string, dateAdd: string, user: string): Observable<any>{
-            return this.http.post<any>(`${environment.apiUrl}/api/auth/observation`, { comment: observation, contractId: contractId, dateAdd: dateAdd, user: user});
+            return this.http.post<any>(`${environment.apiUrl}/api/contracts/observation`, { comment: observation, contractId: contractId, dateAdd: dateAdd, user: user});
         }
 
         /**
@@ -297,7 +297,7 @@ export class ContractService {
          * @returns Un observable contenant la réponse du serveur
          */
         deleteObservation(contractId: string, observationId: string): Observable<any>{
-            return this.http.delete<any>(`${environment.apiUrl}/api/auth/observation/${observationId}`);
+            return this.http.delete<any>(`${environment.apiUrl}/api/contracts/observation/${observationId}`);
         }
 
         /**
@@ -307,7 +307,7 @@ export class ContractService {
          * @returns Un observable contenant les observations du contrat
          */
         getObservations(contractId: string): Observable<any[]>{
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/observations/${contractId}`);
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/observations/${contractId}`);
         }
 
         /**
@@ -318,7 +318,7 @@ export class ContractService {
          * @returns Un observable contenant la réponse du serveur
          */
         addIncident(contractId: string, incident: string, dateAdd: string, userId: string): Observable<any>{
-            return this.http.post<any>(`${environment.apiUrl}/api/auth/incident`, { comment: incident, contractId: contractId, dateAdd: dateAdd, user: userId});
+            return this.http.post<any>(`${environment.apiUrl}/api/contracts/incident`, { comment: incident, contractId: contractId, dateAdd: dateAdd, user: userId});
         }
 
         /**
@@ -329,7 +329,7 @@ export class ContractService {
          * @returns Un observable contenant la réponse du serveur
          */
         deleteIncident(contractId: string, incidentId: string): Observable<any>{
-            return this.http.delete<any>(`${environment.apiUrl}/api/auth/incident/${incidentId}`);
+            return this.http.delete<any>(`${environment.apiUrl}/api/contracts/incident/${incidentId}`);
         }
 
         /**
@@ -339,6 +339,6 @@ export class ContractService {
          * @returns Un observable contenant les incidents du contrat
          */
         getIncidents(contractId: string): Observable<any[]>{
-            return this.http.get<any[]>(`${environment.apiUrl}/api/auth/incidents/${contractId}`);
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/incidents/${contractId}`);
         }
     }

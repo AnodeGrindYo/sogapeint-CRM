@@ -19,7 +19,7 @@ export interface Invoice {
 })
 export class InvoicesService {
 
-  private apiUrl = `${environment.apiUrl}/api/auth/invoices`;
+  private apiUrl = `${environment.apiUrl}/api/invoices/invoices`;
 
   constructor(private http: HttpClient, 
               private contractService: ContractService

@@ -27,7 +27,7 @@ export class CompanyService {
    * @returns Un Observable contenant un tableau d'entreprises.
    */
   getCompanies(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/api/auth/companies`);
+    return this.http.get<any[]>(`${environment.apiUrl}/api/companies/companies`);
   }
 
   /**
@@ -37,7 +37,7 @@ export class CompanyService {
    * @returns Un Observable contenant un tableau de noms d'entreprises.
    */
   getCompaniesNames(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/api/auth/companiesNames`);
+    return this.http.get<any[]>(`${environment.apiUrl}/api/companies/companiesNames`);
   }
 
   /**
@@ -48,7 +48,7 @@ export class CompanyService {
    * @returns Un Observable contenant un tableau d'entreprises filtrées.
    */
   searchCompanies(query: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/api/auth/company/search`, { params: { q: query } });
+    return this.http.get<any[]>(`${environment.apiUrl}/api/companies/company/search`, { params: { q: query } });
   }
 
   /**
@@ -59,7 +59,7 @@ export class CompanyService {
    * @returns Un Observable contenant l'entreprise.
    */
   getCompanyById(id: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/api/auth/company/${id}`);
+    return this.http.get<any>(`${environment.apiUrl}/api/companies/company/${id}`);
   }
 
   /**
@@ -71,7 +71,7 @@ export class CompanyService {
    * @returns Un Observable contenant la réponse de la requête.
    */
   updateCompany(id: string, companyData: any): Observable<any> {
-    return this.http.put(`${environment.apiUrl}/api/auth/company/${id}`, companyData);
+    return this.http.put(`${environment.apiUrl}/api/companies/company/${id}`, companyData);
   }
   
   /**
@@ -82,7 +82,7 @@ export class CompanyService {
    * @returns Un Observable contenant la réponse de la requête.
    */
   createCompany(companyData: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/auth/company`, companyData);
+    return this.http.post(`${environment.apiUrl}/api/companies/company`, companyData);
   }
 
   /**
@@ -92,7 +92,7 @@ export class CompanyService {
    * @returns Un Observable contenant un tableau d'abréviations d'entreprises.
    */
   getCompaniesAbbreviations(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/api/auth/companiesAbbreviations`);
+    return this.http.get<any[]>(`${environment.apiUrl}/api/companies/companiesAbbreviations`);
   }
 
   /**

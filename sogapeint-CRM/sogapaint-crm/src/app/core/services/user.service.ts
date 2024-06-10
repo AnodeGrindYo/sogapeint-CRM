@@ -32,7 +32,7 @@ export class UserProfileService {
      * @returns Un Observable contenant un tableau d'utilisateurs.
      */
     getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/api/auth/allUsers`);
+        return this.http.get<User[]>(`${environment.apiUrl}/api/users/allUsers`);
     }
 
     /**
@@ -43,7 +43,7 @@ export class UserProfileService {
      * @returns Un Observable pour la réponse de la requête.
      */
     create(user: User) {
-        return this.http.post(`${environment.apiUrl}/api/auth/addUser`, {
+        return this.http.post(`${environment.apiUrl}/api/users/addUser`, {
             email: user.email, 
             password: user.password, 
             firstname: user.firstName, 
@@ -62,7 +62,7 @@ export class UserProfileService {
     * @returns Un Observable contenant l'utilisateur.
     */
     getOne(userId: string) {
-        return this.http.get<User>(`${environment.apiUrl}/api/auth/user/${userId}`);
+        return this.http.get<User>(`${environment.apiUrl}/api/users/user/${userId}`);
     }
 
     /**
@@ -74,7 +74,7 @@ export class UserProfileService {
      * @returns Un Observable pour la réponse de la requête.
      */
     update(userId: string, user: User) {
-        return this.http.put(`${environment.apiUrl}/api/auth/user/${userId}`, {
+        return this.http.put(`${environment.apiUrl}/api/users/user/${userId}`, {
             email: user.email, 
             firstname: user.firstName, 
             lastname: user.lastName, 
@@ -94,7 +94,7 @@ export class UserProfileService {
      * @returns Un Observable pour la réponse de la requête.
      */
     delete(userId: string) {
-        return this.http.delete(`${environment.apiUrl}/api/auth/user/${userId}`);
+        return this.http.delete(`${environment.apiUrl}/api/users/user/${userId}`);
     }
 
     /**
@@ -106,8 +106,8 @@ export class UserProfileService {
      */
     searchUsers(query: string) {
         console.log('searchUsers', query);
-        console.log('searchUsers', `${environment.apiUrl}/api/auth/user/search`);
-        return this.http.get<User[]>(`${environment.apiUrl}/api/auth/user-search`, { params: { q: query } });
+        console.log('searchUsers', `${environment.apiUrl}/api/users/user/search`);
+        return this.http.get<User[]>(`${environment.apiUrl}/api/users/user-search`, { params: { q: query } });
     }
 
     /**
@@ -118,7 +118,7 @@ export class UserProfileService {
      * @returns Un Observable pour la réponse de la requête.
      */
     resetPasswordByAdmin(userId: string) {
-        return this.http.post(`${environment.apiUrl}/api/auth/resetPasswordFromAdmin`, { userId });
+        return this.http.post(`${environment.apiUrl}/api/users/resetPasswordFromAdmin`, { userId });
     }
 
     
@@ -130,7 +130,7 @@ export class UserProfileService {
      * @returns Un Observable pour la réponse de la requête.
      */
     requestPasswordReset(email: string) {
-        return this.http.post(`${environment.apiUrl}/api/auth/forgotPassword`, { email });
+        return this.http.post(`${environment.apiUrl}/api/users/forgotPassword`, { email });
     }
 
     
@@ -143,11 +143,11 @@ export class UserProfileService {
      * @returns Un Observable pour la réponse de la requête.
      */
     verifyResetCode(email: string, code: string) {
-        return this.http.post(`${environment.apiUrl}/api/auth/verifyResetCode`, { email, code });
+        return this.http.post(`${environment.apiUrl}/api/users/verifyResetCode`, { email, code });
     }
 
     // Méthode pour réinitialiser le mot de passe avec le code de vérification
     resetPassword(email: string, code: string, newPassword: string) {
-        return this.http.post(`${environment.apiUrl}/api/auth/resetPassword`, { email, code, newPassword });
+        return this.http.post(`${environment.apiUrl}/api/users/resetPassword`, { email, code, newPassword });
     }
 }

@@ -97,59 +97,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     return benefit ? benefit.name : "";
   }
 
-  // loadNotOnGoingContracts() {
-  //   console.log("loadNotOnGoingContracts");
-  //   this.contractService.getNotOnGoingContracts().subscribe({
-  //     next: (notOnGoingContracts) => {
-
-  //       this.orders = [...this.orders, ...notOnGoingContracts];
-  //     },
-  //     error: (error) => {
-  //       console.error(
-  //         "Erreur lors du chargement des contrats non en cours",
-  //         error
-  //       );
-  //     },
-  //   });
-  // }
-  // loadNotOnGoingContracts() {
-  //   console.log("loadNotOnGoingContracts");
-  //   this.isLoading = true;
-  //   this.contractService.getNotOnGoingContracts().subscribe({
-  //       next: (notOnGoingContracts) => {
-  //           const filteredContracts = notOnGoingContracts.filter(contract => {
-              
-  //                 if (this.currentUser.role === "superAdmin") {
-  //                     return true;
-  //                 } else if (this.currentUser.role === "cocontractor" || this.currentUser.role === "subcontractor") {
-  //                     const user_company = this.normalizeString(this.currentUser.company);
-  //                     return this.checkCompanyInContract(contract, user_company);
-  //                 } else if (this.currentUser.role === "customer") {
-  //                   if (contract.customer) {
-  //                     return this.currentUser.userId === contract.customer._id
-  //                       && this.currentUser.userId === contract.customer._id;
-  //                   }
-  //                 } else if (this.currentUser.role === "comanager") {
-  //                   return (this.currentUser.userId == contract.customer._id ||
-  //                     this.currentUser.userId == contract.contact._id ||
-  //                     this.currentUser.userId == contract.external_contributor._id ||
-  //                     this.currentUser.userId == contract.internal_contributor._id ||
-  //                     this.currentUser.userId == contract.subcontractor._id);
-  //                 }
-  //                 return false;
-  //           });
-
-  //           // this.orders = [...this.orders, ...filteredContracts];
-  //           this.sortfilteredOrdersByMostRecent();
-  //           this.updateOrdersToShow();
-  //           this.isLoading = false;
-  //       },
-  //       error: (error) => {
-  //           console.error("Erreur lors du chargement des contrats non en cours", error);
-  //           this.isLoading = false;
-  //       }
-  //   });
-  // }
   loadNotOnGoingContracts() {
     console.log("loadNotOnGoingContracts");
     this.isLoading = true;
@@ -204,11 +151,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
             }
 
             return returnedContract;
-            // return (this.currentUser.userId == contract.customer._id ||
-            //   this.currentUser.userId == contract.contact._id ||
-            //   this.currentUser.userId == contract.external_contributor._id ||
-            //   this.currentUser.userId == contract.internal_contributor._id ||
-            //   this.currentUser.userId == contract.subcontractor._id);
           }
           return false;
         });

@@ -6,8 +6,10 @@ const socketIo = require('socket.io');
 require('dotenv').config();
 
 // Importation des routes
-const apiRoutes = require('./routes/index');
-const chatRoutes = require('./routes/chatRoutes');
+const authRoutes = require('./routes/authRoutes');
+const scraperRoutes = require('./routes/scraperRoutes');
+const kpiRoutes = require('./routes/kpiRoutes');
+const chatRoutes = require('./routes/chatRoutes'); // Importer les routes de chat
 
 // Initialisation d'Express
 const app = express();
@@ -16,6 +18,7 @@ const frontendUrl = process.env.FRONTEND_URL;
 const frontendPort = process.env.FRONTEND_PORT;
 const io = socketIo(server, {
   cors: {
+    // origin:"http://localhost:4200", // frontend Angular
     origin: `http://${frontendUrl}:${frontendPort}`, // frontend Angular
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -34,8 +37,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
   .catch(err => console.error('Erreur de connexion à MongoDB', err));
 
 // Utilisation des routes
-app.use('/api', apiRoutes);
-app.use('/api/chat', chatRoutes(io));
+app.use('/api/auth', authRoutes);
+app.use('/api/scrape', scraperRoutes);
+app.use('/api/kpi', kpiRoutes);
+app.use('/api/chat', chatRoutes(io)); // Utiliser les routes de chat
 
 // Middleware pour la gestion des erreurs
 app.use((err, req, res, next) => {
@@ -51,47 +56,8 @@ io.on('connection', (socket) => {
   });
 });
 
-// Fonction pour lister les routes
-const listRoutes = (app) => {
-  const getRoutes = (stack, path = '') => {
-    const routes = [];
-
-    stack.forEach(layer => {
-      if (layer.route) {
-        const routePath = path + layer.route.path;
-        layer.route.stack.forEach(subLayer => {
-          if (subLayer.method) {
-            routes.push({
-              method: subLayer.method.toUpperCase(),
-              path: routePath,
-            });
-          }
-        });
-      } else if (layer.name === 'router' && layer.handle.stack) {
-        const routerPath = path + (layer.regexp.source
-          .replace(/\\\//g, '/')
-          .replace(/\/$/, '')
-          .replace(/^\^/, '')
-          .replace('/?(?=/|$)', ''));
-        const subRoutes = getRoutes(layer.handle.stack, routerPath);
-        routes.push(...subRoutes);
-      }
-    });
-
-    return routes;
-  };
-
-  const routes = getRoutes(app._router.stack);
-
-  console.log('Liste des routes disponibles:');
-  routes.forEach(route => {
-    console.log(`${route.method} ${route.path}`);
-  });
-};
-
 // Lancement du serveur
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
-  listRoutes(app); // Afficher les routes après le démarrage
 });

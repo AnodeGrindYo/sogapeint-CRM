@@ -38,7 +38,7 @@ export class BenefitService {
     * @returns Un Observable contenant un tableau de services.
     */
     getBenefits(): Observable<any[]> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/benefits`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/benefits/benefits`);
     }
     
     /**
@@ -49,7 +49,7 @@ export class BenefitService {
     * @returns Un Observable contenant le service ajouté.
     */
     addBenefit(benefit: any): Observable<any> {
-        return this.http.post<any>(`${environment.apiUrl}/api/auth/benefit`, benefit);
+        return this.http.post<any>(`${environment.apiUrl}/api/benefits/benefit`, benefit);
     }
     
     /**
@@ -60,7 +60,7 @@ export class BenefitService {
     * @returns Un Observable contenant le service supprimé.
     */
     deleteBenefit(benefitId: string): Observable<any> {
-        return this.http.delete<any>(`${environment.apiUrl}/api/auth/benefit/${benefitId}`);
+        return this.http.delete<any>(`${environment.apiUrl}/api/benefits/benefit/${benefitId}`);
     }
 
     // Nouvelle méthode pour vérifier si une prestation est utilisée
@@ -71,7 +71,7 @@ export class BenefitService {
      * @returns Un Observable contenant un booléen indiquant si la prestation est utilisée.
      */
     checkBenefitInUse(benefitId: string): Observable<boolean> {
-        return this.http.get<boolean>(`${environment.apiUrl}/api/auth/checkBenefitInUse`, {
+        return this.http.get<boolean>(`${environment.apiUrl}/api/benefits/checkBenefitInUse`, {
             params: { benefitId }
         });
     }
@@ -85,7 +85,7 @@ export class BenefitService {
      * @returns Un Observable contenant la réponse de l'API.
      */
     replaceBenefit(oldBenefitId: string, newBenefitId: string): Observable<any> {
-        return this.http.put<any>(`${environment.apiUrl}/api/auth/replaceBenefit`, { oldBenefitId, newBenefitId });
+        return this.http.put<any>(`${environment.apiUrl}/api/benefits/replaceBenefit`, { oldBenefitId, newBenefitId });
     }
     
 }
