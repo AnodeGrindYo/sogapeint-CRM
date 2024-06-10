@@ -34,7 +34,7 @@ describe('CompanyService', () => {
       expect(companies).toEqual(dummyCompanies);
     });
 
-    const req = httpMock.expectOne(`${environment.apiUrl}/api/auth/companies`);
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/companies/companies`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyCompanies);
   });
