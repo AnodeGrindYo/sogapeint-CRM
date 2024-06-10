@@ -1,0 +1,4678 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "API Sogapeint",
+      "version": "1.0.0",
+      "description": "API backend de l'application Sogapeint."
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/login": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rememberMe": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/resetPasswordFromAdmin": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/forgotPassword": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/verifyResetCode": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "code": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/resetPassword": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "code": {
+                    "example": "any"
+                  },
+                  "newPassword": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/addUser": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  },
+                  "firstname": {
+                    "example": "any"
+                  },
+                  "lastname": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "company": {
+                    "example": "any"
+                  },
+                  "role": {
+                    "example": "any"
+                  },
+                  "active": {
+                    "example": "any"
+                  },
+                  "authorized_connection": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/allUsers": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/user/{userId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "firstname": {
+                    "example": "any"
+                  },
+                  "lastname": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "company": {
+                    "example": "any"
+                  },
+                  "role": {
+                    "example": "any"
+                  },
+                  "active": {
+                    "example": "any"
+                  },
+                  "authorized_connection": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/user-search": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "q",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companies": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companiesNames": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/company/search": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "q",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/company/{companyId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "names": {
+                    "example": "any"
+                  },
+                  "normalized_name": {
+                    "example": "any"
+                  },
+                  "abbreviation": {
+                    "example": "any"
+                  },
+                  "industry": {
+                    "example": "any"
+                  },
+                  "address": {
+                    "example": "any"
+                  },
+                  "city": {
+                    "example": "any"
+                  },
+                  "postalCode": {
+                    "example": "any"
+                  },
+                  "country": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "website": {
+                    "example": "any"
+                  },
+                  "employees": {
+                    "example": "any"
+                  },
+                  "documents": {
+                    "example": "any"
+                  },
+                  "contractsAsCustomer": {
+                    "example": "any"
+                  },
+                  "contractsAsContact": {
+                    "example": "any"
+                  },
+                  "contractsAsExternalContributor": {
+                    "example": "any"
+                  },
+                  "additionalFields": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/company": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "names": {
+                    "example": "any"
+                  },
+                  "normalized_name": {
+                    "example": "any"
+                  },
+                  "abbreviation": {
+                    "example": "any"
+                  },
+                  "industry": {
+                    "example": "any"
+                  },
+                  "address": {
+                    "example": "any"
+                  },
+                  "city": {
+                    "example": "any"
+                  },
+                  "postalCode": {
+                    "example": "any"
+                  },
+                  "country": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "website": {
+                    "example": "any"
+                  },
+                  "employees": {
+                    "example": "any"
+                  },
+                  "documents": {
+                    "example": "any"
+                  },
+                  "contractsAsCustomer": {
+                    "example": "any"
+                  },
+                  "contractsAsContact": {
+                    "example": "any"
+                  },
+                  "contractsAsExternalContributor": {
+                    "example": "any"
+                  },
+                  "additionalFields": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contractsByMonth": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "month",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contract/{contractId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contract": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "internal_number": {
+                    "example": "any"
+                  },
+                  "customer": {
+                    "example": "any"
+                  },
+                  "contact": {
+                    "example": "any"
+                  },
+                  "internal_contributor": {
+                    "example": "any"
+                  },
+                  "external_contributor": {
+                    "example": "any"
+                  },
+                  "external_contributor_amount": {
+                    "example": "any"
+                  },
+                  "subcontractor": {
+                    "example": "any"
+                  },
+                  "subcontractor_amount": {
+                    "example": "any"
+                  },
+                  "address": {
+                    "example": "any"
+                  },
+                  "appartment_number": {
+                    "example": "any"
+                  },
+                  "ss4": {
+                    "example": "any"
+                  },
+                  "quote_number": {
+                    "example": "any"
+                  },
+                  "mail_sended": {
+                    "example": "any"
+                  },
+                  "invoice_number": {
+                    "example": "any"
+                  },
+                  "amount_ht": {
+                    "example": "any"
+                  },
+                  "benefit_ht": {
+                    "example": "any"
+                  },
+                  "execution_data_day": {
+                    "example": "any"
+                  },
+                  "execution_data_hour": {
+                    "example": "any"
+                  },
+                  "prevision_data_day": {
+                    "example": "any"
+                  },
+                  "prevision_data_hour": {
+                    "example": "any"
+                  },
+                  "benefit": {
+                    "example": "any"
+                  },
+                  "status": {
+                    "example": "any"
+                  },
+                  "occupied": {
+                    "example": "any"
+                  },
+                  "start_date_works": {
+                    "example": "any"
+                  },
+                  "end_date_works": {
+                    "example": "any"
+                  },
+                  "end_date_customer": {
+                    "example": "any"
+                  },
+                  "trash": {
+                    "example": "any"
+                  },
+                  "date_cde": {
+                    "example": "any"
+                  },
+                  "billing_amount": {
+                    "example": "any"
+                  },
+                  "createdBy": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/ongoingContracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/notOngoingContracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/streamOnGoingContracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "period",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "filter_trash",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "default": {
+              "description": ""
+            }
+          }
+        }
+      },
+      "/streamNotOngoingContracts": {
+        "get": {
+          "description": "",
+          "responses": {
+            "default": {
+              "description": ""
+            }
+          }
+        }
+      },
+      "/streamOrdersByTags": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "status",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "incident",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "default": {
+              "description": ""
+            }
+          }
+        }
+      },
+      "/internalNumbers": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companiesAbbreviations": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/upload": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "x-folder-name",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "folderName",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contractId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/download": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "contractId",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "fileId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/deleteFile": {
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "contractId",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "fileId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/updateFile": {
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileId": {
+                    "example": "any"
+                  },
+                  "updateData": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefit/{benefitId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "benefitId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "benefitId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/checkBenefitInUse": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "benefitId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/replaceBenefit": {
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldBenefitId": {
+                    "example": "any"
+                  },
+                  "newBenefitId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/observation": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contractId": {
+                    "example": "any"
+                  },
+                  "dateAdd": {
+                    "example": "any"
+                  },
+                  "user": {
+                    "example": "any"
+                  },
+                  "comment": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/observation/{observationId}": {
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "observationId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/observations/{contractId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/incident": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contractId": {
+                    "example": "any"
+                  },
+                  "dateAdd": {
+                    "example": "any"
+                  },
+                  "user": {
+                    "example": "any"
+                  },
+                  "comment": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/incident/{incidentId}": {
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "incidentId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/incidents/{contractId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefits": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefit": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/invoices": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "days",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "example": "any"
+                  },
+                  "message": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      },
+      "/streamNotOnGoingContracts": {
+        "get": {
+          "description": "",
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rememberMe": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/auth/resetPasswordFromAdmin": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/auth/forgotPassword": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/auth/verifyResetCode": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "code": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/auth/resetPassword": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "code": {
+                    "example": "any"
+                  },
+                  "newPassword": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/users/addUser": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  },
+                  "firstname": {
+                    "example": "any"
+                  },
+                  "lastname": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "company": {
+                    "example": "any"
+                  },
+                  "role": {
+                    "example": "any"
+                  },
+                  "active": {
+                    "example": "any"
+                  },
+                  "authorized_connection": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/users/allUsers": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/users/user/{userId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "firstname": {
+                    "example": "any"
+                  },
+                  "lastname": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "company": {
+                    "example": "any"
+                  },
+                  "role": {
+                    "example": "any"
+                  },
+                  "active": {
+                    "example": "any"
+                  },
+                  "authorized_connection": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/users/user-search": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "q",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companies/companies": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companies/companiesNames": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companies/company/search": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "q",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companies/company/{companyId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "names": {
+                    "example": "any"
+                  },
+                  "normalized_name": {
+                    "example": "any"
+                  },
+                  "abbreviation": {
+                    "example": "any"
+                  },
+                  "industry": {
+                    "example": "any"
+                  },
+                  "address": {
+                    "example": "any"
+                  },
+                  "city": {
+                    "example": "any"
+                  },
+                  "postalCode": {
+                    "example": "any"
+                  },
+                  "country": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "website": {
+                    "example": "any"
+                  },
+                  "employees": {
+                    "example": "any"
+                  },
+                  "documents": {
+                    "example": "any"
+                  },
+                  "contractsAsCustomer": {
+                    "example": "any"
+                  },
+                  "contractsAsContact": {
+                    "example": "any"
+                  },
+                  "contractsAsExternalContributor": {
+                    "example": "any"
+                  },
+                  "additionalFields": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companies/company": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "names": {
+                    "example": "any"
+                  },
+                  "normalized_name": {
+                    "example": "any"
+                  },
+                  "abbreviation": {
+                    "example": "any"
+                  },
+                  "industry": {
+                    "example": "any"
+                  },
+                  "address": {
+                    "example": "any"
+                  },
+                  "city": {
+                    "example": "any"
+                  },
+                  "postalCode": {
+                    "example": "any"
+                  },
+                  "country": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "website": {
+                    "example": "any"
+                  },
+                  "employees": {
+                    "example": "any"
+                  },
+                  "documents": {
+                    "example": "any"
+                  },
+                  "contractsAsCustomer": {
+                    "example": "any"
+                  },
+                  "contractsAsContact": {
+                    "example": "any"
+                  },
+                  "contractsAsExternalContributor": {
+                    "example": "any"
+                  },
+                  "additionalFields": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/companies/companiesAbbreviations": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/contracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/contractsByMonth": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "month",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/contract/{contractId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/contract": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "internal_number": {
+                    "example": "any"
+                  },
+                  "customer": {
+                    "example": "any"
+                  },
+                  "contact": {
+                    "example": "any"
+                  },
+                  "internal_contributor": {
+                    "example": "any"
+                  },
+                  "external_contributor": {
+                    "example": "any"
+                  },
+                  "external_contributor_amount": {
+                    "example": "any"
+                  },
+                  "subcontractor": {
+                    "example": "any"
+                  },
+                  "subcontractor_amount": {
+                    "example": "any"
+                  },
+                  "address": {
+                    "example": "any"
+                  },
+                  "appartment_number": {
+                    "example": "any"
+                  },
+                  "ss4": {
+                    "example": "any"
+                  },
+                  "quote_number": {
+                    "example": "any"
+                  },
+                  "mail_sended": {
+                    "example": "any"
+                  },
+                  "invoice_number": {
+                    "example": "any"
+                  },
+                  "amount_ht": {
+                    "example": "any"
+                  },
+                  "benefit_ht": {
+                    "example": "any"
+                  },
+                  "execution_data_day": {
+                    "example": "any"
+                  },
+                  "execution_data_hour": {
+                    "example": "any"
+                  },
+                  "prevision_data_day": {
+                    "example": "any"
+                  },
+                  "prevision_data_hour": {
+                    "example": "any"
+                  },
+                  "benefit": {
+                    "example": "any"
+                  },
+                  "status": {
+                    "example": "any"
+                  },
+                  "occupied": {
+                    "example": "any"
+                  },
+                  "start_date_works": {
+                    "example": "any"
+                  },
+                  "end_date_works": {
+                    "example": "any"
+                  },
+                  "end_date_customer": {
+                    "example": "any"
+                  },
+                  "trash": {
+                    "example": "any"
+                  },
+                  "date_cde": {
+                    "example": "any"
+                  },
+                  "billing_amount": {
+                    "example": "any"
+                  },
+                  "createdBy": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/ongoingContracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/notOngoingContracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/streamOnGoingContracts": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "period",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "filter_trash",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/streamNotOnGoingContracts": {
+        "get": {
+          "description": "",
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/streamOrdersByTags": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "status",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "incident",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/internalNumbers": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/observation": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contractId": {
+                    "example": "any"
+                  },
+                  "dateAdd": {
+                    "example": "any"
+                  },
+                  "user": {
+                    "example": "any"
+                  },
+                  "comment": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/observation/{observationId}": {
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "observationId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/observations/{contractId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/incident": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contractId": {
+                    "example": "any"
+                  },
+                  "dateAdd": {
+                    "example": "any"
+                  },
+                  "user": {
+                    "example": "any"
+                  },
+                  "comment": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/incident/{incidentId}": {
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "incidentId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/contracts/incidents/{contractId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "contractId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/files/upload": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "x-folder-name",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "folderName",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contractId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/files/download": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "contractId",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "fileId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/files/deleteFile": {
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "contractId",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "fileId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/files/updateFile": {
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileId": {
+                    "example": "any"
+                  },
+                  "updateData": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefits/benefit/{benefitId}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "benefitId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "benefitId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefits/checkBenefitInUse": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "benefitId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefits/replaceBenefit": {
+        "put": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldBenefitId": {
+                    "example": "any"
+                  },
+                  "newBenefitId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefits/benefits": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/benefits/benefit": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/invoices/invoices": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/scrape/company-list/{companyName}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyName",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/scrape/enriched-company/{companyName}/{postalCode}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyName",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "postalCode",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/kpi/totalOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/ordersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/activeOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/activeOrdersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/inactiveOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/inactiveOrdersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/completedOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/completedOrdersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/averageExecutionTime": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/totalRevenue": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/averageRevenue": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/ordersByService": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/ordersByServiceByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/ordersWithIncidents": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/mailResponseRate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/contributorsEfficiency": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/occupationRate": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/averageBillingAmount": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/averageExternalContributorPaymentDelay": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/ordersStatusDistribution": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/customerRenewalRate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/kpi/order-amount": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "dateStart",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "dateEnd",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/kpi/order-amount-this-month": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/kpi/average-order-amount": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/totalOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/ordersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/activeOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/activeOrdersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/inactiveOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/inactiveOrdersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/completedOrders": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/completedOrdersByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/averageExecutionTime": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/totalRevenue": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/averageRevenue": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/ordersByService": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/ordersByServiceByDate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/ordersWithIncidents": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/mailResponseRate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/contributorsEfficiency": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/occupationRate": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/averageBillingAmount": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/averageExternalContributorPaymentDelay": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/ordersStatusDistribution": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/customerRenewalRate": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/order-amount": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "dateStart",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "dateEnd",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/order-amount-this-month": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/average-order-amount": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/company-list/{companyName}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyName",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/enriched-company/{companyName}/{postalCode}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "companyName",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "postalCode",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      }
+    }
+  }

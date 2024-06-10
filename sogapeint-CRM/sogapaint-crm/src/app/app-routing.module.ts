@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';// Assurez-vous d'importer le composant de la documentation
 import { DocGuard } from './core/guards/doc.guard'
 import { ProtectedDocumentationComponent } from "./protected-documentation/protected-documentation.component";
-
+import { ProtectedApiDocumentationComponent } from "./protected-api-documentation/protected-api-documentation.component";
 // Importation du composant LayoutComponent pour la structure de base de l'application
 import { LayoutComponent } from './layouts/layout/layout.component';
 
@@ -27,6 +27,11 @@ const routes: Routes = [
   {
     path: 'documentation',
     component: ProtectedDocumentationComponent, // Le composant que vous voulez protéger avec le garde
+    canActivate: [DocGuard] // Appliquez le garde à cette route
+  },
+  {
+    path: 'api-documentation',
+    component: ProtectedApiDocumentationComponent, // Le composant que vous voulez protéger avec le garde
     canActivate: [DocGuard] // Appliquez le garde à cette route
   }
 ];

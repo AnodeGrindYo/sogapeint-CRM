@@ -17,6 +17,7 @@ import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { AuthenticationService } from './core/services/auth.service';
 
 import { ProtectedDocumentationComponent } from "./protected-documentation/protected-documentation.component";
+import { ProtectedApiDocumentationComponent } from "./protected-api-documentation/protected-api-documentation.component";
 
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
@@ -34,7 +35,8 @@ export function createTranslateLoader(http: HttpClient): any {
 @NgModule({
   declarations: [
     AppComponent,
-    ProtectedDocumentationComponent
+    ProtectedDocumentationComponent,
+    ProtectedApiDocumentationComponent
   ],
   imports: [
     BrowserModule,

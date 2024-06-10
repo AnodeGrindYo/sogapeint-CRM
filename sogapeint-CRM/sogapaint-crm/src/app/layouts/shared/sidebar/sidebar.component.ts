@@ -246,6 +246,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           label: 'Documentation',
           icon: 'ri-file-text-line',
           link: '/documentation'
+        },
+        {
+          id: 10,
+          label: 'API Documentation',
+          icon: 'ri-file-text-line',
+          link: '/api-documentation'
         }
       ];
     } else {
@@ -351,7 +357,17 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           link: '/documentation'
         });
       }
+      const apiDocumentationExists = this.menuItems.some(item => item.id === 667); // Utilise l'ID  attribué au lien de la documentation
+      if (!apiDocumentationExists) {
+        // Ajoute l'élément de menu pour la documentation si l'utilisateur est un superAdmin et s'il n'existe pas déjà
+        this.menuItems.push({
+          id: 667, // Un ID unique pour l'élément de menu Documentation
+          label: 'API Documentation',
+          icon: 'ri-file-text-line', // icône de documentation
+          link: '/api-documentation'
+        });
     }
+  }
   }
   
   addEditionLinkIfSuperAdmin() {

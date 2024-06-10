@@ -10,7 +10,7 @@ const benefitRoutes = require('./benefitRoutes');
 const invoiceRoutes = require('./invoiceRoutes');
 const scraperRoutes = require('./scraperRoutes');
 const kpiRoutes = require('./kpiRoutes');
-const chatRoutes = require('./chatRoutes');
+
 
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
@@ -21,15 +21,7 @@ router.use('/benefits', benefitRoutes);
 router.use('/invoices', invoiceRoutes);
 router.use('/scrape', scraperRoutes);
 router.use('/kpi', kpiRoutes);
-// router.use('/chat', chatRoutes);
 
-// affiche la liste des routes en console
-// router.stack.forEach(function(r){
-//     console.log(r)
-//     if (r.route && r.route.path){
-//       console.log(r.route.path)
-//     }
-//   })
 
 
 module.exports = router;

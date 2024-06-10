@@ -14,5 +14,7 @@ export class ProtectedDocumentationComponent implements OnInit {
   ngOnInit(): void {
     const docUrl = '/assets/documentation/index.html';
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(docUrl);
+    // const apiDocUrl = '/assets/swagger-docs/index.html';
+    // this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(apiDocUrl);
   }
 }
