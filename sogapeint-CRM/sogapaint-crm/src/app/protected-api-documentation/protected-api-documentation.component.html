@@ -1,1 +1,16 @@
-<iframe *ngIf="safeUrl" [src]="safeUrl" frameborder="0" scrolling="no" height="1490px" width="100%"></iframe>
+<div class="iframe-container">
+    <iframe *ngIf="safeUrl" [src]="safeUrl" frameborder="0" scrolling="yes" class="responsive-iframe"></iframe>
+  </div>
+  
+  <style>
+    .iframe-container {
+      height: 100vh; /* Ajustez la hauteur du conteneur parent comme nécessaire */
+      width: 100%;
+    }
+    .responsive-iframe {
+      width: 100%;
+      height: 100%; /* L'iframe prendra toute la hauteur de son conteneur parent */
+      border: 0;
+    }
+  </style>
+  
