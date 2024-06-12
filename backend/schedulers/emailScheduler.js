@@ -3,13 +3,13 @@ const { sendEmail } = require('../services/emailService');
 const Contract = require('../models/Contract');
 const User = require('../models/User');
 
-
-const scheduleEmailToContributor = async (email, replacements, scheduledDate, templateName="orderNotificationTemplate") => {
+// Planifie l'envoi d'un email à un contributeur
+const scheduleEmailToContributor = async (email, replacements, scheduledDate, templateName = "orderNotificationTemplate") => {
     if (!email) {
-        console.log('No email address provided.');
+        console.log('Aucune adresse email fournie.');
         return;
     }
-
+    
     if (scheduledDate > new Date()) {
         schedule.scheduleJob(scheduledDate, () => {
             sendEmail(
@@ -18,13 +18,14 @@ const scheduleEmailToContributor = async (email, replacements, scheduledDate, te
                 replacements,
                 templateName
             );
-            console.log(`Email scheduled for ${email} on ${scheduledDate.toISOString()}`);
+            console.log(`Email programmé pour ${email} le ${scheduledDate.toISOString()}`);
         });
     } else {
-        console.log('The scheduled date has passed, no email will be sent.');
+        console.log('La date programmée est passée, aucun email ne sera envoyé.');
     }
 };
 
+// Obtenez le jour ouvrable suivant
 const getNextBusinessDay = (date, daysToAdd) => {
     let resultDate = new Date(date);
     let addedDays = 0;
@@ -36,14 +37,113 @@ const getNextBusinessDay = (date, daysToAdd) => {
             addedDays++;
         }
     }
-
+    
     return resultDate;
 };
 
-const scheduleRecurringEmails = async (contractId) => {
+// Planifie des emails récurrents pour les contrats
+// const scheduleRecurringEmails = async (contractId) => {
+//     const contract = await Contract.findById(contractId).populate('external_contributor subcontractor');
+//     if (!contract) {
+//         console.log('Contrat non trouvé.');
+//         return;
+//     }
+    
+//     const replacements = {
+//         'contract.internal_number': contract.internal_number || '',
+//         'CRM_URL': process.env.CRM_URL
+//     };
+    
+//     const reminderEmails = async () => {
+//         if (!contract.mail_sended) {
+//             const today = new Date();
+//             const nextBusinessDay = getNextBusinessDay(today, 3);
+            
+//             if (contract.external_contributor && contract.external_contributor.email) {
+//                 await scheduleEmailToContributor(
+//                     contract.external_contributor.email,
+//                     replacements,
+//                     nextBusinessDay,
+//                     'reminderInvoiceTemplate'
+//                 );
+//             }
+            
+//             if (contract.subcontractor && contract.subcontractor.email) {
+//                 await scheduleEmailToContributor(
+//                     contract.subcontractor.email,
+//                     replacements,
+//                     nextBusinessDay,
+//                     'reminderInvoiceTemplate'
+//                 );
+//             }
+            
+//             // Reschedule the function to run again in 3 business days
+//             schedule.scheduleJob(nextBusinessDay, reminderEmails);
+//         }
+//     };
+    
+//     // Start the first reminder immediately
+//     reminderEmails();
+// };
+// const scheduleRecurringEmails = async (contractId, startDate) => {
+//     const contract = await Contract.findById(contractId).populate('external_contributor subcontractor');
+//     if (!contract) {
+//         console.log('Contrat non trouvé.');
+//         return;
+//     }
+
+//     if (!startDate) {
+//         console.log('Date de fin client non renseignée. Aucune planification d\'emails récurrents.');
+//         return;
+//     }
+
+//     const replacements = {
+//         'contract.internal_number': contract.internal_number || '',
+//         'CRM_URL': process.env.CRM_URL
+//     };
+
+//     const reminderEmails = async () => {
+//         if (!contract.mail_sended) {
+//             const today = new Date();
+//             const nextBusinessDay = getNextBusinessDay(today, 3);
+
+//             if (contract.external_contributor && contract.external_contributor.email) {
+//                 await scheduleEmailToContributor(
+//                     contract.external_contributor.email,
+//                     replacements,
+//                     nextBusinessDay,
+//                     'reminderInvoiceTemplate'
+//                 );
+//             }
+
+//             if (contract.subcontractor && contract.subcontractor.email) {
+//                 await scheduleEmailToContributor(
+//                     contract.subcontractor.email,
+//                     replacements,
+//                     nextBusinessDay,
+//                     'reminderInvoiceTemplate'
+//                 );
+//             }
+
+//             // Reschedule the function to run again in 3 business days
+//             schedule.scheduleJob(nextBusinessDay, reminderEmails);
+//         }
+//     };
+
+//     // Start the first reminder at the specified start date
+//     const startReminderEmails = new Date(startDate);
+//     schedule.scheduleJob(startReminderEmails, reminderEmails);
+// };
+const scheduleRecurringEmails = async (contractId, startDate) => {
     const contract = await Contract.findById(contractId).populate('external_contributor subcontractor');
     if (!contract) {
-        console.log('Contract not found.');
+        console.log('Contrat non trouvé.');
+        return;
+    }
+
+    // Vérifier si la date de début est fournie
+    if (!startDate) {
+        console.log('Date de fin client non renseignée. Aucune planification d\'emails récurrents.');
         return;
     }
 
@@ -62,7 +162,7 @@ const scheduleRecurringEmails = async (contractId) => {
                     contract.external_contributor.email,
                     replacements,
                     nextBusinessDay,
-                    'reminderInvoiceTemplate' // New template for invoice reminder
+                    'reminderInvoiceTemplate'
                 );
             }
 
@@ -71,19 +171,22 @@ const scheduleRecurringEmails = async (contractId) => {
                     contract.subcontractor.email,
                     replacements,
                     nextBusinessDay,
-                    'reminderInvoiceTemplate' // New template for invoice reminder
+                    'reminderInvoiceTemplate'
                 );
             }
 
-            // Reschedule the function to run again in 3 business days
+            // Replanifier la fonction pour s'exécuter à nouveau dans 3 jours ouvrables
             schedule.scheduleJob(nextBusinessDay, reminderEmails);
         }
     };
 
-    // Start the first reminder immediately
-    reminderEmails();
+    // Démarrer le premier rappel à la date de début spécifiée
+    const startReminderEmails = new Date(startDate);
+    schedule.scheduleJob(startReminderEmails, reminderEmails);
 };
 
 
-module.exports = { scheduleEmailToContributor, scheduleRecurringEmails };
 
+
+
+module.exports = { scheduleEmailToContributor, scheduleRecurringEmails };

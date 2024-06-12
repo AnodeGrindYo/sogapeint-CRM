@@ -1,0 +1,38 @@
+<!-- contract-email-scheduler.component.html -->
+<div class="card shadow-sm">
+    <div class="card-header">
+        Planification des Emails Récurrents
+    </div>
+    <div class="card-body">
+        <div *ngIf="isLoading" class="text-center">
+            <p>Chargement...</p>
+        </div>
+        <div class="contract-email-scheduler-component" *ngIf="!isLoading && emailSchedule">
+            <form [formGroup]="emailScheduleForm" (ngSubmit)="updateEmailSchedule()">
+                <div class="mb-3">
+                    <label for="nextEmailDate" class="form-label">Prochaine date d'envoi:</label>
+                    <input type="date" id="nextEmailDate" formControlName="nextEmailDate" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="interval" class="form-label">Intervalle (jours):</label>
+                    <input type="number" id="interval" formControlName="interval" class="form-control" required>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" id="enabled" formControlName="enabled" class="form-check-input">
+                    <label for="enabled" class="form-check-label">
+                        Activer les emails récurrents
+                    </label>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="emailScheduleForm.invalid">Mettre à jour</button>
+                </div>
+                <div *ngIf="errorMessage" class="text-danger mt-3">
+                    {{ errorMessage }}
+                </div>
+                <div *ngIf="successMessage" class="text-success mt-3">
+                    {{ successMessage }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

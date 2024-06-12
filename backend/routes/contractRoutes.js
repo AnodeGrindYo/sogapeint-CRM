@@ -590,4 +590,7 @@ router.delete('/incident/:incidentId', isAdminOrSuperAdmin, contractController.d
  */
 router.get('/incidents/:contractId', isConnected, contractController.getIncidents);
 
+router.get('/:contractId/email-schedule', contractController.getEmailSchedule);
+router.put('/:contractId/email-schedule', contractController.updateEmailSchedule);
+
 module.exports = router;

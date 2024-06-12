@@ -58,6 +58,8 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
 
 import { EndlessAscensionComponent } from './endless-ascension/endless-ascension.component';
 
+import { ContractEmailSchedulerComponent } from './contract-email-scheduler/contract-email-scheduler.component';
+
 
 @NgModule({
   declarations: [
@@ -80,7 +82,8 @@ import { EndlessAscensionComponent } from './endless-ascension/endless-ascension
     OrderUpdateComponent,
     OrderUpdateCocontractorComponent,
     FileSizePipe,
-    EndlessAscensionComponent
+    EndlessAscensionComponent,
+    ContractEmailSchedulerComponent,
     // InvoicesManagementComponent,
     // DashboardComponent
     // LandingPageComponent
