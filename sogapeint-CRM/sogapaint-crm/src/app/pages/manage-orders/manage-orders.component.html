@@ -44,7 +44,7 @@
                               <i class="fas fa-sort-down" *ngIf="sortColumn === 'internal_number' && sortDirection === 'desc'"></i>
                             </div>
                           </th>
-                          <th scope="col">
+                          <th scope="col" *ngIf="currentUser.role !== 'comanager'">
                             <div class="cell-centered">Contact</div>
                             <div class="sort-icons float-end" (click)="onSort('contact')">
                               <i class="fas fa-sort" *ngIf="sortColumn !== 'contact'"></i>
@@ -187,7 +187,7 @@
                                     {{ order?.internal_number }}
                                 </div>
                             </td>
-                            <td class="cell-centered">
+                            <td class="cell-centered"  *ngIf="currentUser.role !== 'comanager'">
                                 <div [ngbTooltip]="order?.contact?.firstname+' '+order?.contact?.lastname">
                                     {{ order?.contact?.firstname }}<br>
                                     {{ order?.contact?.lastname }}
@@ -224,9 +224,12 @@
                                     {{ order?.external_contributor?.firstname }}<br>
                                     {{ order?.external_contributor?.lastname }}
                                     <!-- ligne de séparation -->
-                                    <div class="separator"></div>
+                                    <div *ngIf="currentUser.role !== 'customer'">
+                                      <div class="separator"></div>
                                     {{ order?.subcontractor?.firstname }}<br>
                                     {{ order?.subcontractor?.lastname }}
+                                    </div>
+                                    
                                 </div>
                             </td>
                             <td class="cell-centered">

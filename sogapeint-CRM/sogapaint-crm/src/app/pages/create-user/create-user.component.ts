@@ -28,7 +28,7 @@ export class CreateUserComponent implements OnInit {
     { name: 'Super administrateur', value: 'superAdmin' },
     { name: 'Co-contractant', value: 'cocontractor' },
     { name: 'Sous-traitant', value: 'subcontractor' },
-    // { name: 'Client', value: 'customer' },
+    { name: 'Client', value: 'customer' },
     { name: 'Régisseur', value: 'comanager' },
     { name: 'Super Régisseur', value: 'supermanager' }
   ];
