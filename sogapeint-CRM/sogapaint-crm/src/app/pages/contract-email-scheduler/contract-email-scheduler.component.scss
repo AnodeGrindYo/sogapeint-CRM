@@ -1,0 +1,29 @@
+// .card-header {
+//     font-size: 1.25rem;
+//     font-weight: bold;
+// }
+.form-label {
+    font-weight: bold;
+}
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+.btn-primary {
+    transition: background-color 0.3s, transform 0.3s;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+.btn-primary:active {
+    background-color: #004085;
+    transform: scale(0.95);
+}
+.card {
+    border-radius: 10px;
+}
+// .card-header {
+//     border-top-left-radius: 10px;
+//     border-top-right-radius: 10px;
+// }

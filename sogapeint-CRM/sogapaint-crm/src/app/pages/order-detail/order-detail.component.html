@@ -239,6 +239,11 @@
       </div>
       <div class="row mb-3">
         <div class="col-md-6">
+          <app-contract-email-scheduler [contractId]="contractId"></app-contract-email-scheduler>
+        </div>
+        </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
           <app-contract-activity [contractId]="contractId" [userId]="currentUser['userId']" *ngIf="isAdminOrSuperAdmin()"></app-contract-activity>
         </div>
         <div class="col-md-6">
