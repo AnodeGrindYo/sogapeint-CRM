@@ -76,7 +76,7 @@
               <i class="fas fa-sort-down" *ngIf="sortColumn === 'occupied' && sortDirection === 'desc'"></i>
             </div>
           </th>
-          <th scope="col">
+          <th scope="col" *ngIf="currentUser.role !== 'customer'">
             <div class="cell-centered">N° devis</div>
             <div class="sort-icons float-end" (click)="onSort('quote_number')">
               <i class="fas fa-sort" *ngIf="sortColumn !== 'quote_number'"></i>
@@ -92,22 +92,6 @@
               <i class="fas fa-sort-down" *ngIf="sortColumn === 'benefit' && sortDirection === 'desc'"></i>
             </div>
           </th>
-          <!-- <th scope="col">
-            <div class="cell-centered">Date commande</div>
-            <div class="sort-icons float-end" (click)="onSort('date_cde')">
-              <i class="fas fa-sort" *ngIf="sortColumn !== 'date_cde'"></i>
-              <i class="fas fa-sort-up" *ngIf="sortColumn === 'date_cde' && sortDirection === 'asc'"></i>
-              <i class="fas fa-sort-down" *ngIf="sortColumn === 'date_cde' && sortDirection === 'desc'"></i>
-            </div>
-          </th> -->
-          <!-- <th scope="col">
-            <div class="cell-centered">Montant</div>
-            <div class="sort-icons float-end" (click)="onSort('amount_ht')">
-              <i class="fas fa-sort" *ngIf="sortColumn !== 'amount_ht'"></i>
-              <i class="fas fa-sort-up" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'asc'"></i>
-              <i class="fas fa-sort-down" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'desc'"></i>
-            </div>
-          </th> -->
           <th scope="col">
             <div class="cell-centered">Intervenant</div>
             <div class="sort-icons float-end" (click)="onSort('external_contributor')">
@@ -136,7 +120,7 @@
           <th scope="col"><div class="cell-centered">Fichiers</div><div class="sort-icons float-end">&nbsp;</div></th>
           
           <!-- facture reçue (email sended) -->
-          <th scope="col">
+          <th scope="col" *ngIf="currentUser.role !== 'customer'">
             <div class="cell-centered">Facture reçue</div>
             <div class="sort-icons float-end" (click)="onSort('invoice_received')">
               <i class="fas fa-sort" *ngIf="sortColumn !== 'invoice_received'"></i>
@@ -145,7 +129,7 @@
             </div>
           </th>
           <!-- montant prestataire (external_contributor_amount)-->
-          <th scope="col">
+          <th scope="col" *ngIf="currentUser.role !== 'customer'">
             <div class="cell-centered">Montant sous-traitant/co-traitant</div>
             <div class="sort-icons float-end" (click)="onSort('external_contributor_amount')">
               <i class="fas fa-sort" *ngIf="sortColumn !== 'external_contributor_amount'"></i>
@@ -163,7 +147,7 @@
             </div>
           </th>
           <th scope="col">
-            <div class="cell-centered">Montant</div>
+            <div class="cell-centered">Montant de la commande</div>
             <div class="sort-icons float-end" (click)="onSort('amount_ht')">
               <i class="fas fa-sort" *ngIf="sortColumn !== 'amount_ht'"></i>
               <i class="fas fa-sort-up" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'asc'"></i>
@@ -225,15 +209,20 @@
               {{ order?.quote_number }}
             </div>
           </td>
-          <td class="cell-centered">
+          <td class="cell-centered" *ngIf="currentUser.role !== 'customer'">
             <div [ngbTooltip]="getBenefitName(order?.benefit)">
               {{ getBenefitName(order?.benefit) }}
             </div>
           </td>
           <td class="cell-centered">
             <div [ngbTooltip]="order?.external_contributor?.firstname+' '+order?.external_contributor?.lastname">
-              {{ order?.external_contributor?.firstname }}<br>
-              {{ order?.external_contributor?.lastname }}
+              <div *ngIf="currentUser.role !== 'customer'">
+                {{ order?.external_contributor?.firstname }}<br>
+                {{ order?.external_contributor?.lastname }}
+              </div>
+              <div *ngIf="currentUser.role === 'customer'">
+                {{ order?.external_contributor?.company}}
+              </div>
               <!-- ligne de séparation -->
               <div *ngIf="currentUser.role !== 'customer'">
                 <div class="separator"></div>
@@ -260,7 +249,7 @@
           <td class="cell-centered"><i class="fas fa-comment active-icon" aria-hidden="true"></i> <span class="badge bg-info">{{ order?.observation?.length || 0 }}</span></td>
           <td class="cell-centered"><i class="fas fa-file active-icon" aria-hidden="true"></i> <span class="badge bg-info">{{ order?.file?.length || order?.files?.length || 0 }}</span></td>
           
-          <td class="cell-centered">
+          <td class="cell-centered" *ngIf="currentUser.role !== 'customer'">
             <span 
             [ngSwitch]="order?.mail_sended"
             class="badge" 
@@ -275,7 +264,7 @@
           </span>
         </td>
         <!-- external_contributor_amount -->
-        <td class="cell-centered">
+        <td class="cell-centered" *ngIf="currentUser.role !== 'customer'">
           <div [ngbTooltip]="order?.external_contributor_amount">
             {{ order?.external_contributor_amount }}€
           </div>
