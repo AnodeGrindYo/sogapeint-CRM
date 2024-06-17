@@ -1,3 +1,4 @@
+// /pages/contract-email-scheduler.component.ts
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailSchedulerService } from '../../core/services/email-scheduler.service';
@@ -38,12 +39,20 @@ export class ContractEmailSchedulerComponent implements OnInit {
     this.isLoading = true;
     this.emailSchedulerService.getEmailSchedule(this.contractId).subscribe(
       (data) => {
-        this.emailSchedule = data; // Stocker les données récupérées
-        this.emailScheduleForm.patchValue({
-          nextEmailDate: this.transformDate(data.nextEmailDate),
-          interval: data.interval,
-          enabled: data.enabled
-        });
+        if (data) {
+          this.emailSchedule = data; // Stocker les données récupérées
+          this.emailScheduleForm.patchValue({
+            nextEmailDate: this.transformDate(data.nextEmailDate),
+            interval: data.interval,
+            enabled: data.enabled
+          });
+        } else {
+          this.emailSchedule = {
+            nextEmailDate: null,
+            interval: 3,
+            enabled: false
+          };
+        }
         this.isLoading = false;
         console.log('Planning des emails:', data);
       },
