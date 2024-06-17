@@ -1,4 +1,4 @@
-<!-- contract-email-scheduler.component.html -->
+<!-- /pages/contract-email-scheduler.component.html -->
 <div class="card shadow-sm">
     <div class="card-header">
         Planification des Emails Récurrents
@@ -7,7 +7,7 @@
         <div *ngIf="isLoading" class="text-center">
             <p>Chargement...</p>
         </div>
-        <div class="contract-email-scheduler-component" *ngIf="!isLoading && emailSchedule">
+        <div class="contract-email-scheduler-component" *ngIf="!isLoading">
             <form [formGroup]="emailScheduleForm" (ngSubmit)="updateEmailSchedule()">
                 <div class="mb-3">
                     <label for="nextEmailDate" class="form-label">Prochaine date d'envoi:</label>

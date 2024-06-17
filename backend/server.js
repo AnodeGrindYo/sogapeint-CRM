@@ -3,6 +3,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const socketIo = require('socket.io');
+const { rescheduleAllEmails } = require('./schedulers/emailScheduler');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
@@ -125,6 +126,16 @@ const listRoutes = (app) => {
             console.log(`${route.method} ${route.path}`);
         });
 };
+
+// Replanifier les emails récurrents au démarrage
+mongoose.connection.once('open', () => {
+  console.log('Connexion à MongoDB établie.');
+  rescheduleAllEmails().then(() => {
+      console.log('Reprogrammation des emails récurrents terminée.');
+  }).catch(err => {
+      console.error('Erreur lors de la reprogrammation des emails récurrents:', err);
+  });
+});
     
 // Lancement du serveur
 const PORT = process.env.PORT || 3000;
