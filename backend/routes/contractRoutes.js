@@ -590,7 +590,12 @@ router.delete('/incident/:incidentId', isAdminOrSuperAdmin, contractController.d
  */
 router.get('/incidents/:contractId', isConnected, contractController.getIncidents);
 
+
 router.get('/:contractId/email-schedule', contractController.getEmailSchedule);
 router.put('/:contractId/email-schedule', contractController.updateEmailSchedule);
+router.delete('/:contractId/email-schedule', contractController.deleteEmailSchedule);
+
+// route pour getContractsByInternalNumber. internalNumber est envoyé dans req.query
+router.get('/contractsByInternalNumber', isAdminOrSuperAdmin, contractController.getContractsByInternalNumber);
 
 module.exports = router;

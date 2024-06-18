@@ -4,25 +4,38 @@
     <title>Rappel de Facture</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #e2e2e2;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            color: #212529;
         }
         .container {
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
             background-color: #ffffff;
-            color: black;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .container:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
         .header {
             text-align: center;
             padding: 10px;
-            background-color: #f4f4f4;
-            color: black;
+            background-color: #343a40;
+            color: #ffffff;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .header img {
+            max-height: 60px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .header img:hover {
+            transform: scale(1.1);
         }
         .content {
             padding: 20px;
@@ -33,6 +46,9 @@
             padding: 10px;
             font-size: 12px;
             color: #333333;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            background-color: #f1f1f1;
         }
         .details {
             margin-top: 10px;
@@ -40,8 +56,8 @@
             color: #333;
         }
         .button {
-            background-color: #4CAF50; /* Vert Sogapeint */
-            color: #fefefe !important;
+            background-color: #28a745;
+            color: #ffffff !important;
             padding: 15px 25px;
             margin: 20px 0;
             border: none;
@@ -50,26 +66,75 @@
             text-decoration: none;
             font-size: 18px;
             display: inline-block;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         .button:hover {
-            background-color: #45a049;
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+        }
+        table, th, td {
+            border: 1px solid #dee2e6;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #343a40;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        td {
+            background-color: #ffffff;
+            transition: background-color 0.3s ease-in-out;
+        }
+        tr:hover td {
+            background-color: #f8f9fa;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://www.sogapeint.fr/apps/uploads/2019/10/logo.png" alt="Logo Sogapeint" style="max-height: 60px;">
+            <img src="https://www.sogapeint.fr/apps/uploads/2019/10/logo.png" alt="Logo Sogapeint">
         </div>
         <div class="content">
             <h3>Rappel: Veuillez déposer votre facture</h3>
             <p>Bonjour,</p>
-            <p>Ceci est un rappel pour déposer votre facture pour la commande suivante :</p>
+            <p>Ceci est un rappel pour déposer votre facture pour les commandes suivantes :</p>
             <table>
-                <tr>
-                    <th>Numéro Interne</th>
-                    <td>{{contract.internal_number}}</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Numéro Interne</th>
+                        <th>Prestation</th>
+                        <th>Date de fin client</th>
+                        <th>Statut</th>
+                        <th>Adresse</th>
+                        <th>Numéro d'appartement</th>
+                        <th>Contributeur Externe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each contracts}}
+                    <tr>
+                        <td>{{this.internal_number}}</td>
+                        <td>{{this.benefit}}</td>
+                        <td>{{this.end_date_customer}}</td>
+                        <td>{{this.status}}</td>
+                        <td>{{this.address}}</td>
+                        <td>{{this.appartment_number}}</td>
+                        <td>{{this.external_contributor_name}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
             </table>
             <p class="details">Merci de déposer votre facture dès que possible. Vous pouvez le faire en utilisant l'application web Sogapeint.</p>
         </div>

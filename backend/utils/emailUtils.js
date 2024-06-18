@@ -1,18 +1,19 @@
 const User = require('../models/User');
 const Benefit = require('../models/benefit');
+const { getStatus } = require('./status');
 
-const getStatus = (status) => {
-  const statusDict = {
-    'in_progress': 'En cours',
-    'null': 'En cours',
-    null: 'En cours',
-    'achieve': 'Réalisé',
-    'canceled': 'Annulé',
-    'invoiced': 'Facturé',
-    'anomaly': 'Anomalie'
-  };
-  return statusDict[status] || 'Status inconnu';
-};
+// const getStatus = (status) => {
+//   const statusDict = {
+//     'in_progress': 'En cours',
+//     'null': 'En cours',
+//     null: 'En cours',
+//     'achieve': 'Réalisé',
+//     'canceled': 'Annulé',
+//     'invoiced': 'Facturé',
+//     'anomaly': 'Anomalie'
+//   };
+//   return statusDict[status] || 'Status inconnu';
+// };
 
 const getEmailReplacements = async (contract) => {
   const customerDetails = await User.findById(contract.customer);

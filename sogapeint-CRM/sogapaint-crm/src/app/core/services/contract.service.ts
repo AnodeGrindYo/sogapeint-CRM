@@ -77,6 +77,17 @@ export class ContractService {
         getContractById(contractId: string): Observable<any> {
             return this.http.get<any>(`${environment.apiUrl}/api/contracts/contract/${contractId}`);
         }
+
+        /**
+         * Récupère tous les contrats ayant un certain numéro interne.
+         * 
+         * Envoie une requête GET pour obtenir tous les contrats ayant un certain numéro interne.
+         * @param internalNumber Le numéro interne du contrat.
+         * @returns Un Observable contenant un tableau de contrats.
+         */
+        getContractsByInternalNumber(internalNumber: string): Observable<any[]> {
+            return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/contractsByInternalNumber`, { params: { internalNumber: internalNumber } });
+        }
         
         /**
         * Crée un nouveau contrat.

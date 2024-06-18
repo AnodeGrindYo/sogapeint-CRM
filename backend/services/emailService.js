@@ -53,6 +53,7 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
+const Handlebars = require('handlebars');
 const debug = require('debug')('emailService');
 require('dotenv').config();
 
@@ -61,7 +62,7 @@ const secure = process.env.SMTP_SECURE === 'true';
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT, 10),
-  secure: secure, // Utilisez true pour SSL/TLS avec le port 465
+  secure: secure,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
@@ -117,4 +118,39 @@ const sendEmail = async (to, subject, replacements, templateName) => {
   }
 };
 
-module.exports = { sendEmail };
+const readTemplateForHandlebars = (templateName, replacements) => {
+  const templatePath = path.join(__dirname, '..', 'templates', `${templateName}.html`);
+  debug('Lecture du template pour Handlebars:', templatePath);
+
+  let template;
+  try {
+    template = fs.readFileSync(templatePath, { encoding: 'utf-8' });
+  } catch (error) {
+    debug('Erreur lors de la lecture du template:', error);
+    throw error;
+  }
+
+  const compiledTemplate = Handlebars.compile(template);
+  return compiledTemplate(replacements);
+};
+
+const sendEmailWithHandlebars = async (to, subject, replacements, templateName) => {
+  debug('Envoi d\'un e-mail à:', to);
+  const htmlContent = readTemplateForHandlebars(templateName, replacements);
+
+  const mailOptions = {
+    from: process.env.SMTP_USER,
+    to: to,
+    subject: subject,
+    html: htmlContent,
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    debug('Email envoyé:', info.response);
+  } catch (error) {
+    debug('Erreur lors de l\'envoi de l\'email:', error);
+  }
+};
+
+module.exports = { sendEmail, sendEmailWithHandlebars };

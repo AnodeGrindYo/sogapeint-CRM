@@ -178,3 +178,26 @@ exports.replaceBenefit = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
+// exports.getBenefitNameById = async (req, res) => {
+//     try {
+
+//         const {
+//             benefitId
+//         } = req.params;
+
+//         const service = await Benefit.findById(benefitId);
+//         if (!service) {
+//             return res.status(404).json({
+//                 message: 'Service non trouvé.'
+//             });
+//         }
+//         console.log('Found service:', service);
+//         res.status(200).json(service.name);
+//     } catch (error) {
+//         console.error('Error retrieving service name:', error);
+//         res.status(500).json({
+//             error: error.message
+//         });
+//     }
+// };

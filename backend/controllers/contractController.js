@@ -5,6 +5,12 @@ const { scheduleEmailToContributor, scheduleRecurringEmails } = require('../sche
 const EmailUtils = require('../utils/emailUtils');
 const EmailService = require('../services/emailService');
 const EmailTask = require('../models/EmailTask');
+const { getBenefitName } = require('../utils/benefits');
+const { formatDate } = require('../utils/date');
+const { translateStatus } = require('../utils/status');
+
+// Variable booléenne pour basculer entre la version de test et la version normale
+const isTestMode = false; // Mettez à false pour la version normale
 
 const sanitizeContract = (contract) => {
     ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(role => {
@@ -43,6 +49,22 @@ exports.getContracts = async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de la récupération des contrats:', error);
         res.status(500).send({ message: "Erreur lors de la récupération des contrats", error });
+    }
+};
+
+exports.getContractsByInternalNumber = async (req, res) => {
+    try {
+        const { internalNumber } = req.query;
+        const contracts = await ContractModel.find({ internal_number: internalNumber })
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+
+        contracts.forEach(sanitizeContract);
+        res.json(contracts);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des contrats par numéro interne:', error);
+        res.status(500).send({ message: "Erreur lors de la récupération des contrats par numéro interne", error });
     }
 };
 
@@ -226,293 +248,6 @@ function groupByInternalNumber(contracts) {
     return groupedContracts;
 };
 
-// exports.addContract = async (req, res) => {
-//     try {
-//         const {
-//             internal_number = '',
-//             customer = null,
-//             contact = null,
-//             internal_contributor = null,
-//             external_contributor = null,
-//             external_contributor_amount = 0,
-//             subcontractor = null,
-//             subcontractor_amount = 0,
-//             address = '',
-//             appartment_number = '',
-//             ss4 = false,
-//             quote_number = '',
-//             mail_sended = false,
-//             invoice_number = '',
-//             amount_ht = 0,
-//             benefit_ht = 0,
-//             execution_data_day = 0,
-//             execution_data_hour = 0,
-//             prevision_data_day = 0,
-//             prevision_data_hour = 0,
-//             benefit = '',
-//             status = '',
-//             occupied = false,
-//             start_date_works = null,
-//             end_date_works = null,
-//             end_date_customer = null,
-//             trash = false,
-//             date_cde = null,
-//             billing_amount = 0,
-//             createdBy = null
-//         } = req.body;
-
-//         const currentDate = new Date();
-//         const dateAdd = currentDate;
-//         const external_contributor_invoice_date = new Date();
-//         external_contributor_invoice_date.setDate(currentDate.getDate() + 2);
-
-//         const newContract = new ContractModel({
-//             internal_number: internal_number || 'Default-Number',
-//             customer: customer ? new mongoose.Types.ObjectId(customer) : null,
-//             contact: contact ? new mongoose.Types.ObjectId(contact) : null,
-//             internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
-//             external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
-//             external_contributor_amount,
-//             subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
-//             subcontractor_amount,
-//             address,
-//             appartment_number,
-//             ss4,
-//             quote_number,
-//             mail_sended,
-//             invoice_number,
-//             amount_ht,
-//             benefit_ht,
-//             execution_data_day,
-//             execution_data_hour,
-//             prevision_data_day,
-//             prevision_data_hour,
-//             benefit,
-//             status,
-//             occupied,
-//             start_date_works: start_date_works ? new Date(start_date_works) : null,
-//             end_date_works: end_date_works ? new Date(end_date_works) : null,
-//             end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
-//             trash,
-//             date_cde: date_cde ? new Date(date_cde) : new Date(),
-//             billing_amount,
-//             dateAdd: dateAdd,
-//             external_contributor_invoice_date,
-//             createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
-//         });
-
-//         await newContract.save();
-
-//         const replacements = await EmailUtils.getEmailReplacements(newContract);
-//         await EmailService.sendEmail(newContract.customer.email, 'Notification de commande', replacements, 'orderNotificationTemplate');
-
-//         await scheduleRecurringEmails(newContract._id);
-
-//         res.status(201).json({
-//             message: 'Contrat créé avec succès.',
-//             contractId: newContract._id,
-//             contract: newContract
-//         });
-//     } catch (error) {
-//         console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
-//         res.status(500).json({ error: error.message });
-//     }
-// };
-
-// exports.addContract = async (req, res) => {
-//     try {
-//         const {
-//             internal_number = '',
-//             customer = null,
-//             contact = null,
-//             internal_contributor = null,
-//             external_contributor = null,
-//             external_contributor_amount = 0,
-//             subcontractor = null,
-//             subcontractor_amount = 0,
-//             address = '',
-//             appartment_number = '',
-//             ss4 = false,
-//             quote_number = '',
-//             mail_sended = false,
-//             invoice_number = '',
-//             amount_ht = 0,
-//             benefit_ht = 0,
-//             execution_data_day = 0,
-//             execution_data_hour = 0,
-//             prevision_data_day = 0,
-//             prevision_data_hour = 0,
-//             benefit = '',
-//             status = '',
-//             occupied = false,
-//             start_date_works = null,
-//             end_date_works = null,
-//             end_date_customer = null,
-//             trash = false,
-//             date_cde = null,
-//             billing_amount = 0,
-//             createdBy = null
-//         } = req.body;
-        
-//         const currentDate = new Date();
-//         const dateAdd = currentDate;
-//         const external_contributor_invoice_date = new Date();
-//         external_contributor_invoice_date.setDate(currentDate.getDate() + 2);
-        
-//         const newContract = new ContractModel({
-//             internal_number: internal_number || 'Default-Number',
-//             customer: customer ? new mongoose.Types.ObjectId(customer) : null,
-//             contact: contact ? new mongoose.Types.ObjectId(contact) : null,
-//             internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
-//             external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
-//             external_contributor_amount,
-//             subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
-//             subcontractor_amount,
-//             address,
-//             appartment_number,
-//             ss4,
-//             quote_number,
-//             mail_sended,
-//             invoice_number,
-//             amount_ht,
-//             benefit_ht,
-//             execution_data_day,
-//             execution_data_hour,
-//             prevision_data_day,
-//             prevision_data_hour,
-//             benefit,
-//             status,
-//             occupied,
-//             start_date_works: start_date_works ? new Date(start_date_works) : null,
-//             end_date_works: end_date_works ? new Date(end_date_works) : null,
-//             end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
-//             trash,
-//             date_cde: date_cde ? new Date(date_cde) : new Date(),
-//             billing_amount,
-//             dateAdd: dateAdd,
-//             external_contributor_invoice_date,
-//             createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
-//         });
-        
-//         await newContract.save();
-        
-//         const replacements = await EmailUtils.getEmailReplacements(newContract);
-//         await EmailService.sendEmail(newContract.customer.email, 'Notification de commande', replacements, 'orderNotificationTemplate');
-        
-//         // Planifier les emails récurrents uniquement si end_date_customer est renseigné
-//         if (newContract.end_date_customer) {
-//             await scheduleRecurringEmails(newContract._id, newContract.end_date_customer);
-//         }
-        
-//         res.status(201).json({
-//             message: 'Contrat créé avec succès.',
-//             contractId: newContract._id,
-//             contract: newContract
-//         });
-//     } catch (error) {
-//         console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
-//         res.status(500).json({ error: error.message });
-//     }
-// };
-
-// exports.addContract = async (req, res) => {
-//     try {
-//         const {
-//             internal_number = '',
-//             customer = null,
-//             contact = null,
-//             internal_contributor = null,
-//             external_contributor = null,
-//             external_contributor_amount = 0,
-//             subcontractor = null,
-//             subcontractor_amount = 0,
-//             address = '',
-//             appartment_number = '',
-//             ss4 = false,
-//             quote_number = '',
-//             mail_sended = false,
-//             invoice_number = '',
-//             amount_ht = 0,
-//             benefit_ht = 0,
-//             execution_data_day = 0,
-//             execution_data_hour = 0,
-//             prevision_data_day = 0,
-//             prevision_data_hour = 0,
-//             benefit = '',
-//             status = '',
-//             occupied = false,
-//             start_date_works = null,
-//             end_date_works = null,
-//             end_date_customer = null,
-//             trash = false,
-//             date_cde = null,
-//             billing_amount = 0,
-//             createdBy = null
-//         } = req.body;
-
-//         const currentDate = new Date();
-//         const dateAdd = currentDate;
-//         const external_contributor_invoice_date = new Date();
-//         external_contributor_invoice_date.setDate(currentDate.getDate() + 2);
-
-//         // Créer une nouvelle instance de contrat avec les données fournies
-//         const newContract = new ContractModel({
-//             internal_number: internal_number || 'Default-Number',
-//             customer: customer ? new mongoose.Types.ObjectId(customer) : null,
-//             contact: contact ? new mongoose.Types.ObjectId(contact) : null,
-//             internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
-//             external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
-//             external_contributor_amount,
-//             subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
-//             subcontractor_amount,
-//             address,
-//             appartment_number,
-//             ss4,
-//             quote_number,
-//             mail_sended,
-//             invoice_number,
-//             amount_ht,
-//             benefit_ht,
-//             execution_data_day,
-//             execution_data_hour,
-//             prevision_data_day,
-//             prevision_data_hour,
-//             benefit,
-//             status,
-//             occupied,
-//             start_date_works: start_date_works ? new Date(start_date_works) : null,
-//             end_date_works: end_date_works ? new Date(end_date_works) : null,
-//             end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
-//             trash,
-//             date_cde: date_cde ? new Date(date_cde) : new Date(),
-//             billing_amount,
-//             dateAdd: dateAdd,
-//             external_contributor_invoice_date,
-//             createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
-//         });
-
-//         // Sauvegarder le nouveau contrat dans la base de données
-//         await newContract.save();
-
-//         // Envoyer un email de notification de commande
-//         const replacements = await EmailUtils.getEmailReplacements(newContract);
-//         await EmailService.sendEmail(newContract.customer.email, 'Notification de commande', replacements, 'orderNotificationTemplate');
-        
-//         // Planifier les emails récurrents uniquement si end_date_customer est renseigné
-//         if (newContract.end_date_customer) {
-//             await scheduleRecurringEmails(newContract._id, newContract.end_date_customer);
-//         }
-
-//         res.status(201).json({
-//             message: 'Contrat créé avec succès.',
-//             contractId: newContract._id,
-//             contract: newContract
-//         });
-//     } catch (error) {
-//         console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
-//         res.status(500).json({ error: error.message });
-//     }
-// };
 
 exports.addContract = async (req, res) => {
     try {
@@ -594,9 +329,9 @@ exports.addContract = async (req, res) => {
         const replacements = await EmailUtils.getEmailReplacements(newContract);
         await EmailService.sendEmail(newContract.customer.email, 'Notification de commande', replacements, 'orderNotificationTemplate');
 
-        if (newContract.end_date_customer) {
-            await scheduleRecurringEmails(newContract._id, newContract.end_date_customer);
-        }
+        // if (newContract.end_date_customer) {
+        //     await scheduleRecurringEmails(newContract._id, newContract.end_date_customer);
+        // }
 
         res.status(201).json({
             message: 'Contrat créé avec succès.',
@@ -609,18 +344,60 @@ exports.addContract = async (req, res) => {
     }
 };
 
+// exports.updateContract = async (req, res) => {
+//     try {
+//         const { contractId } = req.params;
+//         const updateData = { ...req.body };
+//         console.log('Modification du contrat', contractId, updateData);
+        
+//         ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
+//             if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
+//                 updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
+//             }
+//         });
+        
+//         ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
+//             if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
+//                 delete updateData[dateKey];
+//             } else if (updateData[dateKey]) {
+//                 updateData[dateKey] = new Date(updateData[dateKey]);
+//             }
+//         });
+        
+//         const updatedContract = await ContractModel.findByIdAndUpdate(
+//             contractId,
+//             updateData, { new: true, runValidators: true }
+//         );
+        
+//         if (!updatedContract) {
+//             return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
+//         }
+        
+//         const replacements = await EmailUtils.getEmailReplacements(updatedContract);
+//         await EmailService.sendEmail(updatedContract.customer.email, 'Mise à jour de la commande', replacements, 'orderUpdateNotificationTemplate');
+        
+//         res.status(200).json({
+//             contract: updatedContract,
+//             message: 'Contrat modifié avec succès.'
+//         });
+//     } catch (error) {
+//         console.error('Erreur lors de la modification du contrat:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
 exports.updateContract = async (req, res) => {
     try {
         const { contractId } = req.params;
         const updateData = { ...req.body };
         console.log('Modification du contrat', contractId, updateData);
-        
+
         ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
             if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
                 updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
             }
         });
-        
+
         ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
             if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
                 delete updateData[dateKey];
@@ -628,19 +405,55 @@ exports.updateContract = async (req, res) => {
                 updateData[dateKey] = new Date(updateData[dateKey]);
             }
         });
-        
+
         const updatedContract = await ContractModel.findByIdAndUpdate(
             contractId,
             updateData, { new: true, runValidators: true }
-        );
-        
+        ).populate('external_contributor');
+
         if (!updatedContract) {
             return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
         }
-        
+
         const replacements = await EmailUtils.getEmailReplacements(updatedContract);
         await EmailService.sendEmail(updatedContract.customer.email, 'Mise à jour de la commande', replacements, 'orderUpdateNotificationTemplate');
-        
+
+        // Check if status is changed and if it is 'achieved' or 'cancelled'
+        if (updateData.status && (updateData.status === 'achieved' || updateData.status === 'cancelled')) {
+            const currentYear = new Date().getFullYear();
+            const startDate = new Date(currentYear, 0, 1);
+            const endDate = new Date(currentYear + 1, 0, 1);
+
+            const contracts = await ContractModel.find({
+                internal_number: updatedContract.internal_number,
+                dateAdd: { $gte: startDate, $lt: endDate }
+            }).populate('external_contributor');
+
+            const allAchievedOrCancelled = contracts.every(contract => 
+                contract.status === 'achieved' || contract.status === 'cancelled'
+            );
+
+            if (allAchievedOrCancelled) {
+                const nextDay = new Date(updatedContract.end_date_customer);
+                nextDay.setDate(nextDay.getDate() + 1);
+
+                const replacements = {
+                    'contracts': await Promise.all(contracts.map(async c => ({
+                        'internal_number': c.internal_number,
+                        'benefit': await getBenefitName(c.benefit),
+                        'end_date_customer': formatDate(c.end_date_customer),
+                        'status': translateStatus(c.status),
+                        'address': c.address,
+                        'appartment_number': c.appartment_number,
+                        'external_contributor_name': `${c.external_contributor.firstname} ${c.external_contributor.lastname}`
+                    }))),
+                    'CRM_URL': process.env.CRM_URL
+                };
+
+                await scheduleRecurringEmails(updatedContract.internal_number, nextDay, 3, replacements);
+            }
+        }
+
         res.status(200).json({
             contract: updatedContract,
             message: 'Contrat modifié avec succès.'
@@ -650,6 +463,7 @@ exports.updateContract = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 exports.deleteContract = async (req, res) => {
     try {
@@ -895,72 +709,6 @@ exports.getIncidents = async (req, res) => {
 };
 
 
-// exports.getEmailSchedule = async (req, res) => {
-//     console.log('Récupération de la planification des emails');
-//     console.log('Requête (params) :', req.params);
-//     console.log('Requête (body) :', req.body);
-//     try {
-//         const { contractId } = req.params;
-//         const contract = await ContractModel.findById(contractId);
-//         if (!contract) {
-//             return res.status(404).json({ message: 'Contrat non trouvé.' });
-//         }
-//         // Retourner la planification actuelle
-//         res.status(200).json({
-//             nextEmailDate: contract.nextEmailDate || new Date(),
-//             interval: contract.interval || 3,
-//             enabled: contract.mail_sended !== false
-//         });
-//     } catch (error) {
-//         console.error('Erreur lors de la récupération de la planification des emails:', error);
-//         res.status(500).json({ error: error.message });
-//     }
-// };
-
-// exports.updateEmailSchedule = async (req, res) => {
-//     try {
-//         const { contractId } = req.params;
-//         const { nextEmailDate, interval, enabled } = req.body;
-//         const contract = await ContractModel.findByIdAndUpdate(
-//             contractId,
-//             {
-//                 nextEmailDate: new Date(nextEmailDate),
-//                 interval: interval,
-//                 mail_sended: enabled
-//             },
-//             { new: true }
-//         );
-//         if (!contract) {
-//             return res.status(404).json({ message: 'Contrat non trouvé.' });
-//         }
-//         res.status(200).json({ message: 'Planification des emails mise à jour.', contract });
-//     } catch (error) {
-//         console.error('Erreur lors de la mise à jour de la planification des emails:', error);
-//         res.status(500).json({ error: error.message });
-//     }
-// };
-
-// exports.getEmailSchedule = async (req, res) => {
-//     console.log('Récupération de la planification des emails');
-//     try {
-//         const { contractId } = req.params;
-//         const emailTask = await EmailTask.findOne({ contractId });
-//         if (!emailTask) {
-//             return res.status(404).json({ message: 'Planification des emails non trouvée.' });
-//         }
-
-//         res.status(200).json({
-//             nextEmailDate: emailTask.scheduledDate,
-//             interval: emailTask.interval,
-//             enabled: emailTask.mailSended,
-//             endDateCustomer: emailTask.scheduledDate || null
-//         });
-//     } catch (error) {
-//         console.error('Erreur lors de la récupération de la planification des emails:', error);
-//         res.status(500).json({ error: error.message });
-//     }
-// };
-
 exports.getEmailSchedule = async (req, res) => {
     console.log('Récupération de la planification des emails');
     try {
@@ -993,45 +741,321 @@ exports.getEmailSchedule = async (req, res) => {
 // exports.updateEmailSchedule = async (req, res) => {
 //     try {
 //         const { contractId } = req.params;
-//         const { nextEmailDate, interval, enabled, endDateCustomer } = req.body;
+//         const { nextEmailDate, interval, enabled } = req.body;
 
 //         console.log('Mise à jour de la planification des emails pour le contrat', contractId);
 //         console.log('Données de mise à jour :', req.body);
 
-//         // Préparer les données de mise à jour
 //         const updateData = {
-//             nextEmailDate: nextEmailDate ? new Date(nextEmailDate) : null, // Mettre à jour la date du prochain email si fournie
-//             interval: interval, // Mettre à jour l'intervalle des emails
-//             mail_sended: enabled // Mettre à jour l'état de l'envoi des emails
+//             contractId: contractId,
+//             scheduledDate: nextEmailDate ? new Date(nextEmailDate) : null,
+//             interval: interval,
+//             mailSended: enabled
 //         };
 
-//         if (endDateCustomer) {
-//             // Mettre à jour la date de fin client si fournie
-//             updateData.end_date_customer = new Date(endDateCustomer);
-//         } else {
-//             // Sinon, définir la date de fin client à null
-//             updateData.end_date_customer = null;
-//         }
-
-//         // Mettre à jour le contrat avec les nouvelles données
-//         const contract = await ContractModel.findByIdAndUpdate(
-//             contractId,
+//         const emailTask = await EmailTask.findOneAndUpdate(
+//             { contractId },
 //             updateData,
-//             { new: true }
+//             { new: true, upsert: true, setDefaultsOnInsert: true }
 //         );
 
-//         if (!contract) {
-//             return res.status(404).json({ message: 'Contrat non trouvé.' });
+//         console.log('Planification des emails après mise à jour:', emailTask);
+//         res.status(200).json({ message: 'Planification des emails mise à jour.', emailTask });
+//     } catch (error) {
+//         console.error('Erreur lors de la mise à jour de la planification des emails:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+// exports.updateEmailSchedule = async (req, res) => {
+//     try {
+//         const { contractId } = req.params;
+//         const { nextEmailDate, interval, enabled } = req.body;
+
+//         console.log('Mise à jour de la planification des emails pour le contrat', contractId);
+//         console.log('Données de mise à jour :', req.body);
+
+//         const updateData = {
+//             contractId: contractId,
+//             scheduledDate: nextEmailDate ? new Date(nextEmailDate) : null,
+//             interval: interval,
+//             mailSended: enabled
+//         };
+
+//         const emailTask = await EmailTask.findOneAndUpdate(
+//             { contractId },
+//             updateData,
+//             { new: true, upsert: true, setDefaultsOnInsert: true }
+//         );
+
+//         if (enabled) {
+//             const contract = await ContractModel.findById(contractId);
+//             const contracts = await ContractModel.find({ internal_number: contract.internal_number });
+
+//             const replacements = {
+//                 'contracts': contracts.map(c => ({
+//                     'internal_number': c.internal_number,
+//                     'benefit': c.benefit,
+//                     'end_date_customer': c.end_date_customer,
+//                     'status': c.status
+//                 })),
+//                 'CRM_URL': process.env.CRM_URL
+//             };
+
+//             await scheduleRecurringEmails(contract.internal_number, nextEmailDate, interval, replacements);
 //         }
 
-//         // Planifier les emails récurrents si la date de fin client est renseignée
-//         if (updateData.end_date_customer) {
-//             await scheduleRecurringEmails(contract._id, updateData.end_date_customer);
+//         console.log('Planification des emails après mise à jour:', emailTask);
+//         res.status(200).json({ message: 'Planification des emails mise à jour.', emailTask });
+//     } catch (error) {
+//         console.error('Erreur lors de la mise à jour de la planification des emails:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+
+// exports.updateEmailSchedule = async (req, res) => {
+//     try {
+//         const { contractId } = req.params;
+//         const { nextEmailDate, interval, enabled } = req.body;
+
+//         console.log('Mise à jour de la planification des emails pour le contrat', contractId);
+//         console.log('Données de mise à jour :', req.body);
+
+//         let updateData;
+
+//         if (isTestMode) {
+//             const currentDate = new Date();
+//             const currentDateUTC = new Date(
+//                 Date.UTC(
+//                     currentDate.getUTCFullYear(),
+//                     currentDate.getUTCMonth(),
+//                     currentDate.getUTCDate(),
+//                     currentDate.getUTCHours(),
+//                     currentDate.getUTCMinutes(),
+//                     currentDate.getUTCSeconds()
+//                 )
+//             );
+//             const currentDatePlusOneMinute = new Date(currentDateUTC.getTime() + 60000);
+
+//             updateData = {
+//                 contractId: contractId,
+//                 scheduledDate: currentDatePlusOneMinute, // dans une minute en UTC
+//                 interval: interval * 60,  // Utilise des secondes pour les tests
+//                 mailSended: enabled
+//             };
 //         } else {
-//             console.log('Date de fin client non renseignée. Aucune planification d\'emails récurrents.');
+//             updateData = {
+//                 contractId: contractId,
+//                 scheduledDate: nextEmailDate ? new Date(nextEmailDate) : null,
+//                 interval: interval,  // intervalle en jours
+//                 mailSended: enabled
+//             };
 //         }
 
-//         res.status(200).json({ message: 'Planification des emails mise à jour.', contract });
+//         const emailTask = await EmailTask.findOneAndUpdate(
+//             { contractId },
+//             updateData,
+//             { new: true, upsert: true, setDefaultsOnInsert: true }
+//         );
+
+//         if (enabled) {
+//             const contract = await ContractModel.findById(contractId).populate('external_contributor');
+//             const contracts = await ContractModel.find({ internal_number: contract.internal_number }).populate('external_contributor');
+//             console.log('Contrats trouvés pour le numéro interne:', contract.internal_number);
+//             console.log('Contrats trouvés:', contracts);
+
+//             const replacements = {
+//                 contracts: contracts.map(c => ({
+//                     internal_number: c.internal_number,
+//                     benefit: c.benefit,
+//                     end_date_customer: c.end_date_customer,
+//                     status: c.status,
+//                     address: c.address,
+//                     appartment_number: c.appartment_number,
+//                     external_contributor_name: `${c.external_contributor.firstname} ${c.external_contributor.lastname}`
+//                 })),
+//                 CRM_URL: process.env.CRM_URL
+//             };
+
+//             console.log('replacements:', replacements);
+
+//             updateData.replacements = replacements; // Ajouter les remplacements aux données de mise à jour
+
+//             await scheduleRecurringEmails(contract.internal_number, updateData.scheduledDate, updateData.interval, replacements); // Utilisez des secondes pour les tests
+//         }
+
+//         console.log('Planification des emails après mise à jour:', emailTask);
+//         res.status(200).json({ message: 'Planification des emails mise à jour.', emailTask });
+//     } catch (error) {
+//         console.error('Erreur lors de la mise à jour de la planification des emails:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+
+// exports.updateEmailSchedule = async (req, res) => {
+//     try {
+//         const { contractId } = req.params;
+//         const { nextEmailDate, interval, enabled } = req.body;
+
+//         console.log('Mise à jour de la planification des emails pour le contrat', contractId);
+//         console.log('Données de mise à jour :', req.body);
+
+//         const contract = await ContractModel.findById(contractId).populate('external_contributor');
+//         const contracts = await ContractModel.find({ internal_number: contract.internal_number }).populate('external_contributor');
+//         console.log('Contrats trouvés pour le numéro interne:', contract.internal_number);
+//         console.log('Contrats trouvés:', contracts);
+
+//         // const replacements = {
+//         //     contracts: contracts.map(c => ({
+//         //         internal_number: c.internal_number,
+//         //         benefit: c.benefit,
+//         //         end_date_customer: c.end_date_customer,
+//         //         status: c.status,
+//         //         address: c.address,
+//         //         appartment_number: c.appartment_number,
+//         //         external_contributor_name: `${c.external_contributor.firstname} ${c.external_contributor.lastname}`
+//         //     })),
+//         //     CRM_URL: process.env.CRM_URL
+//         // };
+//         const replacements = {
+//             'contracts': await Promise.all(contracts.map(async c => ({
+//                 'internal_number': c.internal_number,
+//                 'benefit': await getBenefitName(c.benefit),
+//                 'end_date_customer': formatDate(c.end_date_customer),
+//                 'status': translateStatus(c.status),
+//                 'address': c.address,
+//                 'appartment_number': c.appartment_number,
+//                 'external_contributor_name': `${c.external_contributor.firstname} ${c.external_contributor.lastname}`
+//             }))),
+//             'CRM_URL': process.env.CRM_URL
+//         };
+
+//         let updateData;
+
+//         if (isTestMode) {
+//             const currentDate = new Date();
+//             const currentDateUTC = new Date(
+//                 Date.UTC(
+//                     currentDate.getUTCFullYear(),
+//                     currentDate.getUTCMonth(),
+//                     currentDate.getUTCDate(),
+//                     currentDate.getUTCHours(),
+//                     currentDate.getUTCMinutes(),
+//                     currentDate.getUTCSeconds()
+//                 )
+//             );
+//             const currentDatePlusOneMinute = new Date(currentDateUTC.getTime() + 60000);
+
+//             updateData = {
+//                 contractId: contractId,
+//                 scheduledDate: currentDatePlusOneMinute, // dans une minute en UTC
+//                 interval: interval * 60,  // Utilise des secondes pour les tests
+//                 mailSended: enabled,
+//                 replacements: replacements
+//             };
+//         } else {
+//             updateData = {
+//                 contractId: contractId,
+//                 scheduledDate: nextEmailDate ? new Date(nextEmailDate) : null,
+//                 interval: interval,  // intervalle en jours
+//                 mailSended: enabled,
+//                 replacements: replacements
+//             };
+//         }
+
+//         const emailTask = await EmailTask.findOneAndUpdate(
+//             { contractId },
+//             updateData,
+//             { new: true, upsert: true, setDefaultsOnInsert: true }
+//         );
+
+//         if (enabled) {
+//             await scheduleRecurringEmails(contract.internal_number, updateData.scheduledDate, updateData.interval, replacements); // Utilisez des secondes pour les tests
+//         }
+
+//         console.log('Planification des emails après mise à jour:', emailTask);
+//         res.status(200).json({ message: 'Planification des emails mise à jour.', emailTask });
+//     } catch (error) {
+//         console.error('Erreur lors de la mise à jour de la planification des emails:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+// exports.updateEmailSchedule = async (req, res) => {
+//     try {
+//         const { contractId } = req.params;
+//         const { nextEmailDate, interval, enabled } = req.body;
+
+//         console.log('Mise à jour de la planification des emails pour le contrat', contractId);
+//         console.log('Données de mise à jour :', req.body);
+
+//         const contract = await ContractModel.findById(contractId).populate('external_contributor');
+//         const contracts = await ContractModel.find({ internal_number: contract.internal_number }).populate('external_contributor');
+//         console.log('Contrats trouvés pour le numéro interne:', contract.internal_number);
+//         console.log('Contrats trouvés:', contracts);
+
+//         const formattedContracts = await Promise.all(contracts.map(async c => ({
+//             internal_number: c.internal_number,
+//             benefit: await getBenefitName(c.benefit),
+//             end_date_customer: c.end_date_customer,
+//             status: translateStatus(c.status),
+//             address: c.address,
+//             appartment_number: c.appartment_number,
+//             external_contributor_name: `${c.external_contributor.firstname} ${c.external_contributor.lastname}`
+//         })));
+
+//         const replacements = {
+//             contracts: formattedContracts,
+//             CRM_URL: process.env.CRM_URL
+//         };
+
+//         let updateData;
+
+//         if (isTestMode) {
+//             const currentDate = new Date();
+//             const currentDateUTC = new Date(
+//                 Date.UTC(
+//                     currentDate.getUTCFullYear(),
+//                     currentDate.getUTCMonth(),
+//                     currentDate.getUTCDate(),
+//                     currentDate.getUTCHours(),
+//                     currentDate.getUTCMinutes(),
+//                     currentDate.getUTCSeconds()
+//                 )
+//             );
+//             const currentDatePlusOneMinute = new Date(currentDateUTC.getTime() + 60000);
+
+//             updateData = {
+//                 contractId: contractId,
+//                 scheduledDate: currentDatePlusOneMinute, // dans une minute en UTC
+//                 interval: interval * 60,  // Utilise des secondes pour les tests
+//                 mailSended: enabled,
+//                 replacements: replacements
+//             };
+//         } else {
+//             updateData = {
+//                 contractId: contractId,
+//                 scheduledDate: nextEmailDate ? new Date(nextEmailDate) : null,
+//                 interval: interval,  // intervalle en jours
+//                 mailSended: enabled,
+//                 replacements: replacements
+//             };
+//         }
+
+//         const emailTask = await EmailTask.findOneAndUpdate(
+//             { contractId },
+//             updateData,
+//             { new: true, upsert: true, setDefaultsOnInsert: true }
+//         );
+
+//         if (enabled) {
+//             await scheduleRecurringEmails(contract.internal_number, updateData.scheduledDate, updateData.interval, replacements); // Utilisez des secondes pour les tests
+//         }
+
+//         console.log('Planification des emails après mise à jour:', emailTask);
+//         res.status(200).json({ message: 'Planification des emails mise à jour.', emailTask });
 //     } catch (error) {
 //         console.error('Erreur lors de la mise à jour de la planification des emails:', error);
 //         res.status(500).json({ error: error.message });
@@ -1046,18 +1070,76 @@ exports.updateEmailSchedule = async (req, res) => {
         console.log('Mise à jour de la planification des emails pour le contrat', contractId);
         console.log('Données de mise à jour :', req.body);
 
-        const updateData = {
-            contractId: contractId,
-            scheduledDate: nextEmailDate ? new Date(nextEmailDate) : null,
-            interval: interval,
-            mailSended: enabled
+        const contract = await ContractModel.findById(contractId).populate('external_contributor');
+        const contracts = await ContractModel.find({ internal_number: contract.internal_number }).populate('external_contributor');
+        console.log('Contrats trouvés pour le numéro interne:', contract.internal_number);
+        console.log('Contrats trouvés:', contracts);
+
+        const replacements = {
+            'contracts': await Promise.all(contracts.map(async c => ({
+                'internal_number': c.internal_number,
+                'benefit': await getBenefitName(c.benefit),
+                'end_date_customer': c.end_date_customer,
+                'status': translateStatus(c.status),
+                'address': c.address,
+                'appartment_number': c.appartment_number,
+                'external_contributor_name': `${c.external_contributor.firstname} ${c.external_contributor.lastname}`
+            }))),
+            'CRM_URL': process.env.CRM_URL
         };
+
+        if (!enabled) {
+            // Désactiver les emails récurrents
+            const result = await EmailTask.findOneAndDelete({ contractId });
+            if (!result) {
+                return res.status(404).json({ message: 'Planification des emails non trouvée.' });
+            }
+            console.log('Planification des emails supprimée:', result);
+            return res.status(200).json({ message: 'Planification des emails désactivée avec succès.' });
+        }
+
+        let updateData;
+
+        if (isTestMode) {
+            const currentDate = new Date();
+            const currentDateUTC = new Date(
+                Date.UTC(
+                    currentDate.getUTCFullYear(),
+                    currentDate.getUTCMonth(),
+                    currentDate.getUTCDate(),
+                    currentDate.getUTCHours(),
+                    currentDate.getUTCMinutes(),
+                    currentDate.getUTCSeconds()
+                )
+            );
+            const currentDatePlusOneMinute = new Date(currentDateUTC.getTime() + 60000);
+
+            updateData = {
+                contractId: contractId,
+                scheduledDate: currentDatePlusOneMinute,
+                interval: interval * 60,
+                mailSended: enabled,
+                replacements: replacements
+            };
+        } else {
+            updateData = {
+                contractId: contractId,
+                scheduledDate: nextEmailDate ? new Date(nextEmailDate) : null,
+                interval: interval,
+                mailSended: enabled,
+                replacements: replacements
+            };
+        }
 
         const emailTask = await EmailTask.findOneAndUpdate(
             { contractId },
             updateData,
             { new: true, upsert: true, setDefaultsOnInsert: true }
         );
+
+        if (enabled) {
+            await scheduleRecurringEmails(contract.internal_number, updateData.scheduledDate, updateData.interval, replacements);
+        }
 
         console.log('Planification des emails après mise à jour:', emailTask);
         res.status(200).json({ message: 'Planification des emails mise à jour.', emailTask });
@@ -1067,4 +1149,21 @@ exports.updateEmailSchedule = async (req, res) => {
     }
 };
 
+exports.deleteEmailSchedule = async (req, res) => {
+    try {
+        const { contractId } = req.params;
+        console.log('Suppression de la planification des emails pour le contrat', contractId);
 
+        const result = await EmailTask.findOneAndDelete({ contractId });
+
+        if (!result) {
+            return res.status(404).json({ message: 'Planification des emails non trouvée.' });
+        }
+
+        console.log('Planification des emails supprimée:', result);
+        res.status(200).json({ message: 'Planification des emails supprimée avec succès.' });
+    } catch (error) {
+        console.error('Erreur lors de la suppression de la planification des emails:', error);
+        res.status(500).json({ error: error.message });
+    }
+};

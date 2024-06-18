@@ -21,4 +21,8 @@ export class EmailSchedulerService {
   updateEmailSchedule(contractId: string, schedule: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/contracts/${contractId}/email-schedule`, schedule);
   }
+
+  deleteEmailSchedule(contractId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/contracts/${contractId}/email-schedule`);
+  }
 }

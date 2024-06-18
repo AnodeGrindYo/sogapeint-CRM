@@ -149,4 +149,7 @@ router.post('/benefit', isAdminOrSuperAdmin, benefitController.addBenefit);
  */
 router.delete('/benefit/:benefitId', isAdminOrSuperAdmin, benefitController.deleteBenefit);
 
+// route pour getBenefitNameById (benefitId est dans les paramètres de la requête)
+// router.get('/benefit/:benefitId', benefitController.getBenefitNameById);
+
 module.exports = router;

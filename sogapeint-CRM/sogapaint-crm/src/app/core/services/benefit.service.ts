@@ -88,4 +88,8 @@ export class BenefitService {
         return this.http.put<any>(`${environment.apiUrl}/api/benefits/replaceBenefit`, { oldBenefitId, newBenefitId });
     }
     
+    // méthode pour /benefit/:benefitId
+    // getBenefitName(benefitId: string): Observable<any> {
+    //     return this.http.get<any>(`${environment.apiUrl}/api/benefits/benefit/${benefitId}`);
+    // }
 }

@@ -8,6 +8,32 @@
             <p>Chargement...</p>
         </div>
         <div class="contract-email-scheduler-component" *ngIf="!isLoading">
+            <div *ngIf="infoMessage" class="alert alert-info">
+                {{ infoMessage }}
+            </div>
+            <div class="alert alert-primary" *ngIf="internalNumber">
+                <i class="fa fa-info-circle"></i>
+                Nombre de commandes avec le numéro interne {{ internalNumber }} : {{ contracts.length }}
+            </div>
+            <div *ngIf="contracts.length > 0" class="mb-3">
+                <h5>Commandes avec le numéro interne {{ internalNumber }} :</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Prestation</th>
+                            <th scope="col">Date de fin client</th>
+                            <th scope="col">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let contract of contracts">
+                            <td>{{ getBenefitName(contract.benefit) }}</td>
+                            <td>{{ contract.end_date_customer | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ getStatus(contract.status) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <form [formGroup]="emailScheduleForm" (ngSubmit)="updateEmailSchedule()">
                 <div class="mb-3">
                     <label for="nextEmailDate" class="form-label">Prochaine date d'envoi:</label>
@@ -23,8 +49,12 @@
                         Activer les emails récurrents
                     </label>
                 </div>
+                <div *ngIf="!canScheduleEmails()" class="alert alert-warning">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    Vous ne pouvez pas programmer d'emails récurrents tant que toutes les commandes n'ont pas le statut "Réalisé" ou "Annulé".
+                </div>
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="emailScheduleForm.invalid">Mettre à jour</button>
+                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="emailScheduleForm.invalid || !canScheduleEmails()">Mettre à jour</button>
                 </div>
                 <div *ngIf="errorMessage" class="text-danger mt-3">
                     {{ errorMessage }}
