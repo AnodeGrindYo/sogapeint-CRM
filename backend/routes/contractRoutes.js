@@ -590,6 +590,8 @@ router.delete('/incident/:incidentId', isAdminOrSuperAdmin, contractController.d
  */
 router.get('/incidents/:contractId', isConnected, contractController.getIncidents);
 
+router.put('/observation/:observationId/processed', isAdminOrSuperAdmin, contractController.updateObservationProcessedStatus);
+router.put('/incident/:incidentId/processed', isAdminOrSuperAdmin, contractController.updateIncidentProcessedStatus);
 
 router.get('/:contractId/email-schedule', contractController.getEmailSchedule);
 router.put('/:contractId/email-schedule', contractController.updateEmailSchedule);

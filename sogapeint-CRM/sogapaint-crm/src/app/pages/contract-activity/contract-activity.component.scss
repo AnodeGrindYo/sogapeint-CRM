@@ -1,11 +1,13 @@
-  
-  .contract-activity-component {
+$success-color: #198754; // couleur success bootstrap
+$danger-color: #DC3545; // couleur danger bootstrap
+
+.contract-activity-component {
     .list-group {
         height: 306px;
         max-height: 306px;
         overflow-y: auto;
         margin-bottom: 20px;
-        
+
         .list-group-item {
             display: block;
             background: #f7f7f7;
@@ -14,58 +16,88 @@
             border-radius: 18px;
             border: none;
             transition: background-color 0.3s;
-            
+            position: relative;
+
             &:hover {
                 background-color: #eaeaea;
             }
-            
+
             h5 {
                 font-size: 0.75rem;
                 font-weight: 600;
                 color: #5a5a5a;
             }
-            
+
             small {
                 display: block;
                 text-align: right;
                 color: #666666;
             }
-            
+
             p {
                 font-size: 0.9rem;
                 margin: 0;
                 color: #333333;
             }
-            
-            .btn {
-                float: right;
-                padding: 5px;
-                margin: -5px -5px -5px 10px;
-                font-size: 0.8rem;
-                
-                i {
-                    margin: auto;
+
+            .activity-actions {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 10px;
+
+                .btn-link {
+                    padding: 0;
+                    margin: 0;
+                    color: inherit;
+                    position: relative;
+
+                    i {
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        transition: color 0.3s;
+                    }
+
+                    &:hover i {
+                        color: $success-color;
+                    }
+                }
+
+                .btn {
+                    padding: 5px;
+                    margin: -5px -5px -5px 10px;
+                    font-size: 0.8rem;
+                    position: relative;
+
+                    i {
+                        margin: auto;
+                        transition: color 0.3s;
+                    }
+
+                    &:hover i {
+                        color: $danger-color;
+                    }
                 }
             }
         }
-        
+
         .list-group-item-action {
             &.Observation {
                 background-color: #e3f2fd;
             }
-            
+
             &.Incident {
                 background-color: #ffebee;
             }
         }
     }
-    
+
     .add-activity-form {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 10px;
-        
+
         input, select {
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -74,20 +106,19 @@
         }
 
         select.form-control {
-            flex-grow: 0; // Prevent the select from growing
-            width: auto; // Allow the select to size according to its content
+            flex-grow: 0;
+            width: auto;
             &.Observation { background-color: #e3f2fd; }
             &.Incident { background-color: #ffebee; }
         }
 
         input.form-control {
-            flex-grow: 3; // Give more room to the input
+            flex-grow: 3;
             border-radius: 5px;
             border: 1px solid #ccc;
             padding: 10px;
         }
 
-        
         button {
             background-color: #5664D2;
             color: white;
@@ -98,27 +129,82 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            
+            position: relative;
+            overflow: hidden;
+
             &:hover {
                 background-color: darken(#5664D2, 5%);
             }
-            
+
             i {
-                margin:auto;
+                margin: auto;
             }
         }
-        
-        .form-group {
-            margin-bottom: 0;
+    }
+
+    .particle {
+        position: absolute;
+        background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 204, 0, 1) 100%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        pointer-events: none;
+        animation: particle 0.6s forwards;
+    }
+
+    @keyframes particle {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -150%) scale(0);
+            opacity: 0;
         }
     }
-    
+
+    @keyframes particle-explosion {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+    }
+
     .alert {
         border-radius: 15px;
     }
-}
 
-// ng-select.form-control {
-//     width: 150px !important;
-//   }
+    .message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 15px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+
+        &.success {
+            background-color: #2ecc71;
+        }
+
+        &.error {
+            background-color: #e74c3c;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    }
+}
 

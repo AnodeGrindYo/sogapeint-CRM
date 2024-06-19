@@ -5,4 +5,5 @@ export interface Incident {
     user?: string;
     comment?: string;
     dateAdd?: Date;
+    processed?: boolean;
 }

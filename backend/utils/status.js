@@ -11,6 +11,10 @@ const translateStatus = (status) => {
     return statusDict[status] || 'Statut inconnu';
 };
 
+const getStatus = (status) => {
+    return translateStatus(status);
+};
+
 module.exports = {
-    translateStatus
+    translateStatus, getStatus
 };

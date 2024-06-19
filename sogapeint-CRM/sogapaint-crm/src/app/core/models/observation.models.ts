@@ -5,4 +5,5 @@ export interface Observation {
     dateAdd?: Date;
     user?: string;
     comment?: string;
+    processed?: boolean;
 }

@@ -14,6 +14,10 @@ const incidentSchema = new mongoose.Schema({
   dateAdd: {
     type: Date,
     required: true
+  },
+  processed: {
+    type: Boolean,
+    default: false
   }
 });
 

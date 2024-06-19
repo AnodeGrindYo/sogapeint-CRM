@@ -3,39 +3,44 @@
         Activités du contrat
     </div>
     <div class="contract-activity-component" *ngIf="contractId; else selectContractMessage">
-        <!-- <div class="contract-activity-component container" *ngIf="contractId; else selectContractMessage"> -->
-            <!-- Section Activités -->
-            
-            <div class="list-group">
-                <ng-container *ngFor="let activity of activities">
-                    <div class="list-group-item list-group-item-action" [ngClass]="activity.type">
-                        <h5>{{ activity.user.firstname }} {{ activity.user.lastname }}</h5>
-                        <small>{{ activity.dateAdd | date:'short' }}</small>
-                        <p>{{ activity.comment }}</p>
-                        
-                        <button *ngIf="!isReadOnly" (click)="deleteActivity(activity._id, activity.type, $event)" class="btn btn-outline-danger">
+        <div class="list-group">
+            <ng-container *ngFor="let activity of activities">
+                <div class="list-group-item list-group-item-action" [ngClass]="activity.type">
+                    <h5>{{ activity.user.firstname }} {{ activity.user.lastname }}</h5>
+                    <small>{{ activity.dateAdd | date:'short' }}</small>
+                    <p>{{ activity.comment }}</p>
+                    <div class="activity-actions">
+                        <button *ngIf="!isReadOnly" (click)="triggerParticle($event); toggleProcessed(activity)" class="btn btn-link p-0 m-0">
+                            <i [ngClass]="activity.processed ? 'fas fa-check-circle text-success' : 'far fa-circle text-muted'"></i>
+                        </button>
+                        <button *ngIf="!isReadOnly" (click)="triggerParticle($event); deleteActivity(activity._id, activity.type, $event)" class="btn btn-outline-danger">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
-                </ng-container>
-            </div>
-            <form *ngIf="!isReadOnly" (submit)="addActivity(activityInput.value, typeSelect.value)" class="add-activity-form mt-3">
-                <select #typeSelect class="form-control"(change)="updatePlaceholder(typeSelect.value)">
-                    <option value="Observation">Observation</option>
-                    <option value="Incident">Incident</option>
-                </select>
-                <input #activityInput type="text" class="form-control" [placeholder]="placeholderText" required>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
-        <!-- </div> -->
+                </div>
+            </ng-container>
+        </div>
+        <form *ngIf="!isReadOnly" (submit)="addActivity(activityInput.value, typeSelect.value)" class="add-activity-form mt-3">
+            <select #typeSelect class="form-control" (change)="updatePlaceholder(typeSelect.value)">
+                <option value="Observation">Observation</option>
+                <option value="Incident">Incident</option>
+            </select>
+            <input #activityInput type="text" class="form-control" [placeholder]="placeholderText" required>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
     </div>
 </div>
-
 
 <ng-template #selectContractMessage>
     <div class="alert alert-warning" role="alert">
         Veuillez sélectionner un contrat pour voir les activités.
     </div>
 </ng-template>
+
+<!-- Messages -->
+<div *ngFor="let message of messages" class="alert alert-dismissible fade show" [ngClass]="message.type === 'success' ? 'alert-success' : 'alert-danger'" role="alert">
+    {{ message.text }}
+    <button type="button" class="btn-close" aria-label="Close" (click)="removeMessage(message)"></button>
+</div>

@@ -708,6 +708,70 @@ exports.getIncidents = async (req, res) => {
     }
 };
 
+exports.updateObservationProcessedStatus = async (req, res) => {
+    console.log('Mise à jour du statut de traitement de l\'observation');
+    try {
+        const { observationId } = req.params;
+        const { processed } = req.body;
+        console.log('Observation ID:', observationId);
+        console.log('Statut de traitement:', processed);
+
+        const observationObjectId = new mongoose.Types.ObjectId(observationId);
+
+        const updatedContract = await ContractModel.findOneAndUpdate(
+            { 'observation._id': observationObjectId },
+            { $set: { 'observation.$[elem].processed': processed } },
+            {
+                arrayFilters: [{ 'elem._id': observationObjectId }],
+                new: true
+            }
+        );
+
+        if (!updatedContract) {
+            return res.status(404).json({ message: 'Observation non trouvée.' });
+        }
+
+        res.status(200).json(updatedContract);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.updateIncidentProcessedStatus = async (req, res) => {
+    console.log('Mise à jour du statut de traitement de l\'incident');
+    try {
+        const { incidentId } = req.params;
+        const { processed } = req.body;
+        console.log('Incident ID:', incidentId);
+        console.log('Statut de traitement:', processed);
+
+        const incidentObjectId = new mongoose.Types.ObjectId(incidentId);
+
+        const updatedContract = await ContractModel.findOneAndUpdate(
+            { 'incident._id': incidentObjectId },
+            { $set: { 'incident.$[elem].processed': processed } },
+            {
+                arrayFilters: [{ 'elem._id': incidentObjectId }],
+                new: true
+            }
+        );
+
+        if (!updatedContract) {
+            return res.status(404).json({ message: 'Incident non trouvé.' });
+        }
+
+        res.status(200).json(updatedContract);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+
+
+
+  
+
 
 exports.getEmailSchedule = async (req, res) => {
     console.log('Récupération de la planification des emails');

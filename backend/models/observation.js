@@ -14,6 +14,10 @@ const observationModel = new mongoose.Schema({
   comment: {
     type: String,
     required: false
+  },
+  processed: {
+    type: Boolean,
+    default: false
   }
 });
 
