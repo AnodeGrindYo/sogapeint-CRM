@@ -40,25 +40,49 @@ exports.getBenefits = async (req, res) => {
     }
 };
 
+// exports.addBenefit = async (req, res) => {
+//     try {
+
+//         const {
+//             name
+//         } = req.body;
+
+//         const normalized_name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+//         let service = await Benefit.findOne({
+//             normalized_name
+//         });
+//         if (service) {
+//             return res.status(400).json({
+//                 message: 'Un service avec ce nom existe déjà.'
+//             });
+//         }
+//         const newService = new benefit({
+//             name: normalized_name
+//         });
+//         await newService.save();
+
+//         res.status(201).json({
+//             message: 'Service créé avec succès.',
+//             benefit: newService
+//         });
+//     } catch (error) {
+//         console.error('Erreur lors de l’ajout d’un nouveau service:', error);
+//         res.status(500).json({
+//             error: error.message
+//         });
+//     }
+// };
 exports.addBenefit = async (req, res) => {
     try {
-
-        const {
-            name
-        } = req.body;
+        const { name } = req.body;
 
         const normalized_name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-        let service = await Benefit.findOne({
-            normalized_name
-        });
+        let service = await Benefit.findOne({ name: normalized_name });
         if (service) {
-            return res.status(400).json({
-                message: 'Un service avec ce nom existe déjà.'
-            });
+            return res.status(400).json({ message: 'Un service avec ce nom existe déjà.' });
         }
-        const newService = new benefit({
-            name: normalized_name
-        });
+
+        const newService = new Benefit({ name: normalized_name });
         await newService.save();
 
         res.status(201).json({
@@ -67,11 +91,11 @@ exports.addBenefit = async (req, res) => {
         });
     } catch (error) {
         console.error('Erreur lors de l’ajout d’un nouveau service:', error);
-        res.status(500).json({
-            error: error.message
-        });
+        res.status(500).json({ error: error.message });
     }
 };
+
+
 
 exports.deleteBenefit = async (req, res) => {
     try {

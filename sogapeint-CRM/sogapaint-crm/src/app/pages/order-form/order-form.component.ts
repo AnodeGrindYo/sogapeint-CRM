@@ -81,6 +81,8 @@ export class OrderFormComponent implements OnInit {
 
   @ViewChild("confirmationModal") confirmationModal;
   @ViewChild("deleteBenefitModal") deleteBenefitModal;
+  @ViewChild('simpleDeleteModal') simpleDeleteModal: any;
+  @ViewChild('simpleDeleteConfirmationModal') simpleDeleteConfirmationModal: any;
   replacementBenefit: string;
   benefitToDelete: string;
   filteredBenefits: any[] = [];
@@ -824,15 +826,103 @@ export class OrderFormComponent implements OnInit {
     console.log("Updated contractData:", this.contractData);
   }
 
-  addNewBenefit(name: string): void {
-    const existingBenefit = this.benefits.map((benefit) => benefit.name);
-    const existingBenefitName = this.isProbableTypo(name, existingBenefit);
-    const levenshteinScore = this.levenshteinDistance(
-      name,
-      existingBenefitName
-    );
+  // addNewBenefit(name: string): void {
+  //   const existingBenefit = this.benefits.map((benefit) => benefit.name);
+  //   const existingBenefitName = this.isProbableTypo(name, existingBenefit);
+  //   const levenshteinScore = this.levenshteinDistance(
+  //     name,
+  //     existingBenefitName
+  //   );
 
-    if (existingBenefitName) {
+  //   if (existingBenefitName) {
+  //     this.warningMessage = `Il semble qu'une prestation similaire existe déjà: ${existingBenefitName}`;
+  //     this.warningScore = levenshteinScore;
+  //     this.modalService.open(this.warningModal);
+
+  //     this.renderer.addClass(document.getElementById("benefit"), "pulsing-red");
+
+  //     setTimeout(() => {
+  //       this.renderer.removeClass(
+  //         document.getElementById("benefit"),
+  //         "pulsing-red"
+  //       );
+  //     }, 7000);
+  //   }
+
+  //   console.log("Ajout de la prestation:", name);
+  //   const newBenefit = { name: name };
+  //   this.benefitService.addBenefit(newBenefit).subscribe({
+  //     next: (benefit) => {
+  //       console.log("Prestation ajoutée avec succès:", benefit.benefit._id);
+  //       this.loadBenefits();
+  //       const benefitToSet = {
+  //         name: benefit.benefit.name,
+  //         value: benefit.benefit._id,
+  //       };
+  //       console.log("Prestation à définir:", benefitToSet);
+  //       setTimeout(() => {
+  //         this.orderForm.get("benefit").setValue(benefitToSet.value);
+  //       }, 500);
+  //       this.toastr.success('Prestation ajoutée avec succès.');
+  //     },
+  //     error: (error) => {
+  //       console.error("Erreur lors de l'ajout de la prestation", error);
+  //       this.toastr.error('Erreur lors de l\'ajout de la prestation.');
+  //     }
+  //   });
+  // }
+//   addNewBenefit(name: string): void {
+//     if (!name) {
+//         console.error("Benefit name is required.");
+//         return;
+//     }
+
+//     const existingBenefit = this.benefits.map((benefit) => benefit.name);
+//     const existingBenefitName = this.isProbableTypo(name, existingBenefit);
+//     const levenshteinScore = existingBenefitName ? this.levenshteinDistance(name, existingBenefitName) : null;
+
+//     if (existingBenefitName) {
+//         this.warningMessage = `Il semble qu'une prestation similaire existe déjà: ${existingBenefitName}`;
+//         this.warningScore = levenshteinScore;
+//         this.modalService.open(this.warningModal);
+
+//         this.renderer.addClass(document.getElementById("benefit"), "pulsing-red");
+
+//         setTimeout(() => {
+//             this.renderer.removeClass(document.getElementById("benefit"), "pulsing-red");
+//         }, 7000);
+//     } else {
+//         console.log("Ajout de la prestation:", name);
+//         const newBenefit = { name: name };
+//         this.benefitService.addBenefit(newBenefit).subscribe({
+//             next: (benefit) => {
+//                 console.log("Prestation ajoutée avec succès:", benefit.benefit._id);
+//                 this.loadBenefits();
+//                 const benefitToSet = { name: benefit.benefit.name, value: benefit.benefit._id };
+//                 console.log("Prestation à définir:", benefitToSet);
+//                 setTimeout(() => {
+//                     this.orderForm.get("benefit").setValue(benefitToSet.value);
+//                 }, 500);
+//                 this.toastService.success('Prestation ajoutée avec succès.');
+//             },
+//             error: (error) => {
+//                 console.error("Erreur lors de l'ajout de la prestation", error);
+//                 this.toastService.error('Erreur lors de l\'ajout de la prestation.');
+//             }
+//         });
+//     }
+// }
+addNewBenefit(name: string): void {
+  if (!name) {
+      console.error("Benefit name is required.");
+      return;
+  }
+
+  const existingBenefit = this.benefits.map((benefit) => benefit.name);
+  const existingBenefitName = this.isProbableTypo(name, existingBenefit);
+  const levenshteinScore = existingBenefitName ? this.levenshteinDistance(name, existingBenefitName) : null;
+
+  if (existingBenefitName) {
       this.warningMessage = `Il semble qu'une prestation similaire existe déjà: ${existingBenefitName}`;
       this.warningScore = levenshteinScore;
       this.modalService.open(this.warningModal);
@@ -840,36 +930,67 @@ export class OrderFormComponent implements OnInit {
       this.renderer.addClass(document.getElementById("benefit"), "pulsing-red");
 
       setTimeout(() => {
-        this.renderer.removeClass(
-          document.getElementById("benefit"),
-          "pulsing-red"
-        );
+          this.renderer.removeClass(document.getElementById("benefit"), "pulsing-red");
       }, 7000);
-    }
-
-    console.log("Ajout de la prestation:", name);
-    const newBenefit = { name: name };
-    this.benefitService.addBenefit(newBenefit).subscribe({
-      next: (benefit) => {
-        console.log("Prestation ajoutée avec succès:", benefit.benefit._id);
-        this.loadBenefits();
-        const benefitToSet = {
-          name: benefit.benefit.name,
-          value: benefit.benefit._id,
-        };
-        console.log("Prestation à définir:", benefitToSet);
-        setTimeout(() => {
-          this.orderForm.get("benefit").setValue(benefitToSet.value);
-        }, 500);
-        this.toastr.success('Prestation ajoutée avec succès.');
-      },
-      error: (error) => {
-        console.error("Erreur lors de l'ajout de la prestation", error);
-        this.toastr.error('Erreur lors de l\'ajout de la prestation.');
-      }
-    });
+  } else {
+      console.log("Ajout de la prestation:", name);
+      const newBenefit = { name: name };
+      this.benefitService.addBenefit(newBenefit).subscribe({
+          next: (response) => {
+              console.log("Prestation ajoutée avec succès:", response.benefit._id);
+              this.loadBenefits();
+              const benefitToSet = { name: response.benefit.name, value: response.benefit._id };
+              console.log("Prestation à définir:", benefitToSet);
+              setTimeout(() => {
+                  this.orderForm.get("benefit").setValue(benefitToSet.value);
+              }, 500);
+              this.toastService.success('Prestation ajoutée avec succès.');
+          },
+          error: (error) => {
+              console.error("Erreur lors de l'ajout de la prestation", error);
+              this.toastService.error('Erreur lors de l\'ajout de la prestation.');
+          }
+      });
   }
+}
 
+
+  // deleteBenefit(benefitId: string, event: Event): void {
+  //   event.stopPropagation();
+  //   this.benefitToDelete = benefitId;
+
+  //   this.benefitService.checkBenefitInUse(benefitId).subscribe({
+  //     next: (isInUse) => {
+  //       if (isInUse) {
+  //         this.replacementBenefit = null;
+  //         this.filteredBenefits = this.benefits.filter(
+  //           (benefit) => benefit.value !== benefitId
+  //         );
+  //         this.modalService.open(this.deleteBenefitModal);
+  //       } else {
+  //         this.confirmDeleteBenefit();
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error("Erreur lors de la vérification de la prestation", error);
+  //       this.toastr.error('Erreur lors de la vérification de la prestation.');
+  //     }
+  //   });
+  // }
+
+  // confirmDeleteBenefit(): void {
+  //   this.benefitService.deleteBenefit(this.benefitToDelete).subscribe({
+  //     next: () => {
+  //       this.modalService.dismissAll();
+  //       this.loadBenefits();
+  //       this.toastr.success('Prestation supprimée avec succès.');
+  //     },
+  //     error: (error) => {
+  //       console.error("Erreur lors de la suppression de la prestation", error);
+  //       this.toastr.error('Erreur lors de la suppression de la prestation.');
+  //     }
+  //   });
+  // }
   deleteBenefit(benefitId: string, event: Event): void {
     event.stopPropagation();
     this.benefitToDelete = benefitId;
@@ -883,30 +1004,75 @@ export class OrderFormComponent implements OnInit {
           );
           this.modalService.open(this.deleteBenefitModal);
         } else {
-          this.confirmDeleteBenefit();
+          this.modalService.open(this.simpleDeleteConfirmationModal);
         }
       },
       error: (error) => {
         console.error("Erreur lors de la vérification de la prestation", error);
-        this.toastr.error('Erreur lors de la vérification de la prestation.');
-      }
+        this.toastr.error("Erreur lors de la vérification de la prestation.");
+      },
     });
   }
 
-  confirmDeleteBenefit(): void {
+confirmDeleteBenefit(): void {
+    if (this.replacementBenefit) {
+        this.benefitService.replaceBenefit(this.benefitToDelete, this.replacementBenefit).subscribe({
+            next: () => {
+                this.modalService.dismissAll();
+                this.loadBenefits();
+                this.toastr.success("Prestation remplacée et supprimée avec succès.");
+            },
+            error: (error) => {
+                console.error("Erreur lors du remplacement de la prestation", error);
+                this.toastr.error("Erreur lors du remplacement de la prestation.");
+            },
+        });
+    } else {
+        this.benefitService.deleteBenefit(this.benefitToDelete).subscribe({
+            next: () => {
+                this.modalService.dismissAll();
+                this.loadBenefits();
+                this.toastr.success("Prestation supprimée avec succès.");
+            },
+            error: (error) => {
+                console.error("Erreur lors de la suppression de la prestation", error);
+                this.toastr.error("Erreur lors de la suppression de la prestation.");
+            },
+        });
+    }
+}
+
+confirmSimpleDeleteBenefit(): void {
     this.benefitService.deleteBenefit(this.benefitToDelete).subscribe({
       next: () => {
         this.modalService.dismissAll();
         this.loadBenefits();
-        this.toastr.success('Prestation supprimée avec succès.');
+        this.toastr.success("Prestation supprimée avec succès.");
       },
       error: (error) => {
         console.error("Erreur lors de la suppression de la prestation", error);
-        this.toastr.error('Erreur lors de la suppression de la prestation.');
-      }
+        this.toastr.error("Erreur lors de la suppression de la prestation.");
+      },
     });
-  }
+}
 
+
+  // addNewReplacementBenefit(): void {
+  //   const newBenefitName = prompt("Entrez le nom de la nouvelle prestation:");
+  //   if (newBenefitName) {
+  //     this.benefitService.addBenefit({ name: newBenefitName }).subscribe({
+  //       next: (benefit) => {
+  //         this.replacementBenefit = benefit.benefit._id;
+  //         this.loadBenefits();
+  //         this.toastr.success('Nouvelle prestation ajoutée avec succès.');
+  //       },
+  //       error: (error) => {
+  //         console.error("Erreur lors de l'ajout de la prestation", error);
+  //         this.toastr.error('Erreur lors de l\'ajout de la prestation.');
+  //       }
+  //     });
+  //   }
+  // }
   addNewReplacementBenefit(): void {
     const newBenefitName = prompt("Entrez le nom de la nouvelle prestation:");
     if (newBenefitName) {
@@ -914,48 +1080,78 @@ export class OrderFormComponent implements OnInit {
         next: (benefit) => {
           this.replacementBenefit = benefit.benefit._id;
           this.loadBenefits();
-          this.toastr.success('Nouvelle prestation ajoutée avec succès.');
+          this.toastr.success("Nouvelle prestation ajoutée avec succès.");
         },
         error: (error) => {
           console.error("Erreur lors de l'ajout de la prestation", error);
-          this.toastr.error('Erreur lors de l\'ajout de la prestation.');
-        }
+          this.toastr.error("Erreur lors de l'ajout de la prestation.");
+        },
       });
     }
   }
 
+  // levenshteinDistance(word1: string, word2: string): number {
+  //   const n = word1.length;
+  //   const m = word2.length;
+
+  //   if (n === 0) return m;
+  //   if (m === 0) return n;
+
+  //   const matrix: number[][] = Array.from({ length: n + 1 }, () =>
+  //     Array(m + 1).fill(0)
+  //   );
+
+  //   for (let i = 0; i <= n; i++) {
+  //     matrix[i][0] = i;
+  //   }
+  //   for (let j = 0; j <= m; j++) {
+  //     matrix[0][j] = j;
+  //   }
+
+  //   for (let i = 1; i <= n; i++) {
+  //     for (let j = 1; j <= m; j++) {
+  //       const cost = word1[i - 1] === word2[j - 1] ? 0 : 1;
+
+  //       matrix[i][j] = Math.min(
+  //         matrix[i - 1][j] + 1, // suppression
+  //         matrix[i][j - 1] + 1, // insertion
+  //         matrix[i - 1][j - 1] + cost // substitution
+  //       );
+  //     }
+  //   }
+
+  //   return matrix[n][m];
+  // }
   levenshteinDistance(word1: string, word2: string): number {
+    if (!word1 || !word2) {
+        return Math.max(word1?.length || 0, word2?.length || 0);
+    }
+
     const n = word1.length;
     const m = word2.length;
 
     if (n === 0) return m;
     if (m === 0) return n;
 
-    const matrix: number[][] = Array.from({ length: n + 1 }, () =>
-      Array(m + 1).fill(0)
-    );
+    const matrix: number[][] = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
 
     for (let i = 0; i <= n; i++) {
-      matrix[i][0] = i;
+        matrix[i][0] = i;
     }
     for (let j = 0; j <= m; j++) {
-      matrix[0][j] = j;
+        matrix[0][j] = j;
     }
 
     for (let i = 1; i <= n; i++) {
-      for (let j = 1; j <= m; j++) {
-        const cost = word1[i - 1] === word2[j - 1] ? 0 : 1;
-
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j] + 1, // suppression
-          matrix[i][j - 1] + 1, // insertion
-          matrix[i - 1][j - 1] + cost // substitution
-        );
-      }
+        for (let j = 1; j <= m; j++) {
+            const cost = word1[i - 1] === word2[j - 1] ? 0 : 1;
+            matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
+        }
     }
 
     return matrix[n][m];
-  }
+}
+
 
   isProbableTypo(
     word: string,
