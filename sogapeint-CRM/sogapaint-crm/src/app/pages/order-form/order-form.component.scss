@@ -822,31 +822,31 @@ svg:hover {
 }
 
 // .files-list .list-group-item {
-    //     display: flex;
-    //     justify-content: space-between;
-    //     align-items: center;
-    // }
-    
-    // .file-info .file-name {
-        //     font-weight: bold;
-        //     margin-right: 8px; /* Ajuste l'espace entre le nom du fichier et sa taille */
-        // }
-        
-        // .file-info .file-size {
-            //     color: #6c757d; /* coulur pour indiquer une info secondaire */
-            // }
-            
-            // .btn-delete {
-                //     color: #dc3545; /* Couleur: Bootstrap danger */
-                //     background-color: transparent;
-                //     border: none;
-                // }
-                
-                // .btn-delete:hover {
-                    //     background-color: #dc3545;
-                    //     color: white;
-                    // }
-                    
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+// }
+
+// .file-info .file-name {
+//     font-weight: bold;
+//     margin-right: 8px; /* Ajuste l'espace entre le nom du fichier et sa taille */
+// }
+
+// .file-info .file-size {
+//     color: #6c757d; /* coulur pour indiquer une info secondaire */
+// }
+
+// .btn-delete {
+//     color: #dc3545; /* Couleur: Bootstrap danger */
+//     background-color: transparent;
+//     border: none;
+// }
+
+// .btn-delete:hover {
+//     background-color: #dc3545;
+//     color: white;
+// }
+
 .file-item {
     transition: transform 0.1s ease-in-out;
 }
@@ -922,9 +922,9 @@ svg:hover {
     background-color: #ffcc00;
     border-radius: 50%;
     position: relative;
-  }
-  
-  .pulse-warning::before {
+}
+
+.pulse-warning::before {
     content: "!";
     color: #fff;
     font-weight: bold;
@@ -933,137 +933,170 @@ svg:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-  
-  @keyframes pulseWarning {
+}
+
+@keyframes pulseWarning {
     0% {
-      transform: scale(1);
-      opacity: 1;
+        transform: scale(1);
+        opacity: 1;
     }
     50% {
-      transform: scale(1.2);
-      opacity: 0.7;
+        transform: scale(1.2);
+        opacity: 0.7;
     }
     100% {
-      transform: scale(1);
-      opacity: 1;
+        transform: scale(1);
+        opacity: 1;
     }
-  }
-  
-  .pulse-warning {
-    animation: pulseWarning 1s infinite;
-  }
+}
 
-  .modal-body a {
+.pulse-warning {
+    animation: pulseWarning 1s infinite;
+}
+
+.modal-body a {
     color: #6c757d; /* Couleur grise discrète */
     text-decoration: none;
     font-size: 0.9rem; /* Légèrement plus petit que le texte normal */
-  }
-  
-  .modal-body a:hover {
+}
+
+.modal-body a:hover {
     color: #0056b3; /* Couleur bleue au survol */
     text-decoration: underline; /* Souligné au survol */
-  }
+}
 
-  .particle {
+.particle {
     position: absolute;
     width: 8px;
     height: 8px;
     background: #ffcc00;
     border-radius: 50%;
     opacity: 0;
-  }
-  
-  .explode .particle {
+}
+
+.explode .particle {
     animation: particleExplosion 1s forwards;
     --random-x: calc(-1 + 2 * var(--i));
     --random-y: calc(-1 + 2 * var(--j));
-  }
-  
-  @keyframes particleExplosion {
+}
+
+@keyframes particleExplosion {
     0% {
-      transform: translate(0, 0) scale(2);
-      opacity: 1;
+        transform: translate(0, 0) scale(2);
+        opacity: 1;
     }
     100% {
-      transform: translate(
+        transform: translate(
         calc(100vw * var(--random-x)),
         calc(100vh * var(--random-y))
-      ) scale(0);
-      opacity: 0;
+        ) scale(0);
+        opacity: 0;
     }
-  }
-  
-  .shake-modal {
-    animation: shakeModal 0.5s;
-  }
+}
 
-  .shake-page {
+.shake-modal {
+    animation: shakeModal 0.5s;
+}
+
+.shake-page {
     animation: shakePage 0.5s;
-  }
-  
-  @keyframes shakeModal {
+}
+
+@keyframes shakeModal {
     0%, 100% {
-      transform: translate(0, 0);
+        transform: translate(0, 0);
     }
     25% {
-      transform: translate(-10px, 10px);
+        transform: translate(-10px, 10px);
     }
     50% {
-      transform: translate(10px, -10px);
+        transform: translate(10px, -10px);
     }
     75% {
-      transform: translate(-10px, 10px);
+        transform: translate(-10px, 10px);
     }
-  }
-  
-  @keyframes shakePage {
+}
+
+@keyframes shakePage {
     0%, 100% {
-      transform: translate(0, 0);
+        transform: translate(0, 0);
     }
     25% {
-      transform: translate(-20px, 20px);
+        transform: translate(-20px, 20px);
     }
     50% {
-      transform: translate(20px, -20px);
+        transform: translate(20px, -20px);
     }
     75% {
-      transform: translate(-20px, 20px);
+        transform: translate(-20px, 20px);
     }
-  }
-  
-  .fall-modal {
+}
+
+.fall-modal {
     animation: fallModal 1.5s forwards;
-  }
-  
-  @keyframes fallModal {
+}
+
+@keyframes fallModal {
     0% {
-      transform: rotate(0deg);
-      transform-origin: top right;
+        transform: rotate(0deg);
+        transform-origin: top right;
     }
     50% {
-      transform: rotate(10deg);
-      transform-origin: top right;
+        transform: rotate(10deg);
+        transform-origin: top right;
     }
     100% {
-      transform: translateY(100vh) rotate(20deg);
-      transform-origin: top right;
+        transform: translateY(100vh) rotate(20deg);
+        transform-origin: top right;
     }
-  }
+}
 
-  .pulsing-red {
+.pulsing-red {
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     animation: pulseRed 1s infinite;
-  }
-  
-  @keyframes pulseRed {
+}
+
+@keyframes pulseRed {
     0% {
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     }
     50% {
-      box-shadow: 0 0 20px rgba(255, 0, 0, 1);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 1);
     }
     100% {
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     }
-  }
+}
+
+.is-invalid {
+    border-color: red !important;
+}
+
+.is-valid {
+    border-color: green !important;
+}
+
+.is-touched {
+    border-color: blue !important;
+}
+
+.input-error {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+

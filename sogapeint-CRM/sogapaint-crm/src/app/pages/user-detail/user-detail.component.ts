@@ -342,7 +342,7 @@ export class UserDetailComponent implements OnInit {
             },
             error: (error) => {
               // Affiche un message d'erreur:
-              this.errorMessage = 'Erreur lors de la réinitialisation du mot de passe: ' + error?.error?.message ?? ' ';
+              this.errorMessage = 'Erreur lors de la réinitialisation du mot de passe: ' + (error?.error?.message || ' ');
               
             }
           });

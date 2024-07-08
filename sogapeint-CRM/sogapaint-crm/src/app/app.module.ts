@@ -24,6 +24,11 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { AngularToastifyModule, ToastService } from 'angular-toastify';
+import { ToastrModule } from 'ngx-toastr';
+
+
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
@@ -40,12 +45,14 @@ export function createTranslateLoader(http: HttpClient): any {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     PagesModule,
     LayoutsModule,
     FormsModule,
     PickerModule,
+    AngularToastifyModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -53,12 +60,18 @@ export function createTranslateLoader(http: HttpClient): any {
         deps: [HttpClient]
       }
     }),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'fr' },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    AuthenticationService
+    AuthenticationService,
+    ToastService,
   ],
   bootstrap: [AppComponent]
 })

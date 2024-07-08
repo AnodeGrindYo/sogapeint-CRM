@@ -1,189 +1,223 @@
 <div class="container-fluid">
-  <app-pagetitle title="Saisie d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
-  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-    <!-- Première ligne -->
-    <div class="row mb-3">
-      <!-- Référence commande -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">Référence commande</div>
-          <div class="card-body">
-            <div class="row mb-3 d-flex align-items-center">
-              <div class="col">
-                <label for="internalNumberAbbrPart" class="form-label">Abbréviation</label>
-                <ng-select id="internalNumberAbbrPart" formControlName="internalNumberAbbrPart" [items]="filteredAbbreviationList" placeholder="Sélectionnez l'abréviation" class="form-control" [addTag]="true" addTagText="Ajouter l'abbréviation" [typeahead]="abbreviationInput$" [virtualScroll]="true"></ng-select>
-              </div>
-              <div class="col-auto align-self-center"> - </div>
-              <div class="col">
-                <label for="internalNumberNumericPart" class="form-label">Numéro interne</label>
-                <!-- champ de saisie du numéro interne pré-rempli avec la méthode getNextInternalNumber() -->
-                <input type="text" class="form-control" id="internalNumberNumericPart" formControlName="internalNumberNumericPart">
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="customer" class="form-label">Client</label>
-              <ng-select id="customer" formControlName="customer" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                <ng-template ng-label-tmp let-item="item">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-              </ng-select>
-            </div>
-            <div class="mb-3">
-              <label for="contact" class="form-label">Contact</label>
-              <ng-select id="contact" formControlName="contact" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                <ng-template ng-label-tmp let-item="item">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-              </ng-select>
-            </div>
-            <div class="mb-3">
-              <label for="quoteNumber" class="form-label">Numéro de devis</label>
-              <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
-            </div>
-            <div class="mb-3">
-              <label for="benefit" class="form-label">Prestation</label>
-                <ng-select 
-                id="benefit" 
-                formControlName="benefit" 
-                [items]="benefits" 
-                bindLabel="name" 
-                bindValue="value" 
-                placeholder="🧚‍♂️ Faites un vœu... et choisissez votre prestation !" 
-                [addTag]="addNewBenefit.bind(this)"
-                addTagText="Ajouter une prestation"
-                [multiple]="false"
-                [closeOnSelect]="true"
-                [compareWith]="compareWithFn">
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                  <div class="d-flex justify-content-between align-items-center w-100">
-                    <span class="flex-grow-1">{{ item.name }}</span>
-                    <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+    <app-pagetitle title="Saisie d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+      <!-- Première ligne -->
+      <div class="row mb-3">
+        <!-- Référence commande -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Référence commande</div>
+            <div class="card-body">
+              <div class="row mb-3 d-flex align-items-center">
+                <div class="col">
+                  <label for="internalNumberAbbrPart" class="form-label">Abbréviation</label>
+                  <ng-select id="internalNumberAbbrPart" formControlName="internalNumberAbbrPart" [items]="filteredAbbreviationList" placeholder="Sélectionnez l'abréviation" class="form-control" [addTag]="true" addTagText="Ajouter l'abbréviation" [typeahead]="abbreviationInput$" [virtualScroll]="true"></ng-select>
+                  <div *ngIf="orderForm.get('internalNumberAbbrPart').invalid && (orderForm.get('internalNumberAbbrPart').dirty || orderForm.get('internalNumberAbbrPart').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('internalNumberAbbrPart').errors) }}
                   </div>
-                </ng-template>
-              </ng-select>
-              
+                </div>
+                <div class="col-auto align-self-center"> - </div>
+                <div class="col">
+                  <label for="internalNumberNumericPart" class="form-label">Numéro interne</label>
+                  <input type="text" class="form-control" id="internalNumberNumericPart" formControlName="internalNumberNumericPart">
+                  <div *ngIf="orderForm.get('internalNumberNumericPart').invalid && (orderForm.get('internalNumberNumericPart').dirty || orderForm.get('internalNumberNumericPart').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('internalNumberNumericPart').errors) }}
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="customer" class="form-label">Client</label>
+                <ng-select id="customer" formControlName="customer" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+                <div *ngIf="orderForm.get('customer').invalid && (orderForm.get('customer').dirty || orderForm.get('customer').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('customer').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="contact" class="form-label">Contact</label>
+                <ng-select id="contact" formControlName="contact" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un contact" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+                <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('contact').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="quoteNumber" class="form-label">Numéro de devis</label>
+                <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
+                <div *ngIf="orderForm.get('quoteNumber').invalid && (orderForm.get('quoteNumber').dirty || orderForm.get('quoteNumber').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('quoteNumber').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="benefit" class="form-label">Prestation</label>
+                <ng-select id="benefit" formControlName="benefit" [items]="benefits" bindLabel="name" bindValue="value" placeholder="Sélectionner une prestation" [addTag]="addNewBenefit.bind(this)" addTagText="Ajouter une prestation" [multiple]="false" [closeOnSelect]="true" [compareWith]="compareWithFn">
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                      <span class="flex-grow-1">{{ item.name }}</span>
+                      <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+                    </div>
+                  </ng-template>
+                </ng-select>
+                <div *ngIf="orderForm.get('benefit').invalid && (orderForm.get('benefit').dirty || orderForm.get('benefit').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('benefit').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="order_status" class="form-label">Statut</label>
+                <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="Sélectionner un statut"></ng-select>
+                <div *ngIf="orderForm.get('status').invalid && (orderForm.get('status').dirty || orderForm.get('status').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('status').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="dateCde" class="form-label">Date de Commande</label>
+                <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
+                <div *ngIf="orderForm.get('dateCde').invalid && (orderForm.get('dateCde').dirty || orderForm.get('dateCde').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('dateCde').errors) }}
+                </div>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="order_status" class="form-label">Statut</label>
-              <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="🔮 Devinez le statut... ou sélectionnez-le ici!"></ng-select>
-            </div>
-            <div class="mb-3">
-              <label for="dateCde" class="form-label">Date de Commande</label>
-              <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
+          </div>
+        </div>
+        <!-- Résidence/Adresse -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Résidence/Adresse</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="address" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="address" formControlName="address">
+                <div *ngIf="orderForm.get('address').invalid && (orderForm.get('address').dirty || orderForm.get('address').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('address').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="appartmentNumber" class="form-label">N° appart</label>
+                <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
+                <div *ngIf="orderForm.get('appartmentNumber').invalid && (orderForm.get('appartmentNumber').dirty || orderForm.get('appartmentNumber').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('appartmentNumber').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
+                <select class="form-control" id="occupied" formControlName="occupied">
+                  <option value="true">Oui</option>
+                  <option value="false">Non</option>
+                </select>
+                <div *ngIf="orderForm.get('occupied').invalid && (orderForm.get('occupied').dirty || orderForm.get('occupied').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('occupied').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="ss4" class="form-label">SS4 (amiante)</label>
+                <input type="checkbox" class="form-check-input" id="ss4" formControlName="ss4">
+                <div *ngIf="orderForm.get('ss4').invalid && (orderForm.get('ss4').dirty || orderForm.get('ss4').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('ss4').errors) }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Résidence/Adresse -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">Résidence/Adresse</div>
-          <div class="card-body">
-            <div class="mb-3">
-              <label for="address" class="form-label">Adresse</label>
-              <input type="text" class="form-control" id="address" formControlName="address">
-            </div>
-            <div class="mb-3">
-              <label for="appartmentNumber" class="form-label">N° appart</label>
-              <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
-            </div>
-            <div class="mb-3">
-              <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
-              <select class="form-control" id="occupied" formControlName="occupied">
-                <option value="true">Oui</option>
-                <option value="false">Non</option>
-              </select>
-            </div>
-            <!-- cas à cocher 'SS4' (amiante) -->
-            <div class="mb-3">
-              <label for="ss4" class="form-label">SS4 (amiante) &nbsp;</label>
-              <input type="checkbox" class="form-check-input" id="ss4" formControlName="ss4">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Deuxième ligne -->
-    <div class="row mb-3">
-      <!-- Intervenants -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">Intervenants</div>
-          <div class="card-body">
-            <div class="mb-3">
-              <label for="internalContributor" class="form-label">Intervenant Sogapeint</label>
-              <ng-select id="internalContributor" formControlName="internalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un intervenant Sogapeint" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                <ng-template ng-label-tmp let-item="item">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-              </ng-select>
-            </div>
-            <div class="mb-3">
-              <label for="externalContributor" class="form-label">Co-traitant</label>
-              <ng-select id="externalContributor" formControlName="externalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un co-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                <ng-template ng-label-tmp let-item="item">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-              </ng-select>
-            </div>
-            <div class="mb-3">
-              <label for="subcontractor" class="form-label">Sous-traitant</label>
-              <ng-select id="subcontractor" formControlName="subcontractor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un sous-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                <ng-template ng-label-tmp let-item="item">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                  {{ item.firstname }} {{ item.lastname }}
-                </ng-template>
-              </ng-select>
+      <!-- Deuxième ligne -->
+      <div class="row mb-3">
+        <!-- Intervenants -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Intervenants</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="internalContributor" class="form-label">Intervenant Sogapeint</label>
+                <ng-select id="internalContributor" formControlName="internalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un intervenant Sogapeint" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+                <div *ngIf="orderForm.get('internalContributor').invalid && (orderForm.get('internalContributor').dirty || orderForm.get('internalContributor').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('internalContributor').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="externalContributor" class="form-label">Co-traitant</label>
+                <ng-select id="externalContributor" formControlName="externalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un co-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+                <div *ngIf="orderForm.get('externalContributor').invalid && (orderForm.get('externalContributor').dirty || orderForm.get('externalContributor').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('externalContributor').errors) }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="subcontractor" class="form-label">Sous-traitant</label>
+                <ng-select id="subcontractor" formControlName="subcontractor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un sous-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.firstname }} {{ item.lastname }}
+                  </ng-template>
+                </ng-select>
+                <div *ngIf="orderForm.get('subcontractor').invalid && (orderForm.get('subcontractor').dirty || orderForm.get('subcontractor').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('subcontractor').errors) }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- Montants -->
-      <div class="col-md-6">
-        <!-- <div class="row mb-3"> -->
+        <!-- Montants -->
+        <div class="col-md-6">
           <div class="card">
             <div class="card-header">Montants</div>
             <div class="card-body">
-              
               <div class="mb-3">
                 <label for="amountHt" class="form-label">Montant de la commande HT</label>
                 <input type="number" class="form-control" id="amountHt" formControlName="amountHt" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('amountHt').invalid && (orderForm.get('amountHt').dirty || orderForm.get('amountHt').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('amountHt').errors) }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="benefitHt" class="form-label">Montant de la prestation HT</label>
                 <input type="number" class="form-control" id="benefitHt" formControlName="benefitHt" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('benefitHt').invalid && (orderForm.get('benefitHt').dirty || orderForm.get('benefitHt').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('benefitHt').errors) }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="externalContributorAmount" class="form-label">Montant co-traitant/sous-traitant</label>
                 <input type="number" class="form-control" id="externalContributorAmount" formControlName="externalContributorAmount" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('externalContributorAmount').invalid && (orderForm.get('externalContributorAmount').dirty || orderForm.get('externalContributorAmount').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('externalContributorAmount').errors) }}
+                </div>
               </div>
-              <!-- date de réception de la facture external_contributor_invoice_date -->
               <div class="mb-3">
                 <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
                 <input type="date" class="form-control" id="external_contributor_invoice_date" formControlName="external_contributor_invoice_date">
+                <div *ngIf="orderForm.get('external_contributor_invoice_date').invalid && (orderForm.get('external_contributor_invoice_date').dirty || orderForm.get('external_contributor_invoice_date').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('external_contributor_invoice_date').errors) }}
+                </div>
               </div>
-              <!-- <div class="mb-3">
-                <label for="subcontractorAmount" class="form-label">Montant sous-traitant</label>
-                <input type="number" class="form-control" id="subcontractorAmount" formControlName="subcontractorAmount" (keydown)="onAlphaInput($event)">
-              </div> -->
-              <!-- <div class="mb-3"><label for="benefitHt" class="form-label">Bénéfice HT</label><input type="number" class="form-control" id="benefitHt" formControlName="benefitHt" (keydown)="onAlphaInput($event)"></div> -->
             </div>
           </div>
-          <!-- </div> -->
         </div>
       </div>
       <!-- Troisième ligne -->
@@ -196,14 +230,23 @@
               <div class="mb-3">
                 <label for="start_date_works" class="form-label">Début</label>
                 <input type="date" class="form-control" id="start_date_works" formControlName="startDateWorks">
+                <div *ngIf="orderForm.get('startDateWorks').invalid && (orderForm.get('startDateWorks').dirty || orderForm.get('startDateWorks').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('startDateWorks').errors) }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="end_date_works" class="form-label">Date de fin</label>
                 <input type="date" class="form-control" id="end_date_works" formControlName="endDateWorks">
+                <div *ngIf="orderForm.get('endDateWorks').invalid && (orderForm.get('endDateWorks').dirty || orderForm.get('endDateWorks').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('endDateWorks').errors) }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="end_date_customer" class="form-label">Date de fin client</label>
                 <input type="date" class="form-control" id="end_date_customer" formControlName="endDateCustomer">
+                <div *ngIf="orderForm.get('endDateCustomer').invalid && (orderForm.get('endDateCustomer').dirty || orderForm.get('endDateCustomer').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('endDateCustomer').errors) }}
+                </div>
               </div>
             </div>
           </div>
@@ -278,34 +321,36 @@
       <div class="row mb-3">
         <!-- Temps d'exécution -->
         <div class="col-md-6">
-          <!-- <div class="card"><div class="card-header">Montants</div><div class="card-body"><div class="mb-3"><label for="invoiceNumber" class="form-label">Numéro de Facture</label><input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber"></div><div class="mb-3"><label for="amountHt" class="form-label">Montant HT</label><input type="number" class="form-control" id="amountHt" formControlName="amountHt" (keydown)="onAlphaInput($event)"></div><div class="mb-3"><label for="externalContributorAmount" class="form-label">Montant de la prestation du co-traitant</label><input type="number" class="form-control" id="externalContributorAmount" formControlName="externalContributorAmount" (keydown)="onAlphaInput($event)"></div><div class="mb-3"><label for="subcontractorAmount" class="form-label">Montant de la prestation du sous-traitant</label><input type="number" class="form-control" id="subcontractorAmount" formControlName="subcontractorAmount" (keydown)="onAlphaInput($event)"></div></div></div></div> -->
           <div class="card">
             <div class="card-header">Temps d'exécution</div>
             <div class="card-body">
               <div class="mb-3">
                 <label for="previsionDataHour" class="form-label">Heures (Donné)</label>
                 <input type="number" class="form-control" id="previsionDataHour" formControlName="previsionDataHour" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('previsionDataHour').invalid && (orderForm.get('previsionDataHour').dirty || orderForm.get('previsionDataHour').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('previsionDataHour').errors) }}
+                </div>
               </div>
               <div class="mb-3">
-                <div class="emoji-container" [ngClass]="{'show': isEmojiVisible}">
-                  <div class="emoji emoji--angry">
-                    <div class="emoji__face">
-                      <div class="emoji__eyebrows"></div>
-                      <div class="emoji__eyes"></div>
-                      <div class="emoji__mouth"></div>
-                    </div>
-                  </div>
-                </div>
                 <label for="previsionDataDay" class="form-label">Jours (Donné)</label>
                 <input type="number" class="form-control" id="previsionDataDay" formControlName="previsionDataDay" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('previsionDataDay').invalid && (orderForm.get('previsionDataDay').dirty || orderForm.get('previsionDataDay').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('previsionDataDay').errors) }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="executionDataHour" class="form-label">Heures (Réalisé)</label>
                 <input type="number" class="form-control" id="executionDataHour" formControlName="executionDataHour" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('executionDataHour').invalid && (orderForm.get('executionDataHour').dirty || orderForm.get('executionDataHour').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('executionDataHour').errors) }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="executionDataDay" class="form-label">Jours (Réalisé)</label>
                 <input type="number" class="form-control" id="executionDataDay" formControlName="executionDataDay" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('executionDataDay').invalid && (orderForm.get('executionDataDay').dirty || orderForm.get('executionDataDay').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('executionDataDay').errors) }}
+                </div>
               </div>
               <div class="mb-3">
                 <label class="form-label" for="difference">Différence (Heures)</label>
@@ -316,125 +361,124 @@
         </div>
         <!-- Communication -->
         <div class="col-md-6">
-          <!-- <div class="row"> -->
-            <div class="card">
-              <div class="card-header">Facturation</div>
-              <div class="card-body">
-                <div class="mb-3">
-                  <label for="invoiceNumber" class="form-label">Numéro de Facture</label>
-                  <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber">
+          <div class="card">
+            <div class="card-header">Facturation</div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="invoiceNumber" class="form-label">Numéro de Facture</label>
+                <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber">
+                <div *ngIf="orderForm.get('invoiceNumber').invalid && (orderForm.get('invoiceNumber').dirty || orderForm.get('invoiceNumber').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('invoiceNumber').errors) }}
                 </div>
-                <div class="mb-3">
-                  <label for="billingAmount" class="form-label">Montant de la facture</label>
-                  <input type="number" class="form-control" id="billingAmount" formControlName="billingAmount" (keydown)="onAlphaInput($event)">
+              </div>
+              <div class="mb-3">
+                <label for="billingAmount" class="form-label">Montant de la facture</label>
+                <input type="number" class="form-control" id="billingAmount" formControlName="billingAmount" (keydown)="onAlphaInput($event)">
+                <div *ngIf="orderForm.get('billingAmount').invalid && (orderForm.get('billingAmount').dirty || orderForm.get('billingAmount').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('billingAmount').errors) }}
                 </div>
               </div>
             </div>
-            <div class="card">
-              <div class="card-header">Communication et suivi</div>
-              <div class="card-body">
-                <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="mailSended" formControlName="mailSended">
-                  <label for="mailSended" class="form-check-label">Mail Envoyé</label>
+          </div>
+          <div class="card">
+            <div class="card-header">Communication et suivi</div>
+            <div class="card-body">
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="mailSended" formControlName="mailSended">
+                <label for="mailSended" class="form-check-label">Mail Envoyé</label>
+                <div *ngIf="orderForm.get('mailSended').invalid && (orderForm.get('mailSended').dirty || orderForm.get('mailSended').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('mailSended').errors) }}
                 </div>
-                <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="trash" formControlName="trash">
-                  <label for="trash" class="form-check-label">Marquer comme supprimé</label>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="trash" formControlName="trash">
+                <label for="trash" class="form-check-label">Marquer comme supprimé</label>
+                <div *ngIf="orderForm.get('trash').invalid && (orderForm.get('trash').dirty || orderForm.get('trash').touched)" class="text-danger">
+                  {{ getErrorMessage(orderForm.get('trash').errors) }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
-        <div class="row">
-          <div class="col"></div>
-          <div class="col d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">Valider</button>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Valider</button>
         </div>
-      </form>
+      </div>
+    </form>
+  </div>
+  
+  <ng-template #confirmationModal let-modal>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmation</h5>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Voulez-vous créer une nouvelle commande avec le même numéro interne ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="confirmCreation(true)">Oui</button>
+          <button type="button" class="btn btn-danger" (click)="confirmCreation(false)">Non</button>
+        </div>
+      </div>
     </div>
-    
-    <ng-template #confirmationModal let-modal>
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Confirmation</h5>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Voulez-vous créer une nouvelle commande avec le même numéro interne ?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
-            <button type="button" class="btn btn-primary" (click)="confirmCreation(true)">Oui</button>
-            <button type="button" class="btn btn-danger" (click)="confirmCreation(false)">Non</button>
-          </div>
+  </ng-template>
+  
+  <!-- Modal pour la suppression d'une prestation -->
+  <ng-template #deleteBenefitModal let-modal>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmation de suppression</h5>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Cette prestation est utilisée dans des commandes existantes. Veuillez sélectionner une prestation de remplacement :
+          <ng-select [items]="filteredBenefits" bindLabel="name" bindValue="value" [(ngModel)]="replacementBenefit" placeholder="Choisissez une prestation de remplacement"></ng-select>
+          ou <button type="button" class="btn btn-link" (click)="addNewReplacementBenefit()">créer une nouvelle prestation</button>.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="confirmDeleteBenefit()">Confirmer</button>
         </div>
       </div>
-    </ng-template>
-
-
-    <!-- Modal pour la suppression d'une prestation -->
-    <ng-template #deleteBenefitModal let-modal>
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Confirmation de suppression</h5>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Cette prestation est utilisée dans des commandes existantes. Veuillez sélectionner une prestation de remplacement :
-            <ng-select [items]="filteredBenefits" bindLabel="name" bindValue="value" [(ngModel)]="replacementBenefit" placeholder="Choisissez une prestation de remplacement"></ng-select>
-            ou <button type="button" class="btn btn-link" (click)="addNewReplacementBenefit()">créer une nouvelle prestation</button>.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
-            <button type="button" class="btn btn-primary" (click)="confirmDeleteBenefit()">Confirmer</button>
-          </div>
+    </div>
+  </ng-template>
+  
+  <ng-template #warningModal let-modal>
+    <div class="modal-dialog" role="document" [ngClass]="{'shake-modal': isExploding, 'fall-modal': isFalling}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Avertissement</h5>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-    </ng-template>
-    
-    <ng-template #warningModal let-modal>
-      <div class="modal-dialog" role="document" [ngClass]="{'shake-modal': isExploding, 'fall-modal': isFalling}">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Avertissement</h5>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="d-flex align-items-center">
-              <div class="warning-icon pulse-warning me-3" [ngClass]="{'explode': isExploding}" (click)="triggerExplosion()">
-                <div class="particle" *ngFor="let particle of [].constructor(50); let i = index" [ngStyle]="{'--i': (i % 10) / 10, '--j': (i / 10) / 10}"></div>
-              </div>
-              <div>
-                <p>{{ warningMessage }}</p>
-                <p>Levenshtein distance score: {{ warningScore }}</p>
-                <a href="https://fr.wikipedia.org/wiki/Distance_de_Levenshtein" target="_blank">euh... c'est quoi la distance de Levenshtein?</a>
-              </div>
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
+            <div class="warning-icon pulse-warning me-3" [ngClass]="{'explode': isExploding}" (click)="triggerExplosion()">
+              <div class="particle" *ngFor="let particle of [].constructor(50); let i = index" [ngStyle]="{'--i': (i % 10) / 10, '--j': (i / 10) / 10}"></div>
+            </div>
+            <div>
+              <p>{{ warningMessage }}</p>
+              <p>Levenshtein distance score: {{ warningScore }}</p>
+              <a href="https://fr.wikipedia.org/wiki/Distance_de_Levenshtein" target="_blank">euh... c'est quoi la distance de Levenshtein?</a>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fermer</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fermer</button>
         </div>
       </div>
-    </ng-template>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    </div>
+  </ng-template>
+  
