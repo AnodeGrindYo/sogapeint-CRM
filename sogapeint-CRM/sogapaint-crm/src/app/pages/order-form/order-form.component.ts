@@ -92,6 +92,8 @@ export class OrderFormComponent implements OnInit {
   isExploding: boolean = false;
   isFalling: boolean = false;
 
+
+
   constructor(
     private contractService: ContractService,
     private userProfileService: UserProfileService,
@@ -104,35 +106,6 @@ export class OrderFormComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  // ngOnInit(): void {
-  //   this.setupBreadCrumbItems();
-  //   this.currentUser = this.userProfileService.getCurrentUser();
-  //   console.log("Utilisateur connecté:", this.currentUser);
-  //   this.initializeOrderForm();
-  //   this.subscribeToFormChanges();
-  //   this.setupUserSearchAndTypeahead();
-  //   this.retrieveDataFromServices();
-  //   this.subscribeToAbbreviationInput();
-  //   this.initializeDateCdeWithCurrentDate();
-
-  //   this.orderForm.valueChanges.subscribe((values) => {
-  //     console.log("Modification du formulaire:", values);
-  //     console.log(this.orderForm.status);
-  //     console.log(this.orderForm.errors);
-  //   });
-  //   this.orderForm.get("invoiceNumber").valueChanges.subscribe((value) => {
-  //     console.log("invoiceNumber change:", value);
-  //   });
-  //   Object.keys(this.orderForm.controls).forEach((key) => {
-  //     const control = this.orderForm.get(key);
-  //     console.log(key, control.errors);
-  //   });
-
-  //   this.orderForm.patchValue({
-  //     previsionDataHour: this.contractData.previsionDataHour,
-  //     previsionDataDay: this.contractData.previsionDataDay,
-  //   });
-  // }
   ngOnInit(): void {
     this.setupBreadCrumbItems();
     this.currentUser = this.userProfileService.getCurrentUser();
@@ -152,7 +125,7 @@ export class OrderFormComponent implements OnInit {
 
     this.orderForm.get("invoiceNumber").valueChanges.subscribe((value) => {
         console.log("invoiceNumber change:", value);
-        this.toastr.info(`Invoice number changed to: ${value}`);
+        this.toastr.info(`Le numéro de facture a été remplacé par: ${value}`);
     });
 
     Object.keys(this.orderForm.controls).forEach((key) => {
@@ -160,9 +133,9 @@ export class OrderFormComponent implements OnInit {
         control.statusChanges.subscribe(() => {
             this.updateFieldClasses(key);
             if (control.invalid && control.touched) {
-                this.toastr.error(`Invalid input in field: ${key}`);
+                this.toastr.error(`Entrée invalide dans le champ: ${key}`);
             } else if (control.valid && control.touched) {
-                this.toastr.success(`Valid input in field: ${key}`);
+                this.toastr.success(`Entrée valide dans le champ: ${key}`);
             }
         });
         control.valueChanges.subscribe(() => {
@@ -170,12 +143,7 @@ export class OrderFormComponent implements OnInit {
         });
     });
 
-    // Triggering toast messages for testing
-    this.toastr.success("Form Initialized Successfully");
-    this.toastr.info("Ready to enter data into the form");
 }
-
-
 
   private initializeOrderForm(): void {
     this.orderForm = new FormGroup({
@@ -241,7 +209,7 @@ export class OrderFormComponent implements OnInit {
       startDateWorks: new FormControl(this.contractData.startDateWorks),
       endDateWorks: new FormControl(this.contractData.endDateWorks),
       endDateCustomer: new FormControl(this.contractData.endDateCustomer),
-      trash: new FormControl(this.contractData.trash),
+      // trash: new FormControl(this.contractData.trash),
       dateCde: new FormControl(this.contractData.dateCde),
       billingAmount: new FormControl(this.contractData.billingAmount, [
         Validators.pattern(/^\d+\.?\d*$/),
@@ -284,7 +252,6 @@ export class OrderFormComponent implements OnInit {
       this.calculateDifferencesAndAdjustments();
     });
 
-    // Ajouter des listeners pour l'état des champs
     Object.keys(this.orderForm.controls).forEach((key) => {
       const control = this.orderForm.get(key);
       control.statusChanges.subscribe(() => {
@@ -603,21 +570,19 @@ export class OrderFormComponent implements OnInit {
 
         this.submitContractData();
     } else {
-      // marque tous les champs comme touchés pour afficher les erreurs
+
         this.orderForm.markAllAsTouched();
         this.displayFormErrors();
         this.toastr.error('Veuillez corriger les erreurs dans le formulaire.');
     }
 }
 
-
-
   private displayFormErrors(): void {
     Object.keys(this.orderForm.controls).forEach((key) => {
         const control = this.orderForm.get(key);
         const element = document.getElementById(key);
 
-        if (element) { // Il faut s'assurer que l'élément existe
+        if (element) { 
             if (control.errors) {
                 this.renderer.addClass(element, 'is-invalid');
             } else {
@@ -641,7 +606,6 @@ export class OrderFormComponent implements OnInit {
         }
     });
 }
-
 
   private submitContractData(): void {
     console.log("Soumission des données du contrat:", this.contractData);
@@ -688,9 +652,9 @@ export class OrderFormComponent implements OnInit {
       dataForSubmission["occupied"]
     );
     dataForSubmission["ss4"] = this.convertToBoolean(dataForSubmission["ss4"]);
-    dataForSubmission["trash"] = this.convertToBoolean(
-      dataForSubmission["trash"]
-    );
+    // dataForSubmission["trash"] = this.convertToBoolean(
+    //   dataForSubmission["trash"]
+    // );
     dataForSubmission["amount_ht"] = this.convertToNumber(
       dataForSubmission["amount_ht"]
     );
@@ -826,92 +790,6 @@ export class OrderFormComponent implements OnInit {
     console.log("Updated contractData:", this.contractData);
   }
 
-  // addNewBenefit(name: string): void {
-  //   const existingBenefit = this.benefits.map((benefit) => benefit.name);
-  //   const existingBenefitName = this.isProbableTypo(name, existingBenefit);
-  //   const levenshteinScore = this.levenshteinDistance(
-  //     name,
-  //     existingBenefitName
-  //   );
-
-  //   if (existingBenefitName) {
-  //     this.warningMessage = `Il semble qu'une prestation similaire existe déjà: ${existingBenefitName}`;
-  //     this.warningScore = levenshteinScore;
-  //     this.modalService.open(this.warningModal);
-
-  //     this.renderer.addClass(document.getElementById("benefit"), "pulsing-red");
-
-  //     setTimeout(() => {
-  //       this.renderer.removeClass(
-  //         document.getElementById("benefit"),
-  //         "pulsing-red"
-  //       );
-  //     }, 7000);
-  //   }
-
-  //   console.log("Ajout de la prestation:", name);
-  //   const newBenefit = { name: name };
-  //   this.benefitService.addBenefit(newBenefit).subscribe({
-  //     next: (benefit) => {
-  //       console.log("Prestation ajoutée avec succès:", benefit.benefit._id);
-  //       this.loadBenefits();
-  //       const benefitToSet = {
-  //         name: benefit.benefit.name,
-  //         value: benefit.benefit._id,
-  //       };
-  //       console.log("Prestation à définir:", benefitToSet);
-  //       setTimeout(() => {
-  //         this.orderForm.get("benefit").setValue(benefitToSet.value);
-  //       }, 500);
-  //       this.toastr.success('Prestation ajoutée avec succès.');
-  //     },
-  //     error: (error) => {
-  //       console.error("Erreur lors de l'ajout de la prestation", error);
-  //       this.toastr.error('Erreur lors de l\'ajout de la prestation.');
-  //     }
-  //   });
-  // }
-//   addNewBenefit(name: string): void {
-//     if (!name) {
-//         console.error("Benefit name is required.");
-//         return;
-//     }
-
-//     const existingBenefit = this.benefits.map((benefit) => benefit.name);
-//     const existingBenefitName = this.isProbableTypo(name, existingBenefit);
-//     const levenshteinScore = existingBenefitName ? this.levenshteinDistance(name, existingBenefitName) : null;
-
-//     if (existingBenefitName) {
-//         this.warningMessage = `Il semble qu'une prestation similaire existe déjà: ${existingBenefitName}`;
-//         this.warningScore = levenshteinScore;
-//         this.modalService.open(this.warningModal);
-
-//         this.renderer.addClass(document.getElementById("benefit"), "pulsing-red");
-
-//         setTimeout(() => {
-//             this.renderer.removeClass(document.getElementById("benefit"), "pulsing-red");
-//         }, 7000);
-//     } else {
-//         console.log("Ajout de la prestation:", name);
-//         const newBenefit = { name: name };
-//         this.benefitService.addBenefit(newBenefit).subscribe({
-//             next: (benefit) => {
-//                 console.log("Prestation ajoutée avec succès:", benefit.benefit._id);
-//                 this.loadBenefits();
-//                 const benefitToSet = { name: benefit.benefit.name, value: benefit.benefit._id };
-//                 console.log("Prestation à définir:", benefitToSet);
-//                 setTimeout(() => {
-//                     this.orderForm.get("benefit").setValue(benefitToSet.value);
-//                 }, 500);
-//                 this.toastService.success('Prestation ajoutée avec succès.');
-//             },
-//             error: (error) => {
-//                 console.error("Erreur lors de l'ajout de la prestation", error);
-//                 this.toastService.error('Erreur lors de l\'ajout de la prestation.');
-//             }
-//         });
-//     }
-// }
 addNewBenefit(name: string): void {
   if (!name) {
       console.error("Benefit name is required.");
@@ -954,43 +832,6 @@ addNewBenefit(name: string): void {
   }
 }
 
-
-  // deleteBenefit(benefitId: string, event: Event): void {
-  //   event.stopPropagation();
-  //   this.benefitToDelete = benefitId;
-
-  //   this.benefitService.checkBenefitInUse(benefitId).subscribe({
-  //     next: (isInUse) => {
-  //       if (isInUse) {
-  //         this.replacementBenefit = null;
-  //         this.filteredBenefits = this.benefits.filter(
-  //           (benefit) => benefit.value !== benefitId
-  //         );
-  //         this.modalService.open(this.deleteBenefitModal);
-  //       } else {
-  //         this.confirmDeleteBenefit();
-  //       }
-  //     },
-  //     error: (error) => {
-  //       console.error("Erreur lors de la vérification de la prestation", error);
-  //       this.toastr.error('Erreur lors de la vérification de la prestation.');
-  //     }
-  //   });
-  // }
-
-  // confirmDeleteBenefit(): void {
-  //   this.benefitService.deleteBenefit(this.benefitToDelete).subscribe({
-  //     next: () => {
-  //       this.modalService.dismissAll();
-  //       this.loadBenefits();
-  //       this.toastr.success('Prestation supprimée avec succès.');
-  //     },
-  //     error: (error) => {
-  //       console.error("Erreur lors de la suppression de la prestation", error);
-  //       this.toastr.error('Erreur lors de la suppression de la prestation.');
-  //     }
-  //   });
-  // }
   deleteBenefit(benefitId: string, event: Event): void {
     event.stopPropagation();
     this.benefitToDelete = benefitId;
@@ -1056,23 +897,6 @@ confirmSimpleDeleteBenefit(): void {
     });
 }
 
-
-  // addNewReplacementBenefit(): void {
-  //   const newBenefitName = prompt("Entrez le nom de la nouvelle prestation:");
-  //   if (newBenefitName) {
-  //     this.benefitService.addBenefit({ name: newBenefitName }).subscribe({
-  //       next: (benefit) => {
-  //         this.replacementBenefit = benefit.benefit._id;
-  //         this.loadBenefits();
-  //         this.toastr.success('Nouvelle prestation ajoutée avec succès.');
-  //       },
-  //       error: (error) => {
-  //         console.error("Erreur lors de l'ajout de la prestation", error);
-  //         this.toastr.error('Erreur lors de l\'ajout de la prestation.');
-  //       }
-  //     });
-  //   }
-  // }
   addNewReplacementBenefit(): void {
     const newBenefitName = prompt("Entrez le nom de la nouvelle prestation:");
     if (newBenefitName) {
@@ -1090,38 +914,6 @@ confirmSimpleDeleteBenefit(): void {
     }
   }
 
-  // levenshteinDistance(word1: string, word2: string): number {
-  //   const n = word1.length;
-  //   const m = word2.length;
-
-  //   if (n === 0) return m;
-  //   if (m === 0) return n;
-
-  //   const matrix: number[][] = Array.from({ length: n + 1 }, () =>
-  //     Array(m + 1).fill(0)
-  //   );
-
-  //   for (let i = 0; i <= n; i++) {
-  //     matrix[i][0] = i;
-  //   }
-  //   for (let j = 0; j <= m; j++) {
-  //     matrix[0][j] = j;
-  //   }
-
-  //   for (let i = 1; i <= n; i++) {
-  //     for (let j = 1; j <= m; j++) {
-  //       const cost = word1[i - 1] === word2[j - 1] ? 0 : 1;
-
-  //       matrix[i][j] = Math.min(
-  //         matrix[i - 1][j] + 1, // suppression
-  //         matrix[i][j - 1] + 1, // insertion
-  //         matrix[i - 1][j - 1] + cost // substitution
-  //       );
-  //     }
-  //   }
-
-  //   return matrix[n][m];
-  // }
   levenshteinDistance(word1: string, word2: string): number {
     if (!word1 || !word2) {
         return Math.max(word1?.length || 0, word2?.length || 0);
@@ -1151,7 +943,6 @@ confirmSimpleDeleteBenefit(): void {
 
     return matrix[n][m];
 }
-
 
   isProbableTypo(
     word: string,

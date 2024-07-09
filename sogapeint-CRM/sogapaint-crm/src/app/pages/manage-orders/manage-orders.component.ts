@@ -7,6 +7,7 @@ import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { BenefitService } from '../../core/services/benefit.service';
 import { User } from '../../core/models/auth.models';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -47,12 +48,15 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
 
   currentUser: any;
 
+  showDeletedOrders: boolean = false;
+
   constructor(
     private contractService: ContractService,
     private userService: UserProfileService,
     private benefitService: BenefitService,
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -345,22 +349,44 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     this.sortOrders();
   }
 
+  // onSearch(): void {
+  //   const searchTerms = this.filter.toLowerCase().split(" ");
+
+  //   let filteredBySearchText = !this.filter
+  //     ? [...this.orders]
+  //     : this.orders.filter((order) =>
+  //         searchTerms.every((term) => this.searchInOrder(order, term))
+  //       );
+
+  //   this.filteredOrders = filteredBySearchText.filter(
+  //     (order) =>
+  //       this.activeTags.length === 0 ||
+  //       this.activeTags.every((tag) => this.orderHasTag(order, tag))
+  //   );
+  //   this.updateOrdersToShow();
+  // }
   onSearch(): void {
     const searchTerms = this.filter.toLowerCase().split(" ");
-
-    let filteredBySearchText = !this.filter
-      ? [...this.orders]
-      : this.orders.filter((order) =>
-          searchTerms.every((term) => this.searchInOrder(order, term))
-        );
-
-    this.filteredOrders = filteredBySearchText.filter(
-      (order) =>
-        this.activeTags.length === 0 ||
-        this.activeTags.every((tag) => this.orderHasTag(order, tag))
+  
+    // Filtrer les commandes pour inclure ou exclure celles avec trash: true en fonction de showDeletedOrders
+    let filteredOrders = this.orders.filter(order =>
+      this.showDeletedOrders || !order.trash
     );
+  
+    // Filtrer par texte de recherche
+    filteredOrders = searchTerms.length === 0 ? filteredOrders : filteredOrders.filter(order =>
+      searchTerms.every(term => this.searchInOrder(order, term))
+    );
+  
+    // Filtrer par tags actifs
+    this.filteredOrders = filteredOrders.filter(order =>
+      this.activeTags.length === 0 || this.activeTags.every(tag => this.orderHasTag(order, tag))
+    );
+  
     this.updateOrdersToShow();
   }
+
+  
 
   orderHasTag(order: any, tag: string): boolean {
     switch (tag) {
@@ -635,4 +661,36 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     }
     return false;
   }
+
+  toggleShowDeletedOrders() {
+    this.showDeletedOrders = !this.showDeletedOrders;
+    this.onSearch(); // Met à jour la liste affichée des commandes
+  }
+
+
+  onTrashChange(order): void {
+    if (order._id) {
+      this.contractService.updateContract(order._id, { trash: order.trash }).subscribe({
+        next: () => {
+          if (order.trash) {
+            this.toastr.success(`Commande ID: ${order._id}\nNuméro interne: ${order.internal_number}\nLA COMMANDE A ÉTÉ JETÉE À LA CORBEILLE`);
+          } else {
+            this.toastr.success(`Commande ID: ${order._id}\nNuméro interne: ${order.internal_number}\n\nLA COMMANDE A ÉTÉ SORTIE DE LA CORBEILLE`);
+          }
+          this.onSearch(); // Met à jour l'affichage des commandes après modification
+        },
+        error: (err) => this.toastr.error('Erreur lors de la mise à jour de l\'état de suppression')
+      });
+    } else {
+      console.error('Contract ID is undefined:', order);
+    }
+  }
+
+  getTrashTooltipText(order: any): string {
+    return order.trash ? 'Cliquez pour sortir cette commande de la corbeille' : 'Cliquez pour jeter cette commande dans la corbeille';
+  }
+  
+  
+  
+  
 }
