@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <app-pagetitle title="Gestion des Commandes" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
   <div class="container mt-4">
     <div class="search-container">
@@ -309,6 +309,319 @@
     </tbody>
   </table>
   <app-loading *ngIf="isLoading"></app-loading>
+</div>
+</div>
+</div> -->
+
+
+
+
+<div class="container-fluid">
+  <app-pagetitle title="Gestion des Commandes" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <div class="container mt-4">
+    <div class="search-container">
+      <input type="text" class="form-control search-input" placeholder="Rechercher..." [(ngModel)]="filter" (input)="onSearch()" />
+      <div class="tags-in-search">
+        <ng-container *ngFor="let tag of activeTags">
+          <div class="search-tag badge bg-success" (click)="deactivateTag(tag, $event)">
+            {{ tag }}
+            <span class="fa fa-times remove-tag-icon" (click)="deactivateTag(tag, $event)"></span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-danger float-end adapt-fontsize" (click)="loadOldOrders()">Charger les anciens contrats</button>
+      </div>
+    </div>
+    <br/>
+    <p>Vous pouvez filtrer les commandes selon l'état des contrats :</p>
+    <div class="available-tags mb-3">
+      <div *ngFor="let tag of availableTags" class="badge bg-primary" (click)="activateTag(tag)">
+        {{ tag }}
+      </div>
+    </div>
+    <div 
+      class="table-responsive"  
+      infiniteScroll 
+      [infiniteScrollDistance]="50" 
+      [infiniteScrollThrottle]="5" 
+      (scrolled)="onScroll()"
+    >
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">
+              <div class="cell-centered">N° interne</div>
+              <div class="sort-icons float-end" (click)="onSort('internal_number')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'internal_number'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'internal_number' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'internal_number' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col" *ngIf="currentUser.role !== 'comanager'">
+              <div class="cell-centered">Contact</div>
+              <div class="sort-icons float-end" (click)="onSort('contact')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'contact'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'contact' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'contact' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">N° appt</div>
+              <div class="sort-icons float-end" (click)="onSort('appartment_number')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'appartment_number'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'appartment_number' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'appartment_number' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Adresse</div>
+              <div class="sort-icons float-end" (click)="onSort('address')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'address'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'address' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'address' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Occupé</div>
+              <div class="sort-icons float-end" (click)="onSort('occupied')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'occupied'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'occupied' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'occupied' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col" *ngIf="currentUser.role !== 'customer'">
+              <div class="cell-centered">N° devis</div>
+              <div class="sort-icons float-end" (click)="onSort('quote_number')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'quote_number'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'quote_number' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'quote_number' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Prestation</div>
+              <div class="sort-icons float-end" (click)="onSort('benefit')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'benefit'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'benefit' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'benefit' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Intervenant</div>
+              <div class="sort-icons float-end" (click)="onSort('external_contributor')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'external_contributor'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'external_contributor' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'external_contributor' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">N° de commande</div>
+              <div class="sort-icons float-end" (click)="onSort('internal_number')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'internal_number'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'internal_number' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'internal_number' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Date fin client</div>
+              <div class="sort-icons float-end" (click)="onSort('end_date_customer')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'end_date_customer'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'end_date_customer' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'end_date_customer' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col"><div class="cell-centered">Obs</div><div class="sort-icons float-end">&nbsp;</div></th>
+            <th scope="col"><div class="cell-centered">Fichiers</div><div class="sort-icons float-end">&nbsp;</div></th>
+            <th scope="col" *ngIf="currentUser.role !== 'customer'">
+              <div class="cell-centered">Facture reçue</div>
+              <div class="sort-icons float-end" (click)="onSort('invoice_received')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'invoice_received'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'invoice_received' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'invoice_received' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col" *ngIf="currentUser.role !== 'customer'">
+              <div class="cell-centered">Montant sous-traitant/co-traitant</div>
+              <div class="sort-icons float-end" (click)="onSort('external_contributor_amount')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'external_contributor_amount'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'external_contributor_amount' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'external_contributor_amount' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Montant prestation</div>
+              <div class="sort-icons float-end" (click)="onSort('benefit_ht')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'benefit_ht'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'benefit_ht' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'benefit_ht' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Montant de la commande</div>
+              <div class="sort-icons float-end" (click)="onSort('amount_ht')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'amount_ht'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'amount_ht' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Date fin travaux</div>
+              <div class="sort-icons float-end" (click)="onSort('end_date_work')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'end_date_work'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'end_date_work' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'end_date_work' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">Statut</div>
+              <div class="sort-icons float-end" (click)="onSort('status')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'status'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'status' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'status' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="cell-centered">
+                <i class="fas fa-trash" *ngIf="!showDeletedOrders" (click)="toggleShowDeletedOrders()" [ngbTooltip]="'Cliquer pour fouiller dans la corbeille'"></i>
+                <i class="fas fa-undo" *ngIf="showDeletedOrders" (click)="toggleShowDeletedOrders()" [ngbTooltip]="'Cliquer pour quitter la corbeille'"></i>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        
+        <tbody class="tbody-scrollable">
+          <tr *ngFor="let order of ordersToDisplay; trackBy: trackByFn" (click)="selectOrder(order)">
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.internal_number">
+                {{ order?.internal_number }}
+              </div>
+            </td>
+            <td class="cell-centered"  *ngIf="currentUser.role !== 'comanager'">
+              <div [ngbTooltip]="order?.contact?.firstname+' '+order?.contact?.lastname">
+                {{ order?.contact?.firstname }}<br>
+                {{ order?.contact?.lastname }}
+              </div>
+            </td>
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.appartment_number">
+                {{ order?.appartment_number }}
+              </div>
+            </td>
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.address">
+                {{ order?.address }}
+              </div>
+            </td>
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.occupied ? 'Occupé' : 'Pas occupé'">
+                <i class="fas active-icon" [ngClass]="{'fa-check-circle text-success': order?.occupied, 'fa-times-circle text-danger': !order?.occupied}"></i>
+              </div>
+            </td>
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.quote_number">
+                {{ order?.quote_number }}
+              </div>
+            </td>
+            <td class="cell-centered" *ngIf="currentUser.role !== 'customer'">
+              <div [ngbTooltip]="getBenefitName(order?.benefit)">
+                {{ getBenefitName(order?.benefit) }}
+              </div>
+            </td>
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.external_contributor?.firstname+' '+order?.external_contributor?.lastname">
+                <div *ngIf="currentUser.role !== 'customer'">
+                  {{ order?.external_contributor?.firstname }}<br>
+                  {{ order?.external_contributor?.lastname }}
+                </div>
+                <div *ngIf="currentUser.role === 'customer'">
+                  {{ order?.external_contributor?.company}}
+                </div>
+                <div *ngIf="currentUser.role !== 'customer'">
+                  <div class="separator"></div>
+                  {{ order?.subcontractor?.firstname }}<br>
+                  {{ order?.subcontractor?.lastname }}
+                </div>
+                <div *ngIf="currentUser.role === 'customer'">
+                  <div class="separator"></div>
+                  SOGAPEINT
+                </div>
+              </div>
+            </td>
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.invoice_number">
+                {{ order?.invoice_number }}
+              </div>
+            </td>
+            <td class="cell-centered">
+              <div [ngbTooltip]="order?.end_date_customer" class="smaller-fontsize">
+                {{ order?.end_date_customer | date: 'shortDate' }}
+              </div>
+            </td>
+            <td class="cell-centered"><i class="fas fa-comment active-icon" aria-hidden="true"></i> <span class="badge bg-info">{{ order?.observation?.length || 0 }}</span></td>
+            <td class="cell-centered"><i class="fas fa-file active-icon" aria-hidden="true"></i> <span class="badge bg-info">{{ order?.file?.length || order?.files?.length || 0 }}</span></td>
+            <td class="cell-centered" *ngIf="currentUser.role !== 'customer'">
+              <span 
+              [ngSwitch]="order?.mail_sended"
+              class="badge" 
+              [ngClass]="{
+                'bg-success': order?.mail_sended === true,
+                'bg-danger': order?.mail_sended === false,
+                'bg-secondary': order?.mail_sended === null
+              }">
+              <ng-container *ngSwitchCase="true">Oui</ng-container>
+              <ng-container *ngSwitchCase="false">Non</ng-container>
+              <ng-container *ngSwitchDefault>Non attribué</ng-container>
+            </span>
+          </td>
+          <td class="cell-centered" *ngIf="currentUser.role !== 'customer'">
+            <div [ngbTooltip]="order?.external_contributor_amount">
+              {{ order?.external_contributor_amount }}€
+            </div>
+          </td>
+          <td class="cell-centered">
+            <div [ngbTooltip]="order?.benefit_ht">
+              {{ order?.benefit_ht }}€
+            </div>
+          </td>
+          <td class="cell-centered">
+            <div [ngbTooltip]="order?.amount_ht">
+              {{ order?.amount_ht }}€
+            </div>
+          </td>
+          <td class="cell-centered">
+            <div [ngbTooltip]="order?.end_date_work" class="smaller-fontsize">
+              {{ order?.end_date_work | date: 'shortDate' }}
+            </div>
+          </td>
+          <td class="cell-centered">
+            <span 
+            [ngSwitch]="order?.status"
+            class="badge" 
+            [ngClass]="{
+              'bg-success': order?.status === 'achieve',
+              'bg-warning': order?.status === 'invoiced',
+              'bg-danger': order?.status === 'anomaly',
+              'bg-secondary': order?.status === null || order?.status === 'in_progress',
+              'bg-info': order?.status === 'canceled'
+            }">
+            <ng-container *ngSwitchCase="'achieve'">Réalisé</ng-container>
+            <ng-container *ngSwitchCase="'invoiced'">Facturé</ng-container>
+            <ng-container *ngSwitchCase="'anomaly'">Anomalie</ng-container>
+            <ng-container *ngSwitchCase="'in_progress'">En cours</ng-container>
+            <ng-container *ngSwitchCase="'canceled'">Annulé</ng-container>
+            <ng-container *ngSwitchDefault>En cours</ng-container>
+          </span>
+        </td>
+        <td class="cell-centered" (click)="$event.stopPropagation()">
+          <input type="checkbox" [(ngModel)]="order.trash" (change)="confirmTrashChange(order)" [ngbTooltip]="getTrashTooltipText(order)">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-loading *ngIf="isLoading"></app-loading> <!-- Animation de chargement -->
 </div>
 </div>
 </div>
