@@ -93,6 +93,7 @@ export class OrderFormComponent implements OnInit {
   isExploding: boolean = false;
   isFalling: boolean = false;
 
+  private isSubmitting = false;
 
 
   constructor(
@@ -127,7 +128,7 @@ export class OrderFormComponent implements OnInit {
 
     this.orderForm.get("invoiceNumber").valueChanges.subscribe((value) => {
         console.log("invoiceNumber change:", value);
-        this.toastr.info(`Le numéro de facture a été remplacé par: ${value}`);
+        // this.toastr.info(`Le numéro de facture a été remplacé par: ${value}`);
     });
 
     Object.keys(this.orderForm.controls).forEach((key) => {
@@ -578,21 +579,44 @@ export class OrderFormComponent implements OnInit {
     this.userInput$.next("");
   }
 
-  onSubmit(): void {
-    if (this.orderForm.valid) {
-        console.log("Subcontractor ID from form:", this.orderForm.value.subcontractor);
+//   onSubmit(): void {
+//     if (this.orderForm.valid) {
+//         console.log("Subcontractor ID from form:", this.orderForm.value.subcontractor);
 
-        this.contractData = { ...this.contractData, ...this.orderForm.value };
-        console.log("Updated contractData with form values:", this.contractData);
-        this.prepareDataForSubmission();
+//         this.contractData = { ...this.contractData, ...this.orderForm.value };
+//         console.log("Updated contractData with form values:", this.contractData);
+//         this.prepareDataForSubmission();
 
-        this.submitContractData();
-    } else {
+//         this.submitContractData();
+//     } else {
 
-        this.orderForm.markAllAsTouched();
-        this.displayFormErrors();
-        this.toastr.error('Veuillez corriger les erreurs dans le formulaire.');
-    }
+//         this.orderForm.markAllAsTouched();
+//         this.displayFormErrors();
+//         this.toastr.error('Veuillez corriger les erreurs dans le formulaire.');
+//     }
+// }
+
+onSubmit(): void {
+  if (this.isSubmitting) {
+      return;
+  }
+
+  this.isSubmitting = true;
+
+  if (this.orderForm.valid) {
+      console.log("Subcontractor ID from form:", this.orderForm.value.subcontractor);
+
+      this.contractData = { ...this.contractData, ...this.orderForm.value };
+      console.log("Updated contractData with form values:", this.contractData);
+      this.prepareDataForSubmission();
+
+      this.submitContractData();
+  } else {
+      this.orderForm.markAllAsTouched();
+      this.displayFormErrors();
+      this.toastr.error('Veuillez corriger les erreurs dans le formulaire.');
+      this.isSubmitting = false;
+  }
 }
 
   private displayFormErrors(): void {
@@ -638,6 +662,7 @@ export class OrderFormComponent implements OnInit {
         }
 
         this.openConfirmationModal();
+        this.isSubmitting = false;
       },
       error: (error) => {
         console.error("Erreur lors de la création du contrat", error);
@@ -764,17 +789,28 @@ export class OrderFormComponent implements OnInit {
     );
   }
 
-  confirmCreation(reuseSameNumber: boolean) {
-    this.submitContractData();
+  // confirmCreation(reuseSameNumber: boolean) {
+  //   this.submitContractData();
 
+  //   this.modalService.dismissAll();
+
+  //   if (reuseSameNumber) {
+  //     this.prepareNewOrder();
+  //   } else {
+  //     this.router.navigate(["/manageOrders"]);
+  //   }
+  // }
+
+  confirmCreation(reuseSameNumber: boolean) {
     this.modalService.dismissAll();
 
     if (reuseSameNumber) {
-      this.prepareNewOrder();
+        this.prepareNewOrder();
     } else {
-      this.router.navigate(["/manageOrders"]);
+        this.router.navigate(["/manageOrders"]);
     }
-  }
+}
+
 
   private prepareNewOrder() {
     this.orderForm.patchValue({
