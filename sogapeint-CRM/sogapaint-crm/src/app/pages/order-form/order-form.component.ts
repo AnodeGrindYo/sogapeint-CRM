@@ -48,7 +48,7 @@ export class OrderFormComponent implements OnInit {
     startDateWorks: null,
     endDateWorks: null,
     endDateCustomer: null,
-    trash: false,
+    // trash: false,
     dateCde: null,
     billingAmount: 0,
   };
@@ -270,6 +270,22 @@ export class OrderFormComponent implements OnInit {
     ];
   }
 
+  // private setupUserSearchAndTypeahead(): void {
+  //   this.userInput$
+  //     .pipe(
+  //       debounceTime(300),
+  //       distinctUntilChanged(),
+  //       switchMap((term) =>
+  //         term
+  //           ? this.userProfileService.searchUsers(term.toLowerCase())
+  //           : of([])
+  //       ),
+  //       takeUntil(this.unsubscribe$)
+  //     )
+  //     .subscribe((users) => {
+  //       this.users = users;
+  //     });
+  // }
   private setupUserSearchAndTypeahead(): void {
     this.userInput$
       .pipe(
@@ -283,9 +299,11 @@ export class OrderFormComponent implements OnInit {
         takeUntil(this.unsubscribe$)
       )
       .subscribe((users) => {
-        this.users = users;
+        // Filtrer les utilisateurs pour ne garder que ceux avec le rôle 'customer'
+        this.users = users.filter(user => user.role.includes('customer'));
       });
   }
+  
 
   private retrieveDataFromServices(): void {
     this.getInternalNumbers();
