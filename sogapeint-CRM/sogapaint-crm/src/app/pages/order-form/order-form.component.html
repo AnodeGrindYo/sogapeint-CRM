@@ -121,8 +121,8 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="ss4" class="form-label">SS4 (amiante)</label>
                             <input type="checkbox" class="form-check-input" id="ss4" formControlName="ss4">
+                            &nbsp;<label for="ss4" class="form-label">SS4 (amiante)</label>
                             <div *ngIf="orderForm.get('ss4').invalid && (orderForm.get('ss4').dirty || orderForm.get('ss4').touched)" class="text-danger">
                                 {{ getErrorMessage(orderForm.get('ss4').errors) }}
                             </div>
