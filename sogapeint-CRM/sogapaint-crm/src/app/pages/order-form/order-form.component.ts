@@ -54,6 +54,7 @@ export class OrderFormComponent implements OnInit {
   };
 
   users: any[] = [];
+  customers: any[] = [];
   userInput$ = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
   currentUser: any;
@@ -113,6 +114,7 @@ export class OrderFormComponent implements OnInit {
     this.initializeOrderForm();
     this.subscribeToFormChanges();
     this.setupUserSearchAndTypeahead();
+    this.setupCustomerSearchAndTypeahead();
     this.retrieveDataFromServices();
     this.subscribeToAbbreviationInput();
     this.initializeDateCdeWithCurrentDate();
@@ -270,22 +272,6 @@ export class OrderFormComponent implements OnInit {
     ];
   }
 
-  // private setupUserSearchAndTypeahead(): void {
-  //   this.userInput$
-  //     .pipe(
-  //       debounceTime(300),
-  //       distinctUntilChanged(),
-  //       switchMap((term) =>
-  //         term
-  //           ? this.userProfileService.searchUsers(term.toLowerCase())
-  //           : of([])
-  //       ),
-  //       takeUntil(this.unsubscribe$)
-  //     )
-  //     .subscribe((users) => {
-  //       this.users = users;
-  //     });
-  // }
   private setupUserSearchAndTypeahead(): void {
     this.userInput$
       .pipe(
@@ -299,11 +285,25 @@ export class OrderFormComponent implements OnInit {
         takeUntil(this.unsubscribe$)
       )
       .subscribe((users) => {
-        // Filtrer les utilisateurs pour ne garder que ceux avec le rôle 'customer'
-        this.users = users.filter(user => user.role.includes('customer'));
+        this.users = users;
       });
   }
-  
+
+  private setupCustomerSearchAndTypeahead(): void {
+    this.userInput$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term) =>
+        term
+          ? this.userProfileService.searchUsers(term.toLowerCase())
+          : of([])
+      ),
+      takeUntil(this.unsubscribe$)
+    ).subscribe((users) => {
+      // filtrer les utilisateurs pour ne garder que ceux avec le rôle 'customer'
+      this.customers = users.filter((user) => user.role === 'customer');
+    });
+  }
 
   private retrieveDataFromServices(): void {
     this.getInternalNumbers();

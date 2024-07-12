@@ -27,7 +27,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="customer" class="form-label">Client</label>
-                            <ng-select id="customer" formControlName="customer" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                            <ng-select id="customer" formControlName="customer" [items]="customers" bindLabel="name" bindValue="_id" placeholder="Sélectionner un client" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
                                 <ng-template ng-label-tmp let-item="item">
                                     {{ item.firstname }} {{ item.lastname }}
                                 </ng-template>
