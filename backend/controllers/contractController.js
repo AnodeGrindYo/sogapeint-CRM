@@ -386,6 +386,102 @@ exports.addContract = async (req, res) => {
 //     }
 // };
 
+// exports.updateContract = async (req, res) => {
+//     try {
+//         const { contractId } = req.params;
+//         const updateData = { ...req.body };
+//         console.log('Modification du contrat', contractId, updateData);
+
+//         ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
+//             if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
+//                 updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
+//             }
+//         });
+
+//         ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
+//             if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
+//                 delete updateData[dateKey];
+//             } else if (updateData[dateKey]) {
+//                 updateData[dateKey] = new Date(updateData[dateKey]);
+//             }
+//         });
+
+//         const updatedContract = await ContractModel.findByIdAndUpdate(
+//             contractId,
+//             updateData, { new: true, runValidators: true }
+//         ).populate('external_contributor');
+
+//         if (!updatedContract) {
+//             return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
+//         }
+
+//         const replacements = await EmailUtils.getEmailReplacements(updatedContract);
+//         await EmailService.sendEmail(updatedContract.customer.email, 'Mise à jour de la commande', replacements, 'orderUpdateNotificationTemplate');
+
+//         // Check if status is changed and if it is 'achieved' or 'cancelled'
+//         if (updateData.status && (updateData.status === 'achieved' || updateData.status === 'cancelled')) {
+//             const currentYear = new Date().getFullYear();
+//             const startDate = new Date(currentYear, 0, 1);
+//             const endDate = new Date(currentYear + 1, 0, 1);
+
+//             const contracts = await ContractModel.find({
+//                 internal_number: updatedContract.internal_number,
+//                 dateAdd: { $gte: startDate, $lt: endDate }
+//             }).populate('external_contributor');
+
+//             const allAchievedOrCancelled = contracts.every(contract => 
+//                 contract.status === 'achieved' || contract.status === 'cancelled'
+//             );
+
+//             if (allAchievedOrCancelled) {
+//                 const nextDay = new Date(updatedContract.end_date_customer);
+//                 nextDay.setDate(nextDay.getDate() + 1);
+
+//                 const replacements = {
+//                     'contracts': await Promise.all(contracts.map(async c => ({
+//                         'internal_number': c.internal_number,
+//                         'benefit': await getBenefitName(c.benefit),
+//                         'end_date_customer': formatDate(c.end_date_customer),
+//                         'status': translateStatus(c.status),
+//                         'address': c.address,
+//                         'appartment_number': c.appartment_number,
+//                         'external_contributor_name': `${c.external_contributor.firstname} ${c.external_contributor.lastname}`
+//                     }))),
+//                     'CRM_URL': process.env.CRM_URL
+//                 };
+
+//                 await scheduleRecurringEmails(updatedContract.internal_number, nextDay, 3, replacements);
+//             }
+//         }
+
+//         res.status(200).json({
+//             contract: updatedContract,
+//             message: 'Contrat modifié avec succès.'
+//         });
+//     } catch (error) {
+//         console.error('Erreur lors de la modification du contrat:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+const sendFinalizedOrderSummaryEmail = async (customerEmail, contracts) => {
+    const replacements = {
+        'contracts': await Promise.all(contracts.map(async contract => ({
+            'internal_number': contract.internal_number,
+            'benefit': await getBenefitName(contract.benefit),
+            'end_date_customer': formatDate(contract.end_date_customer),
+            'status': translateStatus(contract.status),
+            'address': contract.address,
+            'appartment_number': contract.appartment_number,
+            'external_contributor_name': `${contract.external_contributor.firstname} ${contract.external_contributor.lastname}`
+        }))),
+        'CRM_URL': process.env.CRM_URL
+    };
+
+    await EmailService.sendEmail(customerEmail, 'Récapitulatif des commandes terminées/annulées', replacements, 'orderSummaryTemplate');
+};
+
+
 exports.updateContract = async (req, res) => {
     try {
         const { contractId } = req.params;
@@ -409,7 +505,7 @@ exports.updateContract = async (req, res) => {
         const updatedContract = await ContractModel.findByIdAndUpdate(
             contractId,
             updateData, { new: true, runValidators: true }
-        ).populate('external_contributor');
+        ).populate('external_contributor customer');
 
         if (!updatedContract) {
             return res.status(404).json({ message: 'Contrat non trouvé.', contractId });
@@ -418,7 +514,6 @@ exports.updateContract = async (req, res) => {
         const replacements = await EmailUtils.getEmailReplacements(updatedContract);
         await EmailService.sendEmail(updatedContract.customer.email, 'Mise à jour de la commande', replacements, 'orderUpdateNotificationTemplate');
 
-        // Check if status is changed and if it is 'achieved' or 'cancelled'
         if (updateData.status && (updateData.status === 'achieved' || updateData.status === 'cancelled')) {
             const currentYear = new Date().getFullYear();
             const startDate = new Date(currentYear, 0, 1);
@@ -427,7 +522,7 @@ exports.updateContract = async (req, res) => {
             const contracts = await ContractModel.find({
                 internal_number: updatedContract.internal_number,
                 dateAdd: { $gte: startDate, $lt: endDate }
-            }).populate('external_contributor');
+            }).populate('external_contributor customer');
 
             const allAchievedOrCancelled = contracts.every(contract => 
                 contract.status === 'achieved' || contract.status === 'cancelled'
@@ -437,7 +532,7 @@ exports.updateContract = async (req, res) => {
                 const nextDay = new Date(updatedContract.end_date_customer);
                 nextDay.setDate(nextDay.getDate() + 1);
 
-                const replacements = {
+                const replacementsForContractors = {
                     'contracts': await Promise.all(contracts.map(async c => ({
                         'internal_number': c.internal_number,
                         'benefit': await getBenefitName(c.benefit),
@@ -450,7 +545,19 @@ exports.updateContract = async (req, res) => {
                     'CRM_URL': process.env.CRM_URL
                 };
 
-                await scheduleRecurringEmails(updatedContract.internal_number, nextDay, 3, replacements);
+                await scheduleRecurringEmails(updatedContract.internal_number, nextDay, 3, replacementsForContractors);
+
+                const customerContracts = contracts.map(contract => ({
+                    'internal_number': contract.internal_number,
+                    'benefit': getBenefitName(contract.benefit),
+                    'end_date_customer': formatDate(contract.end_date_customer),
+                    'status': translateStatus(contract.status),
+                    'address': contract.address,
+                    'appartment_number': contract.appartment_number,
+                    'external_contributor_name': `${contract.external_contributor.firstname} ${contract.external_contributor.lastname}`
+                }));
+
+                await sendFinalizedOrderSummaryEmail(updatedContract.customer.email, customerContracts);
             }
         }
 
