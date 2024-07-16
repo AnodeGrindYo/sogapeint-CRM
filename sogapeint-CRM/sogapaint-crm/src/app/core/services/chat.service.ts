@@ -8,7 +8,9 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ChatService {
-  private socket = io(environment.apiUrl);
+  private socket = io(environment.apiUrl, {
+    withCredentials: true,
+  });
 
   constructor(private http: HttpClient) {}
 
