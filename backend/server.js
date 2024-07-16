@@ -28,13 +28,13 @@ const io = socketIo(server, {
 console.log('cors', cors);
 
 // Configuration des middlewares
-// app.use(cors());
-app.use(cors({
-  origin: `http://${frontendUrl}:${frontendPort}`, // frontend Angular
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
+app.use(cors());
+// app.use(cors({
+//   origin: `http://${frontendUrl}:${frontendPort}`, // frontend Angular
+//   methods: ["GET", "POST"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true
+// }));
 app.use(express.json());
 
 // Connexion à MongoDB
