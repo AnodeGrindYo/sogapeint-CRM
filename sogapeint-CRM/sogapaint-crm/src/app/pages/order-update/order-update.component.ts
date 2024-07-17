@@ -17,6 +17,8 @@ import {
 import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { BenefitService } from "src/app/core/services/benefit.service";
 import { catchError } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: "app-order-update",
@@ -55,13 +57,24 @@ export class OrderUpdateComponent implements OnInit {
   invalidKeyStrokes = 0;
   isEmojiVisible = false;
 
+  loadingMessages: string[] = [
+    'Chargement des données de la commande... Temps estimé: cela dépend de votre position dans le champ gravitationnel. Si vous êtes proches d\'un trou noir, cela pourrait prendre un certain temps. Sinon, cela devrait être rapide. Merci de votre patience.',
+    'Chargement des données de la commande... Temps estimé: en fonction de la courbure de l\'espace-temps à votre emplacement actuel. Merci de votre patience.',
+    'Chargement des données de la commande... Temps estimé: influencé par la relativité générale. Plus la gravité est forte, plus cela prendra du temps. Tenez bon!',
+    'Chargement des données de la commande... Temps estimé: nous calculons avec précision selon la dilatation temporelle. Cela ne devrait pas prendre une éternité. Merci de votre patience.',
+    'Chargement des données de la commande... Temps estimé: relatif à la vitesse de votre connexion internet et la gravité terrestre. Un peu de patience, s\'il vous plaît.',
+    'Chargement des données de la commande... Temps estimé: dépend de l\'alignement des planètes et de la force gravitationnelle locale. Merci pour votre patience.',
+    'Chargement des données de la commande... Temps estimé: affecté par les fluctuations quantiques et la courbure de l\'espace-temps. Merci de votre patience.'
+  ];
+
   constructor(
     private contractService: ContractService,
     private userProfileService: UserProfileService,
     private companyService: CompanyService,
     private benefitService: BenefitService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   // ngOnInit(): void {
@@ -160,6 +173,8 @@ export class OrderUpdateComponent implements OnInit {
   //   });
   // }
   ngOnInit(): void {
+    const randomLoadingMessage = this.loadingMessages[Math.floor(Math.random() * this.loadingMessages.length)];
+    this.toastr.info(randomLoadingMessage);
     this.initializeCurrentUser();
     this.initializeContractId();
     this.initializeBenefits();
@@ -301,9 +316,11 @@ export class OrderUpdateComponent implements OnInit {
     this.benefitService.getBenefits().subscribe({
       next: benefits => {
         this.benefits = benefits;
+        this.toastr.success('Prestations récupérées avec succès.');
         console.log("Prestations récupérées:", benefits);
       },
       error: error => {
+        this.toastr.error('Erreur lors de la récupération des prestations.', error);
         console.error("Erreur lors de la récupération des prestations", error);
       }
     });
@@ -416,10 +433,12 @@ export class OrderUpdateComponent implements OnInit {
 
           // Charge les données utilisateur et patche le formulaire
           this.loadUserDataAndPatchForm(contract, patchValues);
+          this.toastr.success('Données du contrat chargées avec succès.');
           console.log("Contract data loaded:", JSON.stringify(contract));
         });
     } else {
       console.log("No contract id provided");
+      this.toastr.error('Erreur : Aucun identifiant de contrat fourni.');
     }
   }
 
@@ -527,16 +546,19 @@ export class OrderUpdateComponent implements OnInit {
 
     if (this.orderUpdateForm.valid) {
       const data = this.prepareDataForSubmit();
+      this.toastr.info('Soumission des mises à jour...');
       console.log("Data to submit:", data);
       this.contractService
         // .updateContract(this.contractId, this.orderUpdateForm.value)
         .updateContract(this.contractId, data)
         .subscribe({
           next: () => {
+            this.toastr.success('Contrat mis à jour avec succès.');
             console.log("Contract updated successfully");
             this.router.navigate(["/order-detail", this.contractId]);
           },
           error: (error) => {
+            this.toastr.error('Erreur lors de la mise à jour du contrat.', error);
             console.error("Error updating contract:", error);
           },
         })
@@ -544,6 +566,7 @@ export class OrderUpdateComponent implements OnInit {
           this.router.navigate(["/order-detail", this.contractId]);
         });
     } else {
+      this.toastr.error('Formulaire invalide. Veuillez corriger les erreurs');
       console.error("Form is invalid");
       console.log("Form values:", this.orderUpdateForm.value);
       console.log("data values:", this.prepareDataForSubmit());
@@ -712,9 +735,11 @@ export class OrderUpdateComponent implements OnInit {
 
   addNewBenefit(name: string): void {
     console.log('Ajout de la prestation:', name);
+    this.toastr.info('Ajout de la prestation ', name);
     const newBenefit = { name: name };
     this.benefitService.addBenefit(newBenefit).subscribe({
       next: benefit => {
+        this.toastr.success('Prestation ajoutée avec succès:', benefit.benefit._id);
         console.log('Prestation ajoutée avec succès:', benefit.benefit._id);
         this.initializeBenefits();
         const benefitToSet = {name: benefit.benefit.name, value: benefit.benefit._id};
@@ -724,17 +749,25 @@ export class OrderUpdateComponent implements OnInit {
         }
         , 500);
       },
-      error: error => console.error("Erreur lors de l'ajout de la prestation", error)
+      error: error => {
+        console.error("Erreur lors de l'ajout de la prestation", error);
+        this.toastr.error('Erreur lors de l\'ajout de la prestation', error);
+      }
     });
   }
   
   deleteBenefit(benefitId: string, event: Event): void {
+    this.toastr.info('Suppression de la prestation...');
     event.stopPropagation(); // Pour empêcher la sélection de l'élément
     this.benefitService.deleteBenefit(benefitId).subscribe({
       next: () => {
         this.initializeBenefits();
+        this.toastr.success('Prestation supprimée avec succès.');
       },
-      error: error => console.error("Erreur lors de la suppression de la prestation", error)
+      error: error => {
+        console.error("Erreur lors de la suppression de la prestation", error);
+        this.toastr.error('Erreur lors de la suppression de la prestation', error);
+      }
     });
   }
 }
