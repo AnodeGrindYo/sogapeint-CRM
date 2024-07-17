@@ -770,4 +770,18 @@ export class OrderUpdateComponent implements OnInit {
       }
     });
   }
+
+  getErrorMessage(errors: any): string {
+    if (errors.required) {
+      return 'Ce champ est requis.';
+    } else if (errors.pattern) {
+      return 'Le format est invalide.';
+    } else if (errors.minlength) {
+      return `La longueur minimale est de ${errors.minlength.requiredLength} caractères.`;
+    } else if (errors.maxlength) {
+      return `La longueur maximale est de ${errors.maxlength.requiredLength} caractères.`;
+    }
+    return 'Champ invalide.';
+  }
+  
 }
