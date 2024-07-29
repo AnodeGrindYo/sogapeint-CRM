@@ -239,15 +239,33 @@ const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
+// exports.getAllUsers = async (req, res) => {
+//     try {
+//         const users = await User.find();
+
+//         users.forEach(user => {
+//             user.password = undefined;
+//             user.resetCode = undefined;
+//             user.resetCodeExpiry = undefined;
+//             user.salt = undefined;
+//         });
+
+//         res.status(200).json(users);
+//     } catch (error) {
+//         console.error('Error retrieving users:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find().lean(); // Utilisation de lean() pour obtenir des objets bruts
 
         users.forEach(user => {
-            user.password = undefined;
-            user.resetCode = undefined;
-            user.resetCodeExpiry = undefined;
-            user.salt = undefined;
+            // Supprimer explicitement les champs sensibles
+            delete user.password;
+            delete user.resetCode;
+            delete user.resetCodeExpiry;
+            delete user.salt;
         });
 
         res.status(200).json(users);
@@ -256,6 +274,7 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 exports.addUser = async (req, res) => {
     try {
@@ -309,19 +328,40 @@ exports.addUser = async (req, res) => {
     }
 };
 
+// exports.getUserById = async (req, res) => {
+//     try {
+//         const { userId } = req.params;
+
+//         const user = await User.findById(userId);
+//         if (!user) {
+//             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+//         }
+
+//         user.password = undefined;
+//         user.resetCode = undefined;
+//         user.resetCodeExpiry = undefined;
+//         user.salt = undefined;
+//         res.status(200).json(user);
+//     } catch (error) {
+//         console.error('Error retrieving user:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
 exports.getUserById = async (req, res) => {
     try {
         const { userId } = req.params;
 
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).lean(); // Utilisation de lean() pour obtenir un objet brut
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
 
-        user.password = undefined;
-        user.resetCode = undefined;
-        user.resetCodeExpiry = undefined;
-        user.salt = undefined;
+        // Supprimer explicitement les champs sensibles
+        delete user.password;
+        delete user.resetCode;
+        delete user.resetCodeExpiry;
+        delete user.salt;
+
         res.status(200).json(user);
     } catch (error) {
         console.error('Error retrieving user:', error);
@@ -329,6 +369,46 @@ exports.getUserById = async (req, res) => {
     }
 };
 
+
+// exports.updateUser = async (req, res) => {
+//     try {
+//         const { userId } = req.params;
+//         const {
+//             email,
+//             firstname,
+//             lastname,
+//             phone,
+//             company,
+//             role,
+//             active,
+//             authorized_connection
+//         } = req.body;
+
+//         const updatedUser = await User.findByIdAndUpdate(
+//             new mongoose.Types.ObjectId(userId),
+//             {
+//                 email,
+//                 firstname,
+//                 lastname,
+//                 phone,
+//                 company,
+//                 role,
+//                 active,
+//                 authorized_connection
+//             },
+//             { new: true }
+//         );
+
+//         if (!updatedUser) {
+//             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+//         }
+
+//         res.status(200).json(updatedUser);
+//     } catch (error) {
+//         console.error('Erreur lors de la modification de l’utilisateur:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
 exports.updateUser = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -356,11 +436,17 @@ exports.updateUser = async (req, res) => {
                 authorized_connection
             },
             { new: true }
-        );
+        ).lean(); // Utilisation de lean() pour obtenir un objet brut
 
         if (!updatedUser) {
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
+
+        // Supprimer explicitement les champs sensibles
+        delete updatedUser.password;
+        delete updatedUser.resetCode;
+        delete updatedUser.resetCodeExpiry;
+        delete updatedUser.salt;
 
         res.status(200).json(updatedUser);
     } catch (error) {
@@ -368,6 +454,8 @@ exports.updateUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
 
 exports.deleteUser = async (req, res) => {
     try {
@@ -386,6 +474,23 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
+// exports.searchUsers = async (req, res) => {
+//     try {
+//         const query = req.query.q;
+
+//         const users = await User.find({
+//             $or: [
+//                 { firstname: { $regex: query, $options: 'i' } },
+//                 { lastname: { $regex: query, $options: 'i' } },
+//                 { email: { $regex: query, $options: 'i' } }
+//             ]
+//         });
+
+//         res.json(users);
+//     } catch (error) {
+//         res.status(500).send({ message: "Erreur lors de la recherche des utilisateurs", error });
+//     }
+// };
 exports.searchUsers = async (req, res) => {
     try {
         const query = req.query.q;
@@ -396,10 +501,20 @@ exports.searchUsers = async (req, res) => {
                 { lastname: { $regex: query, $options: 'i' } },
                 { email: { $regex: query, $options: 'i' } }
             ]
+        }).lean(); // Utilisation de lean() pour obtenir des objets bruts
+
+        users.forEach(user => {
+            // Supprimer explicitement les champs sensibles
+            delete user.password;
+            delete user.resetCode;
+            delete user.resetCodeExpiry;
+            delete user.salt;
         });
 
         res.json(users);
     } catch (error) {
+        console.error('Erreur lors de la recherche des utilisateurs:', error);
         res.status(500).send({ message: "Erreur lors de la recherche des utilisateurs", error });
     }
 };
+
