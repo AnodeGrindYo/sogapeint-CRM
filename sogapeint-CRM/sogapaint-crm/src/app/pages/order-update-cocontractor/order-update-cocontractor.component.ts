@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ContractService } from "../../core/services/contract.service";
 import { UserProfileService } from "../../core/services/user.service";
@@ -17,6 +17,7 @@ import {
 import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { BenefitService } from "src/app/core/services/benefit.service";
 import { catchError, map } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-order-update-cocontractor",
@@ -54,6 +55,12 @@ export class OrderUpdateCocontractorComponent implements OnInit {
   contractId: string;
   invalidKeyStrokes = 0;
   isEmojiVisible = false;
+
+  // ViewChild('calculationDetailsModal') calculationDetailsModal;
+  // totalEstimatedHours: number;
+  // excessHours: number;
+  // divider: number;
+  // amount: number;
 
   constructor(
     private contractService: ContractService,
