@@ -1100,3 +1100,54 @@ svg:hover {
 }
 
 
+.calculation-modal {
+    margin: 0;
+    background-color: transparent;
+    .modal-content {
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+        background-color: #252B3B;
+        color: white !important;
+        border-bottom: none;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .modal-title {
+        font-size: 18px;
+        color: white;
+    }
+
+    .modal-body {
+        padding: 20px;
+        font-size: 16px;
+    }
+
+    .calculation-detail p {
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .calculation-detail p strong {
+        color: #252B3B;
+        display: inline-block;
+        width: 150px; /* Ajout d'une largeur fixe pour un alignement uniforme */
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .modal-footer .btn {
+        width: 100px;
+    }
+}
+
+
+

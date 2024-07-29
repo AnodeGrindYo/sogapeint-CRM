@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewChild, viewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ContractService } from "../../core/services/contract.service";
 import { CompanyService } from "../../core/services/company.service";
@@ -94,6 +94,12 @@ export class OrderFormComponent implements OnInit {
   isFalling: boolean = false;
 
   private isSubmitting = false;
+
+  totalEstimatedHours: number;
+  excessHours: number;
+  divider: number;
+  amount: number;
+  @ViewChild('calculationDetailsModal') calculationDetailsModal;
 
 
   constructor(
@@ -336,6 +342,56 @@ export class OrderFormComponent implements OnInit {
       });
   }
 
+  // private calculateDifferencesAndAdjustments(): void {
+  //   const totalPrevisionHours =
+  //     Number(this.orderForm.get("previsionDataDay").value) * 8 +
+  //     Number(this.orderForm.get("previsionDataHour").value);
+  //   const totalExecutionHours =
+  //     Number(this.orderForm.get("executionDataDay").value) * 8 +
+  //     Number(this.orderForm.get("executionDataHour").value);
+  //   const difference = totalExecutionHours - totalPrevisionHours;
+
+  //   const benefitId = this.orderForm.get("benefit").value;
+  //   const benefitType = this.benefits.find(
+  //     (benefit) => benefit.value === benefitId
+  //   )?.name;
+  //   const amount = Number(this.orderForm.get("benefitHt").value);
+
+  //   let divider = 0;
+  //   let hours = 0;
+  //   if (benefitType === "Peinture") {
+  //     divider = 450;
+  //   } else if (benefitType === "Sol") {
+  //     divider = 650;
+  //   } else {
+  //     divider = 450;
+  //   }
+
+  //   hours = amount / divider;
+
+  //   hours = Math.round(hours * 100) / 100;
+
+  //   const daysPrevision = Math.floor(hours / 8);
+  //   const hoursPrevision = hours % 8;
+
+  //   this.orderForm.patchValue(
+  //     {
+  //       previsionDataHour: hours,
+  //       previsionDataDay: daysPrevision,
+  //       executionDataDay: Math.floor(totalExecutionHours / 8),
+  //       difference: difference,
+  //     },
+  //     { emitEvent: false }
+  //   );
+
+  //   this.orderForm.patchValue(
+  //     {
+  //       previsionDataHour: hours,
+  //       difference: difference,
+  //     },
+  //     { emitEvent: false }
+  //   );
+  // }
   private calculateDifferencesAndAdjustments(): void {
     const totalPrevisionHours =
       Number(this.orderForm.get("previsionDataDay").value) * 8 +
@@ -344,48 +400,49 @@ export class OrderFormComponent implements OnInit {
       Number(this.orderForm.get("executionDataDay").value) * 8 +
       Number(this.orderForm.get("executionDataHour").value);
     const difference = totalExecutionHours - totalPrevisionHours;
-
+  
     const benefitId = this.orderForm.get("benefit").value;
     const benefitType = this.benefits.find(
       (benefit) => benefit.value === benefitId
     )?.name;
     const amount = Number(this.orderForm.get("benefitHt").value);
-
-    let divider = 0;
-    let hours = 0;
-    if (benefitType === "Peinture") {
-      divider = 450;
-    } else if (benefitType === "Sol") {
+  
+    let divider = 450; // Par défaut à 450
+  
+    if (benefitType === "Sol") {
       divider = 650;
-    } else {
-      divider = 450;
     }
-
-    hours = amount / divider;
-
-    hours = Math.round(hours * 100) / 100;
-
-    const daysPrevision = Math.floor(hours / 8);
-    const hoursPrevision = hours % 8;
-
+  
+    const days = amount / divider;
+    const roundedDays = Math.floor(days);
+    const hours = Math.round((days - roundedDays) * 8);
+  
+    const totalEstimatedHours = roundedDays * 8 + hours;
+    const excessHours = totalEstimatedHours % 8;
+  
     this.orderForm.patchValue(
       {
+        previsionDataDay: roundedDays,
         previsionDataHour: hours,
-        previsionDataDay: daysPrevision,
         executionDataDay: Math.floor(totalExecutionHours / 8),
+        executionDataHour: totalExecutionHours % 8,
         difference: difference,
       },
       { emitEvent: false }
     );
-
-    this.orderForm.patchValue(
-      {
-        previsionDataHour: hours,
-        difference: difference,
-      },
-      { emitEvent: false }
-    );
+  
+    // Stocker les valeurs calculées pour l'affichage dans le détail
+    this.totalEstimatedHours = totalEstimatedHours;
+    this.excessHours = excessHours;
+    this.divider = divider;
+    this.amount = amount;
   }
+  
+  
+  showCalculationDetails(): void {
+    const modalRef = this.modalService.open(this.calculationDetailsModal);
+  }
+  
 
   private initializeDateCdeWithCurrentDate(): void {
     const today = new Date();

@@ -11,6 +11,7 @@ require('dotenv').config();
 // Importation des routes
 const apiRoutes = require('./routes/index');
 const chatRoutes = require('./routes/chatRoutes');
+const urlScheme = process.env.URL_SCHEME;
 
 // Initialisation d'Express
 const app = express();
@@ -19,7 +20,8 @@ const frontendUrl = process.env.FRONTEND_URL;
 const frontendPort = process.env.FRONTEND_PORT;
 const io = socketIo(server, {
     cors: {
-        origin: [`http://${frontendUrl}:${frontendPort}`, `http://${frontendUrl}`], // frontend Angular
+        // origin: [`http://${frontendUrl}:${frontendPort}`, `http://${frontendUrl}`], // frontend Angular
+        origin: [`${urlScheme}://${frontendUrl}:${frontendPort}`, `${urlScheme}://${frontendUrl}`], // frontend Angular
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true

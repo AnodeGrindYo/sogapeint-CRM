@@ -356,6 +356,10 @@
                             <label class="form-label" for="difference">Différence (Heures)</label>
                             <input type="text" class="form-control" id="difference" formControlName="difference" readonly>
                         </div>
+                        <!-- Bouton pour afficher les détails du calcul -->
+                        <button type="button" (click)="showCalculationDetails()" class="btn btn-info">
+                            <i class="fa fa-info-circle"></i> Détails du calcul
+                        </button>
                     </div>
                 </div>
             </div>
@@ -535,21 +539,49 @@
 <!-- Modal pour la confirmation simple de suppression -->
 <ng-template #simpleDeleteConfirmationModal let-modal>
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirmation de suppression</h5>
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation de suppression</h5>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette prestation ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+                <button type="button" class="btn btn-danger" (click)="confirmSimpleDeleteBenefit()">Confirmer</button>
+            </div>
         </div>
-        <div class="modal-body">
-          Êtes-vous sûr de vouloir supprimer cette prestation ?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
-          <button type="button" class="btn btn-danger" (click)="confirmSimpleDeleteBenefit()">Confirmer</button>
-        </div>
-      </div>
     </div>
-  </ng-template>
-  
+</ng-template>
+
+
+
+<ng-template #calculationDetailsModal let-modal>
+    <div class="modal-dialog calculation-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp;Détails du calcul</h5>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="calculation-detail">
+                    <p><strong>Montant :</strong> {{ amount }}€</p>
+                    <p><strong>Diviseur :</strong> {{ divider }}€ par jour</p>
+                    <p><strong>Total estimé :</strong> {{ totalEstimatedHours }} heures</p>
+                    <p><strong>Heures/jour :</strong> 8</p>
+                    <p><strong>Nombre de jours :</strong> {{ orderForm.get('previsionDataDay').value }} jours</p>
+                    <p><strong>Excédent (heures) :</strong> {{ excessHours }} heures</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fermer</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
