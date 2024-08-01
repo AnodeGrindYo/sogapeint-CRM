@@ -63,7 +63,8 @@ const contractSchema = new mongoose.Schema({
         type: String,
         enum: ['received', 'processed', 'pending'],
         default: 'pending'
-    }
+    },
+    isLastContract: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Contract', contractSchema, 'orderforms');

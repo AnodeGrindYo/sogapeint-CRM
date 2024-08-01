@@ -48,6 +48,7 @@ export class UserProfileService {
             password: user.password, 
             firstname: user.firstName, 
             lastname: user.lastName, 
+            address: user.address,
             role: user.role,
             company: user.company,
             phone: user.phone,

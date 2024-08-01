@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewChild, viewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ContractService } from "../../core/services/contract.service";
 import { CompanyService } from "../../core/services/company.service";
@@ -48,6 +48,7 @@ export class OrderFormComponent implements OnInit {
     startDateWorks: null,
     endDateWorks: null,
     endDateCustomer: null,
+    // trash: false,
     dateCde: null,
     billingAmount: 0,
     isLastContract: false
@@ -60,7 +61,7 @@ export class OrderFormComponent implements OnInit {
   currentUser: any;
 
   statuses = [
-    { name: "En cours", value: "in_progress" },
+    { name: "En cours", value: "in_progress" || null },
     { name: "Réalisé", value: "achieve" },
     { name: "Annulé", value: "canceled" },
     { name: "Facturé", value: "invoiced" },
@@ -101,6 +102,7 @@ export class OrderFormComponent implements OnInit {
   amount: number;
   @ViewChild('calculationDetailsModal') calculationDetailsModal;
 
+
   constructor(
     private contractService: ContractService,
     private userProfileService: UserProfileService,
@@ -133,7 +135,7 @@ export class OrderFormComponent implements OnInit {
 
     this.orderForm.get("invoiceNumber").valueChanges.subscribe((value) => {
         console.log("invoiceNumber change:", value);
-
+        // this.toastr.info(`Le numéro de facture a été remplacé par: ${value}`);
     });
 
     Object.keys(this.orderForm.controls).forEach((key) => {
@@ -217,7 +219,7 @@ export class OrderFormComponent implements OnInit {
       startDateWorks: new FormControl(this.contractData.startDateWorks),
       endDateWorks: new FormControl(this.contractData.endDateWorks),
       endDateCustomer: new FormControl(this.contractData.endDateCustomer),
-
+      // trash: new FormControl(this.contractData.trash),
       dateCde: new FormControl(this.contractData.dateCde),
       billingAmount: new FormControl(this.contractData.billingAmount, [
         Validators.pattern(/^\d+\.?\d*$/),
@@ -307,7 +309,7 @@ export class OrderFormComponent implements OnInit {
       ),
       takeUntil(this.unsubscribe$)
     ).subscribe((users) => {
-
+      // filtrer les utilisateurs pour ne garder que ceux avec le rôle 'customer'
       this.customers = users.filter((user) => user.role === 'customer');
     });
   }
@@ -342,6 +344,56 @@ export class OrderFormComponent implements OnInit {
       });
   }
 
+  // private calculateDifferencesAndAdjustments(): void {
+  //   const totalPrevisionHours =
+  //     Number(this.orderForm.get("previsionDataDay").value) * 8 +
+  //     Number(this.orderForm.get("previsionDataHour").value);
+  //   const totalExecutionHours =
+  //     Number(this.orderForm.get("executionDataDay").value) * 8 +
+  //     Number(this.orderForm.get("executionDataHour").value);
+  //   const difference = totalExecutionHours - totalPrevisionHours;
+
+  //   const benefitId = this.orderForm.get("benefit").value;
+  //   const benefitType = this.benefits.find(
+  //     (benefit) => benefit.value === benefitId
+  //   )?.name;
+  //   const amount = Number(this.orderForm.get("benefitHt").value);
+
+  //   let divider = 0;
+  //   let hours = 0;
+  //   if (benefitType === "Peinture") {
+  //     divider = 450;
+  //   } else if (benefitType === "Sol") {
+  //     divider = 650;
+  //   } else {
+  //     divider = 450;
+  //   }
+
+  //   hours = amount / divider;
+
+  //   hours = Math.round(hours * 100) / 100;
+
+  //   const daysPrevision = Math.floor(hours / 8);
+  //   const hoursPrevision = hours % 8;
+
+  //   this.orderForm.patchValue(
+  //     {
+  //       previsionDataHour: hours,
+  //       previsionDataDay: daysPrevision,
+  //       executionDataDay: Math.floor(totalExecutionHours / 8),
+  //       difference: difference,
+  //     },
+  //     { emitEvent: false }
+  //   );
+
+  //   this.orderForm.patchValue(
+  //     {
+  //       previsionDataHour: hours,
+  //       difference: difference,
+  //     },
+  //     { emitEvent: false }
+  //   );
+  // }
   private calculateDifferencesAndAdjustments(): void {
     const totalPrevisionHours =
       Number(this.orderForm.get("previsionDataDay").value) * 8 +
@@ -350,26 +402,26 @@ export class OrderFormComponent implements OnInit {
       Number(this.orderForm.get("executionDataDay").value) * 8 +
       Number(this.orderForm.get("executionDataHour").value);
     const difference = totalExecutionHours - totalPrevisionHours;
-
+  
     const benefitId = this.orderForm.get("benefit").value;
     const benefitType = this.benefits.find(
       (benefit) => benefit.value === benefitId
     )?.name;
     const amount = Number(this.orderForm.get("benefitHt").value);
-
-    let divider = 450; 
-
+  
+    let divider = 450; // Par défaut à 450
+  
     if (benefitType === "Sol") {
       divider = 650;
     }
-
+  
     const days = amount / divider;
     const roundedDays = Math.floor(days);
     const hours = Math.round((days - roundedDays) * 8);
-
+  
     const totalEstimatedHours = roundedDays * 8 + hours;
     const excessHours = totalEstimatedHours % 8;
-
+  
     this.orderForm.patchValue(
       {
         previsionDataDay: roundedDays,
@@ -380,16 +432,19 @@ export class OrderFormComponent implements OnInit {
       },
       { emitEvent: false }
     );
-
+  
+    // Stocker les valeurs calculées pour l'affichage dans le détail
     this.totalEstimatedHours = totalEstimatedHours;
     this.excessHours = excessHours;
     this.divider = divider;
     this.amount = amount;
   }
-
+  
+  
   showCalculationDetails(): void {
     const modalRef = this.modalService.open(this.calculationDetailsModal);
   }
+  
 
   private initializeDateCdeWithCurrentDate(): void {
     const today = new Date();
@@ -583,6 +638,23 @@ export class OrderFormComponent implements OnInit {
     this.userInput$.next("");
   }
 
+//   onSubmit(): void {
+//     if (this.orderForm.valid) {
+//         console.log("Subcontractor ID from form:", this.orderForm.value.subcontractor);
+
+//         this.contractData = { ...this.contractData, ...this.orderForm.value };
+//         console.log("Updated contractData with form values:", this.contractData);
+//         this.prepareDataForSubmission();
+
+//         this.submitContractData();
+//     } else {
+
+//         this.orderForm.markAllAsTouched();
+//         this.displayFormErrors();
+//         this.toastr.error('Veuillez corriger les erreurs dans le formulaire.');
+//     }
+// }
+
 onSubmit(): void {
   if (this.isSubmitting) {
       return;
@@ -682,7 +754,9 @@ onSubmit(): void {
       dataForSubmission["occupied"]
     );
     dataForSubmission["ss4"] = this.convertToBoolean(dataForSubmission["ss4"]);
-
+    // dataForSubmission["trash"] = this.convertToBoolean(
+    //   dataForSubmission["trash"]
+    // );
     dataForSubmission["amount_ht"] = this.convertToNumber(
       dataForSubmission["amount_ht"]
     );
@@ -776,18 +850,41 @@ onSubmit(): void {
     );
   }
 
+  // confirmCreation(reuseSameNumber: boolean) {
+  //   this.submitContractData();
+
+  //   this.modalService.dismissAll();
+
+  //   if (reuseSameNumber) {
+  //     this.prepareNewOrder();
+  //   } else {
+  //     this.router.navigate(["/manageOrders"]);
+  //   }
+  // }
+
+  // confirmCreation(reuseSameNumber: boolean) {
+  //   this.modalService.dismissAll();
+
+  //   if (reuseSameNumber) {
+  //       this.prepareNewOrder();
+  //   } else {
+  //       this.router.navigate(["/manageOrders"]);
+  //   }
+  // }
   confirmCreation(reuseSameNumber: boolean) {
     this.modalService.dismissAll();
 
     if (reuseSameNumber) {
         this.prepareNewOrder();
     } else {
-        this.contractData.isLastContract = true; 
+        this.contractData.isLastContract = true; // Marquer comme dernier contrat
         this.prepareDataForSubmission();
         this.submitContractData(); 
         this.router.navigate(["/manageOrders"]);
     }
 }
+
+
 
   private prepareNewOrder() {
     this.orderForm.patchValue({

@@ -1,0 +1,114 @@
+<!-- templates/consolidatedOrderNotificationTemplate.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Résumé des Commandes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e2e2e2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            color: black;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            color: black;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #333333;
+        }
+        .details {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .button {
+            background-color: #4CAF50; /* Vert Sogapeint */
+            color: #fefefe !important;
+            padding: 15px 25px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 18px;
+            display: inline-block;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://www.sogapeint.fr/apps/uploads/2019/10/logo.png" alt="Logo Sogapeint" style="max-height: 60px;">
+        </div>
+        <div class="content">
+            <h3>Résumé de vos commandes</h3>
+            <p>Bonjour,</p>
+            <p>Veuillez trouver ci-dessous le récapitulatif des commandes que vous avez passées avec nous.</p>
+            <table>
+                <tr>
+                    <th>Numéro Interne</th>
+                    <th>Prestation</th>
+                    <th>Date de Commande</th>
+                    <th>Statut</th>
+                    <th>Adresse</th>
+                    <th>N° Appartement</th>
+                    <th>Occupé</th>
+                </tr>
+                {{#each contracts}}
+                <tr>
+                    <td>{{this.internal_number}}</td>
+                    <td>{{this.benefit}}</td>
+                    <td>{{this.date_cde}}</td>
+                    <td>{{this.status}}</td>
+                    <td>{{this.address}}</td>
+                    <td>{{this.appartment_number}}</td>
+                    <td>{{this.occupied}}</td>
+                </tr>
+                {{/each}}
+            </table>
+            <p class="details">Merci de vérifier que toutes les informations sont correctes. Contactez notre service client pour toute modification nécessaire.</p>
+        </div>
+        <div class="footer">
+            Cordialement,<br>
+            L'équipe Sogapeint<br>
+            <a href="{{CRM_URL}}" class="button">Visitez l'application web Sogapeint</a>
+            <p>Si vous avez des questions, veuillez contacter notre support.</p>
+            &copy; Sogapeint, Tous droits réservés.
+        </div>
+    </div>
+</body>
+</html>

@@ -47,6 +47,7 @@ export class Contract {
         }
     ];
     invoiceStatus: string;
+    isLastContract: boolean;
     constructor() {
         // Initialiser les valeurs par défaut ici si nécessaire
         this.invoiceStatus = 'pending';
