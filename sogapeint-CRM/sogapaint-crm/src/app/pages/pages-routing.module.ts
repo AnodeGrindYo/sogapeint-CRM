@@ -36,7 +36,7 @@ const routes: Routes = [
     // { path: 'dashboard-fake', component: DashboardFakeComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }},
     { path: 'FAQ', component: FAQComponent , canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] }}, // auth: Admin
     { path: 'order-form', component: OrderFormComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin
-    { path: 'order-detail/:orderId', component: OrderDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin']} }, // auth: any role for connected users
+    { path: 'order-detail/:orderId', component: OrderDetailComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'comanager', 'supermanager']} }, // auth: any role for connected users
     { path: 'order-detail-cocontractor/:orderId', component: OrderDetailCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'cocontractor'] } }, // auth: Admin, subcontractor, coContractor
     { path: 'manageOrders', component: ManageOrdersComponent, data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'coContractor', 'supermanager', 'comanager'] }}, // auth: Admin, subcontractor, coContractor
     { path: 'order-update/:orderId', component: OrderUpdateComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin'] } }, // auth: Admin, subcontractor, coContractor

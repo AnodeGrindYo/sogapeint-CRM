@@ -65,3 +65,6 @@ backend/uploads/
 
 # contenu du dossier uploads dans le backend
 backend/uploads/*
+backend/user_emails.txt
+backend/users_without_company.txt
+backend/company_names.txt

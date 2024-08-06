@@ -215,7 +215,13 @@ export class OrderDetailComponent implements OnInit {
   
   isAdminOrSuperAdmin(): boolean {
     const result = this.currentUser && (this.currentUser.role === 'admin' || this.currentUser.role === 'superAdmin');
-    // console.log('isAdminOrSuperAdmin:', result);
+    console.log('isAdminOrSuperAdmin:', result);
+    return result;
+  }
+
+  isComanagerOrSuperManager(): boolean {
+    const result = this.currentUser && (this.currentUser.role === 'comanager' || this.currentUser.role === 'supermanager');
+    console.log('isComanagerOrSuperManager:', result);
     return result;
   }
   

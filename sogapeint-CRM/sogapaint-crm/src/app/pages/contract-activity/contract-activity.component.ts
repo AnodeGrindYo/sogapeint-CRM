@@ -19,6 +19,7 @@ export class ContractActivityComponent implements OnInit {
   messages: { text: string, type: string }[] = [];
   particles = Array(30).fill(0);
   @ViewChild('activityInput') activityInput: ElementRef;
+  currentUser: any;
 
   constructor(
     private contractService: ContractService,
@@ -27,10 +28,27 @@ export class ContractActivityComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.currentUser = this.userProfileService.getCurrentUser();
     if (this.contractId) {
       this.loadActivities();
     }
     this.updatePlaceholder('Observation');
+
+    if (this.isComanagerOrSuperManager()) {
+      this.isReadOnly = true;
+    }
+  }
+
+  isAdminOrSuperAdmin(): boolean {
+    const result = this.currentUser && (this.currentUser.role === 'admin' || this.currentUser.role === 'superAdmin');
+    // console.log('isAdminOrSuperAdmin:', result);
+    return result;
+  }
+
+  isComanagerOrSuperManager(): boolean {
+    const result = this.currentUser && (this.currentUser.role === 'comanager' || this.currentUser.role === 'supermanager');
+    // console.log('isComanagerOrSuperManager:', result);
+    return result;
   }
 
   loadActivities() {

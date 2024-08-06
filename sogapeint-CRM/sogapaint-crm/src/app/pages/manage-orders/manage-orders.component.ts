@@ -418,6 +418,8 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   selectOrder(order: any) {
     console.log("Commande sélectionnée:", order);
     switch (this.currentUser.role) {
+      case "comanager":
+      case "supermanager":
       case "superAdmin":
         console.log(" case superAdmin");
         this.router.navigate(["/order-detail", order._id]);
