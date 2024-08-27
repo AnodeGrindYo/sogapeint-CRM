@@ -58,6 +58,31 @@ export class UserProfileService {
     }
 
     /**
+     * permet de créer un utilisateur à la volée, avec uniquement un nom et un prénom
+     * @param firstName 
+     * @param lastName 
+     * @returns 
+     */
+    createMinimalUser(firstname: string, lastname: string) {
+        const email = `${firstname}.${lastname}@example.com`.toLowerCase(); // Génération d'un email par défaut
+        const user = {
+            firstname,
+            lastname,
+            email,
+            password: '!defaultPassword123', // Vous pouvez choisir un mot de passe par défaut ou le générer dynamiquement
+            role: 'cocontractor',
+            active: false,
+            authorized_connection: false,
+            phone: '0123456789',
+            company: '65b929246e1f842024d08bd1'
+        };
+        console.log('Creating minimal user with data:', user); // Log des données envoyées au backend
+        return this.http.post(`${environment.apiUrl}/api/users/addUser`, user);
+    }
+    
+    
+
+    /**
     * Récupère un utilisateur par son identifiant.
     * @param userId L'identifiant de l'utilisateur à récupérer.
     * @returns Un Observable contenant l'utilisateur.

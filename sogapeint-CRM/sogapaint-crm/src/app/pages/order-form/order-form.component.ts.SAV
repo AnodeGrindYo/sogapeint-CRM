@@ -125,9 +125,7 @@ export class OrderFormComponent implements OnInit {
     console.log("Utilisateur connecté:", this.currentUser);
     this.initializeOrderForm();
 
-    // this.loadFormDataFromStorage();
-
-    this.subscribeToUserSelections();
+    this.loadFormDataFromStorage();  
 
     this.subscribeToFormChanges();
     this.setupUserSearchAndTypeahead();
@@ -365,86 +363,6 @@ export class OrderFormComponent implements OnInit {
       });
     });
   }
-
-  private subscribeToUserSelections(): void {
-    console.log('subscribeToUserSelections');
-    const userFields = [
-        'customer',           // Client
-        'contact',            // Contact
-        'internalContributor',// Intervenant Sogapeint
-        'externalContributor',// Co-traitant
-        'subcontractor'       // Sous-traitant
-    ];
-
-    userFields.forEach(field => {
-        this.orderForm.get(field).valueChanges.subscribe(selectedUserId => {
-            this.onUserSelected(field, selectedUserId);
-        });
-    });
-  }
-
-  // onUserSelected(field: string, selectedUserId: string): void {
-  //   console.log(`Utilisateur sélectionné pour ${field}:`, selectedUserId);
-  //   // Appeler le service pour obtenir les détails de l'utilisateur sélectionné
-  //   this.userProfileService.getOne(selectedUserId).subscribe(
-  //       (selectedUser) => {
-  //           if (selectedUser) {
-  //             console.log(`Utilisateur avec ID ${selectedUserId} trouvé:`, selectedUser);
-  //               // Stocker les informations complètes de l'utilisateur pour une utilisation future
-  //               this.contractData[`${field}Details`] = {
-  //                   firstName: selectedUser.firstName,
-  //                   lastName: selectedUser.lastName,
-  //                   email: selectedUser.email,
-  //                   phone: selectedUser.phone,
-  //                   company: selectedUser.company,
-  //                   role: selectedUser.role
-  //               };
-
-  //               console.log(`Informations complètes pour ${field}:`, this.contractData[`${field}Details`]);
-  //           } else {
-  //               console.error(`Utilisateur avec ID ${selectedUserId} non trouvé.`);
-  //           }
-  //       },
-  //       (error) => {
-  //           console.error(`Erreur lors de la récupération de l'utilisateur avec ID ${selectedUserId}:`, error);
-  //       }
-  //   );
-  // }
-
-  onUserSelected(field: string, selectedUserId: string): void {
-    console.log(`Utilisateur sélectionné pour ${field}:`, selectedUserId);
-    
-    this.userProfileService.getOne(selectedUserId).subscribe(
-        (selectedUser) => {
-            if (selectedUser) {
-                console.log(`Utilisateur avec ID ${selectedUserId} trouvé:`, selectedUser);
-
-                // Vérifiez si les champs firstName et lastName sont présents, sinon utilisez les versions en minuscule
-                const firstName = selectedUser.firstName || selectedUser['firstname'] || '';
-                const lastName = selectedUser.lastName || selectedUser['lastname'] || '';
-
-                this.contractData[`${field}Details`] = {
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: selectedUser.email,
-                    phone: selectedUser.phone,
-                    company: selectedUser.company,
-                    role: selectedUser.role
-                };
-
-                console.log(`Informations complètes pour ${field}:`, this.contractData[`${field}Details`]);
-            } else {
-                console.error(`Utilisateur avec ID ${selectedUserId} non trouvé.`);
-            }
-        },
-        (error) => {
-            console.error(`Erreur lors de la récupération de l'utilisateur avec ID ${selectedUserId}:`, error);
-        }
-    );
-  }
-
-
-
 
   private setupBreadCrumbItems(): void {
     this.breadCrumbItems = [
@@ -762,8 +680,6 @@ export class OrderFormComponent implements OnInit {
   onUserInputFocus(): void {
     this.userInput$.next("");
   }
-
-
 
 onSubmit(): void {
   if (this.isSubmitting) {
@@ -1209,10 +1125,8 @@ confirmSimpleDeleteBenefit(): void {
   }
 
   private getCustomerNameById(customerId: string): string {
-    // console.log('CustomerId:', customerId);
-    const customer = this.userProfileService.getOne(customerId);
-    // console.log('Customer:', customer);
-    return customer ? `${customer["firstname"]} ${customer["lastname"]}` : 'Client inconnu';
+    const customer = this.customers.find(c => c._id === customerId);
+    return customer ? `${customer.firstname} ${customer.lastname}` : 'Client inconnu';
   }
 
   private getBenefitNameById(benefitId: string): string {
@@ -1395,80 +1309,5 @@ confirmSimpleDeleteBenefit(): void {
     this.orderForm.reset();
     this.toastr.success('Formulaire réinitialisé.');
   }
-
-//   onAddContact(tag: string) {
-//     console.log('onAddContact called with tag:', tag); // Log initial pour vérifier que la méthode est appelée
-
-//     if (tag) {
-//         const [firstName, lastName] = tag.split(' ');
-//         console.log('Split tag into firstName:', firstName, 'and lastName:', lastName); // Vérifier la séparation du nom et du prénom
-
-//         this.userProfileService.createMinimalUser(firstName, lastName).subscribe(
-//             (response: any) => {
-//                 console.log('Response from createMinimalUser:', response); // Log de la réponse du backend
-
-//                 if (response && response.userId) {
-//                     console.log('User ID received:', response.userId); // Vérifier que l'ID utilisateur est bien reçu
-//                     this.orderForm.get('contact').setValue(response.userId);
-//                     this.toastr.success('Nouveau contact créé avec succès.');
-
-//                     // Appel manuel à onUserSelected après avoir mis à jour le champ avec l'ID
-//                     this.onUserSelected('contact', response.userId);
-//                 } else {
-//                     console.error('Erreur : ID utilisateur manquant dans la réponse.'); // Log d'erreur si l'ID utilisateur est manquant
-//                     this.toastr.error('Erreur lors de la création du contact : ID utilisateur manquant.');
-//                 }
-//             },
-//             (error) => {
-//                 console.error('Erreur lors de la création du contact:', error); // Log de l'erreur en cas d'échec de l'appel API
-//                 this.toastr.error('Erreur lors de la création du contact.');
-//             }
-//         );
-//     } else {
-//         console.warn('Tag is empty, skipping user creation.'); // Log d'avertissement si le tag est vide
-//     }
-
-//     console.log('Returning tag as object:', { name: tag }); // Vérification de l'objet retourné à `ng-select`
-//     return { name: tag }; // Assurez-vous que la valeur retournée correspond au modèle attendu par `ng-select`
-// }
-
-onAddContact(tag: string): void {
-  console.log(`onAddContact called with tag: ${tag}`);
-
-  // Séparation du tag en firstName et lastName
-  const [firstName, lastName] = tag.split(' ');
-  console.log(`Split tag into firstName: ${firstName} and lastName: ${lastName}`);
-
-  // Création de l'utilisateur minimal
-  this.userProfileService.createMinimalUser(firstName, lastName).subscribe(
-      (response: any) => {
-          console.log('Response from createMinimalUser:', response);
-
-          if (response && response.userId) {
-              console.log('User ID received:', response.userId);
-
-              // Mettre à jour le champ "contact" avec le nouvel ID utilisateur
-              this.orderForm.get('contact').setValue(response.userId, { emitEvent: false });
-
-              // Appeler onUserSelected avec le nouvel ID utilisateur
-              this.onUserSelected('contact', response.userId);
-          } else {
-              console.error('Erreur: aucun userId retourné.');
-          }
-      },
-      (error) => {
-          console.error('Erreur lors de la création du contact:', error);
-      }
-  );
-}
-
-
-
-
-
-
-
-
-
 
 }

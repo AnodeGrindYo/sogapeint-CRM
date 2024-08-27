@@ -1107,7 +1107,7 @@ svg:hover {
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-
+    
     .modal-header {
         background-color: #252B3B;
         color: white !important;
@@ -1115,39 +1115,154 @@ svg:hover {
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
     }
-
+    
     .modal-title {
         font-size: 18px;
         color: white;
     }
-
+    
     .modal-body {
         padding: 20px;
         font-size: 16px;
     }
-
+    
     .calculation-detail p {
         margin: 0;
         margin-bottom: 10px;
     }
-
+    
     .calculation-detail p strong {
         color: #252B3B;
         display: inline-block;
         width: 150px; /* Ajout d'une largeur fixe pour un alignement uniforme */
     }
-
+    
     .modal-footer {
         border-top: none;
         padding: 15px;
         display: flex;
         justify-content: center;
     }
-
+    
     .modal-footer .btn {
         width: 100px;
     }
 }
 
+
+
+.btn-discreet {
+    background: none;
+    border: none;
+    color: #495057;
+    padding: 0.3rem; /* Ajustement du padding */
+    font-size: 0.75rem; /* Taille du texte plus petite */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.btn-discreet i {
+    font-size: 1.2rem; /* Réduction de la taille de l'icône */
+    transition: transform 0.3s ease;
+}
+
+.btn-discreet span {
+    display: none;
+    font-size: 0.75rem; /* Taille du texte plus petite */
+    margin-left: 0.3rem; /* Réduction de l'espace entre l'icône et le texte */
+    transition: all 0.3s ease;
+}
+
+.btn-discreet:hover {
+    background: #495057;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.3rem 0.5rem; /* Ajustement du padding pour un texte plus discret */
+}
+
+.btn-discreet:hover span {
+    display: inline;
+}
+
+.btn-discreet:hover i {
+    transform: scale(1.1); /* Légère réduction du zoom au survol */
+}
+
+.btn-discreet:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #495057;
+    z-index: -1;
+    border-radius: 5px;
+}
+
+
+
+
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem; /* Taille plus discrète */
+    color: #6c757d; /* Couleur plus discrète pour les dates */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa; /* Couleur de fond au survol */
+    color: #495057; /* Couleur du texte au survol */
+}
+
+.delete-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.delete-btn {
+    color: #d9534f; /* Couleur plus discrète pour les boutons de suppression */
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease; /* Ajout de la transition pour l'animation */
+    margin-left: 1rem;
+    visibility: visible; /* Assure que le bouton reste visible */
+    opacity: 1; /* Assure que le bouton reste visible */
+}
+
+.delete-btn:hover {
+    color: #c9302c; /* Couleur au survol */
+    animation: bounce 0.5s ease; /* Animation de rebond au survol */
+}
+
+.delete-btn i {
+    font-size: 0.9rem; /* Taille plus petite pour l'icône de suppression */
+}
+
+/* Ajout d'une transition au survol des éléments du dropdown */
+.dropdown-item:hover .delete-btn {
+    color: #c9302c;
+}
+
+.dropdown-item:hover .delete-btn-container {
+    transform: translateX(0); /* Garde le bouton de suppression à sa place */
+    transition: transform 0.3s ease;
+}
 
 

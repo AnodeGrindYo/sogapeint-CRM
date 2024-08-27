@@ -28,6 +28,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { AngularToastifyModule, ToastService } from 'angular-toastify';
 import { ToastrModule } from 'ngx-toastr';
 
+import { SensitiveDataInterceptor } from './core/interceptors/sensitive-data.interceptor';
+
 
 
 // the second parameter 'fr' is optional
@@ -70,6 +72,7 @@ export function createTranslateLoader(http: HttpClient): any {
     {provide: LOCALE_ID, useValue: 'fr' },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: SensitiveDataInterceptor, multi: true },
     AuthenticationService,
     ToastService,
   ],

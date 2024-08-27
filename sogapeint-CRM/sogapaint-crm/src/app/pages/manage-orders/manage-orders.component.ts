@@ -270,20 +270,43 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
 
   onSearch(): void {
     const searchTerms = this.filter.toLowerCase().trim().split(" ");
+    // let filteredOrders = this.orders.filter(order => !order.trash || this.showDeletedOrders);
     let filteredOrders = this.orders.filter(order => !order.trash || this.showDeletedOrders);
-    
+
+
+    const searchFields: Set<string> = new Set();
+
     filteredOrders = searchTerms.length === 0 ? filteredOrders : filteredOrders.filter(order =>
-      this.searchInOrder(order, searchTerms)
+      this.searchInOrder(order, searchTerms, searchFields)
     );
-  
+
     this.filteredOrders = filteredOrders.filter(order =>
       this.activeTags.length === 0 || this.activeTags.every(tag => this.orderHasTag(order, tag))
     );
-  
+
     this.updateOrdersToShow();
     
     const searchTermStr = searchTerms.join(', ');
     const resultCount = this.filteredOrders.length;
+    const searchFieldsStr = Array.from(searchFields).join(', ');
+    
+    // filteredOrders = searchTerms.length === 0 ? filteredOrders : filteredOrders.filter(order =>
+    //   this.searchInOrder(order, searchTerms)
+    // );
+  
+    // this.filteredOrders = filteredOrders.filter(order =>
+    //   this.activeTags.length === 0 || this.activeTags.every(tag => this.orderHasTag(order, tag))
+    // );
+  
+    // this.updateOrdersToShow();
+    
+    // const searchTermStr = searchTerms.join(', ');
+    // const resultCount = this.filteredOrders.length;
+    // const searchFieldsStr = Array.from(searchFields).join(', ');
+
+    console.log("searchFieldStr : ", searchFieldsStr)
+
+    // this.toastr.info(`${resultCount} commandes trouvées pour les termes de recherche: ${searchTermStr} dans les champs: ${searchFieldsStr}`);
     this.toastr.info(`${resultCount} commandes trouvées pour les termes de recherche: ${searchTermStr}`);
   }
   
@@ -310,25 +333,204 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   }
 
 
-  searchInOrder(order: any, searchTerms: string[]): boolean {
-    const searchInObject = (obj: any, term: string): boolean => {
-      return Object.entries(obj).some(([key, value]) => {
-        if (this.excludedFields.includes(key) || key === '_id') return false; // Exclure les champs non pertinents et les champs _id dans les sous-objets
-        if (typeof value === "object" && value !== null) {
-          return Array.isArray(value)
-            ? value.some((subValue) => searchInObject(subValue, term))
-            : searchInObject(value, term);
-        }
-        const valueStr = typeof value === 'string' || typeof value === 'number'
-          ? String(value).toLowerCase()
-          : (value instanceof Date ? this.formatDate(value) : '').toLowerCase();
-        return valueStr.includes(term) || valueStr === term;
-      });
-    };
+  // searchInOrder(order: any, searchTerms: string[]): boolean {
+  //   const searchInObject = (obj: any, term: string): boolean => {
+  //     return Object.entries(obj).some(([key, value]) => {
+  //       if (this.excludedFields.includes(key) || key === '_id') return false; // Exclure les champs non pertinents et les champs _id dans les sous-objets
+  //       if (typeof value === "object" && value !== null) {
+  //         return Array.isArray(value)
+  //           ? value.some((subValue) => searchInObject(subValue, term))
+  //           : searchInObject(value, term);
+  //       }
+  //       const valueStr = typeof value === 'string' || typeof value === 'number'
+  //         ? String(value).toLowerCase()
+  //         : (value instanceof Date ? this.formatDate(value) : '').toLowerCase();
+  //       return valueStr.includes(term) || valueStr === term;
+  //     });
+  //   };
   
-    // Vérifier si chaque terme de recherche est présent dans l'ordre
+  //   // Vérifier si chaque terme de recherche est présent dans l'ordre
+  //   return searchTerms.every(term => searchInObject(order, term));
+  // }
+
+
+  // searchInOrder(order: any, searchTerms: string[], searchFields: Set<string>): boolean {
+  //   const searchInObject = (obj: any, term: string): boolean => {
+  //       return Object.entries(obj).some(([key, value]) => {
+  //           if (this.excludedFields.includes(key) || key === '_id') return false;
+  //           if (typeof value === "object" && value !== null) {
+  //               return Array.isArray(value)
+  //                   ? value.some((subValue) => searchInObject(subValue, term))
+  //                   : searchInObject(value, term);
+  //           }
+  //           const valueStr = typeof value === 'string' || typeof value === 'number'
+  //               ? String(value).toLowerCase()
+  //               : (value instanceof Date ? this.formatDate(value) : '').toLowerCase();
+            
+  //           if (valueStr.includes(term) || valueStr === term) {
+  //               searchFields.add(key); // Ajoutez le champ à la liste des champs recherchés
+  //               return true;
+  //           }
+  //           return false;
+  //       });
+  //   };
+
+  //   return searchTerms.every(term => searchInObject(order, term));
+  // }
+
+
+  // searchInOrder(order: any, searchTerms: string[], searchFields: Set<string>): boolean {
+  //   const visibleFields = [
+  //     'internal_number',
+  //     'appartment_number',
+  //     'address',
+  //     'quote_number',
+  //     'benefit',
+  //     'external_contributor',
+  //     'invoice_number',
+  //     'end_date_customer',
+  //     'external_contributor_amount',
+  //     'benefit_ht',
+  //     'amount_ht',
+  //     'end_date_work',
+  //     'status'
+  //   ];
+  
+  //   // Ajouter des champs conditionnels en fonction du rôle de l'utilisateur
+  //   if (this.currentUser.role !== 'comanager') {
+  //     visibleFields.push('contact');
+  //   }
+  //   if (this.currentUser.role !== 'customer') {
+  //     visibleFields.push('quote_number', 'external_contributor_amount');
+  //   }
+  
+  //   const dateFields = [
+  //     'date_cde',
+  //     'dateUpd',
+  //     'dateAdd',
+  //     'external_contributor_invoice_date',
+  //     'start_date_works',
+  //     'end_date_works',
+  //     'end_date_customer'
+  //   ];
+  
+  //   const searchInObject = (obj: any, term: string): boolean => {
+  //     return Object.entries(obj).some(([key, value]) => {
+  //       if (!visibleFields.includes(key) || this.excludedFields.includes(key) || key === '_id') return false;
+  
+  //       // Log des dates pour vérifier leur format
+  //       if (dateFields.includes(key)) {
+  //         console.log(`Date field "${key}" received with value:`, value);
+  //       }
+  
+  //       // Log des dates dans modifiedBy
+  //       if (key === 'modifiedBy' && Array.isArray(value)) {
+  //         value.forEach((modification) => {
+  //           console.log(`Date field "modifiedBy.date" received with value:`, modification.date);
+  //         });
+  //       }
+  
+  //       if (key === 'contact' || key === 'external_contributor' || key === 'subcontractor' || key === 'customer') {
+  //         // Rechercher dans les sous-champs spécifiques
+  //         if (value && typeof value === 'object') {
+  //           const subFields = ['firstname', 'lastname', 'email', 'company'];
+  //           return subFields.some(subKey => {
+  //             const subValue = value[subKey];
+  //             if (subValue && String(subValue).toLowerCase().includes(term)) {
+  //               searchFields.add(`${key}.${subKey}`);  // Ajouter le champ dans searchFields
+  //               return true;
+  //             }
+  //             return false;
+  //           });
+  //         }
+  //       }
+  
+  //       if (typeof value === "object" && value !== null) {
+  //         return Array.isArray(value)
+  //           ? value.some((subValue) => searchInObject(subValue, term))
+  //           : searchInObject(value, term);
+  //       }
+  
+  //       const valueStr = typeof value === 'string' || typeof value === 'number'
+  //         ? String(value).toLowerCase()
+  //         : (value instanceof Date ? this.formatDate(value) : '').toLowerCase();
+  
+  //       if (valueStr.includes(term) || valueStr === term) {
+  //         searchFields.add(key);  // Ajouter le champ dans searchFields
+  //         return true;
+  //       }
+  //       return false;
+  //     });
+  //   };
+  
+  //   return searchTerms.every(term => searchInObject(order, term));
+  // }
+
+  searchInOrder(order: any, searchTerms: string[], searchFields: Set<string>): boolean {
+    const visibleFields = [
+        'internal_number',
+        'appartment_number',
+        'address',
+        'quote_number',
+        'benefit',
+        'external_contributor',
+        'invoice_number',
+        'end_date_customer',
+        'external_contributor_amount',
+        'benefit_ht',
+        'amount_ht',
+        'end_date_work',
+        'status',
+        'billing_number',            // Nouveau champ
+        'billing_amount',            // Nouveau champ
+        'observation.comment',       // Nouveau champ
+        'incident.comment'           // Nouveau champ
+    ];
+
+    const companyFields = [
+        'normalized_name',           // Nouveau champ
+        'abbreviation',              // Nouveau champ
+        'address',                   // Nouveau champ
+        'websites',                  // Nouveau champ
+        'phone',                     // Nouveau champ
+        'email'                      // Nouveau champ
+    ];
+
+    const documentFields = [
+        'name'                       // Nouveau champ
+    ];
+
+    // Combiner les champs visibles avec les nouveaux champs ajoutés
+    const searchInObject = (obj: any, term: string): boolean => {
+        return Object.entries(obj).some(([key, value]) => {
+            if (visibleFields.includes(key) || companyFields.includes(key) || documentFields.includes(key)) {
+                searchFields.add(key); // Ajouter le champ trouvé au Set des champs de recherche
+            }
+
+            if (typeof value === "object" && value !== null) {
+                return Array.isArray(value)
+                    ? value.some((subValue) => searchInObject(subValue, term))
+                    : searchInObject(value, term);
+            }
+
+            const valueStr = typeof value === 'string' || typeof value === 'number'
+                ? String(value).toLowerCase()
+                : (value instanceof Date ? this.formatDate(value) : '').toLowerCase();
+
+            if (valueStr.includes(term) || valueStr === term) {
+                return true;
+            }
+            return false;
+        });
+    };
+
     return searchTerms.every(term => searchInObject(order, term));
   }
+
+  
+  
+  
+  
   
   
   

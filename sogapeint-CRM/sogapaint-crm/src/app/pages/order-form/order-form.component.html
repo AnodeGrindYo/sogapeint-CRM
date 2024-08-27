@@ -1,9 +1,38 @@
 <div class="container-fluid">
     <app-pagetitle title="Saisie d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+    <div class="d-flex justify-content-end mb-3">
+        <!-- <div class="dropdown me-2">
+            <button class=" btn-discreet btn-secondary dropdown-toggle" type="button" id="historyDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-history"></i> 
+                <span>Historique</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="historyDropdown">
+                <li *ngFor="let version of formHistory; let i = index" class="dropdown-item">
+                    <span (click)="restoreSpecificVersion($event, i)">
+                        {{ getVersionDescription(version) }}
+                    </span>
+                    <div class="delete-btn-container">
+                        <span class="delete-btn" (click)="deleteVersion($event, i)">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </div>
+                </li>
+                <li *ngIf="formHistory.length === 0">
+                    <span class="dropdown-item text-muted">Aucune version disponible</span>
+                </li>
+            </ul>
+        </div> -->
+        <button class="btn  btn-discreet btn-danger" type="button" (click)="clearFormData()">
+            <i class="fas fa-trash-alt"></i>
+            <span>
+                Réinitialiser
+            </span> 
+        </button>
+    </div>
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-        <!-- Première ligne -->
+        
         <div class="row mb-3">
-            <!-- Référence commande -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Référence commande</div>
@@ -39,7 +68,7 @@
                                 {{ getErrorMessage(orderForm.get('customer').errors) }}
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="contact" class="form-label">Contact</label>
                             <ng-select id="contact" formControlName="contact" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un contact" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
                                 <ng-template ng-label-tmp let-item="item">
@@ -52,7 +81,61 @@
                             <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
                                 {{ getErrorMessage(orderForm.get('contact').errors) }}
                             </div>
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="contact" class="form-label">Contact</label>
+                            <ng-select 
+                                id="contact" 
+                                formControlName="contact" 
+                                [items]="users" 
+                                bindLabel="name" 
+                                bindValue="_id" 
+                                placeholder="Sélectionner ou ajouter un contact" 
+                                [typeahead]="userInput$" 
+                                [virtualScroll]="true" 
+                                [addTag]="true" 
+                                addTagText="Ajouter contact : " 
+                                (add)="onAddContact($event)" 
+                                (focus)="onUserInputFocus()" 
+                                (blur)="onUserInputBlur($event)">
+                                
+                                <ng-template ng-label-tmp let-item="item">
+                                    {{ item.firstname }} {{ item.lastname }}
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                    {{ item.firstname }} {{ item.lastname }}
+                                </ng-template>
+                            </ng-select>
+                            <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
+                                {{ getErrorMessage(orderForm.get('contact').errors) }}
+                            </div>
+                        </div>                         -->
+                        <div class="mb-3">
+                            <label for="contact" class="form-label">Contact</label>
+                            <ng-select id="contact" 
+           formControlName="contact" 
+           [items]="users" 
+           bindLabel="name" 
+           bindValue="_id" 
+           placeholder="Sélectionner un contact" 
+           [typeahead]="userInput$" 
+           [virtualScroll]="true" 
+           [addTag]="onAddContact.bind(this)" 
+           (focus)="onUserInputFocus()" 
+           (blur)="onUserInputBlur($event)">
+    <ng-template ng-label-tmp let-item="item">
+        {{ item.firstname }} {{ item.lastname }}
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-index="index">
+        {{ item.firstname }} {{ item.lastname }}
+    </ng-template>
+</ng-select>
+
+                            <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
+                                {{ getErrorMessage(orderForm.get('contact').errors) }}
+                            </div>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="quoteNumber" class="form-label">Numéro de devis</label>
                             <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
@@ -91,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Résidence/Adresse -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Résidence/Adresse</div>
@@ -131,9 +214,9 @@
                 </div>
             </div>
         </div>
-        <!-- Deuxième ligne -->
+        
         <div class="row mb-3">
-            <!-- Intervenants -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Intervenants</div>
@@ -183,7 +266,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Montants -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Montants</div>
@@ -220,9 +303,9 @@
                 </div>
             </div>
         </div>
-        <!-- Troisième ligne -->
+        
         <div class="row mb-3">
-            <!-- Dates -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Dates</div>
@@ -251,7 +334,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Documents -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Documents</div>
@@ -317,9 +400,9 @@
                 </div>
             </div>
         </div>
-        <!-- Quatrième ligne -->
+        
         <div class="row mb-3">
-            <!-- Temps d'exécution -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Temps d'exécution</div>
@@ -356,14 +439,14 @@
                             <label class="form-label" for="difference">Différence (Heures)</label>
                             <input type="text" class="form-control" id="difference" formControlName="difference" readonly>
                         </div>
-                        <!-- Bouton pour afficher les détails du calcul -->
+                        
                         <button type="button" (click)="showCalculationDetails()" class="btn btn-info">
                             <i class="fa fa-info-circle"></i> Détails du calcul
                         </button>
                     </div>
                 </div>
             </div>
-            <!-- Communication -->
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Facturation</div>
@@ -394,13 +477,7 @@
                                 {{ getErrorMessage(orderForm.get('mailSended').errors) }}
                             </div>
                         </div>
-                        <!-- <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="trash" formControlName="trash">
-                            <label for="trash" class="form-check-label">Marquer comme supprimé</label>
-                            <div *ngIf="orderForm.get('trash').invalid && (orderForm.get('trash').dirty || orderForm.get('trash').touched)" class="text-danger">
-                                {{ getErrorMessage(orderForm.get('trash').errors) }}
-                            </div>
-                        </div> -->
+                        
                     </div>
                 </div>
             </div>
@@ -435,7 +512,6 @@
     </div>
 </ng-template>
 
-<!-- Modal pour la suppression d'une prestation -->
 <ng-template #deleteBenefitModal let-modal>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -486,30 +562,6 @@
     </div>
 </ng-template>
 
-
-<!-- Modal pour la suppression d'une prestation -->
-<!-- <ng-template #deleteBenefitModal let-modal>
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmation de suppression</h5>
-                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Cette prestation est utilisée dans des commandes existantes. Veuillez sélectionner une prestation de remplacement :
-                <ng-select [items]="filteredBenefits" bindLabel="name" bindValue="value" [(ngModel)]="replacementBenefit" placeholder="Choisissez une prestation de remplacement"></ng-select>
-                ou <button type="button" class="btn btn-link" (click)="addNewReplacementBenefit()">créer une nouvelle prestation</button>.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
-                <button type="button" class="btn btn-primary" (click)="confirmDeleteBenefit()">Confirmer</button>
-            </div>
-        </div>
-    </div>
-</ng-template> -->
-<!-- Modal pour la suppression d'une prestation -->
 <ng-template #deleteBenefitModal let-modal>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -535,8 +587,6 @@
     </div>
 </ng-template>
 
-
-<!-- Modal pour la confirmation simple de suppression -->
 <ng-template #simpleDeleteConfirmationModal let-modal>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -556,8 +606,6 @@
         </div>
     </div>
 </ng-template>
-
-
 
 <ng-template #calculationDetailsModal let-modal>
     <div class="modal-dialog calculation-modal" role="document">
@@ -584,4 +632,3 @@
         </div>
     </div>
 </ng-template>
-

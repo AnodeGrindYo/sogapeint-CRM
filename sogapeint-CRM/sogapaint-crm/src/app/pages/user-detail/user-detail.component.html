@@ -1,19 +1,14 @@
 <div class="container-fluid">
     <app-pagetitle title="Contact" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
     <div class="container mt-4">
-        
-        <!-- <div class="alert alert-danger" role="alert">
-            <strong>Attention !</strong> Ce composant est encore en construction. Portez un casque de sécurité !
-        </div> -->
-        <!-- Messages (erreur/succès)-->
         <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">
             {{ successMessage }}
           </ngb-alert>
           <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">
-            {{ errorMessage }}
+            <i class="fas fa-exclamation-circle"></i>&nbsp;{{ errorMessage }}
           </ngb-alert>
 
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-header">
                 <div class="row"  *ngIf="isAdminOrSuperAdmin()">
                     <div class="text-end">
@@ -68,7 +63,7 @@
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <strong>Email</strong>
-                            <!-- Champ éditable si en mode édition -->
+                            
                             <div *ngIf="editMode">
                                 <form [formGroup]="userForm">
                                     <div class="form-group position-relative">
@@ -84,14 +79,14 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- Affichage en mode lecture seul -->
+                            
                             <p class="text-muted" *ngIf="!editMode && user?.email">
                                 <a href="mailto:{{ user.email }}">{{ user?.email }}</a>
                             </p>
                         </div>
                         <div class="col-sm-6">
                             <strong>Entreprise</strong>
-                            <!-- Champ éditable si en mode édition -->
+                            
                             <div *ngIf="editMode">
                                 <form [formGroup]="userForm">
                                     <div class="form-group position-relative">
@@ -122,14 +117,14 @@
                                 </div>
                             </form>
                         </div>
-                        <!-- Affichage en mode lecture seule -->
+                        
                         <p class="text-muted" *ngIf="!editMode && user?.company">{{ user?.company }}</p>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-6">
                         <strong>Numéro de téléphone</strong>
-                        <!-- Champ éditable si en mode édition -->
+                        
                         <div *ngIf="editMode">
                             <form [formGroup]="userForm">
                                 <div class="form-group position-relative">
@@ -144,12 +139,12 @@
                                 </div>
                             </form>
                         </div>
-                        <!-- Affichage en mode lecture seule -->
+                        
                         <p class="text-muted" *ngIf="!editMode && user?.phone">{{ user?.phone }}</p>
                     </div>
                     <div class="col-sm-6">
                         <strong>Adresse</strong>
-                        <!-- Champ éditable si en mode édition -->
+                        
                         <div *ngIf="editMode">
                             <form [formGroup]="userForm">
                                 <div class="form-group position-relative">
@@ -164,7 +159,7 @@
                                 </div>
                             </form>
                         </div>
-                        <!-- Affichage en mode lecture seule -->
+                        
                         <p class="text-muted" *ngIf="!editMode && user?.address; else notProvided">{{ user?.address}}</p>
                         <ng-template #notProvided><p class="text-muted">Non renseigné</p></ng-template>
                     </div>
@@ -172,7 +167,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <strong>Autorisé à se connecter</strong>
-                        <!-- Champ éditable si en mode édition -->
+                       
                         <div *ngIf="editMode">
                             <form [formGroup]="userForm">
                                 <div class="form-group position-relative">
@@ -197,12 +192,12 @@
                                 </div>
                             </form>
                         </div>
-                        <!-- Affichage en mode lecture seule -->
+                        
                         <p class="text-muted" *ngIf="!editMode && user?.authorized_connection">{{ user?.authorized_connection ? 'Oui' : 'Non' }}</p>
                     </div>
                     <div class="col-sm-6">
                         <strong>Statut</strong>
-                        <!-- Champ éditable si en mode édition -->
+                        
                         <div *ngIf="editMode">
                             <form [formGroup]="userForm">
                                 <div class="form-group position-relative">
@@ -227,7 +222,7 @@
                                 </div>
                             </form>
                         </div>
-                        <!-- Affichage en mode lecture seule -->
+                        
                         <p class="text-muted" *ngIf="!editMode && user?.active">{{ user?.active ? 'Actif' : 'Inactif' }}</p>
                     </div>
                 </div>
@@ -238,7 +233,243 @@
                 <button class="btn btn-primary ms-2" (click)="openConfirmationModalForModification(content)" *ngIf="!userForm.pristine">Valider la modification</button>
             </div>
         </div>
+    </div> -->
+
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row" *ngIf="isAdminOrSuperAdmin()">
+                <div class="text-end">
+                    <button class="btn btn-primary ms-2" (click)="enableEditMode()" *ngIf="!editMode">Editer</button>
+                    <button class="btn btn-danger ms-2" (click)="disableEditMode()" *ngIf="editMode">Annuler</button>
+                </div>
+            </div>
+            <div class="row">
+                <h5 class="card-title mb-0" *ngIf="!editMode">
+                    {{ user?.firstName }} {{ user?.lastName }}
+                    <small class="text-muted role-badge" [ngClass]="getRoleClass(user?.role)">{{ translateRole(user?.role) }}</small>
+                </h5>
+                <div *ngIf="editMode">
+                    <form [formGroup]="userForm">
+                        <div class="form-group position-relative" [ngClass]="{'has-error': isFieldInvalid('firstName')}">
+                            <label for="firstName">Prénom</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="firstName" formControlName="firstName" (blur)="onBlur('firstName')">
+                                <div class="input-group-append" *ngIf="userForm.controls['firstName'].dirty">
+                                    <span class="input-group-text" style="cursor: pointer;" (click)="resetField('firstName')">
+                                        <i class="fas fa-undo" title="Réinitialiser le prénom"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div *ngIf="isFieldInvalid('firstName')" class="text-danger">
+                                <small>Le prénom est requis.</small>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative" [ngClass]="{'has-error': isFieldInvalid('lastName')}">
+                            <label for="lastName">Nom</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="lastName" formControlName="lastName" (blur)="onBlur('lastName')">
+                                <div class="input-group-append" *ngIf="userForm.controls['lastName'].dirty">
+                                    <span class="input-group-text" style="cursor: pointer;" (click)="resetField('lastName')">
+                                        <i class="fas fa-undo" title="Réinitialiser le nom"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div *ngIf="isFieldInvalid('lastName')" class="text-danger">
+                                <small>Le nom est requis.</small>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{'has-error': isFieldInvalid('role')}">
+                            <label for="role">Rôle</label>
+                            <select class="form-control" id="role" formControlName="role" (blur)="onBlur('role')">
+                                <option value="superAdmin">superAdmin</option>
+                                <option value="cocontractor">co-traitant</option>
+                                <option value="subcontractor">sous-traitant</option>
+                                <option value="comanager">régisseur</option>
+                                <option value="supermanager">super régisseur</option>
+                                <option value="customer">client</option>
+                            </select>
+                            <div *ngIf="isFieldInvalid('role')" class="text-danger">
+                                <small>Le rôle est requis.</small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <strong>Email</strong>
+                    <div *ngIf="editMode">
+                        <form [formGroup]="userForm">
+                            <div class="form-group position-relative" [ngClass]="{'has-error': isFieldInvalid('email')}">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" formControlName="email" placeholder="Email" (blur)="onBlur('email')">
+                                    <div class="input-group-append" *ngIf="userForm.controls['email'].dirty">
+                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField('email')">
+                                            <i class="fas fa-undo" title="Réinitialiser l'email"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div *ngIf="isFieldInvalid('email')" class="text-danger">
+                                    <small>Un email valide est requis.</small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <p class="text-muted" *ngIf="!editMode && user?.email">
+                        <a href="mailto:{{ user.email }}">{{ user?.email }}</a>
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <strong>Entreprise</strong>
+                    <div *ngIf="editMode">
+                        <form [formGroup]="userForm">
+                            <div class="form-group position-relative" [ngClass]="{'has-error': isFieldInvalid('company')}">
+                                <div class="input-group">
+                                    <div class="col">
+                                        <ng-select id="company" 
+                                        formControlName="company" 
+                                        [items]="companies" 
+                                        bindLabel="normalized_name" 
+                                        bindValue="normalized_name" 
+                                        placeholder="Sélectionner une entreprise"
+                                        [typeahead]="companyInput$"
+                                        [virtualScroll]="true" 
+                                        [compareWith]="compareWithFn"
+                                        [addTag]="true"
+                                        addTagText="Ajoutez l'entreprise"
+                                        (blur)="onCompanyInputBlur($event); onBlur('company')">
+                                    </ng-select>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="input-group-append" *ngIf="userForm.controls['company'].dirty">
+                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField('company')">
+                                            <i class="fas fa-undo" title="Réinitialiser l'entreprise"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="isFieldInvalid('company')" class="text-danger">
+                                <small>L'entreprise est requise.</small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <p class="text-muted" *ngIf="!editMode && user?.company">{{ user?.company }}</p>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <strong>Numéro de téléphone</strong>
+                    <div *ngIf="editMode">
+                        <form [formGroup]="userForm">
+                            <div class="form-group position-relative" [ngClass]="{'has-error': isFieldInvalid('phone')}">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="phone" placeholder="Numéro de téléphone" (blur)="onBlur('phone')">
+                                    <div class="input-group-append" *ngIf="userForm.controls['phone'].dirty">
+                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField('phone')">
+                                            <i class="fas fa-undo" title="Réinitialiser le numéro de téléphone"></i>
+                                        </span>
+                                    </div>                                          
+                                </div>
+                                <div *ngIf="isFieldInvalid('phone')" class="text-danger">
+                                    <small>Numéro de téléphone invalide.</small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <p class="text-muted" *ngIf="!editMode && user?.phone">{{ user?.phone }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <strong>Adresse</strong>
+                    <div *ngIf="editMode">
+                        <form [formGroup]="userForm">
+                            <div class="form-group position-relative" [ngClass]="{'has-error': isFieldInvalid('address')}">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="address" placeholder="Adresse" (blur)="onBlur('address')">
+                                    <div class="input-group-append" *ngIf="userForm.controls['address'].dirty">
+                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField('address')">
+                                            <i class="fas fa-undo" title="Réinitialiser l'adresse"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div *ngIf="isFieldInvalid('address')" class="text-danger">
+                                    <small>Adresse invalide.</small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <p class="text-muted" *ngIf="!editMode && user?.address; else notProvided">{{ user?.address}}</p>
+                    <ng-template #notProvided><p class="text-muted">Non renseigné</p></ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <strong>Autorisé à se connecter</strong>
+                    <div *ngIf="editMode">
+                        <form [formGroup]="userForm">
+                            <div class="form-group position-relative">
+                                <div class="input-group">
+                                    <div class="d-block">
+                                        <ui-switch 
+                                        id="authorized-connection-switch" 
+                                        formControlName="authorized_connection" 
+                                        [checkedLabel]="'Oui'" 
+                                        [uncheckedLabel]="'Non'" 
+                                        size="small"  
+                                        ariaLabel="Autorisé à se connecter" 
+                                        (blur)="onBlur('authorized_connection')"
+                                        ></ui-switch>
+                                    </div>
+                                    <div class="input-group-append" *ngIf="userForm.controls['authorized_connection'].dirty">
+                                        <span class="input-group-text" style="cursor: pointer;" (click)="resetField('authorized_connection')">
+                                            <i class="fas fa-undo" title="Réinitialiser l'autorisation de connexion"></i>
+                                        </span>
+                                    </div>                                          
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <p class="text-muted" *ngIf="!editMode && user?.authorized_connection">{{ user?.authorized_connection ? 'Oui' : 'Non' }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <strong>Statut</strong>
+                    <div *ngIf="editMode">
+                        <form [formGroup]="userForm">
+                            <div class="form-group position-relative">
+                                <div class="input-group">
+                                    <div class="d-block">
+                                        <ui-switch 
+                                        id="status-switch" 
+                                        formControlName="status" 
+                                        [checkedLabel]="'Actif'" 
+                                        [uncheckedLabel]="'Inactif'" 
+                                        size="small"  
+                                        ariaLabel="Statut"
+                                        (blur)="onBlur('status')"
+                                        ></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="input-group-append" *ngIf="userForm.controls['status'].dirty">
+                                    <span class="input-group-text" style="cursor: pointer;" (click)="resetField('status')">
+                                        <i class="fas fa-undo" title="Réinitialiser le statut"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <p class="text-muted" *ngIf="!editMode && user?.active">{{ user?.active ? 'Actif' : 'Inactif' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-end" *ngIf="editMode">
+            <button class="btn btn-danger ms-2" ngbTooltip="Les données de l'utilisateur seront conservées, mais nous mandaterons un tueur à gage" (click)="openDeleteConfirmationModal(deleteModal)">Supprimer l'utilisateur</button>
+            <button class="btn btn-outline-secondary ms-2" (click)="openResetPasswordModal(resetPasswordModal)">Réinitialiser le mot de passe</button>
+            <button class="btn btn-primary ms-2" (click)="validateUserModification()" *ngIf="!userForm.pristine">Valider la modification</button>
+        </div>
     </div>
+    
 </div>
 
 <!-- Template pour le Modal de Confirmation -->

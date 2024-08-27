@@ -312,6 +312,10 @@ export class UserDetailComponent implements OnInit {
             );
           } else {
             this.errorMessage = 'Veuillez remplir correctement le formulaire.';
+            Object.keys(this.userForm.controls).forEach(field => {
+              const control = this.userForm.get(field);
+              control.markAsTouched({ onlySelf: true });
+            });
           }
         }
         
@@ -359,4 +363,20 @@ export class UserDetailComponent implements OnInit {
           };
           return roleTranslationMap[role] || role;
         }
+
+        isFieldInvalid(fieldName: string): boolean {
+          const control = this.userForm.get(fieldName);
+          return control.invalid && (control.dirty || control.touched);
+        }
+        
+        onBlur(fieldName: string): void {
+          const control = this.userForm.get(fieldName);
+          control.markAsTouched();
+          if (control.invalid) {
+            this.errorMessage = 'Certains champs sont invalides. Veuillez les corriger avant de continuer.';
+          }
+        }
+        
+        
+        
       }

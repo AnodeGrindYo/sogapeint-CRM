@@ -276,9 +276,81 @@ exports.getAllUsers = async (req, res) => {
 };
 
 
+// exports.addUser = async (req, res) => {
+//     try {
+//         const {
+//             email,
+//             password,
+//             firstname,
+//             lastname,
+//             phone,
+//             company,
+//             role,
+//             active,
+//             authorized_connection
+//         } = req.body;
+
+//         if (!isEmail(email)) {
+//             return res.status(400).json({ message: 'Adresse email invalide.' });
+//         }
+
+//         let user = await User.findOne({ email });
+//         if (user) {
+//             return res.status(400).json({ message: 'Un utilisateur avec cette adresse email existe déjà.' });
+//         }
+
+//         user = await User.findOne({
+//             firstname: { $regex: new RegExp(`^${firstname}$`, 'i') },
+//             lastname: { $regex: new RegExp(`^${lastname}$`, 'i') }
+//         });
+//         if (user) {
+//             return res.status(400).json({ message: 'Un utilisateur avec ce nom et prénom existe déjà.' });
+//         }
+
+//         const hashedPassword = await bcrypt.hash(password, 10);
+//         const newUser = new User({
+//             email,
+//             password: hashedPassword,
+//             firstname,
+//             lastname,
+//             phone,
+//             company,
+//             role,
+//             active,
+//             authorized_connection
+//         });
+//         await newUser.save();
+
+//         res.status(201).json({ message: 'Utilisateur créé avec succès.', userId: newUser._id });
+//     } catch (error) {
+//         console.error('Error adding new user:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+// exports.getUserById = async (req, res) => {
+//     try {
+//         const { userId } = req.params;
+
+//         const user = await User.findById(userId);
+//         if (!user) {
+//             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+//         }
+
+//         user.password = undefined;
+//         user.resetCode = undefined;
+//         user.resetCodeExpiry = undefined;
+//         user.salt = undefined;
+//         res.status(200).json(user);
+//     } catch (error) {
+//         console.error('Error retrieving user:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
 exports.addUser = async (req, res) => {
     try {
-        const {
+        let {
             email,
             password,
             firstname,
@@ -290,21 +362,36 @@ exports.addUser = async (req, res) => {
             authorized_connection
         } = req.body;
 
-        if (!isEmail(email)) {
+        // Si aucun email n'est fourni, on en génère un par défaut
+        if (!email) {
+            email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@example.com`;
+        }
+
+        // Vérification de l'email uniquement si l'email n'est pas généré automatiquement
+        if (email && !isEmail(email)) {
             return res.status(400).json({ message: 'Adresse email invalide.' });
         }
 
-        let user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).json({ message: 'Un utilisateur avec cette adresse email existe déjà.' });
+        // Vérification de l'existence de l'utilisateur par email uniquement si un email est fourni
+        if (email) {
+            let user = await User.findOne({ email });
+            if (user) {
+                return res.status(400).json({ message: 'Un utilisateur avec cette adresse email existe déjà.' });
+            }
         }
 
-        user = await User.findOne({
+        // Vérification de l'existence de l'utilisateur par prénom et nom
+        let user = await User.findOne({
             firstname: { $regex: new RegExp(`^${firstname}$`, 'i') },
             lastname: { $regex: new RegExp(`^${lastname}$`, 'i') }
         });
         if (user) {
             return res.status(400).json({ message: 'Un utilisateur avec ce nom et prénom existe déjà.' });
+        }
+
+        // Génération d'un mot de passe par défaut si aucun n'est fourni
+        if (!password) {
+            password = 'defaultPassword123';  // Vous pouvez améliorer cette partie en générant un mot de passe plus sécurisé
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -328,25 +415,7 @@ exports.addUser = async (req, res) => {
     }
 };
 
-// exports.getUserById = async (req, res) => {
-//     try {
-//         const { userId } = req.params;
 
-//         const user = await User.findById(userId);
-//         if (!user) {
-//             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
-//         }
-
-//         user.password = undefined;
-//         user.resetCode = undefined;
-//         user.resetCodeExpiry = undefined;
-//         user.salt = undefined;
-//         res.status(200).json(user);
-//     } catch (error) {
-//         console.error('Error retrieving user:', error);
-//         res.status(500).json({ error: error.message });
-//     }
-// };
 exports.getUserById = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -474,23 +543,7 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
-// exports.searchUsers = async (req, res) => {
-//     try {
-//         const query = req.query.q;
 
-//         const users = await User.find({
-//             $or: [
-//                 { firstname: { $regex: query, $options: 'i' } },
-//                 { lastname: { $regex: query, $options: 'i' } },
-//                 { email: { $regex: query, $options: 'i' } }
-//             ]
-//         });
-
-//         res.json(users);
-//     } catch (error) {
-//         res.status(500).send({ message: "Erreur lors de la recherche des utilisateurs", error });
-//     }
-// };
 exports.searchUsers = async (req, res) => {
     try {
         const query = req.query.q;
