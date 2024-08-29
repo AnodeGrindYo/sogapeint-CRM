@@ -22,12 +22,12 @@
                 </li>
             </ul>
         </div> -->
-        <button class="btn  btn-discreet btn-danger" type="button" (click)="clearFormData()">
+        <!-- <button class="btn  btn-discreet btn-danger" type="button" (click)="clearFormData()">
             <i class="fas fa-trash-alt"></i>
             <span>
                 Réinitialiser
             </span> 
-        </button>
+        </button> -->
     </div>
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
         
@@ -110,6 +110,10 @@
                             {{ getErrorMessage(orderForm.get('contact').errors) }}
                         </div>
                     </div>                         -->
+
+
+
+                    <!-- THIS ONE !!!  -->
                     <div class="mb-3">
                         <label for="contact" class="form-label">Contact</label>
                         <ng-select id="contact" 
@@ -129,13 +133,13 @@
                         <ng-template ng-option-tmp let-item="item" let-index="index">
                             {{ item.firstname }} {{ item.lastname }}
                         </ng-template>
-                    </ng-select>
+                    </ng-select> 
                     
                     <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
                         {{ getErrorMessage(orderForm.get('contact').errors) }}
                     </div>
                 </div>
-                
+                <!-- OLD -->
                 <div class="mb-3">
                     <label for="quoteNumber" class="form-label">Numéro de devis</label>
                     <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
@@ -407,12 +411,9 @@
         <div class="card">
             <div class="card-header">Temps d'exécution</div>
             <div class="card-body">
-                <!-- <button (click)="toggleAutoCalculate()">
-                    {{ autoCalculateEnabled ? 'Désactiver' : 'Activer' }} le calcul automatique
-                  </button> -->
-                  
                 <div class="mb-3">
                     <label for="previsionDataHour" class="form-label">Heures (Donné)</label>
+                    <!-- THIS ONE -->
                     <input 
                     type="number" 
                     class="form-control" 
@@ -421,12 +422,21 @@
                     [disabled]="autoCalculateEnabled"
                     (keydown)="onAlphaInput($event)"
                     >
+                    <!-- OLD -->
+                    <!-- <input
+                    type="number" 
+                    class="form-control" 
+                    id="previsionDataHour" 
+                    formControlName="previsionDataHour"
+                    (keydown)="onAlphaInput($event)"
+                    > -->
                     <div *ngIf="orderForm.get('previsionDataHour').invalid && (orderForm.get('previsionDataHour').dirty || orderForm.get('previsionDataHour').touched)" class="text-danger">
                         {{ getErrorMessage(orderForm.get('previsionDataHour').errors) }}
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="previsionDataDay" class="form-label">Jours (Donné)</label>
+                    <!-- THIS ONE -->
                     <input 
                     type="number" 
                     class="form-control" 
@@ -435,6 +445,14 @@
                     [disabled]="autoCalculateEnabled" 
                     (keydown)="onAlphaInput($event)"
                     >
+                    <!-- OLD -->
+                    <!-- <input 
+                    type="number" 
+                    class="form-control" 
+                    id="previsionDataDay" 
+                    formControlName="previsionDataDay"
+                    (keydown)="onAlphaInput($event)"
+                    > -->
                     <div *ngIf="orderForm.get('previsionDataDay').invalid && (orderForm.get('previsionDataDay').dirty || orderForm.get('previsionDataDay').touched)" class="text-danger">
                         {{ getErrorMessage(orderForm.get('previsionDataDay').errors) }}
                     </div>
