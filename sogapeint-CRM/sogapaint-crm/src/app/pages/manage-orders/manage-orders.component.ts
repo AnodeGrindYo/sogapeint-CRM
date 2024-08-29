@@ -67,7 +67,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     this.currentUser = this.userService.getCurrentUser();
     this.loadBenefits();
 
-    // this.activeTags.push("En cours"); // désactivation à la demande de Sogapeint
+    this.activeTags.push("En cours"); // désactivation à la demande de Sogapeint
 
     this.availableTags = this.availableTags.filter((tag) => tag !== "En cours");
 
