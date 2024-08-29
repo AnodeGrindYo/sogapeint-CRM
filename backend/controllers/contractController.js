@@ -36,7 +36,7 @@ exports.getContractById = async (req, res) => {
     try {
         console.log('Fetching contract by id');
         const { contractId } = req.params;
-        const contract = await ContractModel.findById(contractId);
+        let contract = await ContractModel.findById(contractId);
         if (!contract) {
             return res.status(404).json({ message: 'Contrat non trouvé.' });
         }
