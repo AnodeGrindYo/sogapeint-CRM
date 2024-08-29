@@ -409,12 +409,12 @@
                 <i class="fas fa-sort-down" *ngIf="sortColumn === 'external_contributor' && sortDirection === 'desc'"></i>
               </div>
             </th>
-            <th scope="col">
+            <th scope="col" *ngIf="currentUser.role === 'admin' || currentUser.role === 'superAdmin'">
               <div class="cell-centered">N° de commande</div>
-              <div class="sort-icons float-end" (click)="onSort('internal_number')">
-                <i class="fas fa-sort" *ngIf="sortColumn !== 'internal_number'"></i>
-                <i class="fas fa-sort-up" *ngIf="sortColumn === 'internal_number' && sortDirection === 'asc'"></i>
-                <i class="fas fa-sort-down" *ngIf="sortColumn === 'internal_number' && sortDirection === 'desc'"></i>
+              <div class="sort-icons float-end" (click)="onSort('invoice_number')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'invoice_number'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'invoice_number' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'invoice_number' && sortDirection === 'desc'"></i>
               </div>
             </th>
             <th scope="col">
@@ -475,7 +475,7 @@
                 <i class="fas fa-sort-down" *ngIf="sortColumn === 'status' && sortDirection === 'desc'"></i>
               </div>
             </th>
-            <th scope="col">
+            <th scope="col" *ngIf="currentUser.role === 'admin' || currentUser.role === 'superAdmin'">
               <div class="cell-centered">
                 <i class="fas fa-trash" *ngIf="!showDeletedOrders" (click)="toggleShowDeletedOrders()" [ngbTooltip]="'Cliquer pour fouiller dans la corbeille'"></i>
                 <i class="fas fa-undo" *ngIf="showDeletedOrders" (click)="toggleShowDeletedOrders()" [ngbTooltip]="'Cliquer pour quitter la corbeille'"></i>
@@ -607,7 +607,7 @@
             <ng-container *ngSwitchDefault>En cours</ng-container>
           </span>
         </td>
-        <td class="cell-centered" (click)="$event.stopPropagation()">
+        <td class="cell-centered" (click)="$event.stopPropagation()"  *ngIf="currentUser.role === 'admin' || currentUser.role === 'superAdmin'">
           <input type="checkbox" [(ngModel)]="order.trash" (change)="confirmTrashChange(order)" [ngbTooltip]="getTrashTooltipText(order)">
         </td>
       </tr>

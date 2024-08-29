@@ -1272,35 +1272,88 @@ private initializeOrderForm(): void {
 //       this.isSubmitting = false;
 //   }
 // }
+
+// onSubmit(): void {
+//   console.log("Soumission du formulaire");
+//   if (this.isSubmitting) {
+//       return;
+//   }
+
+//   // Vérification pour empêcher la soumission si le calcul automatique est désactivé
+//   if (!this.autoCalculateEnabled) {
+//       this.toastr.warning('Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire.');
+//       return;
+//   }
+
+//   this.isSubmitting = true;
+
+//   if (this.orderForm.valid) {
+//       console.log("Subcontractor ID from form:", this.orderForm.value.subcontractor);
+
+//       this.contractData = { ...this.contractData, ...this.orderForm.value };
+//       console.log("Updated contractData with form values:", this.contractData);
+//       this.prepareDataForSubmission();
+
+//       this.submitContractData();
+//   } else {
+//       this.orderForm.markAllAsTouched();
+//       this.displayFormErrors();
+//       this.toastr.error('Veuillez corriger les erreurs dans le formulaire.');
+//       this.isSubmitting = false;
+//   }
+// }
+
+// onSubmit(): void {
+//   console.log("Tentative de soumission du formulaire");
+//   if (this.isSubmitting) {
+//       return;
+//   }
+
+//   if (!this.autoCalculateEnabled) {
+//       this.toastr.warning('Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire.');
+//       return;
+//   }
+
+//   // Ouvrir le modal pour demander la confirmation avant de soumettre
+//   this.modalService.open(this.confirmationModal).result.then(
+//       (result) => {
+//           if (result === true || result === false) {
+//               this.confirmCreation(result);
+//           }
+//       },
+//       (dismissReason) => {
+//           console.log("Modal fermé sans action");
+//       }
+//   );
+// }
+
 onSubmit(): void {
+  console.log("Tentative de soumission du formulaire");
   if (this.isSubmitting) {
       return;
   }
 
-  // Vérification pour empêcher la soumission si le calcul automatique est désactivé
   if (!this.autoCalculateEnabled) {
       this.toastr.warning('Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire.');
       return;
   }
 
-  this.isSubmitting = true;
-
-  if (this.orderForm.valid) {
-      console.log("Subcontractor ID from form:", this.orderForm.value.subcontractor);
-
-      this.contractData = { ...this.contractData, ...this.orderForm.value };
-      console.log("Updated contractData with form values:", this.contractData);
-      this.prepareDataForSubmission();
-
-      this.submitContractData();
-  } else {
-      this.orderForm.markAllAsTouched();
-      this.displayFormErrors();
-      this.toastr.error('Veuillez corriger les erreurs dans le formulaire.');
-      this.isSubmitting = false;
-  }
+  // Ouvrir le modal pour demander la confirmation avant de soumettre
+  this.modalService.open(this.confirmationModal).result.then(
+      (result) => {
+          if (result === true) {
+              this.prepareNewOrder();  // Pré-remplir un nouveau contrat
+          } else if (result === false) {
+              this.contractData.isLastContract = true;
+              this.submitContractData(); // Soumettre le contrat actuel
+              this.router.navigate(['/manageOrders']); // Redirection
+          }
+      },
+      (dismissReason) => {
+          console.log("Modal fermé sans action");
+      }
+  );
 }
-
 
   private displayFormErrors(): void {
     Object.keys(this.orderForm.controls).forEach((key) => {
@@ -1332,26 +1385,49 @@ onSubmit(): void {
     });
 }
 
-  private submitContractData(): void {
+  // private submitContractData(): void {
+  //   console.log("Soumission des données du contrat:", this.contractData);
+  //   this.contractService.addContract(this.contractData).subscribe({
+  //     next: (response) => {
+  //       console.log("Contrat créé avec succès", response);
+  //       this.toastr.success('Le contrat a été créé avec succès.');
+
+  //       if (this.files.length > 0) {
+  //         console.log("il y a des fichiers à uploader");
+  //         this.onFileUpload(this.files, response.contractId);
+  //       }
+
+  //       this.openConfirmationModal();
+  //       this.isSubmitting = false;
+  //     },
+  //     error: (error) => {
+  //       console.error("Erreur lors de la création du contrat", error);
+  //       this.toastr.error('Une erreur est survenue lors de la création du contrat.');
+  //     },
+  //   });
+  // }
+
+  submitContractData(): void {
     console.log("Soumission des données du contrat:", this.contractData);
+  
+    // Envoi de la commande au backend
     this.contractService.addContract(this.contractData).subscribe({
-      next: (response) => {
-        console.log("Contrat créé avec succès", response);
-        this.toastr.success('Le contrat a été créé avec succès.');
-
-        if (this.files.length > 0) {
-          console.log("il y a des fichiers à uploader");
-          this.onFileUpload(this.files, response.contractId);
-        }
-
-        this.openConfirmationModal();
-        this.isSubmitting = false;
-      },
-      error: (error) => {
-        console.error("Erreur lors de la création du contrat", error);
-        this.toastr.error('Une erreur est survenue lors de la création du contrat.');
-      },
+        next: (response) => {
+            console.log("Contrat créé avec succès", response);
+            this.toastr.success('Le contrat a été créé avec succès.');
+  
+            // Si des fichiers doivent être uploadés
+            if (this.files.length > 0) {
+                this.onFileUpload(this.files, response.contractId);
+            }
+        },
+        error: (error) => {
+            console.error("Erreur lors de la création du contrat", error);
+            this.toastr.error('Une erreur est survenue lors de la création du contrat.');
+        },
     });
+  
+    this.isSubmitting = false;
   }
 
   private prepareDataForSubmission(): void {
@@ -1472,37 +1548,86 @@ onSubmit(): void {
     );
   }
 
+//   confirmCreation(reuseSameNumber: boolean) {
+//     this.modalService.dismissAll();
+
+//     if (reuseSameNumber) {
+//         this.prepareNewOrder();
+//     } else {
+//         this.contractData.isLastContract = true; 
+//         this.clearFormData();
+//         this.prepareDataForSubmission();
+//         this.submitContractData(); 
+//         this.router.navigate(["/manageOrders"]);
+//     }
+// }
+
+  // confirmCreation(reuseSameNumber: boolean) {
+  //   console.log("Confirmation reçue, soumission de la commande");
+  //   this.isSubmitting = true;
+
+  //   this.contractData = { ...this.contractData, ...this.orderForm.value };
+    
+  //   if (reuseSameNumber) {
+  //       this.prepareNewOrder();
+  //   } else {
+  //       this.contractData.isLastContract = true; 
+  //       this.clearFormData();
+  //   }
+    
+  //   this.prepareDataForSubmission();
+  //   this.submitContractData();
+  //   this.router.navigate(["/manageOrders"]); // Redirection vers une autre page après soumission
+  // }
+
   confirmCreation(reuseSameNumber: boolean) {
     this.modalService.dismissAll();
-
+  
     if (reuseSameNumber) {
-        this.prepareNewOrder();
+        this.prepareNewOrder(); // Préparer un nouveau contrat sans soumettre
     } else {
-        this.contractData.isLastContract = true; 
-        this.clearFormData();
-        this.prepareDataForSubmission();
-        this.submitContractData(); 
-        this.router.navigate(["/manageOrders"]);
+        this.contractData.isLastContract = true;
+        this.submitContractData(); // Soumettre et rediriger
+        this.router.navigate(['/manageOrders']);
     }
-}
+  }
 
-  private prepareNewOrder() {
+  // private prepareNewOrder() {
+  //   this.orderForm.patchValue({
+  //     internalContributor: null,
+  //     externalContributor: null,
+  //     subcontractor: null,
+  //     previsionDataHour: 0,
+  //     previsionDataDay: 0,
+  //     executionDataDay: 0,
+  //     executionDataHour: 0,
+  //     difference: 0,
+  //     benefit: null,
+  //   });
+
+  //   console.log(
+  //     "Le formulaire a été préparé pour une nouvelle saisie avec certains champs réinitialisés."
+  //   );
+  //   this.toastr.success('Le formulaire est prêt pour une nouvelle saisie.');
+  // }
+
+  prepareNewOrder() {
+    console.log("Préparation d'une nouvelle commande avec les mêmes informations de base");
+  
     this.orderForm.patchValue({
-      internalContributor: null,
-      externalContributor: null,
-      subcontractor: null,
-      previsionDataHour: 0,
-      previsionDataDay: 0,
-      executionDataDay: 0,
-      executionDataHour: 0,
-      difference: 0,
-      benefit: null,
+        internalContributor: null,
+        externalContributor: null,
+        subcontractor: null,
+        previsionDataHour: 0,
+        previsionDataDay: 0,
+        executionDataDay: 0,
+        executionDataHour: 0,
+        difference: 0,
+        benefit: null,
     });
-
-    console.log(
-      "Le formulaire a été préparé pour une nouvelle saisie avec certains champs réinitialisés."
-    );
-    this.toastr.success('Le formulaire est prêt pour une nouvelle saisie.');
+  
+    // Le contrat est prêt pour une nouvelle saisie
+    this.toastr.success('Le formulaire est prêt pour une nouvelle saisie avec les informations de base conservées.');
   }
 
   findUserById(userId: string) {

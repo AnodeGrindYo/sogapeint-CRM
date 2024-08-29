@@ -801,7 +801,8 @@ exports.addContract = async (req, res) => {
             await EmailService.sendEmail(newContract.customer.email, 'Résumé des commandes', emailReplacements, 'consolidatedOrderNotificationTemplate');
         }
 
-        const sanitizedContract = sanitizeContract(newContract);
+        // const sanitizedContract = sanitizeContract(newContract);
+        const sanitizedContract = newContract;
         res.status(201).json({
             message: 'Contrat créé avec succès.',
             contractId: sanitizedContract._id,
