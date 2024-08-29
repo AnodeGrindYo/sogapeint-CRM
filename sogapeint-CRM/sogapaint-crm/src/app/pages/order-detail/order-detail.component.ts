@@ -66,48 +66,99 @@ export class OrderDetailComponent implements OnInit {
     });
   }
   
+  // loadContractDetails(contractId: string) {
+  //   this.contractService.getContractById(contractId).subscribe({
+  //     next: (data) => {
+  //       this.contract = data;
+
+  //       // historique de la commande
+  //       // Charger les détails de l'utilisateur qui a créé la commande
+  //       if (this.contract.createdBy) {
+  //         this.userProfileService.getOne(this.contract.createdBy).subscribe({
+  //           next: (user) => {
+  //             this.createdBy = user;
+  //             console.log('Détails du créateur de la commande:', user);
+  //           },
+  //           error: (error) => console.error('Erreur lors du chargement du créateur de la commande', error)
+  //         });
+  //       }
+        
+  //       // Charger les détails des utilisateurs qui ont modifié la commande
+  //       if (this.contract.modifiedBy && this.contract.modifiedBy.length > 0) {
+  //         const modifiedByUsers = this.contract.modifiedBy.map(mod => 
+  //           this.userProfileService.getOne(mod.user).toPromise().then(user => ({ user, date: mod.date }))
+  //         );
+  //         Promise.all(modifiedByUsers).then(results => {
+  //           this.history = results;
+  //           console.log('Historique de la commande:', this.history);});
+  //       }
+  //       // \historique de la commande
+
+  //       // this.files = this.contract.file;
+  //       console.log('Détails de la commande chargés', this.contract);
+        
+  //       // si on a réussi à charger le contrat, on va chercher les détails 
+  //       // du client, du co-traitant, du contact sogapeint et du sous-traitant
+  //       if (this.contract) {
+  //         // this.patchExternalContributorInvoiceDate();
+  //         this.loadUserDetails();
+  //         this.benefit_name = this.getBenefitName(this.contract.benefit);
+  //       }
+  //     },
+  //     error: (error) => console.error('Erreur lors du chargement des détails de la commande', error)
+  //   })
+  // }
   loadContractDetails(contractId: string) {
     this.contractService.getContractById(contractId).subscribe({
-      next: (data) => {
-        this.contract = data;
+        next: (data) => {
+            this.contract = data || {}; // Assure que this.contract est toujours un objet
+            
+            // Gestion de createdBy de manière sécurisée
+            if (this.contract.createdBy) {
+                this.userProfileService.getOne(this.contract.createdBy).subscribe({
+                    next: (user) => {
+                        this.createdBy = user || { firstname: 'INCONNU', lastname: '', email: '' };
+                        console.log('Détails du créateur de la commande:', this.createdBy);
+                    },
+                    error: (error) => {
+                        console.error('Erreur lors du chargement du créateur de la commande', error);
+                        this.createdBy = { firstname: 'INCONNU', lastname: '', email: '' };
+                    }
+                });
+            } else {
+                this.createdBy = { firstname: 'INCONNU', lastname: '', email: '' };
+            }
 
-        // historique de la commande
-        // Charger les détails de l'utilisateur qui a créé la commande
-        if (this.contract.createdBy) {
-          this.userProfileService.getOne(this.contract.createdBy).subscribe({
-            next: (user) => {
-              this.createdBy = user;
-              console.log('Détails du créateur de la commande:', user);
-            },
-            error: (error) => console.error('Erreur lors du chargement du créateur de la commande', error)
-          });
-        }
-        
-        // Charger les détails des utilisateurs qui ont modifié la commande
-        if (this.contract.modifiedBy && this.contract.modifiedBy.length > 0) {
-          const modifiedByUsers = this.contract.modifiedBy.map(mod => 
-            this.userProfileService.getOne(mod.user).toPromise().then(user => ({ user, date: mod.date }))
-          );
-          Promise.all(modifiedByUsers).then(results => {
-            this.history = results;
-            console.log('Historique de la commande:', this.history);});
-        }
-        // \historique de la commande
+            // Gestion de modifiedBy de manière sécurisée
+            if (Array.isArray(this.contract.modifiedBy) && this.contract.modifiedBy.length > 0) {
+                const modifiedByUsers = this.contract.modifiedBy.map(mod =>
+                    this.userProfileService.getOne(mod.user).toPromise().then(user => ({ user, date: mod.date }))
+                );
+                Promise.all(modifiedByUsers).then(results => {
+                    this.history = results || [];
+                    console.log('Historique de la commande:', this.history);
+                }).catch(error => {
+                    console.error('Erreur lors du chargement des utilisateurs modifiés', error);
+                    this.history = [];
+                });
+            } else {
+                this.history = []; // Gestion des cas où modifiedBy est vide ou inexistant
+            }
 
-        // this.files = this.contract.file;
-        console.log('Détails de la commande chargés', this.contract);
-        
-        // si on a réussi à charger le contrat, on va chercher les détails 
-        // du client, du co-traitant, du contact sogapeint et du sous-traitant
-        if (this.contract) {
-          // this.patchExternalContributorInvoiceDate();
-          this.loadUserDetails();
-          this.benefit_name = this.getBenefitName(this.contract.benefit);
-        }
-      },
-      error: (error) => console.error('Erreur lors du chargement des détails de la commande', error)
-    })
-  }
+            // Assurez-vous que le reste du code s'exécute correctement même si les valeurs sont absentes
+            console.log('Détails de la commande chargés', this.contract);
+
+            if (this.contract) {
+                this.loadUserDetails();
+                this.benefit_name = this.getBenefitName(this.contract.benefit);
+            }
+        },
+        error: (error) => console.error('Erreur lors du chargement des détails de la commande', error)
+    });
+}
+
+
+
   
   loadUserDetails(){
     console.log('Chargement des détails des utilisateurs');

@@ -40,7 +40,8 @@ exports.getContractById = async (req, res) => {
         if (!contract) {
             return res.status(404).json({ message: 'Contrat non trouvé.' });
         }
-        contract = sanitizeContract(contract);
+        console.log('Contract found:', contract);
+        // contract = sanitizeContract(contract);
         res.status(200).json(contract);
     } catch (error) {
         console.error('Error retrieving contract:', error);
