@@ -1516,35 +1516,35 @@ export class OrderFormComponent implements OnInit {
     this.toastr.success("Formulaire réinitialisé.");
   }
 
-  onAddContact(tag: string): void {
-    console.log(`onAddContact called with tag: ${tag}`);
+  // onAddContact(tag: string): void {
+  //   console.log(`onAddContact called with tag: ${tag}`);
 
-    const [firstName, lastName] = tag.split(" ");
-    console.log(
-      `Split tag into firstName: ${firstName} and lastName: ${lastName}`
-    );
+  //   const [firstName, lastName] = tag.split(" ");
+  //   console.log(
+  //     `Split tag into firstName: ${firstName} and lastName: ${lastName}`
+  //   );
 
-    this.userProfileService.createMinimalUser(firstName, lastName).subscribe(
-      (response: any) => {
-        console.log("Response from createMinimalUser:", response);
+  //   this.userProfileService.createMinimalUser(firstName, lastName).subscribe(
+  //     (response: any) => {
+  //       console.log("Response from createMinimalUser:", response);
 
-        if (response && response.userId) {
-          console.log("User ID received:", response.userId);
+  //       if (response && response.userId) {
+  //         console.log("User ID received:", response.userId);
 
-          this.orderForm
-            .get("contact")
-            .setValue(response.userId, { emitEvent: false });
+  //         this.orderForm
+  //           .get("contact")
+  //           .setValue(response.userId, { emitEvent: false });
 
-          this.onUserSelected("contact", response.userId);
-        } else {
-          console.error("Erreur: aucun userId retourné.");
-        }
-      },
-      (error) => {
-        console.error("Erreur lors de la création du contact:", error);
-      }
-    );
-  }
+  //         this.onUserSelected("contact", response.userId);
+  //       } else {
+  //         console.error("Erreur: aucun userId retourné.");
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error("Erreur lors de la création du contact:", error);
+  //     }
+  //   );
+  // }
 
   private calculateHoursAndDaysFromBenefit(): void {
     const benefitId = this.orderForm.get("benefit").value;

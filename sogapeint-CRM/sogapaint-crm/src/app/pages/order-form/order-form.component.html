@@ -68,37 +68,18 @@
                                 {{ getErrorMessage(orderForm.get('customer').errors) }}
                             </div>
                         </div>
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="contact" class="form-label">Contact</label>
-                            <ng-select id="contact" formControlName="contact" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un contact" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                                <ng-template ng-label-tmp let-item="item">
-                                    {{ item.firstname }} {{ item.lastname }}
-                                </ng-template>
-                                <ng-template ng-option-tmp let-item="item" let-index="index">
-                                    {{ item.firstname }} {{ item.lastname }}
-                                </ng-template>
-                            </ng-select>
-                            <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
-                                {{ getErrorMessage(orderForm.get('contact').errors) }}
-                            </div>
-                        </div> -->
-                        <!-- <div class="mb-3">
-                            <label for="contact" class="form-label">Contact</label>
-                            <ng-select 
-                            id="contact" 
+                            <ng-select id="contact" 
                             formControlName="contact" 
                             [items]="users" 
                             bindLabel="name" 
                             bindValue="_id" 
-                            placeholder="Sélectionner ou ajouter un contact" 
+                            placeholder="Sélectionner un contact" 
                             [typeahead]="userInput$" 
-                            [virtualScroll]="true" 
-                            [addTag]="true" 
-                            addTagText="Ajouter contact : " 
-                            (add)="onAddContact($event)" 
+                            [virtualScroll]="true"
                             (focus)="onUserInputFocus()" 
                             (blur)="onUserInputBlur($event)">
-                            
                             <ng-template ng-label-tmp let-item="item">
                                 {{ item.firstname }} {{ item.lastname }}
                             </ng-template>
@@ -106,117 +87,146 @@
                                 {{ item.firstname }} {{ item.lastname }}
                             </ng-template>
                         </ng-select>
+                        
                         <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
                             {{ getErrorMessage(orderForm.get('contact').errors) }}
                         </div>
-                    </div>                         -->
-
-
-
-                    <!-- THIS ONE !!!  -->
-                    <div class="mb-3">
+                    </div>
+                    <!-- <div class="mb-3">
                         <label for="contact" class="form-label">Contact</label>
-                        <ng-select id="contact" 
+                        <ng-select 
+                        id="contact" 
                         formControlName="contact" 
                         [items]="users" 
                         bindLabel="name" 
                         bindValue="_id" 
-                        placeholder="Sélectionner un contact" 
+                        placeholder="Sélectionner ou ajouter un contact" 
                         [typeahead]="userInput$" 
                         [virtualScroll]="true" 
-                        [addTag]="onAddContact.bind(this)" 
+                        [addTag]="true" 
+                        addTagText="Ajouter contact : " 
+                        (add)="onAddContact($event)" 
                         (focus)="onUserInputFocus()" 
                         (blur)="onUserInputBlur($event)">
+                        
                         <ng-template ng-label-tmp let-item="item">
                             {{ item.firstname }} {{ item.lastname }}
                         </ng-template>
                         <ng-template ng-option-tmp let-item="item" let-index="index">
                             {{ item.firstname }} {{ item.lastname }}
                         </ng-template>
-                    </ng-select> 
-                    
+                    </ng-select>
                     <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
                         {{ getErrorMessage(orderForm.get('contact').errors) }}
                     </div>
+                </div>                         -->
+                
+                
+                
+                <!-- THIS ONE !!!  -->
+                <!-- <div class="mb-3">
+                    <label for="contact" class="form-label">Contact</label>
+                    <ng-select id="contact" 
+                    formControlName="contact" 
+                    [items]="users" 
+                    bindLabel="name" 
+                    bindValue="_id" 
+                    placeholder="Sélectionner un contact" 
+                    [typeahead]="userInput$" 
+                    [virtualScroll]="true" 
+                    [addTag]="onAddContact.bind(this)" 
+                    (focus)="onUserInputFocus()" 
+                    (blur)="onUserInputBlur($event)">
+                    <ng-template ng-label-tmp let-item="item">
+                        {{ item.firstname }} {{ item.lastname }}
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        {{ item.firstname }} {{ item.lastname }}
+                    </ng-template>
+                </ng-select> 
+                
+                <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('contact').errors) }}
                 </div>
-                <!-- OLD -->
-                <div class="mb-3">
-                    <label for="quoteNumber" class="form-label">Numéro de devis</label>
-                    <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
-                    <div *ngIf="orderForm.get('quoteNumber').invalid && (orderForm.get('quoteNumber').dirty || orderForm.get('quoteNumber').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('quoteNumber').errors) }}
-                    </div>
+            </div> -->
+            <!-- OLD -->
+            <div class="mb-3">
+                <label for="quoteNumber" class="form-label">Numéro de devis</label>
+                <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
+                <div *ngIf="orderForm.get('quoteNumber').invalid && (orderForm.get('quoteNumber').dirty || orderForm.get('quoteNumber').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('quoteNumber').errors) }}
                 </div>
-                <div class="mb-3">
-                    <label for="benefit" class="form-label">Prestation</label>
-                    <ng-select id="benefit" formControlName="benefit" [items]="benefits" bindLabel="name" bindValue="value" placeholder="Sélectionner une prestation" [addTag]="addNewBenefit.bind(this)" addTagText="Ajouter une prestation" [multiple]="false" [closeOnSelect]="true" [compareWith]="compareWithFn">
-                        <ng-template ng-option-tmp let-item="item" let-index="index">
-                            <div class="d-flex justify-content-between align-items-center w-100">
-                                <span class="flex-grow-1">{{ item.name }}</span>
-                                <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
-                            </div>
-                        </ng-template>
-                    </ng-select>
-                    <div *ngIf="orderForm.get('benefit').invalid && (orderForm.get('benefit').dirty || orderForm.get('benefit').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('benefit').errors) }}
-                    </div>
+            </div>
+            <div class="mb-3">
+                <label for="benefit" class="form-label">Prestation</label>
+                <ng-select id="benefit" formControlName="benefit" [items]="benefits" bindLabel="name" bindValue="value" placeholder="Sélectionner une prestation" [addTag]="addNewBenefit.bind(this)" addTagText="Ajouter une prestation" [multiple]="false" [closeOnSelect]="true" [compareWith]="compareWithFn">
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <span class="flex-grow-1">{{ item.name }}</span>
+                            <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+                        </div>
+                    </ng-template>
+                </ng-select>
+                <div *ngIf="orderForm.get('benefit').invalid && (orderForm.get('benefit').dirty || orderForm.get('benefit').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('benefit').errors) }}
                 </div>
-                <div class="mb-3">
-                    <label for="order_status" class="form-label">Statut</label>
-                    <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="Sélectionner un statut"></ng-select>
-                    <div *ngIf="orderForm.get('status').invalid && (orderForm.get('status').dirty || orderForm.get('status').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('status').errors) }}
-                    </div>
+            </div>
+            <div class="mb-3">
+                <label for="order_status" class="form-label">Statut</label>
+                <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="Sélectionner un statut"></ng-select>
+                <div *ngIf="orderForm.get('status').invalid && (orderForm.get('status').dirty || orderForm.get('status').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('status').errors) }}
                 </div>
-                <div class="mb-3">
-                    <label for="dateCde" class="form-label">Date de Commande</label>
-                    <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
-                    <div *ngIf="orderForm.get('dateCde').invalid && (orderForm.get('dateCde').dirty || orderForm.get('dateCde').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('dateCde').errors) }}
-                    </div>
+            </div>
+            <div class="mb-3">
+                <label for="dateCde" class="form-label">Date de Commande</label>
+                <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
+                <div *ngIf="orderForm.get('dateCde').invalid && (orderForm.get('dateCde').dirty || orderForm.get('dateCde').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('dateCde').errors) }}
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Résidence/Adresse</div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="address" class="form-label">Adresse</label>
-                    <input type="text" class="form-control" id="address" formControlName="address">
-                    <div *ngIf="orderForm.get('address').invalid && (orderForm.get('address').dirty || orderForm.get('address').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('address').errors) }}
-                    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">Résidence/Adresse</div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="address" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="address" formControlName="address">
+                <div *ngIf="orderForm.get('address').invalid && (orderForm.get('address').dirty || orderForm.get('address').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('address').errors) }}
                 </div>
-                <div class="mb-3">
-                    <label for="appartmentNumber" class="form-label">N° appart</label>
-                    <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
-                    <div *ngIf="orderForm.get('appartmentNumber').invalid && (orderForm.get('appartmentNumber').dirty || orderForm.get('appartmentNumber').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('appartmentNumber').errors) }}
-                    </div>
+            </div>
+            <div class="mb-3">
+                <label for="appartmentNumber" class="form-label">N° appart</label>
+                <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
+                <div *ngIf="orderForm.get('appartmentNumber').invalid && (orderForm.get('appartmentNumber').dirty || orderForm.get('appartmentNumber').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('appartmentNumber').errors) }}
                 </div>
-                <div class="mb-3">
-                    <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
-                    <select class="form-control" id="occupied" formControlName="occupied">
-                        <option value="true">Oui</option>
-                        <option value="false">Non</option>
-                    </select>
-                    <div *ngIf="orderForm.get('occupied').invalid && (orderForm.get('occupied').dirty || orderForm.get('occupied').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('occupied').errors) }}
-                    </div>
+            </div>
+            <div class="mb-3">
+                <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
+                <select class="form-control" id="occupied" formControlName="occupied">
+                    <option value="true">Oui</option>
+                    <option value="false">Non</option>
+                </select>
+                <div *ngIf="orderForm.get('occupied').invalid && (orderForm.get('occupied').dirty || orderForm.get('occupied').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('occupied').errors) }}
                 </div>
-                <div class="mb-3">
-                    <input type="checkbox" class="form-check-input" id="ss4" formControlName="ss4">
-                    &nbsp;<label for="ss4" class="form-label">SS4 (amiante)</label>
-                    <div *ngIf="orderForm.get('ss4').invalid && (orderForm.get('ss4').dirty || orderForm.get('ss4').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('ss4').errors) }}
-                    </div>
+            </div>
+            <div class="mb-3">
+                <input type="checkbox" class="form-check-input" id="ss4" formControlName="ss4">
+                &nbsp;<label for="ss4" class="form-label">SS4 (amiante)</label>
+                <div *ngIf="orderForm.get('ss4').invalid && (orderForm.get('ss4').dirty || orderForm.get('ss4').touched)" class="text-danger">
+                    {{ getErrorMessage(orderForm.get('ss4').errors) }}
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div class="row mb-3">
