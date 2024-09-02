@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
             company: user.company
         };
 
-        const expiresIn = req.body.rememberMe ? '7d' : '1h';
+        const expiresIn = req.body.rememberMe ? '7d' : '24h';
 
         const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
             expiresIn: expiresIn

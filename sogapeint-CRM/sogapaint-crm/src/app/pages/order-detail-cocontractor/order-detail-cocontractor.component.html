@@ -123,7 +123,7 @@
                   <label class="form-label">Montant de la commande HT</label>
                   <input type="text" class="form-control" value="{{ contract?.amount_ht | currency:'EUR' }}" disabled>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" *ngIf="currentUser.role == 'admin' || currentUser.role == 'superadmin'">
                   <label class="form-label">Montant co-traitant/sous-traitant</label>
                   <input type="text" class="form-control" value="{{ contract?.external_contributor_amount | currency:'EUR' }}" disabled>
                 </div>
