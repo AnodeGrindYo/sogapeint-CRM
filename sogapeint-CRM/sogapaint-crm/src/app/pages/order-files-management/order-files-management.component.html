@@ -2,8 +2,9 @@
     <div class="card-header">Documents</div>
     <div class="card-body">
         <!-- <ngx-dropzone (change)="onSelect($event)"> -->
-            <ngx-dropzone *ngIf="currentUser.role === 'superAdmin' || currentUser.role === 'cocontractor' || currentUser.role === 'subcontractor' || isInvoiceMode" (change)="onSelect($event)">
-            <ngx-dropzone-label>
+            <!-- <ngx-dropzone *ngIf="currentUser.role === 'superAdmin' || currentUser.role === 'cocontractor' || currentUser.role === 'subcontractor' || isInvoiceMode" (change)="onSelect($event)"> -->
+                <ngx-dropzone *ngIf="(currentUser.role === 'superAdmin' || currentUser.role === 'cocontractor' || currentUser.role === 'subcontractor' || isInvoiceMode) && currentUser.role !== 'comanager' && currentUser.role !== 'supermanager'" (change)="onSelect($event)">
+                <ngx-dropzone-label>
                 <div>
                     Déposez vos fichiers ici ou cliquez pour choisir des fichiers.
                 </div>
