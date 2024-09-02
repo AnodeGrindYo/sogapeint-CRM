@@ -33,7 +33,8 @@ export class CompanyCreateComponent implements OnInit {
     ngOnInit(): void {
       this.companyForm = this.fb.group({
         normalized_name: ['', Validators.required],
-        abbreviation: ['', [Validators.required, this.consonantValidator]],
+        // abbreviation: ['', [Validators.required, this.consonantValidator]],
+        abbreviation: ['', Validators.required],
         names: ['', Validators.required],
         industry: [''],
         email: ['', Validators.email],
