@@ -1,33 +1,8 @@
 <div class="container-fluid">
     <app-pagetitle title="Saisie d'une commande" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
     <div class="d-flex justify-content-end mb-3">
-        <!-- <div class="dropdown me-2">
-            <button class=" btn-discreet btn-secondary dropdown-toggle" type="button" id="historyDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-history"></i> 
-                <span>Historique</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="historyDropdown">
-                <li *ngFor="let version of formHistory; let i = index" class="dropdown-item">
-                    <span (click)="restoreSpecificVersion($event, i)">
-                        {{ getVersionDescription(version) }}
-                    </span>
-                    <div class="delete-btn-container">
-                        <span class="delete-btn" (click)="deleteVersion($event, i)">
-                            <i class="fas fa-times"></i>
-                        </span>
-                    </div>
-                </li>
-                <li *ngIf="formHistory.length === 0">
-                    <span class="dropdown-item text-muted">Aucune version disponible</span>
-                </li>
-            </ul>
-        </div> -->
-        <!-- <button class="btn  btn-discreet btn-danger" type="button" (click)="clearFormData()">
-            <i class="fas fa-trash-alt"></i>
-            <span>
-                Réinitialiser
-            </span> 
-        </button> -->
+        
+        
     </div>
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
         
@@ -92,64 +67,13 @@
                             {{ getErrorMessage(orderForm.get('contact').errors) }}
                         </div>
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="contact" class="form-label">Contact</label>
-                        <ng-select 
-                        id="contact" 
-                        formControlName="contact" 
-                        [items]="users" 
-                        bindLabel="name" 
-                        bindValue="_id" 
-                        placeholder="Sélectionner ou ajouter un contact" 
-                        [typeahead]="userInput$" 
-                        [virtualScroll]="true" 
-                        [addTag]="true" 
-                        addTagText="Ajouter contact : " 
-                        (add)="onAddContact($event)" 
-                        (focus)="onUserInputFocus()" 
-                        (blur)="onUserInputBlur($event)">
-                        
-                        <ng-template ng-label-tmp let-item="item">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                        <ng-template ng-option-tmp let-item="item" let-index="index">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                    </ng-select>
-                    <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('contact').errors) }}
-                    </div>
-                </div>                         -->
+                    
                 
                 
                 
-                <!-- THIS ONE !!!  -->
-                <!-- <div class="mb-3">
-                    <label for="contact" class="form-label">Contact</label>
-                    <ng-select id="contact" 
-                    formControlName="contact" 
-                    [items]="users" 
-                    bindLabel="name" 
-                    bindValue="_id" 
-                    placeholder="Sélectionner un contact" 
-                    [typeahead]="userInput$" 
-                    [virtualScroll]="true" 
-                    [addTag]="onAddContact.bind(this)" 
-                    (focus)="onUserInputFocus()" 
-                    (blur)="onUserInputBlur($event)">
-                    <ng-template ng-label-tmp let-item="item">
-                        {{ item.firstname }} {{ item.lastname }}
-                    </ng-template>
-                    <ng-template ng-option-tmp let-item="item" let-index="index">
-                        {{ item.firstname }} {{ item.lastname }}
-                    </ng-template>
-                </ng-select> 
                 
-                <div *ngIf="orderForm.get('contact').invalid && (orderForm.get('contact').dirty || orderForm.get('contact').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('contact').errors) }}
-                </div>
-            </div> -->
-            <!-- OLD -->
+                
+            
             <div class="mb-3">
                 <label for="quoteNumber" class="form-label">Numéro de devis</label>
                 <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
@@ -423,7 +347,7 @@
             <div class="card-body">
                 <div class="mb-3">
                     <label for="previsionDataHour" class="form-label">Heures (Donné)</label>
-                    <!-- THIS ONE -->
+                    
                     <input 
                     type="number" 
                     class="form-control" 
@@ -432,21 +356,15 @@
                     [disabled]="autoCalculateEnabled"
                     (keydown)="onAlphaInput($event)"
                     >
-                    <!-- OLD -->
-                    <!-- <input
-                    type="number" 
-                    class="form-control" 
-                    id="previsionDataHour" 
-                    formControlName="previsionDataHour"
-                    (keydown)="onAlphaInput($event)"
-                    > -->
+                    
+                    
                     <div *ngIf="orderForm.get('previsionDataHour').invalid && (orderForm.get('previsionDataHour').dirty || orderForm.get('previsionDataHour').touched)" class="text-danger">
                         {{ getErrorMessage(orderForm.get('previsionDataHour').errors) }}
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="previsionDataDay" class="form-label">Jours (Donné)</label>
-                    <!-- THIS ONE -->
+                    
                     <input 
                     type="number" 
                     class="form-control" 
@@ -455,14 +373,8 @@
                     [disabled]="autoCalculateEnabled" 
                     (keydown)="onAlphaInput($event)"
                     >
-                    <!-- OLD -->
-                    <!-- <input 
-                    type="number" 
-                    class="form-control" 
-                    id="previsionDataDay" 
-                    formControlName="previsionDataDay"
-                    (keydown)="onAlphaInput($event)"
-                    > -->
+                    
+                    
                     <div *ngIf="orderForm.get('previsionDataDay').invalid && (orderForm.get('previsionDataDay').dirty || orderForm.get('previsionDataDay').touched)" class="text-danger">
                         {{ getErrorMessage(orderForm.get('previsionDataDay').errors) }}
                     </div>
@@ -664,8 +576,7 @@
             </div>
             <div class="modal-body">
                 <div class="calculation-detail">
-                    <!-- <p><strong>Montant :</strong> {{ orderForm.get('benefitHT').value }}€</p>
-                    <p><strong>Diviseur :</strong> {{ divider }}€ par jour</p> -->
+                    
                     <p><strong>Total estimé :</strong> {{ (orderForm.get('previsionDataDay').value * 8) + orderForm.get('previsionDataHour').value }} heures</p>
                     <p><strong>Heures/jour :</strong> 8</p>
                     <p><strong>Nombre de jours :</strong> {{ orderForm.get('previsionDataDay').value }} jours</p>
