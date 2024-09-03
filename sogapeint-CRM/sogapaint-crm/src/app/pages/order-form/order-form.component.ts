@@ -333,7 +333,7 @@ export class OrderFormComponent implements OnInit {
     this.orderForm = new FormGroup({
       internalNumberAbbrPart: new FormControl(
         this.contractData.internalNumberAbbrPart,
-        [Validators.pattern(/^[BCDFGHJKLMNPQRSTVWXYZ]{1,5}$/)]
+        // [Validators.pattern(/^[BCDFGHJKLMNPQRSTVWXYZ]{1,5}$/)]
       ),
       internalNumberNumericPart: new FormControl(
         this.contractData.internalNumberNumericPart,
