@@ -308,104 +308,104 @@ function groupByInternalNumber(contracts) {
 };
 
 
-exports.addContract = async (req, res) => {
-    try {
-        const {
-            internal_number = '',
-            customer = null,
-            contact = null,
-            internal_contributor = null,
-            external_contributor = null,
-            external_contributor_amount = 0,
-            subcontractor = null,
-            subcontractor_amount = 0,
-            address = '',
-            appartment_number = '',
-            ss4 = false,
-            quote_number = '',
-            mail_sended = false,
-            invoice_number = '',
-            amount_ht = 0,
-            benefit_ht = 0,
-            execution_data_day = 0,
-            execution_data_hour = 0,
-            prevision_data_day = 0,
-            prevision_data_hour = 0,
-            benefit = '',
-            status = '',
-            occupied = false,
-            start_date_works = null,
-            end_date_works = null,
-            end_date_customer = null,
-            trash = false,
-            date_cde = null,
-            billing_amount = 0,
-            createdBy = null
-        } = req.body;
+// exports.addContract = async (req, res) => {
+//     try {
+//         const {
+//             internal_number = '',
+//             customer = null,
+//             contact = null,
+//             internal_contributor = null,
+//             external_contributor = null,
+//             external_contributor_amount = 0,
+//             subcontractor = null,
+//             subcontractor_amount = 0,
+//             address = '',
+//             appartment_number = '',
+//             ss4 = false,
+//             quote_number = '',
+//             mail_sended = false,
+//             invoice_number = '',
+//             amount_ht = 0,
+//             benefit_ht = 0,
+//             execution_data_day = 0,
+//             execution_data_hour = 0,
+//             prevision_data_day = 0,
+//             prevision_data_hour = 0,
+//             benefit = '',
+//             status = '',
+//             occupied = false,
+//             start_date_works = null,
+//             end_date_works = null,
+//             end_date_customer = null,
+//             trash = false,
+//             date_cde = null,
+//             billing_amount = 0,
+//             createdBy = null
+//         } = req.body;
 
-        const currentDate = new Date();
-        const dateAdd = currentDate;
-        const external_contributor_invoice_date = new Date();
-        external_contributor_invoice_date.setDate(currentDate.getDate() + 2);
+//         const currentDate = new Date();
+//         const dateAdd = currentDate;
+//         const external_contributor_invoice_date = new Date();
+//         external_contributor_invoice_date.setDate(currentDate.getDate() + 2);
 
-        const newContract = new ContractModel({
-            internal_number: internal_number || 'Default-Number',
-            customer: customer ? new mongoose.Types.ObjectId(customer) : null,
-            contact: contact ? new mongoose.Types.ObjectId(contact) : null,
-            internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
-            external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
-            external_contributor_amount,
-            subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
-            subcontractor_amount,
-            address,
-            appartment_number,
-            ss4,
-            quote_number,
-            mail_sended,
-            invoice_number,
-            amount_ht,
-            benefit_ht,
-            execution_data_day,
-            execution_data_hour,
-            prevision_data_day,
-            prevision_data_hour,
-            benefit,
-            status,
-            occupied,
-            start_date_works: start_date_works ? new Date(start_date_works) : null,
-            end_date_works: end_date_works ? new Date(end_date_works) : null,
-            end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
-            trash,
-            date_cde: date_cde ? new Date(date_cde) : new Date(),
-            billing_amount,
-            dateAdd: dateAdd,
-            external_contributor_invoice_date,
-            createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
-        });
+//         const newContract = new ContractModel({
+//             internal_number: internal_number || 'Default-Number',
+//             customer: customer ? new mongoose.Types.ObjectId(customer) : null,
+//             contact: contact ? new mongoose.Types.ObjectId(contact) : null,
+//             internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
+//             external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
+//             external_contributor_amount,
+//             subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
+//             subcontractor_amount,
+//             address,
+//             appartment_number,
+//             ss4,
+//             quote_number,
+//             mail_sended,
+//             invoice_number,
+//             amount_ht,
+//             benefit_ht,
+//             execution_data_day,
+//             execution_data_hour,
+//             prevision_data_day,
+//             prevision_data_hour,
+//             benefit,
+//             status,
+//             occupied,
+//             start_date_works: start_date_works ? new Date(start_date_works) : null,
+//             end_date_works: end_date_works ? new Date(end_date_works) : null,
+//             end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
+//             trash,
+//             date_cde: date_cde ? new Date(date_cde) : new Date(),
+//             billing_amount,
+//             dateAdd: dateAdd,
+//             external_contributor_invoice_date,
+//             createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null
+//         });
 
-        await newContract.save();
+//         await newContract.save();
 
-        const replacements = await EmailUtils.getEmailReplacements(newContract);
-        await EmailService.sendEmail(newContract.customer.email, 'Notification de commande', replacements, 'orderNotificationTemplate');
+//         const replacements = await EmailUtils.getEmailReplacements(newContract);
+//         await EmailService.sendEmail(newContract.customer.email, 'Notification de commande', replacements, 'orderNotificationTemplate');
 
-        // Envoi des emails aux sous-traitants et co-traitants
-        if (newContract.external_contributor) {
-            await EmailService.sendEmail(newContract.external_contributor.email, 'Nouvelle commande', replacements, 'subcontractorNotificationTemplate');
-        }
-        if (newContract.subcontractor) {
-            await EmailService.sendEmail(newContract.subcontractor.email, 'Nouvelle commande', replacements, 'subcontractorNotificationTemplate');
-        }
+//         // Envoi des emails aux sous-traitants et co-traitants
+//         if (newContract.external_contributor) {
+//             await EmailService.sendEmail(newContract.external_contributor.email, 'Nouvelle commande', replacements, 'subcontractorNotificationTemplate');
+//         }
+//         if (newContract.subcontractor) {
+//             await EmailService.sendEmail(newContract.subcontractor.email, 'Nouvelle commande', replacements, 'subcontractorNotificationTemplate');
+//         }
 
-        res.status(201).json({
-            message: 'Contrat créé avec succès.',
-            contractId: newContract._id,
-            contract: newContract
-        });
-    } catch (error) {
-        console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
-        res.status(500).json({ error: error.message });
-    }
-};
+//         res.status(201).json({
+//             message: 'Contrat créé avec succès.',
+//             contractId: newContract._id,
+//             contract: newContract
+//         });
+//     } catch (error) {
+//         console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
 exports.addContract = async (req, res) => {
     try {
         const {
