@@ -606,6 +606,8 @@ export class OrderFormComponent implements OnInit {
         "Tab",
         "Delete",
         "Enter",
+        "Shift",
+        "CapsLock"
       ].includes(event.key) &&
       !(
         event.key === "e" ||
@@ -799,10 +801,10 @@ export class OrderFormComponent implements OnInit {
 
     this.contractData = dataForSubmission;
 
-    // alert(
-    //   "Données du contrat préparées pour le backend:\n" +
-    //     JSON.stringify(dataForSubmission, null, 2)
-    // );
+    alert(
+      "Données du contrat préparées pour le backend:\n" +
+        JSON.stringify(dataForSubmission["end_date_works"], null, 2)
+    );
   }
 
   private convertToBoolean(value: any): boolean {
