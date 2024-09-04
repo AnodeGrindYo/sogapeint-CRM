@@ -68,3 +68,4 @@ backend/uploads/*
 backend/user_emails.txt
 backend/users_without_company.txt
 backend/company_names.txt
+backend/addTheDev.js

@@ -109,12 +109,6 @@ export class OrderFormComponent implements OnInit {
   amount: number;
   @ViewChild("calculationDetailsModal") calculationDetailsModal;
 
-  // private formStorageKey = "orderFormData";
-  // private formHistoryKey = "orderFormHistory";
-  // private maxHistorySize = 5;
-
-  // formHistory: any[] = [];
-
   private isManuallyChanging: boolean = false;
   autoCalculateEnabled: boolean = true;
 
@@ -165,175 +159,12 @@ export class OrderFormComponent implements OnInit {
     this.unsubscribe$.complete();
 
     this.unsubscribeFromBenefitAmountChanges();
-
-    // this.saveFormDataToStorage();
-    // this.saveFormHistoryToStorage();
-
-    // const formData = this.orderForm.getRawValue();
-    // this.saveFormDataToHistory(formData);
   }
 
-  // private initializeOrderForm(): void {
-  //   const savedFormData = localStorage.getItem(this.formStorageKey);
-  //   const initialFormData = savedFormData
-  //     ? JSON.parse(savedFormData)
-  //     : this.contractData;
-
-  //   this.orderForm = new FormGroup({
-  //     internalNumberAbbrPart: new FormControl(
-  //       initialFormData.internalNumberAbbrPart ||
-  //         this.contractData.internalNumberAbbrPart,
-  //       [Validators.pattern(/^[BCDFGHJKLMNPQRSTVWXYZ]{1,5}$/)]
-  //     ),
-  //     internalNumberNumericPart: new FormControl(
-  //       initialFormData.internalNumberNumericPart ||
-  //         this.contractData.internalNumberNumericPart,
-  //       [Validators.pattern(/^\d{3}$/)]
-  //     ),
-  //     customer: new FormControl(
-  //       initialFormData.customer || this.contractData.customer,
-  //       Validators.required
-  //     ),
-  //     internalContributor: new FormControl(
-  //       initialFormData.internalContributor ||
-  //         this.contractData.internalContributor
-  //     ),
-  //     contact: new FormControl(
-  //       initialFormData.contact || this.contractData.contact
-  //     ),
-  //     externalContributor: new FormControl(
-  //       initialFormData.externalContributor ||
-  //         this.contractData.externalContributor
-  //     ),
-  //     subcontractor: new FormControl(
-  //       initialFormData.subcontractor || this.contractData.subcontractor
-  //     ),
-  //     address: new FormControl(
-  //       initialFormData.address || this.contractData.address
-  //     ),
-  //     appartmentNumber: new FormControl(
-  //       initialFormData.appartmentNumber || this.contractData.appartmentNumber
-  //     ),
-  //     ss4: new FormControl(
-  //       initialFormData.ss4 !== undefined
-  //         ? initialFormData.ss4
-  //         : this.contractData.ss4
-  //     ),
-  //     quoteNumber: new FormControl(
-  //       initialFormData.quoteNumber || this.contractData.quoteNumber
-  //     ),
-  //     mailSended: new FormControl(
-  //       initialFormData.mailSended !== undefined
-  //         ? initialFormData.mailSended
-  //         : this.contractData.mailSended
-  //     ),
-  //     invoiceNumber: new FormControl(
-  //       initialFormData.invoiceNumber || this.contractData.invoiceNumber
-  //     ),
-  //     amountHt: new FormControl(
-  //       initialFormData.amountHt !== null
-  //         ? initialFormData.amountHt
-  //         : this.contractData.amountHt,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     benefitHt: new FormControl(
-  //       initialFormData.benefitHt !== null
-  //         ? initialFormData.benefitHt
-  //         : this.contractData.benefitHt,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     externalContributorAmount: new FormControl(
-  //       initialFormData.externalContributorAmount !== null
-  //         ? initialFormData.externalContributorAmount
-  //         : this.contractData.externalContributorAmount,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     subcontractorAmount: new FormControl(
-  //       initialFormData.subcontractorAmount !== null
-  //         ? initialFormData.subcontractorAmount
-  //         : this.contractData.subcontractorAmount,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     external_contributor_invoice_date: new FormControl(
-  //       initialFormData.external_contributor_invoice_date ||
-  //         this.contractData.external_contributor_invoice_date
-  //     ),
-  //     previsionDataHour: new FormControl(
-  //       initialFormData.previsionDataHour !== null
-  //         ? initialFormData.previsionDataHour
-  //         : this.contractData.previsionDataHour,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     previsionDataDay: new FormControl(
-  //       initialFormData.previsionDataDay !== null
-  //         ? initialFormData.previsionDataDay
-  //         : this.contractData.previsionDataDay,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     executionDataDay: new FormControl(
-  //       initialFormData.executionDataDay !== null
-  //         ? initialFormData.executionDataDay
-  //         : this.contractData.executionDataDay,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     executionDataHour: new FormControl(
-  //       initialFormData.executionDataHour !== null
-  //         ? initialFormData.executionDataHour
-  //         : this.contractData.executionDataHour,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     difference: new FormControl(
-  //       initialFormData.difference !== null
-  //         ? initialFormData.difference
-  //         : this.contractData.difference
-  //     ),
-  //     benefit: new FormControl(
-  //       initialFormData.benefit || this.contractData.benefit
-  //     ),
-  //     status: new FormControl(
-  //       initialFormData.status || this.contractData.status
-  //     ),
-  //     occupied: new FormControl(
-  //       initialFormData.occupied !== undefined
-  //         ? initialFormData.occupied
-  //         : this.contractData.occupied
-  //     ),
-  //     startDateWorks: new FormControl(
-  //       initialFormData.startDateWorks || this.contractData.startDateWorks
-  //     ),
-  //     endDateWorks: new FormControl(
-  //       initialFormData.endDateWorks || this.contractData.endDateWorks
-  //     ),
-  //     endDateCustomer: new FormControl(
-  //       initialFormData.endDateCustomer || this.contractData.endDateCustomer
-  //     ),
-  //     dateCde: new FormControl(
-  //       initialFormData.dateCde || this.contractData.dateCde
-  //     ),
-  //     billingAmount: new FormControl(
-  //       initialFormData.billingAmount !== null
-  //         ? initialFormData.billingAmount
-  //         : this.contractData.billingAmount,
-  //       [Validators.pattern(/^\d+\.?\d*$/)]
-  //     ),
-  //     isLastContract: new FormControl(
-  //       initialFormData.isLastContract !== undefined
-  //         ? initialFormData.isLastContract
-  //         : this.contractData.isLastContract
-  //     ),
-  //   });
-
-  //   if (this.orderForm.get("benefitHt").value) {
-  //     this.calculateHoursAndDaysFromBenefit();
-  //   }
-  // }
-
   private initializeOrderForm(): void {
-    // Initialiser le formulaire avec les données par défaut
     this.orderForm = new FormGroup({
       internalNumberAbbrPart: new FormControl(
-        this.contractData.internalNumberAbbrPart,
-        // [Validators.pattern(/^[BCDFGHJKLMNPQRSTVWXYZ]{1,5}$/)]
+        this.contractData.internalNumberAbbrPart
       ),
       internalNumberNumericPart: new FormControl(
         this.contractData.internalNumberNumericPart,
@@ -343,9 +174,13 @@ export class OrderFormComponent implements OnInit {
         this.contractData.customer,
         Validators.required
       ),
-      internalContributor: new FormControl(this.contractData.internalContributor),
+      internalContributor: new FormControl(
+        this.contractData.internalContributor
+      ),
       contact: new FormControl(this.contractData.contact),
-      externalContributor: new FormControl(this.contractData.externalContributor),
+      externalContributor: new FormControl(
+        this.contractData.externalContributor
+      ),
       subcontractor: new FormControl(this.contractData.subcontractor),
       address: new FormControl(this.contractData.address),
       appartmentNumber: new FormControl(this.contractData.appartmentNumber),
@@ -353,14 +188,12 @@ export class OrderFormComponent implements OnInit {
       quoteNumber: new FormControl(this.contractData.quoteNumber),
       mailSended: new FormControl(this.contractData.mailSended),
       invoiceNumber: new FormControl(this.contractData.invoiceNumber),
-      amountHt: new FormControl(
-        this.contractData.amountHt,
-        [Validators.pattern(/^\d+\.?\d*$/)]
-      ),
-      benefitHt: new FormControl(
-        this.contractData.benefitHt,
-        [Validators.pattern(/^\d+\.?\d*$/)]
-      ),
+      amountHt: new FormControl(this.contractData.amountHt, [
+        Validators.pattern(/^\d+\.?\d*$/),
+      ]),
+      benefitHt: new FormControl(this.contractData.benefitHt, [
+        Validators.pattern(/^\d+\.?\d*$/),
+      ]),
       externalContributorAmount: new FormControl(
         this.contractData.externalContributorAmount,
         [Validators.pattern(/^\d+\.?\d*$/)]
@@ -372,22 +205,18 @@ export class OrderFormComponent implements OnInit {
       external_contributor_invoice_date: new FormControl(
         this.contractData.external_contributor_invoice_date
       ),
-      previsionDataHour: new FormControl(
-        this.contractData.previsionDataHour,
-        [Validators.pattern(/^\d+\.?\d*$/)]
-      ),
-      previsionDataDay: new FormControl(
-        this.contractData.previsionDataDay,
-        [Validators.pattern(/^\d+\.?\d*$/)]
-      ),
-      executionDataDay: new FormControl(
-        this.contractData.executionDataDay,
-        [Validators.pattern(/^\d+\.?\d*$/)]
-      ),
-      executionDataHour: new FormControl(
-        this.contractData.executionDataHour,
-        [Validators.pattern(/^\d+\.?\d*$/)]
-      ),
+      previsionDataHour: new FormControl(this.contractData.previsionDataHour, [
+        Validators.pattern(/^\d+\.?\d*$/),
+      ]),
+      previsionDataDay: new FormControl(this.contractData.previsionDataDay, [
+        Validators.pattern(/^\d+\.?\d*$/),
+      ]),
+      executionDataDay: new FormControl(this.contractData.executionDataDay, [
+        Validators.pattern(/^\d+\.?\d*$/),
+      ]),
+      executionDataHour: new FormControl(this.contractData.executionDataHour, [
+        Validators.pattern(/^\d+\.?\d*$/),
+      ]),
       difference: new FormControl(this.contractData.difference),
       benefit: new FormControl(this.contractData.benefit),
       status: new FormControl(this.contractData.status),
@@ -396,25 +225,20 @@ export class OrderFormComponent implements OnInit {
       endDateWorks: new FormControl(this.contractData.endDateWorks),
       endDateCustomer: new FormControl(this.contractData.endDateCustomer),
       dateCde: new FormControl(this.contractData.dateCde),
-      billingAmount: new FormControl(
-        this.contractData.billingAmount,
-        [Validators.pattern(/^\d+\.?\d*$/)]
-      ),
+      billingAmount: new FormControl(this.contractData.billingAmount, [
+        Validators.pattern(/^\d+\.?\d*$/),
+      ]),
       isLastContract: new FormControl(this.contractData.isLastContract),
     });
-  
-    // Calcul initial des heures et des jours en fonction du benefit, si présent
+
     if (this.orderForm.get("benefitHt").value) {
       this.calculateHoursAndDaysFromBenefit();
     }
   }
-  
 
   private subscribeToFormChanges(): void {
     this.orderForm.valueChanges.subscribe((val) => {
       this.contractData = { ...this.contractData, ...val };
-
-      // this.saveFormDataToStorage();
     });
     this.orderForm
       .get("internalNumberAbbrPart")
@@ -824,67 +648,38 @@ export class OrderFormComponent implements OnInit {
     this.userInput$.next("");
   }
 
-  // onSubmit(): void {
-  //   console.log("Tentative de soumission du formulaire");
-  //   if (this.isSubmitting) {
-  //     return;
-  //   }
-
-  //   if (!this.autoCalculateEnabled) {
-  //     this.toastr.warning(
-  //       "Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire."
-  //     );
-  //     return;
-  //   }
-
-  //   this.modalService.open(this.confirmationModal).result.then(
-  //     (result) => {
-  //       if (result === true) {
-  //         this.prepareNewOrder();
-  //       } else if (result === false) {
-  //         this.contractData.isLastContract = true;
-  //         this.prepareDataForSubmission();
-  //         this.submitContractData();
-  //         this.router.navigate(["/manageOrders"]);
-  //       }
-  //     },
-  //     (dismissReason) => {
-  //       console.log("Modal fermé sans action");
-  //     }
-  //   );
-  // }
-
   onSubmit(): void {
     console.log("Tentative de soumission du formulaire");
     if (this.isSubmitting) {
-        return;
+      return;
     }
 
-    // Ajout de l'alerte pour afficher les données du formulaire avant la préparation des données
-    alert("Données du formulaire avant préparation:\n" + JSON.stringify(this.contractData, null, 2));
+    // alert(
+    //   "Données du formulaire avant préparation:\n" +
+    //     JSON.stringify(this.contractData, null, 2)
+    // );
 
     if (!this.autoCalculateEnabled) {
-        this.toastr.warning(
-            "Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire."
-        );
-        return;
+      this.toastr.warning(
+        "Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire."
+      );
+      return;
     }
 
     this.modalService.open(this.confirmationModal).result.then(
-        (result) => {
-            if (result === true) {
-                this.prepareDataForSubmission();  // Préparer les données avant soumission
-                this.submitContractData(); // Envoyer les données au backend après confirmation
-            } else {
-                console.log("Soumission annulée par l'utilisateur");
-            }
-        },
-        (dismissReason) => {
-            console.log("Modal fermée sans confirmation");
+      (result) => {
+        if (result === true) {
+          this.prepareDataForSubmission();
+          this.submitContractData();
+        } else {
+          console.log("Soumission annulée par l'utilisateur");
         }
+      },
+      (dismissReason) => {
+        console.log("Modal fermée sans confirmation");
+      }
     );
   }
-
 
   private displayFormErrors(): void {
     Object.keys(this.orderForm.controls).forEach((key) => {
@@ -956,7 +751,6 @@ export class OrderFormComponent implements OnInit {
       dataForSubmission
     );
 
-    
     dataForSubmission["mail_sended"] = this.convertToBoolean(
       dataForSubmission["mail_sended"]
     );
@@ -1005,8 +799,10 @@ export class OrderFormComponent implements OnInit {
 
     this.contractData = dataForSubmission;
 
-    // Ajout de l'alerte pour afficher les données du contrat après la préparation
-    alert("Données du contrat préparées pour le backend:\n" + JSON.stringify(dataForSubmission, null, 2));
+    // alert(
+    //   "Données du contrat préparées pour le backend:\n" +
+    //     JSON.stringify(dataForSubmission, null, 2)
+    // );
   }
 
   private convertToBoolean(value: any): boolean {
@@ -1063,30 +859,18 @@ export class OrderFormComponent implements OnInit {
     );
   }
 
-  // confirmCreation(reuseSameNumber: boolean) {
-  //   this.modalService.dismissAll();
-
-  //   if (reuseSameNumber) {
-  //     this.prepareNewOrder();
-  //   } else {
-  //     this.contractData.isLastContract = true;
-  //     this.submitContractData();
-  //     this.router.navigate(["/manageOrders"]);
-  //   }
-  // }
   confirmCreation(reuseSameNumber: boolean) {
     this.modalService.dismissAll();
 
     if (reuseSameNumber) {
-        this.prepareNewOrder();
+      this.prepareNewOrder();
     } else {
-        this.contractData.isLastContract = true;
-        this.prepareDataForSubmission(); // Préparer les données avant soumission
-        this.submitContractData(); // Envoyer les données au backend après confirmation
-        this.router.navigate(["/manageOrders"]);
+      this.contractData.isLastContract = true;
+      this.prepareDataForSubmission();
+      this.submitContractData();
+      this.router.navigate(["/manageOrders"]);
     }
-}
-
+  }
 
   prepareNewOrder() {
     console.log(
@@ -1118,7 +902,7 @@ export class OrderFormComponent implements OnInit {
     this.contractData = {
       ...this.contractData,
       ...this.orderForm.value,
-      internalNumber: this.assembleInternalNumber() // à vérifier
+      internalNumber: this.assembleInternalNumber(),
     };
 
     console.log("Updated contractData:", this.contractData);
@@ -1365,186 +1149,10 @@ export class OrderFormComponent implements OnInit {
     return benefit ? benefit.name : "Prestation inconnue";
   }
 
-  // private saveFormDataToStorage(): void {
-  //   const formData = this.orderForm.getRawValue();
-  //   console.log("Formulaire actuel à sauvegarder:", formData);
-  //   localStorage.setItem(this.formStorageKey, JSON.stringify(formData));
-  //   console.log(
-  //     "Données sauvegardées dans localStorage:",
-  //     localStorage.getItem(this.formStorageKey)
-  //   );
-  // }
-
-  // private loadFormDataFromStorage(): void {
-  //   const savedFormData = localStorage.getItem(this.formStorageKey);
-  //   if (savedFormData) {
-  //     try {
-  //       const parsedFormData = JSON.parse(savedFormData);
-  //       if (this.isFormDataValid(parsedFormData)) {
-  //         this.orderForm.patchValue(parsedFormData);
-  //         this.toastr.info("Les données du formulaire ont été restaurées.");
-  //       } else {
-  //         this.toastr.warning(
-  //           "Les données sauvegardées sont invalides ou obsolètes."
-  //         );
-  //         const lastSavedVersion = this.getLastSavedFormVersion();
-  //         if (lastSavedVersion && this.isFormDataValid(lastSavedVersion.data)) {
-  //           this.orderForm.patchValue(lastSavedVersion.data);
-  //           this.toastr.info(
-  //             "Le formulaire a été pré-rempli avec la dernière sauvegarde."
-  //           );
-  //         }
-  //       }
-  //     } catch (e) {
-  //       console.error(
-  //         "Erreur lors de la restauration des données du formulaire:",
-  //         e
-  //       );
-  //       this.toastr.error(
-  //         "Erreur lors de la restauration des données du formulaire."
-  //       );
-  //     }
-  //   } else {
-  //     const lastSavedVersion = this.getLastSavedFormVersion();
-  //     if (lastSavedVersion && this.isFormDataValid(lastSavedVersion.data)) {
-  //       this.orderForm.patchValue(lastSavedVersion.data);
-  //       this.toastr.info(
-  //         "Le formulaire a été pré-rempli avec la dernière sauvegarde."
-  //       );
-  //     }
-  //   }
-  // }
-
-  // private getLastSavedFormVersion(): any {
-  //   const history = this.getFormHistory();
-  //   return history.length > 0 ? history[history.length - 1] : null;
-  // }
-
-  // private isFormDataValid(formData: any): boolean {
-  //   if (!formData || typeof formData !== "object") {
-  //     return false;
-  //   }
-  //   const formControls = Object.keys(this.orderForm.controls);
-  //   return formControls.every((control) => formData.hasOwnProperty(control));
-  // }
-
-  // private saveFormDataToHistory(formData: any): void {
-  //   let history = this.getFormHistory();
-  //   history.push({
-  //     timestamp: new Date().toISOString(),
-  //     data: formData,
-  //   });
-  //   if (history.length > this.maxHistorySize) {
-  //     history = history.slice(-this.maxHistorySize);
-  //   }
-  //   localStorage.setItem(this.formHistoryKey, JSON.stringify(history));
-  //   this.formHistory = history;
-  // }
-
-  // private getFormHistory(): any[] {
-  //   const history = localStorage.getItem(this.formHistoryKey);
-  //   return history ? JSON.parse(history) : [];
-  // }
-
-  // private loadFormHistoryFromStorage(): void {
-  //   this.formHistory = this.getFormHistory();
-  //   if (this.formHistory.length > 0) {
-  //     this.toastr.info("Historique du formulaire chargé.");
-  //   }
-  // }
-
-  // private saveFormHistoryToStorage(): void {
-  //   localStorage.setItem(this.formHistoryKey, JSON.stringify(this.formHistory));
-  // }
-
-  // restorePreviousVersion(): void {
-  //   let history = this.getFormHistory();
-  //   if (history.length > 1) {
-  //     history.pop();
-  //     const previousFormData = history[history.length - 1].data;
-  //     this.orderForm.setValue(previousFormData);
-  //     localStorage.setItem(this.formHistoryKey, JSON.stringify(history));
-  //     this.toastr.success("Version précédente du formulaire restaurée.");
-  //   } else {
-  //     this.toastr.warning("Aucune version précédente disponible.");
-  //   }
-  // }
-
-  // restoreSpecificVersion(event: Event, index: number): void {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   const history = this.getFormHistory();
-  //   if (index >= 0 && index < history.length) {
-  //     const formData = history[index].data;
-  //     this.orderForm.setValue(formData);
-  //     this.toastr.success("Version spécifique du formulaire restaurée.");
-  //   } else {
-  //     this.toastr.warning("Index de version invalide.");
-  //   }
-  // }
-
-  // getVersionDescription(version: any): string {
-  //   const timestamp = new Date(version.timestamp).toLocaleString();
-  //   const customerName = this.getCustomerNameById(version.data.customer);
-  //   const benefitName = this.getBenefitNameById(version.data.benefit);
-  //   return `${timestamp} - ${customerName} - ${benefitName}`;
-  // }
-
-  // clearFormData(): void {
-  //   localStorage.removeItem(this.formStorageKey);
-  //   localStorage.removeItem(this.formHistoryKey);
-  //   this.orderForm.reset();
-  //   this.formHistory = [];
-  //   this.toastr.info("Les données du formulaire ont été réinitialisées.");
-  // }
-
-  // deleteVersion(event: Event, index: number): void {
-  //   event.stopPropagation();
-  //   const history = this.getFormHistory();
-  //   if (index >= 0 && index < history.length) {
-  //     history.splice(index, 1);
-  //     localStorage.setItem(this.formHistoryKey, JSON.stringify(history));
-  //     this.formHistory = history;
-  //     this.toastr.success("Version supprimée avec succès.");
-  //   } else {
-  //     this.toastr.warning("Index de version invalide.");
-  //   }
-  // }
-
   resetForm(): void {
     this.orderForm.reset();
     this.toastr.success("Formulaire réinitialisé.");
   }
-
-  // onAddContact(tag: string): void {
-  //   console.log(`onAddContact called with tag: ${tag}`);
-
-  //   const [firstName, lastName] = tag.split(" ");
-  //   console.log(
-  //     `Split tag into firstName: ${firstName} and lastName: ${lastName}`
-  //   );
-
-  //   this.userProfileService.createMinimalUser(firstName, lastName).subscribe(
-  //     (response: any) => {
-  //       console.log("Response from createMinimalUser:", response);
-
-  //       if (response && response.userId) {
-  //         console.log("User ID received:", response.userId);
-
-  //         this.orderForm
-  //           .get("contact")
-  //           .setValue(response.userId, { emitEvent: false });
-
-  //         this.onUserSelected("contact", response.userId);
-  //       } else {
-  //         console.error("Erreur: aucun userId retourné.");
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error("Erreur lors de la création du contact:", error);
-  //     }
-  //   );
-  // }
 
   private calculateHoursAndDaysFromBenefit(): void {
     const benefitId = this.orderForm.get("benefit").value;
