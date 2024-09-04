@@ -199,7 +199,11 @@ exports.streamOnGoingContracts = (req, res) => {
     
     let filter = {
         status: { $in: ['in_progress', null] },
-        dateAdd: { $gte: new Date(new Date().setFullYear(new Date().getFullYear() - period)) }
+        // dateAdd: { $gte: new Date(new Date().setFullYear(new Date().getFullYear() - period)) }
+        dateAdd: {
+            $gte: new Date(new Date().setFullYear(new Date().getFullYear() - period)),
+            $lte: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)  // Ajout de 24 heures pour inclure aujourd'hui
+        }
     };
     
     if (filter_trash) {

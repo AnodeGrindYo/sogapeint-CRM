@@ -8,7 +8,7 @@
           <div class="card-body">
             <div class="row mb-3 d-flex align-items-center">
               <div class="col">
-                <label for="internal_number_abbr_part" class="form-label">Abbréviation</label>
+                <label for="internal_number_abbr_part" class="form-label">Abréviation</label>
                 <ng-select id="internal_number_abbr_part" formControlName="internalNumberAbbrPart" [items]="filteredAbbreviationList" placeholder="Sélectionnez l'abréviation" class="form-control" [addTag]="true" addTagText="Ajouter l'abbréviation" [typeahead]="abbreviationInput$" [virtualScroll]="true"></ng-select>
                 <div *ngIf="orderUpdateForm.get('internalNumberAbbrPart').invalid && (orderUpdateForm.get('internalNumberAbbrPart').dirty || orderUpdateForm.get('internalNumberAbbrPart').touched)" class="text-danger">
                   {{ getErrorMessage(orderUpdateForm.get('internalNumberAbbrPart').errors) }}
