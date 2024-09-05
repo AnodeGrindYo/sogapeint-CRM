@@ -186,7 +186,7 @@
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="isAdminOrSuperAdmin()">
           <div class="card">
             <div class="card-header">Temps d'exécution</div>
             <div class="card-body">
@@ -211,7 +211,7 @@
         </div>
         <div class="col-md-6">
           <div class="card">
-            <div class="card-header">Facturation</div>
+            <div class="card-header" *ngIf="isAdminOrSuperAdmin()">Facturation</div>
             <div class="card-body">
               <div class="mb-3">
                 <label class="form-label">Numéro de Facture</label>
@@ -223,7 +223,7 @@
               </div>
             </div>
           </div>
-          <div class="card">
+          <div class="card" *ngIf="isAdminOrSuperAdmin()">
             <div class="card-header">Communication et suivi</div>
             <div class="card-body">
               <div class="mb-3 form-check">
