@@ -151,10 +151,10 @@
             </th>
             <th scope="col">
               <div class="cell-centered">Date fin travaux</div>
-              <div class="sort-icons float-end" (click)="onSort('end_date_work')">
-                <i class="fas fa-sort" *ngIf="sortColumn !== 'end_date_work'"></i>
-                <i class="fas fa-sort-up" *ngIf="sortColumn === 'end_date_work' && sortDirection === 'asc'"></i>
-                <i class="fas fa-sort-down" *ngIf="sortColumn === 'end_date_work' && sortDirection === 'desc'"></i>
+              <div class="sort-icons float-end" (click)="onSort('end_date_works')">
+                <i class="fas fa-sort" *ngIf="sortColumn !== 'end_date_works'"></i>
+                <i class="fas fa-sort-up" *ngIf="sortColumn === 'end_date_works' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" *ngIf="sortColumn === 'end_date_works' && sortDirection === 'desc'"></i>
               </div>
             </th>
             <th scope="col">
@@ -274,8 +274,8 @@
             </div>
           </td>
           <td class="cell-centered">
-            <div [ngbTooltip]="order?.end_date_work" class="smaller-fontsize">
-              {{ order?.end_date_work | date: 'shortDate' }}
+            <div [ngbTooltip]="order?.end_date_works" class="smaller-fontsize">
+              {{ order?.end_date_works | date: 'shortDate' }}
             </div>
           </td>
           <td class="cell-centered">

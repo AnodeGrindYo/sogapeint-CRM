@@ -148,9 +148,9 @@ export class OrderFormComponent implements OnInit {
     }
 
     this.orderForm.valueChanges.subscribe((values) => {
-      console.log("Modification du formulaire:", values);
-      console.log(this.orderForm.status);
-      console.log(this.orderForm.errors);
+      // console.log("Modification du formulaire:", values);
+      // console.log(this.orderForm.status);
+      // console.log(this.orderForm.errors);
     });
   }
 
@@ -589,6 +589,11 @@ export class OrderFormComponent implements OnInit {
   }
 
   assembleInternalNumber(): string {
+    console.log("Assemblage du numéro interne");
+    console.log("internalNumberAbbrPart:", this.orderForm.get("internalNumberAbbrPart").value);
+    console.log("internalNumberNumericPart:", this.orderForm.get("internalNumberNumericPart").value);
+    this.contractData.internalNumberAbbrPart = this.orderForm.get("internalNumberAbbrPart").value;
+    this.contractData.internalNumberNumericPart = this.orderForm.get("internalNumberNumericPart").value;
     return `${this.contractData.internalNumberAbbrPart.toUpperCase()}-${
       this.contractData.internalNumberNumericPart
     }`;
@@ -655,32 +660,39 @@ export class OrderFormComponent implements OnInit {
     if (this.isSubmitting) {
       return;
     }
+    if (this.orderForm.valid) {
+      this.prepareDataForSubmission(); // Préparation des données pour la soumission
 
-    // alert(
-    //   "Données du formulaire avant préparation:\n" +
-    //     JSON.stringify(this.contractData, null, 2)
-    // );
+      // alert(
+      //   "Données du formulaire avant préparation:\n" +
+      //     JSON.stringify(this.contractData, null, 2)
+      // );
 
-    if (!this.autoCalculateEnabled) {
-      this.toastr.warning(
-        "Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire."
-      );
-      return;
-    }
-
-    this.modalService.open(this.confirmationModal).result.then(
-      (result) => {
-        if (result === true) {
-          this.prepareDataForSubmission();
-          this.submitContractData();
-        } else {
-          console.log("Soumission annulée par l'utilisateur");
-        }
-      },
-      (dismissReason) => {
-        console.log("Modal fermée sans confirmation");
+      if (!this.autoCalculateEnabled) {
+        this.toastr.warning(
+          "Le calcul automatique est désactivé. Veuillez vérifier et réactiver si nécessaire."
+        );
+        return;
       }
-    );
+
+      this.modalService.open(this.confirmationModal).result.then(
+        (result) => {
+          if (result === true) {
+            console.log("Résultat du modal de confirmation :", result);
+            // this.prepareDataForSubmission();
+            this.submitContractData();
+          } else {
+            console.log("Soumission annulée par l'utilisateur");
+          }
+        },
+        (dismissReason) => {
+          console.log("Modal fermée sans confirmation");
+        }
+      );
+    } else {
+      this.displayFormErrors();
+      this.toastr.error("Certains champs du formulaire sont invalides. Veuillez les corriger.");
+    }
   }
 
   private displayFormErrors(): void {
@@ -716,10 +728,14 @@ export class OrderFormComponent implements OnInit {
   submitContractData(): void {
     console.log("Soumission des données du contrat:", this.contractData);
 
+    this.isSubmitting = true; // Activation du flag
+
     this.contractService.addContract(this.contractData).subscribe({
       next: (response) => {
         console.log("Contrat créé avec succès", response);
         this.toastr.success("Le contrat a été créé avec succès.");
+
+        this.isSubmitting = false; // Réinitialisation du flag ici pour éviter les problèmes
 
         if (this.files.length > 0) {
           this.onFileUpload(this.files, response.contractId);
@@ -730,7 +746,11 @@ export class OrderFormComponent implements OnInit {
         this.toastr.error(
           "Une erreur est survenue lors de la création du contrat."
         );
+        this.isSubmitting = false; // Réinitialisation du flag ici pour éviter les problèmes en cas d'erreur
       },
+      complete: () => {
+        this.router.navigate(["/manageOrders"]);
+      }
     });
 
     this.isSubmitting = false;
@@ -801,10 +821,21 @@ export class OrderFormComponent implements OnInit {
 
     this.contractData = dataForSubmission;
 
-    alert(
-      "Données du contrat préparées pour le backend:\n" +
-        JSON.stringify(dataForSubmission["end_date_works"], null, 2)
-    );
+    // enlève les champs inutiles : contact_details, customer_details, internal_contributor_details, external_contributor_details, subcontractor_details, difference, created_by, date_add, date_uppd
+    delete this.contractData["contact_details"];
+    delete this.contractData["customer_details"];
+    delete this.contractData["internal_contributor_details"];
+    delete this.contractData["external_contributor_details"];
+    delete this.contractData["subcontractor_details"];
+    delete this.contractData["difference"];
+    delete this.contractData["created_by"];
+    delete this.contractData["date_add"];
+    delete this.contractData["date_uppd"];
+
+    // alert(
+    //   "Données du contrat préparées pour le backend:\n" +
+    //     JSON.stringify(dataForSubmission["end_date_works"], null, 2)
+    // );
   }
 
   private convertToBoolean(value: any): boolean {
@@ -870,7 +901,7 @@ export class OrderFormComponent implements OnInit {
       this.contractData.isLastContract = true;
       this.prepareDataForSubmission();
       this.submitContractData();
-      this.router.navigate(["/manageOrders"]);
+      // this.router.navigate(["/manageOrders"]);
     }
   }
 
