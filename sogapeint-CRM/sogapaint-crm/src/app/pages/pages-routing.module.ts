@@ -20,6 +20,7 @@ import { OrderUpdateComponent } from './order-update/order-update.component';
 import { OrderUpdateCocontractorComponent } from './order-update-cocontractor/order-update-cocontractor.component';
 import { RoleGuard } from '../core/guards/role.guard';
 import { AuthGuard } from '../core/guards/auth.guard';
+import { RoleRedirectGuard } from '../core/guards/roleRedirect.guard';
 import { EndlessAscensionComponent } from './endless-ascension/endless-ascension.component';
 
 
@@ -43,9 +44,11 @@ const routes: Routes = [
     { path: 'order-update-cocontractor/:orderId', component: OrderUpdateCocontractorComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'superAdmin', 'subcontractor', 'cocontractor'] } },
     { path: 'order-detail-customer/:orderId', component: OrderDetailCustomerComponent, canActivate: [RoleGuard], data: { roles: ['Admin', 'customer', 'supermanager', 'comanager'] } },
     // route pour la landing page
-    { path: '', component: LandingPageComponent},
+    // { path: '', component: LandingPageComponent},
+    //  la route par défaut dépend du rôle de l'utilisateur : dashboard pour admin et superAdmin, manageOrders pour les autres
+    { path: '', component: DashboardComponent, data: { roles: ['Admin', 'superAdmin'] }},
+    { path: '', component: ManageOrdersComponent, data: { roles: ['subcontractor', 'coContractor', 'supermanager', 'comanager'] }},
     { path: 'endless-ascension', component: EndlessAscensionComponent, canActivate: [AuthGuard] }
-    // { path: '', }
 ];
 
 @NgModule({

@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserProfileService } from '../../core/services/user.service';
+import { AuthenticationService } from '../../core/services/auth.service';
+import { ToastService } from "angular-toastify";
+import { ToastrService } from "ngx-toastr";
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-landing-page',
@@ -6,10 +12,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit{
+  currentUser: any;
   
-    constructor() { }
+    constructor(
+      private router: Router,
+      private userProfileService: UserProfileService,
+      private authenticationService: AuthenticationService,
+      private toastService: ToastService,
+      private toastr: ToastrService
+    ) { }
   
     ngOnInit(): void {
+      this.currentUser = this.authenticationService.currentUserValue;
+      console.log(this.currentUser);
+      this.toastr.success('Bonjour ' + this.currentUser.firstName + ' !', 'Bienvenue');
+      // si le role de l'utilisateur est admin ou superAdmin, on le redirige vers /dashboard au bout de 15 secondes
+      const delay = 5000;
+      if(this.currentUser.role === 'admin' || this.currentUser.role === 'superAdmin'){
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, delay);
+      }
+      // sinon, on redirige vers /manageOrders
+      else{
+        setTimeout(() => {
+          this.router.navigate(['/manageOrders']);
+        }, delay);
+      }
+
     }
 
 }

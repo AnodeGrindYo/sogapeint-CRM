@@ -80,6 +80,8 @@ export class UserInfoBarComponent implements OnInit {
   onLogoClick() {
     this.clickCount++;
     if (this.clickCount >= this.clickThreshold) {
+      // empeche le navigateur d'aller ailleurs
+      event.preventDefault();
       this.router.navigate(['/endless-ascension']);
       this.clickCount = 0; // Reset the counter after navigation
     }
