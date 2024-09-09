@@ -639,7 +639,7 @@ getNextInternalNumber(abbr: string): string {
     .filter((number) => number !== null);
 
   if (filteredNumbers.length === 0) {
-    return "000"; // Retourner 000 si aucun numéro n'existe encore pour cette abbréviation et année
+    return "001"; // Retourner 000 si aucun numéro n'existe encore pour cette abbréviation et année
   }
 
   const maxNumber = Math.max(...filteredNumbers);
