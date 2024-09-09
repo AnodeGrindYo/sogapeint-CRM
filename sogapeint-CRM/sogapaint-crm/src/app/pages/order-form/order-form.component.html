@@ -20,9 +20,29 @@
                                     {{ getErrorMessage(orderForm.get('internalNumberAbbrPart').errors) }}
                                 </div>
                             </div>
+                            
+                            <!-- Modification du format de internal_number -->
                             <div class="col-auto align-self-center"> - </div>
                             <div class="col">
-                                <label for="internalNumberNumericPart" class="form-label">Numéro interne</label>
+                                <label for="internalNumberYearPart" class="form-label">Année</label>
+                                <input 
+                                type="number" 
+                                class="form-control" 
+                                id="internalNumberYearPart" 
+                                formControlName="internalNumberYearPart"
+                                [min]="2020"
+                                [max]="9999"
+                                placeholder="Année"
+                                required
+                                (keydown)="onAlphaInput($event)">
+                                <div *ngIf="orderForm.get('internalNumberYearPart').invalid && (orderForm.get('internalNumberYearPart').dirty || orderForm.get('internalNumberYearPart').touched)" class="text-danger">
+                                    {{ getErrorMessage(orderForm.get('internalNumberYearPart').errors) }}
+                                </div>
+                            </div>
+                            
+                            <div class="col-auto align-self-center"> - </div>
+                            <div class="col">
+                                <label for="internalNumberNumericPart" class="form-label">N° interne</label>
                                 <input type="text" class="form-control" id="internalNumberNumericPart" formControlName="internalNumberNumericPart">
                                 <div *ngIf="orderForm.get('internalNumberNumericPart').invalid && (orderForm.get('internalNumberNumericPart').dirty || orderForm.get('internalNumberNumericPart').touched)" class="text-danger">
                                     {{ getErrorMessage(orderForm.get('internalNumberNumericPart').errors) }}
@@ -68,384 +88,384 @@
                         </div>
                     </div>
                     
-                
-                
-                
-                
-                
-            
-            <div class="mb-3">
-                <label for="quoteNumber" class="form-label">Numéro de devis</label>
-                <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
-                <div *ngIf="orderForm.get('quoteNumber').invalid && (orderForm.get('quoteNumber').dirty || orderForm.get('quoteNumber').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('quoteNumber').errors) }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="benefit" class="form-label">Prestation</label>
-                <ng-select id="benefit" formControlName="benefit" [items]="benefits" bindLabel="name" bindValue="value" placeholder="Sélectionner une prestation" [addTag]="addNewBenefit.bind(this)" addTagText="Ajouter une prestation" [multiple]="false" [closeOnSelect]="true" [compareWith]="compareWithFn">
-                    <ng-template ng-option-tmp let-item="item" let-index="index">
-                        <div class="d-flex justify-content-between align-items-center w-100">
-                            <span class="flex-grow-1">{{ item.name }}</span>
-                            <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="mb-3">
+                        <label for="quoteNumber" class="form-label">Numéro de devis</label>
+                        <input type="text" class="form-control" id="quoteNumber" formControlName="quoteNumber">
+                        <div *ngIf="orderForm.get('quoteNumber').invalid && (orderForm.get('quoteNumber').dirty || orderForm.get('quoteNumber').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('quoteNumber').errors) }}
                         </div>
-                    </ng-template>
-                </ng-select>
-                <div *ngIf="orderForm.get('benefit').invalid && (orderForm.get('benefit').dirty || orderForm.get('benefit').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('benefit').errors) }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="order_status" class="form-label">Statut</label>
-                <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="Sélectionner un statut"></ng-select>
-                <div *ngIf="orderForm.get('status').invalid && (orderForm.get('status').dirty || orderForm.get('status').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('status').errors) }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="dateCde" class="form-label">Date de Commande</label>
-                <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
-                <div *ngIf="orderForm.get('dateCde').invalid && (orderForm.get('dateCde').dirty || orderForm.get('dateCde').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('dateCde').errors) }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="benefit" class="form-label">Prestation</label>
+                        <ng-select id="benefit" formControlName="benefit" [items]="benefits" bindLabel="name" bindValue="value" placeholder="Sélectionner une prestation" [addTag]="addNewBenefit.bind(this)" addTagText="Ajouter une prestation" [multiple]="false" [closeOnSelect]="true" [compareWith]="compareWithFn">
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <span class="flex-grow-1">{{ item.name }}</span>
+                                    <span class="ms-auto text-danger" style="cursor: pointer;" (click)="deleteBenefit(item.value, $event)">x</span>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="orderForm.get('benefit').invalid && (orderForm.get('benefit').dirty || orderForm.get('benefit').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('benefit').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="order_status" class="form-label">Statut</label>
+                        <ng-select id="order_status" formControlName="status" [items]="statuses" bindLabel="name" bindValue="value" placeholder="Sélectionner un statut"></ng-select>
+                        <div *ngIf="orderForm.get('status').invalid && (orderForm.get('status').dirty || orderForm.get('status').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('status').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateCde" class="form-label">Date de Commande</label>
+                        <input type="date" class="form-control" id="dateCde" formControlName="dateCde">
+                        <div *ngIf="orderForm.get('dateCde').invalid && (orderForm.get('dateCde').dirty || orderForm.get('dateCde').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('dateCde').errors) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="col-md-6">
-    <div class="card">
-        <div class="card-header">Résidence/Adresse</div>
-        <div class="card-body">
-            <div class="mb-3">
-                <label for="address" class="form-label">Adresse</label>
-                <input type="text" class="form-control" id="address" formControlName="address">
-                <div *ngIf="orderForm.get('address').invalid && (orderForm.get('address').dirty || orderForm.get('address').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('address').errors) }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="appartmentNumber" class="form-label">N° appart</label>
-                <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
-                <div *ngIf="orderForm.get('appartmentNumber').invalid && (orderForm.get('appartmentNumber').dirty || orderForm.get('appartmentNumber').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('appartmentNumber').errors) }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
-                <select class="form-control" id="occupied" formControlName="occupied">
-                    <option value="true">Oui</option>
-                    <option value="false">Non</option>
-                </select>
-                <div *ngIf="orderForm.get('occupied').invalid && (orderForm.get('occupied').dirty || orderForm.get('occupied').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('occupied').errors) }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <input type="checkbox" class="form-check-input" id="ss4" formControlName="ss4">
-                &nbsp;<label for="ss4" class="form-label">SS4 (amiante)</label>
-                <div *ngIf="orderForm.get('ss4').invalid && (orderForm.get('ss4').dirty || orderForm.get('ss4').touched)" class="text-danger">
-                    {{ getErrorMessage(orderForm.get('ss4').errors) }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="row mb-3">
-    
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Intervenants</div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="internalContributor" class="form-label">Intervenant Sogapeint</label>
-                    <ng-select id="internalContributor" formControlName="internalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un intervenant Sogapeint" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                        <ng-template ng-label-tmp let-item="item">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                        <ng-template ng-option-tmp let-item="item" let-index="index">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                    </ng-select>
-                    <div *ngIf="orderForm.get('internalContributor').invalid && (orderForm.get('internalContributor').dirty || orderForm.get('internalContributor').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('internalContributor').errors) }}
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Résidence/Adresse</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Adresse</label>
+                        <input type="text" class="form-control" id="address" formControlName="address">
+                        <div *ngIf="orderForm.get('address').invalid && (orderForm.get('address').dirty || orderForm.get('address').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('address').errors) }}
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="externalContributor" class="form-label">Co-traitant</label>
-                    <ng-select id="externalContributor" formControlName="externalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un co-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                        <ng-template ng-label-tmp let-item="item">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                        <ng-template ng-option-tmp let-item="item" let-index="index">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                    </ng-select>
-                    <div *ngIf="orderForm.get('externalContributor').invalid && (orderForm.get('externalContributor').dirty || orderForm.get('externalContributor').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('externalContributor').errors) }}
+                    <div class="mb-3">
+                        <label for="appartmentNumber" class="form-label">N° appart</label>
+                        <input type="text" class="form-control" id="appartmentNumber" formControlName="appartmentNumber">
+                        <div *ngIf="orderForm.get('appartmentNumber').invalid && (orderForm.get('appartmentNumber').dirty || orderForm.get('appartmentNumber').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('appartmentNumber').errors) }}
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="subcontractor" class="form-label">Sous-traitant</label>
-                    <ng-select id="subcontractor" formControlName="subcontractor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un sous-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
-                        <ng-template ng-label-tmp let-item="item">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                        <ng-template ng-option-tmp let-item="item" let-index="index">
-                            {{ item.firstname }} {{ item.lastname }}
-                        </ng-template>
-                    </ng-select>
-                    <div *ngIf="orderForm.get('subcontractor').invalid && (orderForm.get('subcontractor').dirty || orderForm.get('subcontractor').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('subcontractor').errors) }}
+                    <div class="mb-3">
+                        <label for="occupied" class="form-label">Occupé (Oui/Non)</label>
+                        <select class="form-control" id="occupied" formControlName="occupied">
+                            <option value="true">Oui</option>
+                            <option value="false">Non</option>
+                        </select>
+                        <div *ngIf="orderForm.get('occupied').invalid && (orderForm.get('occupied').dirty || orderForm.get('occupied').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('occupied').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" class="form-check-input" id="ss4" formControlName="ss4">
+                        &nbsp;<label for="ss4" class="form-label">SS4 (amiante)</label>
+                        <div *ngIf="orderForm.get('ss4').invalid && (orderForm.get('ss4').dirty || orderForm.get('ss4').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('ss4').errors) }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Montants</div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="amountHt" class="form-label">Montant de la commande HT</label>
-                    <input type="number" class="form-control" id="amountHt" formControlName="amountHt" (keydown)="onAlphaInput($event)">
-                    <div *ngIf="orderForm.get('amountHt').invalid && (orderForm.get('amountHt').dirty || orderForm.get('amountHt').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('amountHt').errors) }}
+    <div class="row mb-3">
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Intervenants</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="internalContributor" class="form-label">Intervenant Sogapeint</label>
+                        <ng-select id="internalContributor" formControlName="internalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un intervenant Sogapeint" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                            <ng-template ng-label-tmp let-item="item">
+                                {{ item.firstname }} {{ item.lastname }}
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                {{ item.firstname }} {{ item.lastname }}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="orderForm.get('internalContributor').invalid && (orderForm.get('internalContributor').dirty || orderForm.get('internalContributor').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('internalContributor').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="externalContributor" class="form-label">Co-traitant</label>
+                        <ng-select id="externalContributor" formControlName="externalContributor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un co-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                            <ng-template ng-label-tmp let-item="item">
+                                {{ item.firstname }} {{ item.lastname }}
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                {{ item.firstname }} {{ item.lastname }}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="orderForm.get('externalContributor').invalid && (orderForm.get('externalContributor').dirty || orderForm.get('externalContributor').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('externalContributor').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subcontractor" class="form-label">Sous-traitant</label>
+                        <ng-select id="subcontractor" formControlName="subcontractor" [items]="users" bindLabel="name" bindValue="_id" placeholder="Sélectionner un sous-traitant" [typeahead]="userInput$" [virtualScroll]="true" [addTag]="false" (focus)="onUserInputFocus()" (blur)="onUserInputBlur($event)">
+                            <ng-template ng-label-tmp let-item="item">
+                                {{ item.firstname }} {{ item.lastname }}
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                {{ item.firstname }} {{ item.lastname }}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="orderForm.get('subcontractor').invalid && (orderForm.get('subcontractor').dirty || orderForm.get('subcontractor').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('subcontractor').errors) }}
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="benefitHt" class="form-label">Montant de la prestation HT</label>
-                    <input type="number" class="form-control" id="benefitHt" formControlName="benefitHt" (keydown)="onAlphaInput($event)">
-                    <div *ngIf="orderForm.get('benefitHt').invalid && (orderForm.get('benefitHt').dirty || orderForm.get('benefitHt').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('benefitHt').errors) }}
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Montants</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="amountHt" class="form-label">Montant de la commande HT</label>
+                        <input type="number" class="form-control" id="amountHt" formControlName="amountHt" (keydown)="onAlphaInput($event)">
+                        <div *ngIf="orderForm.get('amountHt').invalid && (orderForm.get('amountHt').dirty || orderForm.get('amountHt').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('amountHt').errors) }}
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="externalContributorAmount" class="form-label">Montant co-traitant/sous-traitant</label>
-                    <input type="number" class="form-control" id="externalContributorAmount" formControlName="externalContributorAmount" (keydown)="onAlphaInput($event)">
-                    <div *ngIf="orderForm.get('externalContributorAmount').invalid && (orderForm.get('externalContributorAmount').dirty || orderForm.get('externalContributorAmount').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('externalContributorAmount').errors) }}
+                    <div class="mb-3">
+                        <label for="benefitHt" class="form-label">Montant de la prestation HT</label>
+                        <input type="number" class="form-control" id="benefitHt" formControlName="benefitHt" (keydown)="onAlphaInput($event)">
+                        <div *ngIf="orderForm.get('benefitHt').invalid && (orderForm.get('benefitHt').dirty || orderForm.get('benefitHt').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('benefitHt').errors) }}
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
-                    <input type="date" class="form-control" id="external_contributor_invoice_date" formControlName="external_contributor_invoice_date">
-                    <div *ngIf="orderForm.get('external_contributor_invoice_date').invalid && (orderForm.get('external_contributor_invoice_date').dirty || orderForm.get('external_contributor_invoice_date').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('external_contributor_invoice_date').errors) }}
+                    <div class="mb-3">
+                        <label for="externalContributorAmount" class="form-label">Montant co-traitant/sous-traitant</label>
+                        <input type="number" class="form-control" id="externalContributorAmount" formControlName="externalContributorAmount" (keydown)="onAlphaInput($event)">
+                        <div *ngIf="orderForm.get('externalContributorAmount').invalid && (orderForm.get('externalContributorAmount').dirty || orderForm.get('externalContributorAmount').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('externalContributorAmount').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="external_contributor_invoice_date" class="form-label">Date de réception de la facture co-traitant</label>
+                        <input type="date" class="form-control" id="external_contributor_invoice_date" formControlName="external_contributor_invoice_date">
+                        <div *ngIf="orderForm.get('external_contributor_invoice_date').invalid && (orderForm.get('external_contributor_invoice_date').dirty || orderForm.get('external_contributor_invoice_date').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('external_contributor_invoice_date').errors) }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row mb-3">
     
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Dates</div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="start_date_works" class="form-label">Début</label>
-                    <input type="date" class="form-control" id="start_date_works" formControlName="startDateWorks">
-                    <div *ngIf="orderForm.get('startDateWorks').invalid && (orderForm.get('startDateWorks').dirty || orderForm.get('startDateWorks').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('startDateWorks').errors) }}
+    <div class="row mb-3">
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Dates</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="start_date_works" class="form-label">Début</label>
+                        <input type="date" class="form-control" id="start_date_works" formControlName="startDateWorks">
+                        <div *ngIf="orderForm.get('startDateWorks').invalid && (orderForm.get('startDateWorks').dirty || orderForm.get('startDateWorks').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('startDateWorks').errors) }}
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="end_date_works" class="form-label">Date de fin</label>
-                    <input type="date" class="form-control" id="end_date_works" formControlName="endDateWorks">
-                    <div *ngIf="orderForm.get('endDateWorks').invalid && (orderForm.get('endDateWorks').dirty || orderForm.get('endDateWorks').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('endDateWorks').errors) }}
+                    <div class="mb-3">
+                        <label for="end_date_works" class="form-label">Date de fin</label>
+                        <input type="date" class="form-control" id="end_date_works" formControlName="endDateWorks">
+                        <div *ngIf="orderForm.get('endDateWorks').invalid && (orderForm.get('endDateWorks').dirty || orderForm.get('endDateWorks').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('endDateWorks').errors) }}
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="end_date_customer" class="form-label">Date de fin client</label>
-                    <input type="date" class="form-control" id="end_date_customer" formControlName="endDateCustomer">
-                    <div *ngIf="orderForm.get('endDateCustomer').invalid && (orderForm.get('endDateCustomer').dirty || orderForm.get('endDateCustomer').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('endDateCustomer').errors) }}
+                    <div class="mb-3">
+                        <label for="end_date_customer" class="form-label">Date de fin client</label>
+                        <input type="date" class="form-control" id="end_date_customer" formControlName="endDateCustomer">
+                        <div *ngIf="orderForm.get('endDateCustomer').invalid && (orderForm.get('endDateCustomer').dirty || orderForm.get('endDateCustomer').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('endDateCustomer').errors) }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Documents</div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <ngx-dropzone (change)="onSelect($event)">
-                        <ngx-dropzone-label>
-                            <div> Déposez vos fichiers ici ou cliquez pour choisir des fichiers. </div>
-                            <div class="svg-container">
-                                <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <style>
-                                        #arrow-box {
-                                            transform: translateY(100%);
-                                            animation: moveup 1.5s ease-in-out infinite;
-                                        }
-                                        
-                                        @keyframes moveup {
-                                            0% {
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Documents</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <ngx-dropzone (change)="onSelect($event)">
+                            <ngx-dropzone-label>
+                                <div> Déposez vos fichiers ici ou cliquez pour choisir des fichiers. </div>
+                                <div class="svg-container">
+                                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <style>
+                                            #arrow-box {
                                                 transform: translateY(100%);
+                                                animation: moveup 1.5s ease-in-out infinite;
                                             }
                                             
-                                            40%,
-                                            60% {
-                                                transform: translateY(0);
+                                            @keyframes moveup {
+                                                0% {
+                                                    transform: translateY(100%);
+                                                }
+                                                
+                                                40%,
+                                                60% {
+                                                    transform: translateY(0);
+                                                }
+                                                
+                                                100% {
+                                                    transform: translateY(-100%);
+                                                }
                                             }
-                                            
-                                            100% {
-                                                transform: translateY(-100%);
-                                            }
-                                        }
-                                    </style>
-                                    <defs>
-                                        <clipPath id="cloud-mask">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M76.3818 41.5239C76.3818 41.7358 76.3818 41.7358 76.3818 41.9477C86.9769 44.0667 94.3935 54.0261 93.334 64.8332C92.2745 75.6402 83.1627 83.9044 72.1438 83.9044H29.7633C18.9563 83.9044 9.84454 75.6402 8.57313 64.8332C7.30172 54.0261 14.9302 44.0667 25.5253 41.9477C25.5253 41.7358 25.5253 41.7358 25.5253 41.5239C25.5253 27.5384 36.968 16.0957 50.9536 16.0957C64.9391 16.0957 76.3818 27.5384 76.3818 41.5239Z" />
-                                        </clipPath>
-                                    </defs>
-                                    <g clip-path="url(#cloud-mask)">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M100 -100H0V200H100V-100ZM34.8377 49.1524L47.426 36.4383C48.2652 35.5907 49.3142 35.1669 50.3632 35.1669C51.4122 35.1669 52.671 35.5907 53.3005 36.4383L65.8888 49.1524C66.9378 50.4238 67.3574 52.3309 66.728 53.8143C66.0986 55.2976 64.6299 56.3571 62.9514 56.3571H54.5593V69.0712C54.5593 71.4021 52.671 73.3093 50.3632 73.3093C48.0554 73.3093 46.1672 71.4021 46.1672 69.0712V56.3571H37.775C36.0966 56.3571 34.6279 55.2976 33.9985 53.8143C33.3691 52.119 33.5789 50.4238 34.8377 49.1524Z" fill="rgb(37,43,59)" id="arrow-box" />
-                                    </g>
-                                </svg>
+                                        </style>
+                                        <defs>
+                                            <clipPath id="cloud-mask">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M76.3818 41.5239C76.3818 41.7358 76.3818 41.7358 76.3818 41.9477C86.9769 44.0667 94.3935 54.0261 93.334 64.8332C92.2745 75.6402 83.1627 83.9044 72.1438 83.9044H29.7633C18.9563 83.9044 9.84454 75.6402 8.57313 64.8332C7.30172 54.0261 14.9302 44.0667 25.5253 41.9477C25.5253 41.7358 25.5253 41.7358 25.5253 41.5239C25.5253 27.5384 36.968 16.0957 50.9536 16.0957C64.9391 16.0957 76.3818 27.5384 76.3818 41.5239Z" />
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#cloud-mask)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M100 -100H0V200H100V-100ZM34.8377 49.1524L47.426 36.4383C48.2652 35.5907 49.3142 35.1669 50.3632 35.1669C51.4122 35.1669 52.671 35.5907 53.3005 36.4383L65.8888 49.1524C66.9378 50.4238 67.3574 52.3309 66.728 53.8143C66.0986 55.2976 64.6299 56.3571 62.9514 56.3571H54.5593V69.0712C54.5593 71.4021 52.671 73.3093 50.3632 73.3093C48.0554 73.3093 46.1672 71.4021 46.1672 69.0712V56.3571H37.775C36.0966 56.3571 34.6279 55.2976 33.9985 53.8143C33.3691 52.119 33.5789 50.4238 34.8377 49.1524Z" fill="rgb(37,43,59)" id="arrow-box" />
+                                        </g>
+                                    </svg>
+                                </div>
+                            </ngx-dropzone-label>
+                        </ngx-dropzone>
+                        <div *ngIf="files && files.length > 0" class="mt-2">
+                            <div class="card">
+                                <div class="card-header"> Fichiers prêts à être uploadés: </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item file-item" *ngFor="let file of files; let i = index">
+                                        <div class="file-description d-flex align-items-center">
+                                            <i class="fas fa-file-alt me-2"></i>
+                                            <span class="file-name flex-grow-1">{{ file.name }}</span>
+                                            <span class="file-size me-2">{{ file.size | fileSize }}</span>
+                                            <button type="button" class="btn btn-delete ms-auto" (click)="removeFile(i)" [ngbTooltip]="'Supprimer '+ file.name +' de la liste'">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
-                        </ngx-dropzone-label>
-                    </ngx-dropzone>
-                    <div *ngIf="files && files.length > 0" class="mt-2">
-                        <div class="card">
-                            <div class="card-header"> Fichiers prêts à être uploadés: </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item file-item" *ngFor="let file of files; let i = index">
-                                    <div class="file-description d-flex align-items-center">
-                                        <i class="fas fa-file-alt me-2"></i>
-                                        <span class="file-name flex-grow-1">{{ file.name }}</span>
-                                        <span class="file-size me-2">{{ file.size | fileSize }}</span>
-                                        <button type="button" class="btn btn-delete ms-auto" (click)="removeFile(i)" [ngbTooltip]="'Supprimer '+ file.name +' de la liste'">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row mb-3">
     
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Temps d'exécution</div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="previsionDataHour" class="form-label">Heures (Donné)</label>
-                    
-                    <input 
-                    type="number" 
-                    class="form-control" 
-                    id="previsionDataHour" 
-                    formControlName="previsionDataHour"
-                    [disabled]="autoCalculateEnabled"
-                    (keydown)="onAlphaInput($event)"
-                    >
-                    
-                    
-                    <div *ngIf="orderForm.get('previsionDataHour').invalid && (orderForm.get('previsionDataHour').dirty || orderForm.get('previsionDataHour').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('previsionDataHour').errors) }}
+    <div class="row mb-3">
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Temps d'exécution</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="previsionDataHour" class="form-label">Heures (Donné)</label>
+                        
+                        <input 
+                        type="number" 
+                        class="form-control" 
+                        id="previsionDataHour" 
+                        formControlName="previsionDataHour"
+                        [disabled]="autoCalculateEnabled"
+                        (keydown)="onAlphaInput($event)"
+                        >
+                        
+                        
+                        <div *ngIf="orderForm.get('previsionDataHour').invalid && (orderForm.get('previsionDataHour').dirty || orderForm.get('previsionDataHour').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('previsionDataHour').errors) }}
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="previsionDataDay" class="form-label">Jours (Donné)</label>
+                    <div class="mb-3">
+                        <label for="previsionDataDay" class="form-label">Jours (Donné)</label>
+                        
+                        <input 
+                        type="number" 
+                        class="form-control" 
+                        id="previsionDataDay" 
+                        formControlName="previsionDataDay"
+                        [disabled]="autoCalculateEnabled" 
+                        (keydown)="onAlphaInput($event)"
+                        >
+                        
+                        
+                        <div *ngIf="orderForm.get('previsionDataDay').invalid && (orderForm.get('previsionDataDay').dirty || orderForm.get('previsionDataDay').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('previsionDataDay').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="executionDataHour" class="form-label">Heures (Réalisé)</label>
+                        <input type="number" class="form-control" id="executionDataHour" formControlName="executionDataHour" (keydown)="onAlphaInput($event)">
+                        <div *ngIf="orderForm.get('executionDataHour').invalid && (orderForm.get('executionDataHour').dirty || orderForm.get('executionDataHour').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('executionDataHour').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="executionDataDay" class="form-label">Jours (Réalisé)</label>
+                        <input type="number" class="form-control" id="executionDataDay" formControlName="executionDataDay" (keydown)="onAlphaInput($event)">
+                        <div *ngIf="orderForm.get('executionDataDay').invalid && (orderForm.get('executionDataDay').dirty || orderForm.get('executionDataDay').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('executionDataDay').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="difference">Différence (Heures)</label>
+                        <input type="text" class="form-control" id="difference" formControlName="difference" readonly>
+                    </div>
                     
-                    <input 
-                    type="number" 
-                    class="form-control" 
-                    id="previsionDataDay" 
-                    formControlName="previsionDataDay"
-                    [disabled]="autoCalculateEnabled" 
-                    (keydown)="onAlphaInput($event)"
-                    >
-                    
-                    
-                    <div *ngIf="orderForm.get('previsionDataDay').invalid && (orderForm.get('previsionDataDay').dirty || orderForm.get('previsionDataDay').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('previsionDataDay').errors) }}
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="executionDataHour" class="form-label">Heures (Réalisé)</label>
-                    <input type="number" class="form-control" id="executionDataHour" formControlName="executionDataHour" (keydown)="onAlphaInput($event)">
-                    <div *ngIf="orderForm.get('executionDataHour').invalid && (orderForm.get('executionDataHour').dirty || orderForm.get('executionDataHour').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('executionDataHour').errors) }}
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="executionDataDay" class="form-label">Jours (Réalisé)</label>
-                    <input type="number" class="form-control" id="executionDataDay" formControlName="executionDataDay" (keydown)="onAlphaInput($event)">
-                    <div *ngIf="orderForm.get('executionDataDay').invalid && (orderForm.get('executionDataDay').dirty || orderForm.get('executionDataDay').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('executionDataDay').errors) }}
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="difference">Différence (Heures)</label>
-                    <input type="text" class="form-control" id="difference" formControlName="difference" readonly>
-                </div>
-                
-                <button type="button" (click)="showCalculationDetails()" class="btn btn-info">
-                    <i class="fa fa-info-circle"></i> Détails
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Facturation</div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="invoiceNumber" class="form-label">Numéro de Facture</label>
-                    <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber">
-                    <div *ngIf="orderForm.get('invoiceNumber').invalid && (orderForm.get('invoiceNumber').dirty || orderForm.get('invoiceNumber').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('invoiceNumber').errors) }}
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="billingAmount" class="form-label">Montant de la facture</label>
-                    <input type="number" class="form-control" id="billingAmount" formControlName="billingAmount" (keydown)="onAlphaInput($event)">
-                    <div *ngIf="orderForm.get('billingAmount').invalid && (orderForm.get('billingAmount').dirty || orderForm.get('billingAmount').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('billingAmount').errors) }}
-                    </div>
+                    <button type="button" (click)="showCalculationDetails()" class="btn btn-info">
+                        <i class="fa fa-info-circle"></i> Détails
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">Communication et suivi</div>
-            <div class="card-body">
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="mailSended" formControlName="mailSended">
-                    <label for="mailSended" class="form-check-label">Mail Envoyé</label>
-                    <div *ngIf="orderForm.get('mailSended').invalid && (orderForm.get('mailSended').dirty || orderForm.get('mailSended').touched)" class="text-danger">
-                        {{ getErrorMessage(orderForm.get('mailSended').errors) }}
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Facturation</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="invoiceNumber" class="form-label">Numéro de Facture</label>
+                        <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber">
+                        <div *ngIf="orderForm.get('invoiceNumber').invalid && (orderForm.get('invoiceNumber').dirty || orderForm.get('invoiceNumber').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('invoiceNumber').errors) }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billingAmount" class="form-label">Montant de la facture</label>
+                        <input type="number" class="form-control" id="billingAmount" formControlName="billingAmount" (keydown)="onAlphaInput($event)">
+                        <div *ngIf="orderForm.get('billingAmount').invalid && (orderForm.get('billingAmount').dirty || orderForm.get('billingAmount').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('billingAmount').errors) }}
+                        </div>
                     </div>
                 </div>
-                
+            </div>
+            <div class="card">
+                <div class="card-header">Communication et suivi</div>
+                <div class="card-body">
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="mailSended" formControlName="mailSended">
+                        <label for="mailSended" class="form-check-label">Mail Envoyé</label>
+                        <div *ngIf="orderForm.get('mailSended').invalid && (orderForm.get('mailSended').dirty || orderForm.get('mailSended').touched)" class="text-danger">
+                            {{ getErrorMessage(orderForm.get('mailSended').errors) }}
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col"></div>
-    <div class="col d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary">Valider</button>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
     </div>
-</div>
 </form>
 </div>
 

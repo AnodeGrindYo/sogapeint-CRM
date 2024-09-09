@@ -82,6 +82,46 @@ exports.getContracts = async (req, res) => {
 //         res.status(500).send({ message: "Erreur lors de la récupération des contrats par numéro interne", error });
 //     }
 // };
+
+
+// Version à restaurer (au cas où)
+// exports.getContractsByInternalNumber = async (req, res) => {
+//     try {
+//         const { internalNumber } = req.query;
+//         let contracts = await ContractModel.find({ internal_number: internalNumber })
+//             .populate('customer')
+//             .populate('contact')
+//             .populate('external_contributor')
+//             .populate('subcontractor');
+
+//         // Appliquer le sanitize seulement aux sous-objets sensibles sans casser les objets principaux
+//         contracts = contracts.map(contract => {
+//             contract = contract.toObject(); // Convertir le document Mongoose en objet JS ordinaire
+
+//             if (contract.customer) {
+//                 sanitizeFields(contract.customer);
+//             }
+//             if (contract.contact) {
+//                 sanitizeFields(contract.contact);
+//             }
+//             if (contract.external_contributor) {
+//                 sanitizeFields(contract.external_contributor);
+//             }
+//             if (contract.subcontractor) {
+//                 sanitizeFields(contract.subcontractor);
+//             }
+
+//             return contract;
+//         });
+
+//         res.json(contracts);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des contrats par numéro interne:', error);
+//         res.status(500).send({ message: "Erreur lors de la récupération des contrats par numéro interne", error });
+//     }
+// };
+
+// Modification du format de internal_number
 exports.getContractsByInternalNumber = async (req, res) => {
     try {
         const { internalNumber } = req.query;
@@ -91,9 +131,14 @@ exports.getContractsByInternalNumber = async (req, res) => {
             .populate('external_contributor')
             .populate('subcontractor');
 
-        // Appliquer le sanitize seulement aux sous-objets sensibles sans casser les objets principaux
         contracts = contracts.map(contract => {
-            contract = contract.toObject(); // Convertir le document Mongoose en objet JS ordinaire
+            contract = contract.toObject();
+
+            // Vérification et modification du format du numéro interne
+            const currentYear = new Date().getFullYear();
+            if (contract.internal_number.match(/^[A-Z]+-\d{3}$/)) {
+                contract.internal_number = `${contract.internal_number.split('-')[0]}-${currentYear}-${contract.internal_number.split('-')[1]}`;
+            }
 
             if (contract.customer) {
                 sanitizeFields(contract.customer);
@@ -117,6 +162,7 @@ exports.getContractsByInternalNumber = async (req, res) => {
         res.status(500).send({ message: "Erreur lors de la récupération des contrats par numéro interne", error });
     }
 };
+
 
 // Fonction pour supprimer uniquement les champs sensibles sans affecter l'objet principal
 function sanitizeFields(user) {
@@ -255,9 +301,46 @@ exports.streamNotOnGoingContracts = (req, res) => {
     });
 };
 
+// version à restaurer (au cas où)
+// exports.streamOrdersByTag = (req, res) => {
+//     const { status, incident = false } = req.query;
+    
+//     let query = {};
+//     if (status) {
+//         query.status = status;
+//     }
+//     if (incident) {
+//         query.incident = { $exists: true, $not: { $size: 0 } };
+//     }
+    
+//     res.writeHead(200, {
+//         'Content-Type': 'text/event-stream',
+//         'Cache-Control': 'no-cache',
+//         'Connection': 'keep-alive',
+//     });
+    
+//     const sortOrder = status === 'in_progress' ? 'asc' : 'desc';
+    
+//     Contract.find(query)
+//     .sort({ 'internal_number': 1, 'dateAdd': sortOrder })
+//     .populate('customer contact external_contributor subcontractor')
+//     .then(contracts => {
+//         const groupedContracts = groupByInternalNumber(contracts);
+//         for (const group of groupedContracts) {
+//             group.forEach(sanitizeContract);
+//             res.write(`data: ${JSON.stringify(group)}\n\n`);
+//         }
+//         res.end();
+//     })
+//     .catch(err => {
+//         console.error('Erreur lors du streaming des contrats:', err);
+//         res.status(500).end();
+//     });
+// };
+// Modification du format de internal_number
 exports.streamOrdersByTag = (req, res) => {
     const { status, incident = false } = req.query;
-    
+
     let query = {};
     if (status) {
         query.status = status;
@@ -265,31 +348,39 @@ exports.streamOrdersByTag = (req, res) => {
     if (incident) {
         query.incident = { $exists: true, $not: { $size: 0 } };
     }
-    
+
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
     });
-    
+
     const sortOrder = status === 'in_progress' ? 'asc' : 'desc';
-    
+
     Contract.find(query)
-    .sort({ 'internal_number': 1, 'dateAdd': sortOrder })
-    .populate('customer contact external_contributor subcontractor')
-    .then(contracts => {
-        const groupedContracts = groupByInternalNumber(contracts);
-        for (const group of groupedContracts) {
-            group.forEach(sanitizeContract);
-            res.write(`data: ${JSON.stringify(group)}\n\n`);
-        }
-        res.end();
-    })
-    .catch(err => {
-        console.error('Erreur lors du streaming des contrats:', err);
-        res.status(500).end();
-    });
+        .sort({ 'internal_number': 1, 'dateAdd': sortOrder })
+        .populate('customer contact external_contributor subcontractor')
+        .then(contracts => {
+            const groupedContracts = groupByInternalNumber(contracts);
+            groupedContracts.forEach(group => {
+                group.forEach(contract => {
+                    // Vérification et modification du format du numéro interne
+                    const currentYear = new Date().getFullYear();
+                    if (contract.internal_number.match(/^[A-Z]+-\d{3}$/)) {
+                        contract.internal_number = `${contract.internal_number.split('-')[0]}-${currentYear}-${contract.internal_number.split('-')[1]}`;
+                    }
+                    sanitizeContract(contract);
+                });
+                res.write(`data: ${JSON.stringify(group)}\n\n`);
+            });
+            res.end();
+        })
+        .catch(err => {
+            console.error('Erreur lors du streaming des contrats:', err);
+            res.status(500).end();
+        });
 };
+
 
 function groupByInternalNumber(contracts) {
     const groupedContracts = [];
@@ -945,25 +1036,74 @@ exports.deleteContract = async (req, res) => {
     }
 };
 
+// version à restaurer (au cas où)
+// exports.getContractsInternalNumbers = async (req, res) => {
+//     try {
+//         console.log('Récupération des numéros internes des contrats pour l\'année ', new Date().getFullYear());
+//         const contracts = await ContractModel.find({
+//             date_cde: {
+//                 $gte: new Date(new Date().getFullYear(), 0, 1),
+//                 $lt: new Date(new Date().getFullYear() + 1, 0, 1)
+//             }
+//         });
+//         console.log(`Found ${contracts.length} contracts`);
+        
+//         const internalNumbers = contracts.map(contract => contract.internal_number);
+        
+//         res.status(200).json(internalNumbers);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+// Modification du format de internal_number
+// Modification du format de internal_number
 exports.getContractsInternalNumbers = async (req, res) => {
     try {
         console.log('Récupération des numéros internes des contrats pour l\'année ', new Date().getFullYear());
+        
         const contracts = await ContractModel.find({
             date_cde: {
                 $gte: new Date(new Date().getFullYear(), 0, 1),
                 $lt: new Date(new Date().getFullYear() + 1, 0, 1)
             }
         });
+        
         console.log(`Found ${contracts.length} contracts`);
-        
-        const internalNumbers = contracts.map(contract => contract.internal_number);
-        
+
+        const internalNumbers = contracts.map(contract => {
+            const internalNumberParts = contract.internal_number.split('-');
+
+            // Vérification que le numéro interne contient bien l'abréviation et la partie numérique
+            if (internalNumberParts.length === 2) {
+                const [abbr, numericPart] = internalNumberParts;
+                const year = new Date(contract.date_cde).getFullYear(); // Année basée sur la date de commande
+
+                // Reconstitution du format attendu : abbr-année-numéro
+                return `${abbr}-${year}-${numericPart.padStart(3, '0')}`;
+            } else {
+                console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${contract.internal_number}`);
+                return contract.internal_number; // Retourne le numéro interne tel quel si le format est incorrect
+            }
+        });
+
+        // Gestion des abréviations sans commandes pour l'année en cours
+        if (internalNumbers.length === 0) {
+            const currentYear = new Date().getFullYear();
+            const emptyAbbreviation = req.query.abbr || 'XXX';  // Utilisez une abréviation par défaut ou passée dans la requête
+            internalNumbers.push(`${emptyAbbreviation}-${currentYear}-000`);
+        }
+
         res.status(200).json(internalNumbers);
     } catch (error) {
         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);
         res.status(500).json({ error: error.message });
     }
 };
+
+
+
+
 
 exports.addObservation = async (req, res) => {
     console.log('Tentative d\'ajout d\'une observation à un contrat');
