@@ -1056,50 +1056,88 @@ exports.deleteContract = async (req, res) => {
 //         res.status(500).json({ error: error.message });
 //     }
 // };
+
 // Modification du format de internal_number
+// exports.getContractsInternalNumbers = async (req, res) => {
+//     try {
+//         console.log('Récupération des numéros internes des contrats pour l\'année ', new Date().getFullYear());
+        
+//         const contracts = await ContractModel.find({
+//             date_cde: {
+//                 $gte: new Date(new Date().getFullYear(), 0, 1),
+//                 $lt: new Date(new Date().getFullYear() + 1, 0, 1)
+//             }
+//         });
+        
+//         console.log(`Found ${contracts.length} contracts`);
+
+//         const internalNumbers = contracts.map(contract => {
+//             const internalNumberParts = contract.internal_number.split('-');
+
+//             // Vérification que le numéro interne contient bien l'abréviation et la partie numérique
+//             if (internalNumberParts.length === 2) {
+//                 const [abbr, numericPart] = internalNumberParts;
+//                 const year = new Date(contract.date_cde).getFullYear(); // Année basée sur la date de commande
+
+//                 // Reconstitution du format attendu : abbr-année-numéro
+//                 return `${abbr}-${year}-${numericPart.padStart(3, '0')}`;
+//             } else {
+//                 console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${contract.internal_number}`);
+//                 return contract.internal_number; // Retourne le numéro interne tel quel si le format est incorrect
+//             }
+//         });
+
+//         // Gestion des abréviations sans commandes pour l'année en cours
+//         if (internalNumbers.length === 0) {
+//             const currentYear = new Date().getFullYear();
+//             const emptyAbbreviation = req.query.abbr || 'XXX';  // Utilisez une abréviation par défaut ou passée dans la requête
+//             internalNumbers.push(`${emptyAbbreviation}-${currentYear}-000`);
+//         }
+
+//         res.status(200).json(internalNumbers);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
 // Modification du format de internal_number
 exports.getContractsInternalNumbers = async (req, res) => {
     try {
         console.log('Récupération des numéros internes des contrats pour l\'année ', new Date().getFullYear());
         
-        const contracts = await ContractModel.find({
-            date_cde: {
-                $gte: new Date(new Date().getFullYear(), 0, 1),
-                $lt: new Date(new Date().getFullYear() + 1, 0, 1)
-            }
-        });
+        const currentYear = new Date().getFullYear();
+        const abbr = req.query.abbr; // Assurez-vous que l'abréviation est passée en tant que query paramètre
         
-        console.log(`Found ${contracts.length} contracts`);
+        const contracts = await ContractModel.find({
+            internal_number: { $regex: `^${abbr}-${currentYear}-` } // Recherche des numéros internes pour l'année en cours et l'abréviation
+        });
+
+        console.log(`Found ${contracts.length} contracts for abbreviation ${abbr}`);
 
         const internalNumbers = contracts.map(contract => {
             const internalNumberParts = contract.internal_number.split('-');
 
-            // Vérification que le numéro interne contient bien l'abréviation et la partie numérique
-            if (internalNumberParts.length === 2) {
-                const [abbr, numericPart] = internalNumberParts;
-                const year = new Date(contract.date_cde).getFullYear(); // Année basée sur la date de commande
-
-                // Reconstitution du format attendu : abbr-année-numéro
-                return `${abbr}-${year}-${numericPart.padStart(3, '0')}`;
+            // Vérification que le numéro interne contient bien l'abréviation, l'année et la partie numérique
+            if (internalNumberParts.length === 3) {
+                const numericPart = internalNumberParts[2];
+                return parseInt(numericPart, 10); // Retourne uniquement la partie numérique sous forme d'entier
             } else {
                 console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${contract.internal_number}`);
-                return contract.internal_number; // Retourne le numéro interne tel quel si le format est incorrect
+                return 0; // Retourne 0 si le format est incorrect
             }
         });
 
-        // Gestion des abréviations sans commandes pour l'année en cours
-        if (internalNumbers.length === 0) {
-            const currentYear = new Date().getFullYear();
-            const emptyAbbreviation = req.query.abbr || 'XXX';  // Utilisez une abréviation par défaut ou passée dans la requête
-            internalNumbers.push(`${emptyAbbreviation}-${currentYear}-000`);
-        }
+        const nextNumber = internalNumbers.length > 0 ? Math.max(...internalNumbers) + 1 : 1;
+        const nextNumberString = nextNumber.toString().padStart(3, '0');
 
-        res.status(200).json(internalNumbers);
+        // Retourne le prochain numéro interne avec l'abréviation et l'année
+        res.status(200).json(`${abbr}-${currentYear}-${nextNumberString}`);
     } catch (error) {
         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);
         res.status(500).json({ error: error.message });
     }
 };
+
 
 
 
