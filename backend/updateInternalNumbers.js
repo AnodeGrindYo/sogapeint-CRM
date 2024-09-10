@@ -20,8 +20,12 @@ function logError(errorMessage) {
 // Fonction de mise à jour
 async function updateInternalNumbers() {
   try {
-    // Récupérer toutes les commandes qui n'ont pas l'année dans le numéro interne (format sans année)
-    const contracts = await Contract.find({ internal_number: { $regex: /^[A-Z]+-\d{3}$/ } });
+    // Récupérer toutes les commandes sans l'année dans le numéro interne
+    const contracts = await Contract.find({ 
+      internal_number: { 
+        $regex: /^[A-Z]+-\d+(?:-TC)?$/  // Accepte ABBREVIATION-NUMERO et ABBREVIATION-NUMERO-TC
+      } 
+    });
     
     console.log(`Nombre de commandes à mettre à jour : ${contracts.length}`);
     
@@ -51,9 +55,17 @@ async function updateInternalNumbers() {
 
       // Mise à jour du numéro interne avec l'année
       const parts = contract.internal_number.split('-');
-      const abbr = parts[0];
-      const num = parts[1];
-      const newInternalNumber = `${abbr}-${year}-${num}`;
+      const abbr = parts[0];  // ABBREVIATION
+      let num = parts[1];     // NUMERO (ou NUMERO-TC)
+
+      // Si le numéro contient "-TC", il faut le traiter séparément
+      let tcSuffix = '';
+      if (contract.internal_number.endsWith('-TC')) {
+        tcSuffix = '-TC';
+        num = num.replace('-TC', '');  // Retirer "-TC" pour avoir seulement le numéro
+      }
+
+      const newInternalNumber = `${abbr}-${year}-${num}${tcSuffix}`;
 
       try {
         // Mise à jour dans la base de données
