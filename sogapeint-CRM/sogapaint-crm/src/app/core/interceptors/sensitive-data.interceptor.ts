@@ -19,7 +19,7 @@ export class SensitiveDataInterceptor implements HttpInterceptor {
   private checkForSensitiveData(data: any): void {
     if (typeof data === 'object' && data !== null) {
       if (this.containsSensitiveData(data)) {
-        console.warn('Sensitive data detected in response:', data);
+        // console.warn('Sensitive data detected in response:', data);
       }
     }
   }

@@ -43,5 +43,10 @@ export class AuthenticationService {
         const currentUser = this.currentUserValue;
         return currentUser ? currentUser.token : null; // Assurez-vous que le jeton est stocké dans la propriété 'token'
     }
+
+    isAdminOrSuperAdmin(): boolean {
+        const currentUser = this.currentUserValue;
+        return currentUser && (currentUser.role === 'admin' || currentUser.role === 'superAdmin');
+    }
     
 }

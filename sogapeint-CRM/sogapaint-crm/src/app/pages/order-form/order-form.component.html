@@ -48,6 +48,12 @@
                                     {{ getErrorMessage(orderForm.get('internalNumberNumericPart').errors) }}
                                 </div>
                             </div>
+                            
+                            <!-- Suffixe libre pour TC, TC1, TC2, etc. -->
+                            <div class="col">
+                                <label for="internalNumberSuffixPart" class="form-label">Suffixe</label>
+                                <input type="text" class="form-control" id="internalNumberSuffixPart" formControlName="internalNumberSuffixPart" placeholder="-TC, -TC1, -TC2, etc.">
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="customer" class="form-label">Client</label>

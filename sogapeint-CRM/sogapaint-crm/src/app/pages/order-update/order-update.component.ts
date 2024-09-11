@@ -328,11 +328,18 @@ export class OrderUpdateComponent implements OnInit {
   private initializeForm() {
     this.orderUpdateForm = new FormGroup({
       // internal_number: new FormControl('', Validators.required),
+      // internalNumberNumericPart: new FormControl("", [
+      //   Validators.required,
+      //   Validators.pattern(/^\d{3}$/),
+      // ]),
+      // internalNumberAbbrPart: new FormControl("", Validators.required),
+      internalNumberAbbrPart: new FormControl("", Validators.required),
+      internalNumberYearPart: new FormControl(new Date().getFullYear(), [Validators.required, Validators.min(2020), Validators.max(9999)]), 
       internalNumberNumericPart: new FormControl("", [
         Validators.required,
-        Validators.pattern(/^\d{3}$/),
+        Validators.pattern(/^\d+$/),
       ]),
-      internalNumberAbbrPart: new FormControl("", Validators.required),
+      internalNumberSuffixPart: new FormControl(''),
       customer: new FormControl(undefined, Validators.required),
       contact: new FormControl(""),
       internal_contributor: new FormControl(""),
@@ -393,11 +400,16 @@ export class OrderUpdateComponent implements OnInit {
             : "";
 
           // Divise le numéro interne en abréviation et partie numérique
-          const internalNumberParts = contract.internal_number
-            ? contract.internal_number.split("-")
-            : ["", ""];
+          // const internalNumberParts = contract.internal_number
+          //   ? contract.internal_number.split("-")
+          //   : ["", ""];
+          // const abbreviation = internalNumberParts[0];
+          // const numericPart = internalNumberParts[1];
+          const internalNumberParts = contract.internal_number ? contract.internal_number.split("-") : ["", "", ""];
           const abbreviation = internalNumberParts[0];
-          const numericPart = internalNumberParts[1];
+          const year = internalNumberParts[1];
+          const numericPart = internalNumberParts[2];
+          const suffix = internalNumberParts.length > 3 ? internalNumberParts[3] : '';
 
           // si prevision_data_hour et prevision_data_day ne sont pas remplis, 
           // les remplit avec les valeurs de execution_data_hour et execution_data_day
@@ -422,8 +434,12 @@ export class OrderUpdateComponent implements OnInit {
             end_date_customer: contract.end_date_customer,
             external_contributor_invoice_date: contract.external_contributor_invoice_date,
             date_cde: contract.date_cde,
-            internalNumberAbbrPart: abbreviation, // Partie abréviation
-            internalNumberNumericPart: numericPart, // Partie numérique
+            // internalNumberAbbrPart: abbreviation, // Partie abréviation
+            // internalNumberNumericPart: numericPart, // Partie numérique
+            internalNumberAbbrPart: abbreviation,
+            internalNumberYearPart: year,
+            internalNumberNumericPart: numericPart,
+            internalNumberSuffixPart: suffix,
             benefit: contract.benefit,
           };
 
@@ -536,17 +552,63 @@ export class OrderUpdateComponent implements OnInit {
       });
   }
 
+  // onSubmitUpdate(): void {
+  //   console.log("Attempting to submit form", this.orderUpdateForm.value);
+  //   console.log("Form validity:", this.orderUpdateForm.valid);
+
+  //   if (this.orderUpdateForm.valid) {
+  //     const data = this.prepareDataForSubmit();
+  //     this.toastr.info('Soumission des mises à jour...');
+  //     console.log("Data to submit:", data);
+  //     this.contractService
+  //       // .updateContract(this.contractId, this.orderUpdateForm.value)
+  //       .updateContract(this.contractId, data)
+  //       .subscribe({
+  //         next: () => {
+  //           this.toastr.success('Contrat mis à jour avec succès.');
+  //           console.log("Contract updated successfully");
+  //           this.router.navigate(["/order-detail", this.contractId]);
+  //         },
+  //         error: (error) => {
+  //           this.toastr.error('Erreur lors de la mise à jour du contrat.', error);
+  //           console.error("Error updating contract:", error);
+  //         },
+  //       })
+  //       .add(() => {
+  //         this.router.navigate(["/order-detail", this.contractId]);
+  //       });
+  //   } else {
+  //     this.toastr.error('Formulaire invalide. Veuillez corriger les erreurs');
+  //     console.error("Form is invalid");
+  //     console.log("Form values:", this.orderUpdateForm.value);
+  //     console.log("data values:", this.prepareDataForSubmit());
+  //     console.log("invalid fields: ", this.findInvalidControls());
+  //   }
+  // }
   onSubmitUpdate(): void {
     console.log("Attempting to submit form", this.orderUpdateForm.value);
     console.log("Form validity:", this.orderUpdateForm.valid);
-
+  
     if (this.orderUpdateForm.valid) {
+      // Assembler le numéro interne avant de soumettre les données
+      const assembledInternalNumber = this.assembleInternalNumber();
+  
+      // Vérification que le numéro interne est valide avant de continuer
+      if (!assembledInternalNumber) {
+        this.toastr.error("Le numéro interne est invalide ou incomplet. Veuillez vérifier les champs.");
+        return; // Interrompt la soumission si le numéro interne n'est pas valide
+      }
+  
       const data = this.prepareDataForSubmit();
+  
+      // Injecter le numéro interne assemblé dans les données à soumettre
+      data.internal_number = assembledInternalNumber;
+  
       this.toastr.info('Soumission des mises à jour...');
       console.log("Data to submit:", data);
-      this.contractService
-        // .updateContract(this.contractId, this.orderUpdateForm.value)
-        .updateContract(this.contractId, data)
+  
+      // Appel à l'API pour la mise à jour du contrat avec les données modifiées
+      this.contractService.updateContract(this.contractId, data)
         .subscribe({
           next: () => {
             this.toastr.success('Contrat mis à jour avec succès.');
@@ -556,19 +618,17 @@ export class OrderUpdateComponent implements OnInit {
           error: (error) => {
             this.toastr.error('Erreur lors de la mise à jour du contrat.', error);
             console.error("Error updating contract:", error);
-          },
-        })
-        .add(() => {
-          this.router.navigate(["/order-detail", this.contractId]);
+          }
         });
     } else {
-      this.toastr.error('Formulaire invalide. Veuillez corriger les erreurs');
+      this.toastr.error('Formulaire invalide. Veuillez corriger les erreurs.');
       console.error("Form is invalid");
       console.log("Form values:", this.orderUpdateForm.value);
       console.log("data values:", this.prepareDataForSubmit());
-      console.log("invalid fields: ", this.findInvalidControls());
+      console.log("invalid fields:", this.findInvalidControls());
     }
   }
+  
 
   prepareDataForSubmit(): any {
     // récupère le status
@@ -706,13 +766,29 @@ export class OrderUpdateComponent implements OnInit {
     });
   }
 
+  // assembleInternalNumber(): string {
+  //   return `${this.orderUpdateForm
+  //     .get("internalNumberAbbrPart")
+  //     .value.toUpperCase()}-${
+  //     this.orderUpdateForm.get("internalNumberNumericPart").value
+  //   }`;
+  // }
   assembleInternalNumber(): string {
-    return `${this.orderUpdateForm
-      .get("internalNumberAbbrPart")
-      .value.toUpperCase()}-${
-      this.orderUpdateForm.get("internalNumberNumericPart").value
-    }`;
+    const abbr = (this.orderUpdateForm.get("internalNumberAbbrPart").value || '').toUpperCase();
+    const numericPart = this.orderUpdateForm.get("internalNumberNumericPart").value || '';
+    const year = this.orderUpdateForm.get("internalNumberYearPart").value || '';
+    const suffix = this.orderUpdateForm.get('internalNumberSuffixPart').value || ''; 
+  
+    if (!abbr || !numericPart || !year) {
+      this.toastr.error("Impossible d'assembler le numéro interne. Veuillez vérifier les champs obligatoires.");
+      return '';
+    }
+  
+    const internalNumber = `${abbr}-${year}-${numericPart}`;
+  
+    return suffix ? `${internalNumber}-${suffix}` : internalNumber;
   }
+  
 
   onDelete(): void {
     if (this.contractId) {

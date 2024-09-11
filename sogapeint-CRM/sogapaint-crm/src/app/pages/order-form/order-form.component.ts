@@ -238,9 +238,10 @@ export class OrderFormComponent implements OnInit {
   // Modification du format de internal_number
   private initializeOrderForm(): void {
     this.orderForm = new FormGroup({
-      internalNumberAbbrPart: new FormControl(this.contractData.internalNumberAbbrPart),
+      internalNumberAbbrPart: new FormControl(this.contractData.internalNumberAbbrPart, Validators.required),
       internalNumberYearPart: new FormControl(new Date().getFullYear(), [Validators.required, Validators.min(2020), Validators.max(9999)]), // Champ d'année initialisé avec l'année en cours
-      internalNumberNumericPart: new FormControl(this.contractData.internalNumberNumericPart, [Validators.pattern(/^\d{3}$/)]),
+      internalNumberNumericPart: new FormControl(this.contractData.internalNumberNumericPart, [Validators.required, Validators.pattern(/^\d+$/)]),
+      internalNumberSuffixPart: new FormControl(''),
       customer: new FormControl(this.contractData.customer, Validators.required),
       internalContributor: new FormControl(this.contractData.internalContributor),
       contact: new FormControl(this.contractData.contact),
@@ -693,14 +694,30 @@ getAbbreviationList(): void {
 
 assembleInternalNumber(): string {
   console.log("Assemblage du numéro interne");
-  console.log("internalNumberAbbrPart:", this.orderForm.get("internalNumberAbbrPart").value);
-  console.log("internalNumberNumericPart:", this.orderForm.get("internalNumberNumericPart").value);
-  this.contractData.internalNumberAbbrPart = this.orderForm.get("internalNumberAbbrPart").value;
-  this.contractData.internalNumberNumericPart = this.orderForm.get("internalNumberNumericPart").value;
-  return `${this.contractData.internalNumberAbbrPart.toUpperCase()}-${
-    this.contractData.internalNumberNumericPart
-  }`;
+
+  const abbr = (this.orderForm.get("internalNumberAbbrPart").value || '').toUpperCase();
+  const numericPart = this.orderForm.get("internalNumberNumericPart").value || '';
+  const year = this.orderForm.get("internalNumberYearPart").value || '';
+  const suffix = this.orderForm.get('internalNumberSuffixPart').value || ''; // Suffixe optionnel
+
+  // Vérification des champs obligatoires
+  if (!abbr || !numericPart || !year) {
+    this.toastr.error("Impossible d'assembler le numéro interne. Veuillez vérifier les champs obligatoires.");
+    console.error("Numéro interne incomplet : abbr, numericPart ou year manquant.");
+    return '';
+  }
+
+  // Assemblage de la partie principale du numéro
+  const internalNumber = `${abbr}-${year}-${numericPart}`;
+
+  // Si un suffixe est présent, l'ajouter à la fin
+  const finalInternalNumber = suffix ? `${internalNumber}-${suffix}` : internalNumber;
+
+  console.log("Numéro interne final assemblé :", finalInternalNumber);
+
+  return finalInternalNumber;
 }
+
 
 onAlphaInput(event: KeyboardEvent): void {
   if (

@@ -226,11 +226,18 @@ export class OrderUpdateCocontractorComponent implements OnInit {
   private initializeForm() {
     this.orderUpdateForm = new FormGroup({
       // internal_number: new FormControl('', Validators.required),
+      // internalNumberNumericPart: new FormControl("", [
+      //   Validators.required,
+      //   Validators.pattern(/^\d{3}$/),
+      // ]),
+      // internalNumberAbbrPart: new FormControl("", Validators.required),
+      internalNumberAbbrPart: new FormControl("", Validators.required),
+      internalNumberYearPart: new FormControl("", [Validators.required, Validators.min(2020), Validators.max(9999)]),
       internalNumberNumericPart: new FormControl("", [
         Validators.required,
-        Validators.pattern(/^\d{3}$/),
+        Validators.pattern(/^\d+$/),
       ]),
-      internalNumberAbbrPart: new FormControl("", Validators.required),
+      internalNumberSuffixPart: new FormControl(""),
       customer: new FormControl(undefined, Validators.required),
       contact: new FormControl(""),
       internal_contributor: new FormControl(""),
@@ -290,11 +297,16 @@ export class OrderUpdateCocontractorComponent implements OnInit {
             : "";
 
           // Divise le numéro interne en abréviation et partie numérique
-          const internalNumberParts = contract.internal_number
-            ? contract.internal_number.split("-")
-            : ["", ""];
+          // const internalNumberParts = contract.internal_number
+          //   ? contract.internal_number.split("-")
+          //   : ["", ""];
+          // const abbreviation = internalNumberParts[0];
+          // const numericPart = internalNumberParts[1];
+          const internalNumberParts = contract.internal_number ? contract.internal_number.split("-") : ["", "", ""];
           const abbreviation = internalNumberParts[0];
-          const numericPart = internalNumberParts[1];
+          const year = internalNumberParts[1];
+          const numericPart = internalNumberParts[2];
+          const suffix = internalNumberParts.length > 3 ? internalNumberParts[3] : '';
 
           // si prevision_data_hour et prevision_data_day ne sont pas remplis, 
           // les remplit avec les valeurs de execution_data_hour et execution_data_day
@@ -323,8 +335,12 @@ export class OrderUpdateCocontractorComponent implements OnInit {
             end_date_customer: contract.end_date_customer,
             external_contributor_invoice_date: contract.external_contributor_invoice_date,
             date_cde: contract.date_cde,
-            internalNumberAbbrPart: abbreviation, // Partie abréviation
-            internalNumberNumericPart: numericPart, // Partie numérique
+            // internalNumberAbbrPart: abbreviation, // Partie abréviation
+            // internalNumberNumericPart: numericPart, // Partie numérique
+            internalNumberAbbrPart: abbreviation,
+            internalNumberYearPart: year,
+            internalNumberNumericPart: numericPart,
+            internalNumberSuffixPart: suffix,
             benefit: contract.benefit,
           };
 
@@ -412,6 +428,17 @@ export class OrderUpdateCocontractorComponent implements OnInit {
 
     if (this.orderUpdateForm.valid) {
       const data = this.prepareDataForSubmit();
+
+      // Assemblage des parties du numéro interne
+      const internalNumberAbbrPart = this.orderUpdateForm.get('internalNumberAbbrPart').value;
+      const internalNumberYearPart = this.orderUpdateForm.get('internalNumberYearPart').value;
+      const internalNumberNumericPart = this.orderUpdateForm.get('internalNumberNumericPart').value;
+      const internalNumberSuffixPart = this.orderUpdateForm.get('internalNumberSuffixPart').value;
+
+      // Combinaison des parties du numéro interne
+      data.internal_number = `${internalNumberAbbrPart}-${internalNumberYearPart}-${internalNumberNumericPart}${internalNumberSuffixPart || ''}`;
+
+
       console.log("Data to submit:", data);
       this.contractService
         // .updateContract(this.contractId, this.orderUpdateForm.value)
@@ -441,6 +468,15 @@ export class OrderUpdateCocontractorComponent implements OnInit {
     const status = this.orderUpdateForm.get("status").value;
     const data = { ...this.orderUpdateForm.value };
     console.log("data befor modification", data);
+    // Assemblage des parties du numéro interne
+    const internalNumberAbbrPart = this.orderUpdateForm.get('internalNumberAbbrPart').value;
+    const internalNumberYearPart = this.orderUpdateForm.get('internalNumberYearPart').value;
+    const internalNumberNumericPart = this.orderUpdateForm.get('internalNumberNumericPart').value;
+    const internalNumberSuffixPart = this.orderUpdateForm.get('internalNumberSuffixPart').value;
+
+    // Combinaison des parties du numéro interne, ajout d'un "-" avant le suffixe s'il existe
+    data.internal_number = `${internalNumberAbbrPart}-${internalNumberYearPart}-${internalNumberNumericPart}${internalNumberSuffixPart ? '-' + internalNumberSuffixPart : ''}`;
+
     data.status = status;
     // convertit date_cde en dd/mm/yyyy
     data.date_cde = new Date(data.date_cde).toLocaleDateString("fr-CA");

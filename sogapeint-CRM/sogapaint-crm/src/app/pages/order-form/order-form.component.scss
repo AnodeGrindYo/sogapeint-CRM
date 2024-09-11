@@ -1265,5 +1265,32 @@ svg:hover {
     transition: transform 0.3s ease;
 }
 
+.form-control {
+    padding: 0.375rem 0.75rem;  // Standard padding pour les champs de formulaire
+    box-sizing: border-box;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.input-group .form-control {
+    flex: 1;
+}
+
+.input-group .col-auto {
+    margin-left: 5px;  // Ajuster si nécessaire pour les tirets
+}
+
+.suffix-input {
+    padding: 0.375rem 0.75rem;  // S'assurer que les marges et paddings correspondent aux autres champs
+    margin-top: 0 !important;   // Éviter tout décalage
+    flex-grow: 1;               // Pour s'assurer que le champ prenne la largeur correcte
+}
+
+
+
 
 

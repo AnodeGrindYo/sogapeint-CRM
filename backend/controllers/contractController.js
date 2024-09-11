@@ -122,10 +122,60 @@ exports.getContracts = async (req, res) => {
 // };
 
 // Modification du format de internal_number
+
+// exports.getContractsByInternalNumber = async (req, res) => {
+//     try {
+//         const { internalNumber } = req.query;
+//         let contracts = await ContractModel.find({ internal_number: internalNumber })
+//             .populate('customer')
+//             .populate('contact')
+//             .populate('external_contributor')
+//             .populate('subcontractor');
+
+//         contracts = contracts.map(contract => {
+//             contract = contract.toObject();
+
+//             // Vérification et modification du format du numéro interne
+//             const currentYear = new Date().getFullYear();
+//             if (contract.internal_number.match(/^[A-Z]+-\d{3}$/)) {
+//                 contract.internal_number = `${contract.internal_number.split('-')[0]}-${currentYear}-${contract.internal_number.split('-')[1]}`;
+//             }
+
+//             if (contract.customer) {
+//                 sanitizeFields(contract.customer);
+//             }
+//             if (contract.contact) {
+//                 sanitizeFields(contract.contact);
+//             }
+//             if (contract.external_contributor) {
+//                 sanitizeFields(contract.external_contributor);
+//             }
+//             if (contract.subcontractor) {
+//                 sanitizeFields(contract.subcontractor);
+//             }
+
+//             return contract;
+//         });
+
+//         res.json(contracts);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des contrats par numéro interne:', error);
+//         res.status(500).send({ message: "Erreur lors de la récupération des contrats par numéro interne", error });
+//     }
+// };
+
+
+// Fonction pour supprimer uniquement les champs sensibles sans affecter l'objet principal
+
 exports.getContractsByInternalNumber = async (req, res) => {
     try {
         const { internalNumber } = req.query;
-        let contracts = await ContractModel.find({ internal_number: internalNumber })
+
+        // Vérification si le numéro interne inclut un suffixe
+        const regex = new RegExp(`^${internalNumber}`, 'i'); // Cherche à partir du numéro interne fourni
+
+        // Trouver les contrats dont le numéro interne correspond partiellement ou totalement
+        let contracts = await ContractModel.find({ internal_number: { $regex: regex } })
             .populate('customer')
             .populate('contact')
             .populate('external_contributor')
@@ -134,12 +184,7 @@ exports.getContractsByInternalNumber = async (req, res) => {
         contracts = contracts.map(contract => {
             contract = contract.toObject();
 
-            // Vérification et modification du format du numéro interne
-            const currentYear = new Date().getFullYear();
-            if (contract.internal_number.match(/^[A-Z]+-\d{3}$/)) {
-                contract.internal_number = `${contract.internal_number.split('-')[0]}-${currentYear}-${contract.internal_number.split('-')[1]}`;
-            }
-
+            // Sanitize les informations sensibles
             if (contract.customer) {
                 sanitizeFields(contract.customer);
             }
@@ -164,7 +209,7 @@ exports.getContractsByInternalNumber = async (req, res) => {
 };
 
 
-// Fonction pour supprimer uniquement les champs sensibles sans affecter l'objet principal
+
 function sanitizeFields(user) {
     delete user.password;
     delete user.salt;
@@ -1101,42 +1146,140 @@ exports.deleteContract = async (req, res) => {
 //     }
 // };
 // Modification du format de internal_number
+// exports.getContractsInternalNumbers = async (req, res) => {
+//     try {
+//         console.log('Récupération des numéros internes des contrats pour l\'année ', new Date().getFullYear());
+        
+//         const currentYear = new Date().getFullYear();
+
+//         // Récupérer tous les contrats pour l'année en cours
+//         const contracts = await ContractModel.find({
+//             date_cde: {
+//                 $gte: new Date(currentYear, 0, 1),
+//                 $lt: new Date(currentYear + 1, 0, 1)
+//             }
+//         });
+        
+//         console.log(`Found ${contracts.length} contracts`);
+
+//         // Transformation des numéros internes pour inclure l'année correcte
+//         const internalNumbers = contracts.map(contract => {
+//             const internalNumberParts = contract.internal_number.split('-');
+
+//             if (internalNumberParts.length === 3 && internalNumberParts[1] === new Date(contract.dateAdd).getFullYear().toString()) {
+//                 // Si le numéro interne est déjà au format correct (abbr-année-numéro)
+//                 return contract.internal_number;
+//             } else if (internalNumberParts.length === 2) {
+//                 // Si le numéro interne est au format abbr-numéro (ancien format), on utilise dateAdd pour l'année
+//                 const [abbr, numericPart] = internalNumberParts;
+//                 const yearFromAdd = new Date(contract.dateAdd).getFullYear(); // Année basée sur dateAdd
+//                 return `${abbr}-${yearFromAdd}-${numericPart.padStart(3, '0')}`;
+//             } else {
+//                 // Si le format est incorrect, on retourne le numéro tel quel
+//                 console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${contract.internal_number}`);
+//                 return contract.internal_number;
+//             }
+//         });
+
+//         // Retourner tous les numéros internes formatés
+//         res.status(200).json(internalNumbers);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+// exports.getContractsInternalNumbers = async (req, res) => {
+//     try {
+//         console.log('Récupération des numéros internes des contrats pour l\'année ', new Date().getFullYear());
+        
+//         const currentYear = new Date().getFullYear();
+
+//         // Récupérer tous les contrats pour l'année en cours
+//         const contracts = await ContractModel.find({
+//             date_cde: {
+//                 $gte: new Date(currentYear, 0, 1),
+//                 $lt: new Date(currentYear + 1, 0, 1)
+//             }
+//         });
+        
+//         console.log(`Found ${contracts.length} contracts`);
+
+//         // Transformation des numéros internes pour valider leur format
+//         const internalNumbers = contracts.map(contract => {
+//             const internalNumber = contract.internal_number.trim(); // Supprime les espaces
+//             const internalNumberParts = internalNumber.split('-');
+
+//             // Ajout d'un log pour aider à diagnostiquer
+//             console.log(`Contrat ${contract._id} - Internal Number: ${internalNumber}`);
+
+//             // Validation du format du numéro interne: abbr-année-numéro
+//             if (internalNumberParts.length === 3) {
+//                 const abbr = internalNumberParts[0];
+//                 const year = internalNumberParts[1];
+//                 const number = internalNumberParts[2];
+
+//                 // On vérifie que l'année dans le numéro interne correspond bien à l'année courante et que le numéro est bien de 3 chiffres
+//                 if (year === currentYear.toString() && number.length === 3) {
+//                     return internalNumber;
+//                 } else {
+//                     console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${internalNumber} (année attendue: ${currentYear})`);
+//                     return internalNumber;
+//                 }
+//             } else {
+//                 // Si le format est incorrect, on retourne le numéro tel quel avec un avertissement
+//                 console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${internalNumber}`);
+//                 return internalNumber;
+//             }
+//         });
+
+//         // Retourner tous les numéros internes formatés
+//         res.status(200).json(internalNumbers);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
 exports.getContractsInternalNumbers = async (req, res) => {
     try {
-        console.log('Récupération des numéros internes des contrats pour l\'année ', new Date().getFullYear());
-        
+        console.log('Récupération des numéros internes des contrats pour l\'année', new Date().getFullYear());
+
         const currentYear = new Date().getFullYear();
 
-        // Récupérer tous les contrats pour l'année en cours
+        // Récupérer tous les contrats créés pour l'année en cours
         const contracts = await ContractModel.find({
             date_cde: {
                 $gte: new Date(currentYear, 0, 1),
                 $lt: new Date(currentYear + 1, 0, 1)
             }
         });
-        
+
         console.log(`Found ${contracts.length} contracts`);
 
-        // Transformation des numéros internes pour inclure l'année correcte
         const internalNumbers = contracts.map(contract => {
-            const internalNumberParts = contract.internal_number.split('-');
+            const internalNumber = contract.internal_number.trim();
+            const internalNumberParts = internalNumber.split('-');
 
-            if (internalNumberParts.length === 3 && internalNumberParts[1] === new Date(contract.dateAdd).getFullYear().toString()) {
-                // Si le numéro interne est déjà au format correct (abbr-année-numéro)
-                return contract.internal_number;
-            } else if (internalNumberParts.length === 2) {
-                // Si le numéro interne est au format abbr-numéro (ancien format), on utilise dateAdd pour l'année
-                const [abbr, numericPart] = internalNumberParts;
-                const yearFromAdd = new Date(contract.dateAdd).getFullYear(); // Année basée sur dateAdd
-                return `${abbr}-${yearFromAdd}-${numericPart.padStart(3, '0')}`;
+            // Assurer que le format du numéro interne est correct, sans limiter la partie numérique à 3 chiffres
+            if (internalNumberParts.length >= 3) {
+                const abbr = internalNumberParts[0];
+                const year = internalNumberParts[1];
+                const number = internalNumberParts[2]; // Peut faire plus de 3 chiffres
+                const suffix = internalNumberParts[3] || ''; // Suffixe optionnel
+
+                if (year === currentYear.toString()) {
+                    // Retourner le numéro complet avec suffixe si applicable
+                    return suffix ? `${abbr}-${year}-${number}-${suffix}` : `${abbr}-${year}-${number}`;
+                } else {
+                    console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${internalNumber}`);
+                    return internalNumber;
+                }
             } else {
-                // Si le format est incorrect, on retourne le numéro tel quel
-                console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${contract.internal_number}`);
-                return contract.internal_number;
+                console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${internalNumber}`);
+                return internalNumber;
             }
         });
 
-        // Retourner tous les numéros internes formatés
         res.status(200).json(internalNumbers);
     } catch (error) {
         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);

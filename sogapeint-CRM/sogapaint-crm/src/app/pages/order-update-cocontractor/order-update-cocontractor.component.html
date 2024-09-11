@@ -7,7 +7,7 @@
             <div class="card-header">Référence commande</div>
             <div class="card-body">
               <div class="row mb-3 d-flex align-items-center">
-                <div class="col">
+                <!-- <div class="col">
                   <label for="internal_number_abbr_part" class="form-label">Abréviation</label>
                   <ng-select 
                     id="internal_number_abbr_part" 
@@ -32,7 +32,63 @@
                     formControlName="internalNumberNumericPart"
                     [readOnly]="true"
                   >
-                </div>
+                </div> -->
+              
+                <!-- Ajout de l'abréviation -->
+              <div class="col">
+                <label for="internal_number_abbr_part" class="form-label">Abréviation</label>
+                <ng-select 
+                  id="internal_number_abbr_part" 
+                  formControlName="internalNumberAbbrPart" 
+                  [items]="filteredAbbreviationList" 
+                  placeholder="Sélectionnez l'abréviation" 
+                  class="form-control" 
+                  [addTag]="false" 
+                  [readonly]="true"
+                  [searchable]="false"
+                  [clearable]="false">
+                </ng-select>
+              </div>
+              
+              <!-- Séparation avec le tiret -->
+              <div class="col-auto align-self-center"> - </div>
+              
+              <!-- Ajout de l'année -->
+              <div class="col">
+                <label for="internal_number_year_part" class="form-label">Année</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="internal_number_year_part" 
+                  formControlName="internalNumberYearPart"
+                  [readonly]="true"
+                  min="2020" max="9999">
+              </div>
+              
+              <div class="col-auto align-self-center"> - </div>
+              
+              <!-- Ajout du numéro interne -->
+              <div class="col">
+                <label for="internal_number_numeric_part" class="form-label">Numéro interne</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="internal_number_numeric_part" 
+                  formControlName="internalNumberNumericPart"
+                  [readonly]="true">
+              </div>
+              
+              <!-- Ajout du suffixe -->
+              <div class="col">
+                <label for="internal_number_suffix_part" class="form-label">Suffixe</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="internal_number_suffix_part" 
+                  formControlName="internalNumberSuffixPart"
+                  [readonly]="true">
+              </div>
+              
               </div>
               <div class="mb-3">
                 <label for="customer" class="form-label">Client</label>

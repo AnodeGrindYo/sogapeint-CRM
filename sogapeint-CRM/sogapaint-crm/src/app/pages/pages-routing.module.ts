@@ -46,8 +46,9 @@ const routes: Routes = [
     // route pour la landing page
     // { path: '', component: LandingPageComponent},
     //  la route par défaut dépend du rôle de l'utilisateur : dashboard pour admin et superAdmin, manageOrders pour les autres
-    { path: '', component: DashboardComponent, data: { roles: ['Admin', 'superAdmin'] }},
-    { path: '', component: ManageOrdersComponent, data: { roles: ['subcontractor', 'coContractor', 'supermanager', 'comanager'] }},
+    // { path: '', component: DashboardComponent, data: { roles: ['Admin', 'superAdmin'] }},
+    // { path: '', component: ManageOrdersComponent, data: { roles: ['subcontractor', 'coContractor', 'supermanager', 'comanager'] }},
+    { path: '', canActivate: [RoleRedirectGuard] },
     { path: 'endless-ascension', component: EndlessAscensionComponent, canActivate: [AuthGuard] }
 ];
 
