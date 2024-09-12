@@ -23,8 +23,9 @@ export class LandingPageComponent implements OnInit{
     ) { }
   
     ngOnInit(): void {
-      this.currentUser = this.authenticationService.currentUserValue;
+      this.currentUser = this.userProfileService.getCurrentUser();
       console.log(this.currentUser);
+      console.log(this.currentUser.role);
       this.toastr.success('Bonjour ' + this.currentUser.firstName + ' !', 'Bienvenue');
       // si le role de l'utilisateur est admin ou superAdmin, on le redirige vers /dashboard au bout de 15 secondes
       const delay = 5000;

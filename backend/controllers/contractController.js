@@ -230,7 +230,7 @@ exports.getContractsByMonth = async (req, res) => {
         const startDate = new Date(currentYear, monthNumber - 1, 1);
         const endDate = new Date(currentYear, monthNumber, 0, 23, 59, 59);
         
-        const contracts = await ContractModel.find({
+        let contracts = await ContractModel.find({
             dateAdd: { $gte: startDate, $lt: endDate }
         })
         .populate('customer')
@@ -238,7 +238,7 @@ exports.getContractsByMonth = async (req, res) => {
         .populate('external_contributor')
         .populate('subcontractor');
         
-        contracts = contracts.forEach(sanitizeContract);
+        // contracts = contracts.forEach(sanitizeContract);
         res.json(contracts);
     } catch (error) {
         console.error('Erreur lors de la récupération des contrats pour le mois donné:', error);
