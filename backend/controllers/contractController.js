@@ -993,7 +993,7 @@ exports.updateContract = async (req, res) => {
             }
         });
 
-        const updatedContract = await ContractModel.findByIdAndUpdate(
+        let updatedContract = await ContractModel.findByIdAndUpdate(
             contractId,
             updateData, { new: true, runValidators: true }
         ).populate('external_contributor customer');
@@ -1266,11 +1266,6 @@ exports.getContractsInternalNumbers = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
-
-
-
-
 
 
 
