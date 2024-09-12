@@ -632,23 +632,38 @@ getInternalNumbers() {
 // }
 // Modification du format de internal_number
 getNextInternalNumber(abbr: string): string {
+  const currentYear = new Date().getFullYear().toString();
+  const validFormatRegex = /^[A-Z]+-\d{4}-\d+(?:-\w+)?$/; // Regex pour vérifier le format attendu
+
+  // Filtrer les numéros internes avec un format valide et correspondant à l'abréviation et à l'année en cours
   const filteredNumbers = this.internalNumberList
-    .filter((item) => item.startsWith(`${abbr.toUpperCase()}-${new Date().getFullYear()}`)) // Modification pour tenir compte de l'année
+    .filter((item) => validFormatRegex.test(item)) // Exclure les numéros avec un format incorrect
+    .filter((item) => {
+      const parts = item.split("-");
+      const itemAbbr = parts[0];
+      const itemYear = parts[1];
+      return itemAbbr === abbr.toUpperCase() && itemYear === currentYear;
+    })
     .map((item) => {
-      const match = item.match(/([A-Z]+)-(\d{4})-(\d+)(-[A-Z0-9]*)?/);
-      return match ? parseInt(match[3], 10) : null; // Utilisation de la 3ème capture (partie numérique)
+      // Extraction de la partie numérique sans tenir compte du suffixe éventuel
+      const match = item.match(/([A-Z]+)-(\d{4})-(\d+)(?:-(\w+))?/);
+      return match ? parseInt(match[3], 10) : null; // Convertir en nombre entier pour comparaison
     })
     .filter((number) => number !== null);
 
   if (filteredNumbers.length === 0) {
-    return "001"; // Retourner 000 si aucun numéro n'existe encore pour cette abbréviation et année
+    return "001"; // Si aucun numéro n'existe pour l'année, on commence avec "001"
   }
 
-  const maxNumber = Math.max(...filteredNumbers);
-  const nextNumber = maxNumber + 1;
-  const nextNumberString = nextNumber.toString().padStart(3, "0");
-  return nextNumberString;
+  // Trouver le numéro maximum parmi les numéros existants
+  const maxNumber = Math.max(...filteredNumbers); // Comparer en tant qu'entiers
+  const nextNumber = maxNumber + 1; // Calculer le prochain numéro
+
+  // Formater le prochain numéro avec padding (3 chiffres minimum)
+  return nextNumber.toString().padStart(3, "0");
 }
+
+
 
 // Modification du format de internal_number
 isInternalNumberNumericPartValid(): boolean {

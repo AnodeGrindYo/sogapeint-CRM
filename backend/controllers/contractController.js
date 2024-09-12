@@ -1242,13 +1242,12 @@ exports.deleteContract = async (req, res) => {
 
 exports.getContractsInternalNumbers = async (req, res) => {
     try {
-        console.log('Récupération des numéros internes des contrats pour l\'année', new Date().getFullYear());
-
         const currentYear = new Date().getFullYear();
+        console.log('Récupération des numéros internes des contrats pour l\'année', currentYear);
 
-        // Récupérer tous les contrats créés pour l'année en cours
+        // Récupérer tous les contrats ajoutés durant l'année en cours, en utilisant le champ dateAdd
         const contracts = await ContractModel.find({
-            date_cde: {
+            dateAdd: {
                 $gte: new Date(currentYear, 0, 1),
                 $lt: new Date(currentYear + 1, 0, 1)
             }
@@ -1256,29 +1255,10 @@ exports.getContractsInternalNumbers = async (req, res) => {
 
         console.log(`Found ${contracts.length} contracts`);
 
-        const internalNumbers = contracts.map(contract => {
-            const internalNumber = contract.internal_number.trim();
-            const internalNumberParts = internalNumber.split('-');
-
-            // Assurer que le format du numéro interne est correct, sans limiter la partie numérique à 3 chiffres
-            if (internalNumberParts.length >= 3) {
-                const abbr = internalNumberParts[0];
-                const year = internalNumberParts[1];
-                const number = internalNumberParts[2]; // Peut faire plus de 3 chiffres
-                const suffix = internalNumberParts[3] || ''; // Suffixe optionnel
-
-                if (year === currentYear.toString()) {
-                    // Retourner le numéro complet avec suffixe si applicable
-                    return suffix ? `${abbr}-${year}-${number}-${suffix}` : `${abbr}-${year}-${number}`;
-                } else {
-                    console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${internalNumber}`);
-                    return internalNumber;
-                }
-            } else {
-                console.warn(`Numéro interne invalide pour le contrat ${contract._id}: ${internalNumber}`);
-                return internalNumber;
-            }
-        });
+        // Extraire et retourner les numéros internes, avec une vérification pour s'assurer que internal_number est défini
+        const internalNumbers = contracts
+            .filter(contract => contract.internal_number) // Ne garder que les contrats avec un numéro interne défini
+            .map(contract => contract.internal_number.trim()); // Utiliser trim uniquement si internal_number est présent
 
         res.status(200).json(internalNumbers);
     } catch (error) {
@@ -1286,6 +1266,7 @@ exports.getContractsInternalNumbers = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 
 
