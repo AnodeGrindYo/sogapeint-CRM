@@ -579,6 +579,7 @@ getInternalNumbers() {
     },
     
     complete: () => {
+      console.log("Numéros internes récupérés:", this.internalNumberList);
       this.initializeInternalNumber();
     },
     error: (error) => {
@@ -634,7 +635,7 @@ getNextInternalNumber(abbr: string): string {
   const filteredNumbers = this.internalNumberList
     .filter((item) => item.startsWith(`${abbr.toUpperCase()}-${new Date().getFullYear()}`)) // Modification pour tenir compte de l'année
     .map((item) => {
-      const match = item.match(/([A-Z]+)-(\d{4})-(\d{3})/); // Modification du regex pour inclure l'année
+      const match = item.match(/([A-Z]+)-(\d{4})-(\d+)(-[A-Z0-9]*)?/);
       return match ? parseInt(match[3], 10) : null; // Utilisation de la 3ème capture (partie numérique)
     })
     .filter((number) => number !== null);
