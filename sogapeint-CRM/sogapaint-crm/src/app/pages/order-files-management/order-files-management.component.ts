@@ -57,35 +57,57 @@ export class OrderFilesManagementComponent implements OnInit {
   //   });
   // }
 
+  // loadFiles() {
+  //   this.contractService.getContractById(this.contractId).subscribe({
+  //       next: (data) => {
+  //           console.log("Données reçues pour les fichiers:", data);
+  //           if (data && data.file) {
+  //               if (['cocontractor', 'subcontractor'].includes(this.currentUser.role)) {
+  //                   this.files = data.file.filter(file => file.name.startsWith('invoice_'));
+  //               } else if (this.currentUser.role === 'superAdmin') {
+  //                   this.files = data.file;
+  //               } else if (this.currentUser.role === 'comanager' || this.currentUser.role === 'supermanager') {
+  //                   this.files = data.file.filter(file => !file.name.startsWith('invoice_'));
+  //               } else {
+  //                   this.files = data.file.filter(file => !file.name.startsWith('invoice_'));
+  //               }
+  //           } else {
+  //               console.error("Aucun fichier ou mauvais format de données:", data);
+  //               this.files = [];
+  //           }
+  //           console.log("Fichiers filtrés selon le rôle:", this.files);
+  //       },
+  //       error: (error) => {
+  //           console.error("Erreur lors du chargement des fichiers", error);
+  //           this.files = [];
+  //       }
+  //   });
+  // }
+
   loadFiles() {
     this.contractService.getContractById(this.contractId).subscribe({
-        next: (data) => {
-            console.log("Données reçues pour les fichiers:", data);
-            if (data && data.file) {
-                if (['cocontractor', 'subcontractor'].includes(this.currentUser.role)) {
-                    this.files = data.file.filter(file => file.name.startsWith('invoice_'));
-                } else if (this.currentUser.role === 'superAdmin') {
-                    this.files = data.file;
-                } else if (this.currentUser.role === 'comanager' || this.currentUser.role === 'supermanager') {
-                    this.files = data.file.filter(file => !file.name.startsWith('invoice_'));
-                } else {
-                    this.files = data.file.filter(file => !file.name.startsWith('invoice_'));
-                }
-            } else {
-                console.error("Aucun fichier ou mauvais format de données:", data);
-                this.files = [];
-            }
-            console.log("Fichiers filtrés selon le rôle:", this.files);
-        },
-        error: (error) => {
-            console.error("Erreur lors du chargement des fichiers", error);
-            this.files = [];
+      next: (data) => {
+        console.log("Données reçues pour les fichiers:", data);
+        if (data && data.file) {
+          if (['cocontractor', 'subcontractor'].includes(this.currentUser.role)) {
+            this.files = data.file.filter(file => file.name.startsWith('invoice_'));
+          } else if (this.currentUser.role === 'superAdmin' || this.currentUser.role === 'comanager' || this.currentUser.role === 'supermanager') {
+            this.files = data.file;
+          } else {
+            this.files = data.file.filter(file => !file.name.startsWith('invoice_'));
+          }
+        } else {
+          console.error("Aucun fichier ou mauvais format de données:", data);
+          this.files = [];
         }
+        console.log("Fichiers filtrés selon le rôle:", this.files);
+      },
+      error: (error) => {
+        console.error("Erreur lors du chargement des fichiers", error);
+        this.files = [];
+      }
     });
   }
-
-  
-  
   
   
   onFileDownload(file: any) {
@@ -115,17 +137,29 @@ export class OrderFilesManagementComponent implements OnInit {
     }
   }
   
+  // onSelect(event) {
+  //   if (this.currentUser.role === 'superAdmin' || (this.isInvoiceMode && (this.currentUser.role === 'cocontractor' || this.currentUser.role === 'subcontractor'))) {
+  //     console.log(event);
+  //     this.files_to_upload.push(...event.addedFiles);
+  //     this.uploadFile(this.files_to_upload);
+  //     this.files_to_upload = [];
+  //   } else {
+  //     // Afficher un message d'erreur ou ne rien faire
+  //     console.error("Vous n'êtes pas autorisé à uploader des fichiers ici.");
+  //   }
+  // }
+
   onSelect(event) {
-    if (this.currentUser.role === 'superAdmin' || (this.isInvoiceMode && (this.currentUser.role === 'cocontractor' || this.currentUser.role === 'subcontractor'))) {
+    if (this.currentUser.role === 'superAdmin' || this.currentUser.role === 'comanager' || this.currentUser.role === 'supermanager' || (this.isInvoiceMode && (this.currentUser.role === 'cocontractor' || this.currentUser.role === 'subcontractor'))) {
       console.log(event);
       this.files_to_upload.push(...event.addedFiles);
       this.uploadFile(this.files_to_upload);
       this.files_to_upload = [];
     } else {
-      // Afficher un message d'erreur ou ne rien faire
       console.error("Vous n'êtes pas autorisé à uploader des fichiers ici.");
     }
   }
+  
   
   uploadFile(files: File[]) {
     console.log("Fichiers à télécharger", files);
