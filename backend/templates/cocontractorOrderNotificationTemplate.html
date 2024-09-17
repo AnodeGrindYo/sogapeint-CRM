@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvelle commande pour les co-traitants</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #212529;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 10px;
+            background-color: #343a40;
+            color: #ffffff;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .details {
+            font-size: 14px;
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #333333;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>[SOGAPEINT] – Nouvelle commande [{{internal_number}}] a été créée</h2>
+        </div>
+        <div class="content">
+            <p>Bonjour {{cocontractor.firstname}},</p>
+            <p>Une nouvelle commande a été ajoutée.</p>
+            <ul class="details">
+                <li><strong>Numéro interne :</strong> {{internal_number}}</li>
+                <li><strong>Numéro de devis :</strong> {{quote_number}}</li>
+                <li><strong>Adresse :</strong> {{address}}</li>
+                <li><strong>Contact :</strong> {{contact_name}}</li>
+                <li><strong>Téléphone du contact :</strong> {{contact_phone}}</li>
+            </ul>
+            <p>Elle a été enregistrée ce jour.</p>
+            <p>Vous pouvez la consulter sur l'application <a href="{{CRM_URL}}">Sogapeint</a> dans l'espace qui vous est dédié.</p>
+        </div>
+        <div class="footer">
+            Cordialement,<br>
+            L'équipe Sogapeint
+        </div>
+    </div>
+</body>
+</html>
