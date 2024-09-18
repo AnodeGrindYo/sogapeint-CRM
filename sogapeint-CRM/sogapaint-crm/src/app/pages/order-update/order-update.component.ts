@@ -468,14 +468,21 @@ export class OrderUpdateComponent implements OnInit {
           //   ? contract.end_date_customer.split("T")[0]
           //   : "";
           if (this.isOldCommand) {
-            contract.end_date_customer = this.correctOldDateFormat(
-              contract.end_date_customer
-            );
+            contract.end_date_customer = contract.end_date_customer ? contract.end_date_customer.split("T")[0] : "";
+            // Séparation de la chaîne en trois parties : année, mois, jour
+            const [year, month, day] = contract.end_date_customer.split('-');
+
+            // Réassemblage de la date avec le jour et le mois inversés
+            contract.end_date_customer = `${year}-${day}-${month}`;
+
+            console.log("old date format for end_date_customer: ", contract.end_date_customer);
           } else {
             contract.end_date_customer = contract.end_date_customer
               ? contract.end_date_customer.split("T")[0]
               : "";
+            console.log("new date format for end_date_customer: ", contract.end_date_customer);
           }
+
 
           // Divise le numéro interne en abréviation et partie numérique
           // const internalNumberParts = contract.internal_number
