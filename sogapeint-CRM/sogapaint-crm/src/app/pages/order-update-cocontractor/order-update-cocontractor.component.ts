@@ -56,6 +56,8 @@ export class OrderUpdateCocontractorComponent implements OnInit {
   invalidKeyStrokes = 0;
   isEmojiVisible = false;
 
+  isOldCommand: boolean = false;
+
   // ViewChild('calculationDetailsModal') calculationDetailsModal;
   // totalEstimatedHours: number;
   // excessHours: number;
@@ -76,6 +78,7 @@ export class OrderUpdateCocontractorComponent implements OnInit {
     this.initializeContractId();
     this.initializeBenefits();
     this.initializeForm();
+    this.detectIfOldCommand();
     this.loadAndSetup();
     this.initializeBreadCrumbItems();
     this.initializeAbbreviationSearch();
@@ -103,6 +106,15 @@ export class OrderUpdateCocontractorComponent implements OnInit {
       { label: "Accueil", path: "/" },
       { label: "Mise à jour d’une commande", active: true },
     ];
+  }
+
+  detectIfOldCommand(): void {
+    // On vérifie si la commande n'a pas de champ createdBy
+    this.contractService
+      .getContractById(this.contractId)
+      .subscribe((contract) => {
+        this.isOldCommand = !contract.createdBy;
+      });
   }
   
   initializeAbbreviationSearch(): void {
@@ -292,9 +304,25 @@ export class OrderUpdateCocontractorComponent implements OnInit {
           contract.end_date_works = contract.end_date_works
             ? contract.end_date_works.split("T")[0]
             : "";
-          contract.end_date_customer = contract.end_date_customer
-            ? contract.end_date_customer.split("T")[0]
-            : "";
+          // contract.end_date_customer = contract.end_date_customer
+          //   ? contract.end_date_customer.split("T")[0]
+          //   : "";
+          if (this.isOldCommand) {
+            contract.end_date_customer = contract.end_date_customer ? contract.end_date_customer.split("T")[0] : "";
+            // Séparation de la chaîne en trois parties : année, mois, jour
+            const [year, month, day] = contract.end_date_customer.split('-');
+
+            // Réassemblage de la date avec le jour et le mois inversés
+            contract.end_date_customer = `${year}-${day}-${month}`;
+
+            console.log("old date format for end_date_customer: ", contract.end_date_customer);
+          } else {
+            contract.end_date_customer = contract.end_date_customer
+              ? contract.end_date_customer.split("T")[0]
+              : "";
+            console.log("new date format for end_date_customer: ", contract.end_date_customer);
+          }
+
 
           // Divise le numéro interne en abréviation et partie numérique
           // const internalNumberParts = contract.internal_number
