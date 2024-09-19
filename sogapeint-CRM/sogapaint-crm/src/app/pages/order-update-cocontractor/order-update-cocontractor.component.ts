@@ -381,9 +381,60 @@ export class OrderUpdateCocontractorComponent implements OnInit {
     }
   }
 
+  // private loadUserDataAndPatchForm(contract: any, patchValues: any) {
+  //   const userRequests = [];
+
+  //   if (contract.customer)
+  //     userRequests.push(this.userProfileService.getOne(contract.customer));
+  //   if (contract.contact)
+  //     userRequests.push(this.userProfileService.getOne(contract.contact));
+  //   if (contract.internal_contributor)
+  //     userRequests.push(
+  //       this.userProfileService.getOne(contract.internal_contributor)
+  //     );
+
+
+  //   forkJoin(userRequests).pipe(
+  //     catchError(error => {
+  //       // Logique de gestion d'erreur
+  //       console.error('Une erreur est survenue lors de la récupération des utilisateurs', error);
+  //       // On pourra décider de renvoyer un Observable vide, ou de gérer l'erreur d'une manière 
+  //       // qui convient à notre application
+  //       return of([]);
+  //     })
+  //   ).subscribe((userResponses) => {
+
+  //     if (contract.customer)
+  //       patchValues.customer = userResponses.find(
+  //         (u) => u._id === contract.customer
+  //       );
+  //     if (contract.contact)
+  //       patchValues.contact = userResponses.find(
+  //         (u) => u._id === contract.contact
+  //       );
+  //     if (contract.internal_contributor)
+  //       patchValues.internal_contributor = userResponses.find(
+  //         (u) => u._id === contract.internal_contributor
+  //       );
+
+  //     if (contract.benefit) {
+  //       // Utilisez la valeur correspondante de l'objet benefit, pas l'objet entier
+  //       console.log("Benefit id to patch:", contract.benefit);
+  //       patchValues.benefit = this.benefits.find(b => b._id === contract.benefit);
+  //       console.log("Benefit value to patch:", patchValues.benefit);
+  //     }
+      
+  //     console.log("User data loaded:", userResponses);
+  //     // Après que toutes les opérations asynchrones sont terminées, patche le formulaire
+      
+  //     if (this.orderUpdateForm && patchValues) {
+  //       this.orderUpdateForm.patchValue(patchValues);
+  //     }
+  //   });
+  // }
   private loadUserDataAndPatchForm(contract: any, patchValues: any) {
     const userRequests = [];
-
+  
     if (contract.customer)
       userRequests.push(this.userProfileService.getOne(contract.customer));
     if (contract.contact)
@@ -392,56 +443,83 @@ export class OrderUpdateCocontractorComponent implements OnInit {
       userRequests.push(
         this.userProfileService.getOne(contract.internal_contributor)
       );
-
-
-    forkJoin(userRequests).pipe(
-      catchError(error => {
-        // Logique de gestion d'erreur
-        console.error('Une erreur est survenue lors de la récupération des utilisateurs', error);
-        // On pourra décider de renvoyer un Observable vide, ou de gérer l'erreur d'une manière 
-        // qui convient à notre application
-        return of([]);
-      })
-    ).subscribe((userResponses) => {
-
-      if (contract.customer)
-        patchValues.customer = userResponses.find(
-          (u) => u._id === contract.customer
+    if (contract.external_contributor)
+      userRequests.push(
+        this.userProfileService.getOne(contract.external_contributor)
+      );
+    if (contract.subcontractor)
+      userRequests.push(this.userProfileService.getOne(contract.subcontractor));
+  
+    forkJoin(userRequests)
+      .pipe(
+        catchError((error) => {
+          console.error(
+            "An error occurred while fetching users",
+            error
+          );
+          return of([]);
+        })
+      )
+      .subscribe((userResponses) => {
+        if (contract.customer)
+          patchValues.customer = userResponses.find(
+            (u) => u._id === contract.customer
+          );
+        if (contract.contact)
+          patchValues.contact = userResponses.find(
+            (u) => u._id === contract.contact
+          );
+        if (contract.internal_contributor)
+          patchValues.internal_contributor = userResponses.find(
+            (u) => u._id === contract.internal_contributor
+          );
+        if (contract.external_contributor)
+          patchValues.external_contributor = userResponses.find(
+            (u) => u._id === contract.external_contributor
+          );
+        if (contract.subcontractor)
+          patchValues.subcontractor = userResponses.find(
+            (u) => u._id === contract.subcontractor
+          );
+  
+        // Add the fetched users to the 'users' array
+        const uniqueUsers = userResponses.filter(
+          (user) => !this.users.some((u) => u._id === user._id)
         );
-      if (contract.contact)
-        patchValues.contact = userResponses.find(
-          (u) => u._id === contract.contact
-        );
-      if (contract.internal_contributor)
-        patchValues.internal_contributor = userResponses.find(
-          (u) => u._id === contract.internal_contributor
-        );
-
-      if (contract.benefit) {
-        // Utilisez la valeur correspondante de l'objet benefit, pas l'objet entier
-        console.log("Benefit id to patch:", contract.benefit);
-        patchValues.benefit = this.benefits.find(b => b._id === contract.benefit);
-        console.log("Benefit value to patch:", patchValues.benefit);
-      }
-      
-      console.log("User data loaded:", userResponses);
-      // Après que toutes les opérations asynchrones sont terminées, patche le formulaire
-      
-      if (this.orderUpdateForm && patchValues) {
-        this.orderUpdateForm.patchValue(patchValues);
-      }
-    });
+        this.users = [...this.users, ...uniqueUsers];
+  
+        console.log("User data loaded:", userResponses);
+  
+        if (this.orderUpdateForm && patchValues) {
+          this.orderUpdateForm.patchValue(patchValues);
+        }
+      });
   }
+  
 
+  // private setupUserSearch() {
+  //   this.userInput$
+  //     .pipe(
+  //       debounceTime(300),
+  //       distinctUntilChanged(),
+  //       switchMap((term) =>
+  //         term
+  //           ? this.userProfileService.searchUsers(term.toLowerCase())
+  //           : of([])
+  //       ),
+  //       takeUntil(this.unsubscribe$)
+  //     )
+  //     .subscribe((users) => {
+  //       this.users = users;
+  //     });
+  // }
   private setupUserSearch() {
     this.userInput$
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
         switchMap((term) =>
-          term
-            ? this.userProfileService.searchUsers(term.toLowerCase())
-            : of([])
+          this.userProfileService.searchUsers(term.toLowerCase())
         ),
         takeUntil(this.unsubscribe$)
       )
@@ -449,6 +527,7 @@ export class OrderUpdateCocontractorComponent implements OnInit {
         this.users = users;
       });
   }
+  
 
   onSubmitUpdate(): void {
     console.log("Attempting to submit form", this.orderUpdateForm.value);
