@@ -219,12 +219,14 @@ export class OrderFilesManagementComponent implements OnInit {
       this.loadFiles();
     } else {
       this.toastr.error('Erreur : impossible de charger les informations utilisateur. L’objet utilisateur est manquant ou invalide.');
+      console.error('Impossible de charger les informations utilisateur. L’objet utilisateur est manquant ou invalide.', this.currentUser);
     }
   }
 
   loadFiles() {
     if (!this.contractId) {
       this.toastr.error("L'ID de contrat est manquant. Veuillez vérifier les informations.");
+      console.error("L'ID de contrat est manquant :", this.contractId);
       return;
     }
 
@@ -233,6 +235,7 @@ export class OrderFilesManagementComponent implements OnInit {
         if (data && Array.isArray(data.file)) {
           this.files = this.filterFilesByRole(data.file);
           this.toastr.success('Fichiers chargés avec succès.');
+          console.log("Fichiers filtrés selon le rôle :", this.files);
         } else if (data) {
           // Affiche les champs présents dans l'objet si la propriété file est manquante ou incorrecte
           this.toastr.error("Données reçues mais sans fichiers valides. Champs présents : " + Object.keys(data).join(', '));
@@ -240,6 +243,7 @@ export class OrderFilesManagementComponent implements OnInit {
           this.files = [];
         } else {
           this.toastr.error("Erreur : données reçues nulles ou indéfinies.");
+          console.error("Données reçues nulles ou indéfinies :", data);
           this.files = [];
         }
       },
@@ -254,6 +258,7 @@ export class OrderFilesManagementComponent implements OnInit {
   filterFilesByRole(files: any[]): any[] {
     if (!this.currentUser || !this.currentUser.role) {
       this.toastr.error('Erreur : rôle utilisateur manquant ou invalide.');
+      console.error('Rôle utilisateur manquant ou invalide :', this.currentUser);
       return [];
     }
 
@@ -299,6 +304,7 @@ export class OrderFilesManagementComponent implements OnInit {
       });
     } else {
       this.toastr.warning("Le mode lecture seule est activé. Téléchargement impossible.");
+      console.warn("Tentative de téléchargement en mode lecture seule :", file);
     }
   }
 
@@ -345,10 +351,12 @@ export class OrderFilesManagementComponent implements OnInit {
         (this.isInvoiceMode && (this.currentUser.role === 'cocontractor' || this.currentUser.role === 'subcontractor'))) {
       this.files_to_upload.push(...event.addedFiles);
       this.toastr.info(`Préparation de l'upload. ${event.addedFiles.length} fichier(s) sélectionné(s).`);
+      console.log("Fichiers sélectionnés pour l'upload :", this.files_to_upload);
       this.uploadFile(this.files_to_upload);
       this.files_to_upload = [];
     } else {
       this.toastr.error("Vous n'êtes pas autorisé à uploader des fichiers. Contactez un administrateur si nécessaire.");
+      console.error("Upload de fichiers non autorisé pour le rôle :", this.currentUser.role);
     }
   }
 
@@ -362,15 +370,18 @@ export class OrderFilesManagementComponent implements OnInit {
     if (!this.isReadOnly) {
       const folderName = this.isInvoiceMode ? 'invoices' : 'files';
       this.toastr.info('Upload en cours...');
+      console.log("upload en cours des fichiers");
 
       this.contractService.uploadFiles(this.contractId, files, folderName).subscribe(
         (event) => {
           if (event instanceof HttpResponse) {
             this.toastr.success("Upload réussi !");
+            console.log("Fichiers complètement uploadés!", event.body);
             this.loadFiles();
           } else if (event.type === HttpEventType.UploadProgress && event.total) {
             const percentDone = Math.round(100 * event.loaded / event.total);
             this.toastr.info(`Progression de l'upload : ${percentDone}%`);
+            console.log(`Progression de l'upload : ${percentDone}%`);
           }
         },
         (error) => {
@@ -380,6 +391,7 @@ export class OrderFilesManagementComponent implements OnInit {
       );
     } else {
       this.toastr.warning("Le mode lecture seule est activé. Upload impossible.");
+      console.warn("Tentative d'upload en mode lecture seule :", files);
     }
   }
 }
