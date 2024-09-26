@@ -32,8 +32,9 @@ export class ContractService {
     * Envoie une requête GET pour obtenir une liste de tous les contrats.
     * @returns Un Observable contenant un tableau de contrats.
     */
-    getContracts(): Observable<any[]> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/contracts`).pipe(
+    getContracts(period: number=2): Observable<any[]> {
+        const params = { period: toString() };
+        return this.http.get<any[]>(`${environment.apiUrl}/api/contracts/contracts`, { params }).pipe(
             map(contracts => contracts.map(contract => {
                 // Initialiser invoiceStatus s'il est absent
                 if (!contract.invoiceStatus) {
@@ -197,6 +198,9 @@ export class ContractService {
             eventSource.close();
         }
     }
+
+    
+    
     
     /**
     * Méthode pour '/internalNumbers' : Récupère les numéros internes des contrats

@@ -67,12 +67,13 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     this.currentUser = this.userService.getCurrentUser();
     this.loadBenefits();
 
-    this.activeTags.push("En cours"); // désactivation à la demande de Sogapeint
+    // this.activeTags.push("En cours"); // désactivation à la demande de Sogapeint
 
-    this.availableTags = this.availableTags.filter((tag) => tag !== "En cours");
+    // this.availableTags = this.availableTags.filter((tag) => tag !== "En cours");
 
-    this.loadOnGoingContractsStream();
-    this.loadNotOnGoingContracts();
+    // this.loadOnGoingContractsStream();
+    // this.loadNotOnGoingContracts();
+    this.loadContracts();
   }
 
   ngOnDestroy() {
@@ -98,6 +99,64 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     const benefit = this.benefits.find((benefit) => benefit._id === benefitId);
     return benefit ? benefit.name : "";
   }
+
+  loadContracts() {
+    this.isLoading = true;
+  
+    this.contractService.getContracts(2)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (contracts: any[]) => {
+          const contractsArray = [];
+  
+          contracts.forEach(contract => {
+            if (!contract || !contract._id) return;
+            if (contract.trash) return; // Exclure les commandes avec trash=true
+  
+            // Filtrage basé sur le rôle de l'utilisateur
+            if (this.currentUser.role === "superAdmin") {
+              contractsArray.push(contract);
+            } else if (["cocontractor", "subcontractor", "supermanager"].includes(this.currentUser.role)) {
+              const user_company = this.normalizeString(this.currentUser.company);
+              if (this.checkCompanyInContract(contract, user_company)) {
+                contractsArray.push(contract);
+              }
+            } else if (this.currentUser.role === "customer") {
+              if (this.currentUser.userId == contract.customer?._id){
+                contractsArray.push(contract);
+              }
+            } else if (this.currentUser.role === "comanager") {
+              if (
+                this.currentUser.userId == contract.customer?._id ||
+                this.currentUser.userId == contract.contact?._id ||
+                this.currentUser.userId == contract.external_contributor?._id ||
+                this.currentUser.userId == contract.internal_contributor?._id ||
+                this.currentUser.userId == contract.subcontractor?._id
+              ){
+                contractsArray.push(contract);
+              }
+            }
+          });
+  
+          // Affecter et trier les contrats
+          this.orders = contractsArray;
+          this.filteredOrders = [...contractsArray];
+  
+          // Trier les commandes par date la plus récente
+          this.sortfilteredOrdersByMostRecent();
+  
+          // Mettre à jour l'affichage
+          this.updateOrdersToShow();
+  
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error("Erreur lors du chargement des contrats", error);
+          this.isLoading = false;
+        }
+      });
+  }
+  
 
   loadNotOnGoingContracts() {
     console.log("loadNotOnGoingContracts");
@@ -476,13 +535,13 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
         'external_contributor',
         'invoice_number',
         'end_date_customer',
-        'external_contributor_amount',
-        'benefit_ht',
-        'amount_ht',
+        // 'external_contributor_amount',
+        // 'benefit_ht',
+        // 'amount_ht',
         'end_date_work',
         'status',
         'billing_number',            // Nouveau champ
-        'billing_amount',            // Nouveau champ
+        // 'billing_amount',            // Nouveau champ
         'observation.comment',       // Nouveau champ
         'incident.comment'           // Nouveau champ
     ];

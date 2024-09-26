@@ -319,6 +319,9 @@ router.put('/contract/:contractId', isAdminOrSuperAdmin, contractController.upda
  */
 router.delete('/contract/:contractId', isAdminOrSuperAdmin, contractController.deleteContract);
 
+router.get('/contracts', isConnected, contractController.getContracts);
+
+
 /**
  * @swagger
  * /ongoingContracts:

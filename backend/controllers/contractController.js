@@ -44,7 +44,7 @@ exports.getContractById = async (req, res) => {
             });
         }
         console.log('Contract found:', contract);
-
+        
         res.status(200).json(contract);
     } catch (error) {
         console.error('Error retrieving contract:', error);
@@ -57,11 +57,11 @@ exports.getContractById = async (req, res) => {
 exports.getContracts = async (req, res) => {
     try {
         const contracts = await ContractModel.find()
-            .populate('customer')
-            .populate('contact')
-            .populate('external_contributor')
-            .populate('subcontractor');
-
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+        .populate('subcontractor');
+        
         contracts.forEach(sanitizeContract);
         res.json(contracts);
     } catch (error) {
@@ -78,22 +78,22 @@ exports.getContractsByInternalNumber = async (req, res) => {
         const {
             internalNumber
         } = req.query;
-
+        
         const regex = new RegExp(`^${internalNumber}`, 'i');
-
+        
         let contracts = await ContractModel.find({
-                internal_number: {
-                    $regex: regex
-                }
-            })
-            .populate('customer')
-            .populate('contact')
-            .populate('external_contributor')
-            .populate('subcontractor');
-
+            internal_number: {
+                $regex: regex
+            }
+        })
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+        .populate('subcontractor');
+        
         contracts = contracts.map(contract => {
             contract = contract.toObject();
-
+            
             if (contract.customer) {
                 sanitizeFields(contract.customer);
             }
@@ -106,10 +106,10 @@ exports.getContractsByInternalNumber = async (req, res) => {
             if (contract.subcontractor) {
                 sanitizeFields(contract.subcontractor);
             }
-
+            
             return contract;
         });
-
+        
         res.json(contracts);
     } catch (error) {
         console.error('Erreur lors de la récupération des contrats par numéro interne:', error);
@@ -139,21 +139,21 @@ exports.getContractsByMonth = async (req, res) => {
                 message: "Le mois spécifié est invalide"
             });
         }
-
+        
         const startDate = new Date(currentYear, monthNumber - 1, 1);
         const endDate = new Date(currentYear, monthNumber, 0, 23, 59, 59);
-
+        
         let contracts = await ContractModel.find({
-                dateAdd: {
-                    $gte: startDate,
-                    $lt: endDate
-                }
-            })
-            .populate('customer')
-            .populate('contact')
-            .populate('external_contributor')
-            .populate('subcontractor');
-
+            dateAdd: {
+                $gte: startDate,
+                $lt: endDate
+            }
+        })
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+        .populate('subcontractor');
+        
         res.json(contracts);
     } catch (error) {
         console.error('Erreur lors de la récupération des contrats pour le mois donné:', error);
@@ -164,16 +164,72 @@ exports.getContractsByMonth = async (req, res) => {
     }
 };
 
+// exports.getContracts = async (req, res) => {
+    //     try {
+//         const period = parseInt(req.query.period) || 2;
+//         const startDate = new Date();
+//         startDate.setFullYear(startDate.getFullYear() - period);
+
+//         const contracts = await ContractModel.find({
+//             trash: false,
+//             dateAdd: { $gte: startDate },
+//         })
+//         .sort({ dateAdd: -1 })
+//         .populate('customer')
+//         .populate('contact')
+//         .populate('external_contributor')
+//         .populate('subcontractor');
+
+//         contracts.forEach(sanitizeContract);
+//         res.json(contracts);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des contrats:', error);
+//         res.status(500).send({
+//             message: "Erreur lors de la récupération des contrats",
+//             error
+//         });
+//     }
+// };
+// contractController.js
+exports.getContracts = async (req, res) => {
+    try {
+        const period = parseInt(req.query.period) || 2; // Période en années
+        const startDate = new Date();
+        startDate.setFullYear(startDate.getFullYear() - period);
+        
+        const contracts = await ContractModel.find({
+            trash: false,
+            dateAdd: { $gte: startDate },
+        })
+        .sort({ dateAdd: -1 }) // Trier du plus récent au plus ancien
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+        .populate('subcontractor');
+        
+        contracts.forEach(sanitizeContract);
+        res.json(contracts);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des contrats:', error);
+        res.status(500).send({
+            message: "Erreur lors de la récupération des contrats",
+            error
+        });
+    }
+};
+
+
+
 exports.getOngoingContracts = async (req, res) => {
     try {
         const contracts = await ContractModel.find({
-                status: 'in_progress'
-            })
-            .populate('customer')
-            .populate('contact')
-            .populate('external_contributor')
-            .populate('subcontractor');
-
+            status: 'in_progress'
+        })
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+        .populate('subcontractor');
+        
         contracts.forEach(sanitizeContract);
         res.json(contracts);
     } catch (error) {
@@ -188,15 +244,15 @@ exports.getOngoingContracts = async (req, res) => {
 exports.getNotOngoingContracts = async (req, res) => {
     try {
         const contracts = await ContractModel.find({
-                status: {
-                    $ne: 'in_progress'
-                }
-            })
-            .populate('customer')
-            .populate('contact')
-            .populate('external_contributor')
-            .populate('subcontractor');
-
+            status: {
+                $ne: 'in_progress'
+            }
+        })
+        .populate('customer')
+        .populate('contact')
+        .populate('external_contributor')
+        .populate('subcontractor');
+        
         contracts.forEach(sanitizeContract);
         res.json(contracts);
     } catch (error) {
@@ -214,44 +270,44 @@ exports.streamOnGoingContracts = (req, res) => {
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
     });
-
+    
     const period = parseInt(req.query.period) || 2;
     const filter_trash = req.query.filter_trash !== 'false';
-
+    
     let filter = {
         status: {
             $in: ['in_progress', null]
         },
-
+        
         dateAdd: {
             $gte: new Date(new Date().setFullYear(new Date().getFullYear() - period)),
             $lte: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
         }
     };
-
+    
     if (filter_trash) {
         filter.trash = false;
     }
-
+    
     const cursor = ContractModel.find(filter)
-        .sort({
-            dateAdd: -1
-        })
-        .populate('customer')
-        .populate('contact')
-        .populate('external_contributor')
-        .populate('subcontractor')
-        .cursor();
-
+    .sort({
+        dateAdd: -1
+    })
+    .populate('customer')
+    .populate('contact')
+    .populate('external_contributor')
+    .populate('subcontractor')
+    .cursor();
+    
     cursor.eachAsync((contract) => {
-            sanitizeContract(contract);
-            res.write(`data: ${JSON.stringify(contract)}\n\n`);
-        })
-        .then(() => res.end())
-        .catch(err => {
-            console.error('Erreur lors du streaming des contrats en cours:', err);
-            res.status(500).end();
-        });
+        sanitizeContract(contract);
+        res.write(`data: ${JSON.stringify(contract)}\n\n`);
+    })
+    .then(() => res.end())
+    .catch(err => {
+        console.error('Erreur lors du streaming des contrats en cours:', err);
+        res.status(500).end();
+    });
 };
 
 exports.streamNotOnGoingContracts = (req, res) => {
@@ -260,30 +316,30 @@ exports.streamNotOnGoingContracts = (req, res) => {
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
     });
-
+    
     const cursor = ContractModel.find({
-            status: {
-                $ne: 'in_progress'
-            }
-        })
-        .sort({
-            'dateAdd': 'desc'
-        })
-        .populate('customer')
-        .populate('contact')
-        .populate('external_contributor')
-        .populate('subcontractor')
-        .cursor();
-
+        status: {
+            $ne: 'in_progress'
+        }
+    })
+    .sort({
+        'dateAdd': 'desc'
+    })
+    .populate('customer')
+    .populate('contact')
+    .populate('external_contributor')
+    .populate('subcontractor')
+    .cursor();
+    
     cursor.eachAsync((contract) => {
-            sanitizeContract(contract);
-            res.write(`data: ${JSON.stringify(contract)}\n\n`);
-        })
-        .then(() => res.end())
-        .catch(err => {
-            console.error('Erreur lors du streaming des contrats non en cours:', err);
-            res.status(500).end();
-        });
+        sanitizeContract(contract);
+        res.write(`data: ${JSON.stringify(contract)}\n\n`);
+    })
+    .then(() => res.end())
+    .catch(err => {
+        console.error('Erreur lors du streaming des contrats non en cours:', err);
+        res.status(500).end();
+    });
 };
 
 exports.streamOrdersByTag = (req, res) => {
@@ -291,7 +347,7 @@ exports.streamOrdersByTag = (req, res) => {
         status,
         incident = false
     } = req.query;
-
+    
     let query = {};
     if (status) {
         query.status = status;
@@ -304,40 +360,40 @@ exports.streamOrdersByTag = (req, res) => {
             }
         };
     }
-
+    
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
     });
-
+    
     const sortOrder = status === 'in_progress' ? 'asc' : 'desc';
-
+    
     Contract.find(query)
-        .sort({
-            'internal_number': 1,
-            'dateAdd': sortOrder
-        })
-        .populate('customer contact external_contributor subcontractor')
-        .then(contracts => {
-            const groupedContracts = groupByInternalNumber(contracts);
-            groupedContracts.forEach(group => {
-                group.forEach(contract => {
-
-                    const currentYear = new Date().getFullYear();
-                    if (contract.internal_number.match(/^[A-Z]+-\d{3}$/)) {
-                        contract.internal_number = `${contract.internal_number.split('-')[0]}-${currentYear}-${contract.internal_number.split('-')[1]}`;
-                    }
-                    sanitizeContract(contract);
-                });
-                res.write(`data: ${JSON.stringify(group)}\n\n`);
+    .sort({
+        'internal_number': 1,
+        'dateAdd': sortOrder
+    })
+    .populate('customer contact external_contributor subcontractor')
+    .then(contracts => {
+        const groupedContracts = groupByInternalNumber(contracts);
+        groupedContracts.forEach(group => {
+            group.forEach(contract => {
+                
+                const currentYear = new Date().getFullYear();
+                if (contract.internal_number.match(/^[A-Z]+-\d{3}$/)) {
+                    contract.internal_number = `${contract.internal_number.split('-')[0]}-${currentYear}-${contract.internal_number.split('-')[1]}`;
+                }
+                sanitizeContract(contract);
             });
-            res.end();
-        })
-        .catch(err => {
-            console.error('Erreur lors du streaming des contrats:', err);
-            res.status(500).end();
+            res.write(`data: ${JSON.stringify(group)}\n\n`);
         });
+        res.end();
+    })
+    .catch(err => {
+        console.error('Erreur lors du streaming des contrats:', err);
+        res.status(500).end();
+    });
 };
 
 function groupByInternalNumber(contracts) {
@@ -361,7 +417,7 @@ function groupByInternalNumber(contracts) {
 };
 
 // exports.addContract = async (req, res) => {
-//     try {
+    //     try {
 //         const {
 //             internal_number = '',
 //                 customer = null,
@@ -462,7 +518,7 @@ function groupByInternalNumber(contracts) {
 
 //             const emailReplacements = {
 //                 contracts: contracts.map(contract => ({
-//                     internal_number: contract.internal_number,
+    //                     internal_number: contract.internal_number,
 //                     benefit: contract.benefit,
 //                     date_cde: formatDate(contract.date_cde),
 //                     status: translateStatus(contract.status),
@@ -524,12 +580,12 @@ exports.addContract = async (req, res) => {
             createdBy = null,
             isLastContract = false
         } = req.body;
-
+        
         const currentDate = new Date();
         const dateAdd = currentDate;
         const external_contributor_invoice_date = new Date();
         external_contributor_invoice_date.setDate(currentDate.getDate() + 2);
-
+        
         const newContract = new ContractModel({
             internal_number: internal_number || 'Default-Number',
             customer: customer ? new mongoose.Types.ObjectId(customer) : null,
@@ -566,12 +622,12 @@ exports.addContract = async (req, res) => {
             createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null,
             isLastContract
         });
-
+        
         await newContract.save();
-
+        
         // Collecte des informations dynamiques pour l'email
         const replacements = await EmailUtils.getEmailReplacements(newContract);
-
+        
         // Envoi de l'email au contributeur externe
         if (newContract.external_contributor) {
             const externalContributorEmail = newContract.external_contributor.email;
@@ -582,7 +638,7 @@ exports.addContract = async (req, res) => {
                 'orderNotificationTemplate'
             );
         }
-
+        
         // Envoi de l'email au sous-traitant
         if (newContract.subcontractor) {
             const subcontractorEmail = newContract.subcontractor.email;
@@ -593,7 +649,7 @@ exports.addContract = async (req, res) => {
                 'orderNotificationTemplate'
             );
         }
-
+        
         // Envoi de l'email au co-traitant avec les fichiers joints
         if (newContract.cocontractor) {
             const cocontractorEmail = newContract.cocontractor.email;
@@ -601,7 +657,7 @@ exports.addContract = async (req, res) => {
                 filename: file.name,
                 path: file.path,
             }));
-
+            
             // Collecte les informations spécifiques au co-traitant
             const cocontractorReplacements = {
                 internal_number: newContract.internal_number,
@@ -610,7 +666,7 @@ exports.addContract = async (req, res) => {
                 contact_name: `${newContract.internal_contributor.firstname} ${newContract.internal_contributor.lastname}`,
                 contact_phone: newContract.internal_contributor.phone
             };
-
+            
             await EmailService.sendEmail(
                 cocontractorEmail,
                 'Nouvelle commande pour les co-traitants',
@@ -619,7 +675,7 @@ exports.addContract = async (req, res) => {
                 attachments
             );
         }
-
+        
         // Si c'est le dernier contrat, envoyer un email récapitulatif
         if (isLastContract) {
             const currentYear = new Date().getFullYear();
@@ -630,7 +686,7 @@ exports.addContract = async (req, res) => {
                     $lt: new Date(currentYear + 1, 0, 1)
                 }
             }).populate('customer').populate('contact').populate('external_contributor').populate('subcontractor');
-
+            
             const emailReplacements = {
                 contracts: contracts.map(contract => ({
                     internal_number: contract.internal_number,
@@ -643,7 +699,7 @@ exports.addContract = async (req, res) => {
                 })),
                 CRM_URL: process.env.CRM_URL
             };
-
+            
             await EmailService.sendEmail(
                 newContract.customer.email,
                 'Résumé des commandes',
@@ -651,7 +707,7 @@ exports.addContract = async (req, res) => {
                 'consolidatedOrderNotificationTemplate'
             );
         }
-
+        
         res.status(201).json({
             message: 'Contrat créé avec succès.',
             contractId: newContract._id,
@@ -680,7 +736,7 @@ const sendFinalizedOrderSummaryEmail = async (customerEmail, contracts) => {
         }))),
         'CRM_URL': process.env.CRM_URL
     };
-
+    
     await EmailService.sendEmail(customerEmail, 'Récapitulatif des commandes terminées/annulées', replacements, 'orderSummaryTemplate');
 };
 
@@ -693,13 +749,13 @@ exports.updateContract = async (req, res) => {
             ...req.body
         };
         console.log('Modification du contrat', contractId, updateData);
-
+        
         ['customer', 'contact', 'external_contributor', 'subcontractor'].forEach(key => {
             if (updateData[key] && mongoose.isValidObjectId(updateData[key])) {
                 updateData[key] = new mongoose.Types.ObjectId(updateData[key]);
             }
         });
-
+        
         ['start_date_works', 'end_date_works', 'end_date_customer', 'date_cde'].forEach(dateKey => {
             if (updateData[dateKey] && isNaN(Date.parse(updateData[dateKey]))) {
                 delete updateData[dateKey];
@@ -707,7 +763,7 @@ exports.updateContract = async (req, res) => {
                 updateData[dateKey] = new Date(updateData[dateKey]);
             }
         });
-
+        
         let updatedContract = await ContractModel.findByIdAndUpdate(
             contractId,
             updateData, {
@@ -715,22 +771,22 @@ exports.updateContract = async (req, res) => {
                 runValidators: true
             }
         ).populate('external_contributor customer');
-
+        
         if (!updatedContract) {
             return res.status(404).json({
                 message: 'Contrat non trouvé.',
                 contractId
             });
         }
-
+        
         const replacements = await EmailUtils.getEmailReplacements(updatedContract);
         await EmailService.sendEmail(updatedContract.customer.email, 'Mise à jour de la commande', replacements, 'orderUpdateNotificationTemplate');
-
+        
         if (updateData.status && (updateData.status === 'achieved' || updateData.status === 'cancelled')) {
             const currentYear = new Date().getFullYear();
             const startDate = new Date(currentYear, 0, 1);
             const endDate = new Date(currentYear + 1, 0, 1);
-
+            
             const contracts = await ContractModel.find({
                 internal_number: updatedContract.internal_number,
                 dateAdd: {
@@ -738,15 +794,15 @@ exports.updateContract = async (req, res) => {
                     $lt: endDate
                 }
             }).populate('external_contributor customer');
-
+            
             const allAchievedOrCancelled = contracts.every(contract =>
                 contract.status === 'achieved' || contract.status === 'cancelled'
             );
-
+            
             if (allAchievedOrCancelled) {
                 const nextDay = new Date(updatedContract.end_date_customer);
                 nextDay.setDate(nextDay.getDate() + 1);
-
+                
                 const replacementsForContractors = {
                     'contracts': await Promise.all(contracts.map(async c => ({
                         'internal_number': c.internal_number,
@@ -759,9 +815,9 @@ exports.updateContract = async (req, res) => {
                     }))),
                     'CRM_URL': process.env.CRM_URL
                 };
-
+                
                 await scheduleRecurringEmails(updatedContract.internal_number, nextDay, 3, replacementsForContractors);
-
+                
                 const customerContracts = contracts.map(contract => ({
                     'internal_number': contract.internal_number,
                     'benefit': getBenefitName(contract.benefit),
@@ -771,13 +827,13 @@ exports.updateContract = async (req, res) => {
                     'appartment_number': contract.appartment_number,
                     'external_contributor_name': `${contract.external_contributor.firstname} ${contract.external_contributor.lastname}`
                 }));
-
+                
                 await sendFinalizedOrderSummaryEmail(updatedContract.customer.email, customerContracts);
             }
         }
-
+        
         updatedContract = sanitizeContract(updatedContract);
-
+        
         res.status(200).json({
             contract: updatedContract,
             message: 'Contrat modifié avec succès.'
@@ -796,13 +852,13 @@ exports.deleteContract = async (req, res) => {
             contractId
         } = req.params;
         const deletedContract = await ContractModel.findByIdAndDelete(contractId);
-
+        
         if (!deletedContract) {
             return res.status(404).json({
                 message: 'Contrat non trouvé.'
             });
         }
-
+        
         res.status(200).json({
             message: 'Contrat supprimé avec succès.'
         });
@@ -818,7 +874,7 @@ exports.getContractsInternalNumbers = async (req, res) => {
     try {
         const currentYear = new Date().getFullYear();
         console.log('Récupération des numéros internes des contrats pour l\'année', currentYear);
-
+        
         const contracts = await ContractModel.find({
             dateAdd: {
                 $gte: new Date(currentYear, 0, 1),
@@ -826,13 +882,13 @@ exports.getContractsInternalNumbers = async (req, res) => {
             },
             trash: false
         });
-
+        
         console.log(`Found ${contracts.length} contracts`);
-
+        
         const internalNumbers = contracts
-            .filter(contract => contract.internal_number)
-            .map(contract => contract.internal_number.trim());
-
+        .filter(contract => contract.internal_number)
+        .map(contract => contract.internal_number.trim());
+        
         res.status(200).json(internalNumbers);
     } catch (error) {
         console.error('Erreur lors de la récupération des numéros internes des contrats:', error);
@@ -843,7 +899,7 @@ exports.getContractsInternalNumbers = async (req, res) => {
 };
 
 // exports.addObservation = async (req, res) => {
-//     console.log('Tentative d\'ajout d\'une observation à un contrat');
+    //     console.log('Tentative d\'ajout d\'une observation à un contrat');
 //     try {
 //         const {
 //             contractId,
@@ -901,10 +957,10 @@ exports.addObservation = async (req, res) => {
             user,
             comment
         } = req.body;
-
+        
         // Convertir l'ID utilisateur en ObjectId MongoDB
         const userObjectId = new mongoose.Types.ObjectId(user);
-
+        
         // Ajouter l'observation au contrat
         const updatedContract = await ContractModel.findByIdAndUpdate(
             contractId, {
@@ -921,23 +977,23 @@ exports.addObservation = async (req, res) => {
                 useFindAndModify: false
             }
         ).populate('customer'); // Populate pour obtenir les informations du client
-
+        
         if (!updatedContract) {
             console.log('Contrat non trouvé.');
             return res.status(404).json({
                 message: 'Contrat non trouvé.'
             });
         }
-
+        
         console.log('Observation ajoutée avec succès.');
         res.status(200).json(updatedContract);
-
+        
         // Formatage des informations pour l'email
         const replacements = await EmailUtils.getEmailReplacements(updatedContract, {
             'observation.dateAdd': new Date(dateAdd).toISOString().split('T')[0],
             'observation.comment': comment || ''
         });
-
+        
         // Envoi de l'email au client
         if (updatedContract.customer && updatedContract.customer.email) {
             await EmailService.sendEmail(
@@ -964,9 +1020,9 @@ exports.deleteObservation = async (req, res) => {
     try {
         const observationId = req.params.observationId;
         console.log('Suppression de l\'observation avec l\'ID:', observationId);
-
+        
         const observationObjectId = new mongoose.Types.ObjectId(observationId);
-
+        
         const updatedContract = await ContractModel.findOneAndUpdate({
             'observation._id': observationObjectId
         }, {
@@ -978,13 +1034,13 @@ exports.deleteObservation = async (req, res) => {
         }, {
             new: true
         });
-
+        
         if (!updatedContract) {
             return res.status(404).json({
                 message: 'Observation non trouvée.'
             });
         }
-
+        
         res.status(200).json({
             message: 'Observation supprimée avec succès.',
             contract: updatedContract
@@ -1003,18 +1059,18 @@ exports.getObservations = async (req, res) => {
             contractId
         } = req.params;
         const contract = await ContractModel.findById(contractId)
-            .populate({
-                path: 'observation.user',
-                select: 'firstname lastname'
-            })
-            .select('observation');
+        .populate({
+            path: 'observation.user',
+            select: 'firstname lastname'
+        })
+        .select('observation');
         console.log('Récupération des observations d\'un contrat');
         if (!contract) {
             return res.status(404).json({
                 message: 'Contrat non trouvé.'
             });
         }
-
+        
         const observationsWithUserDetails = await Promise.all(
             contract.observation.map(async (obs) => {
                 const user = await User.findById(obs.user).select('firstname lastname');
@@ -1027,7 +1083,7 @@ exports.getObservations = async (req, res) => {
                 };
             })
         );
-
+        
         console.log("Observation: ", observationsWithUserDetails);
         res.status(200).json(observationsWithUserDetails);
     } catch (error) {
@@ -1048,7 +1104,7 @@ exports.addIncident = async (req, res) => {
             comment
         } = req.body;
         const userObjectId = new mongoose.Types.ObjectId(user);
-
+        
         const updatedContract = await ContractModel.findByIdAndUpdate(
             contractId, {
                 $push: {
@@ -1063,22 +1119,22 @@ exports.addIncident = async (req, res) => {
                 new: true
             }
         );
-
+        
         if (!updatedContract) {
             console.log('Contrat non trouvé.');
             return res.status(404).json({
                 message: 'Contrat non trouvé.'
             });
         }
-
+        
         console.log('Incident ajouté avec succès.');
         res.status(200).json(updatedContract);
-
+        
         const replacements = await EmailUtils.getEmailReplacements(updatedContract, {
             'incident.dateAdd': new Date(dateAdd).toISOString().split('T')[0],
             'incident.comment': comment || ''
         });
-
+        
         await EmailService.sendEmail(updatedContract.customer.email, 'Nouvel incident ajouté', replacements, 'incidentNotificationTemplate');
     } catch (error) {
         console.error('Erreur lors de l\'ajout de l\'incident:', error);
@@ -1092,9 +1148,9 @@ exports.deleteIncident = async (req, res) => {
     try {
         const incidentId = req.params.incidentId;
         console.log('Suppression de l\'incident avec l\'ID:', incidentId);
-
+        
         const incidentObjectId = new mongoose.Types.ObjectId(incidentId);
-
+        
         const updatedContract = await ContractModel.findOneAndUpdate({
             'incident._id': incidentObjectId
         }, {
@@ -1106,13 +1162,13 @@ exports.deleteIncident = async (req, res) => {
         }, {
             new: true
         });
-
+        
         if (!updatedContract) {
             return res.status(404).json({
                 message: 'Incident non trouvé.'
             });
         }
-
+        
         res.status(200).json({
             message: 'Incident supprimé avec succès.',
             contract: updatedContract
@@ -1132,15 +1188,15 @@ exports.getIncidents = async (req, res) => {
             contractId
         } = req.params;
         const contract = await ContractModel.findById(contractId)
-            .select('incident');
-
+        .select('incident');
+        
         if (!contract) {
             console.log('Contrat non trouvé.');
             return res.status(404).json({
                 message: 'Contrat non trouvé.'
             });
         }
-
+        
         const incidentsWithUserDetails = await Promise.all(
             contract.incident.map(async (incident) => {
                 const user = await User.findById(incident.user).select('firstname lastname');
@@ -1153,7 +1209,7 @@ exports.getIncidents = async (req, res) => {
                 };
             })
         );
-
+        
         console.log('Incidents récupérés avec succès.');
         res.status(200).json(incidentsWithUserDetails);
     } catch (error) {
@@ -1175,9 +1231,9 @@ exports.updateObservationProcessedStatus = async (req, res) => {
         } = req.body;
         console.log('Observation ID:', observationId);
         console.log('Statut de traitement:', processed);
-
+        
         const observationObjectId = new mongoose.Types.ObjectId(observationId);
-
+        
         const updatedContract = await ContractModel.findOneAndUpdate({
             'observation._id': observationObjectId
         }, {
@@ -1190,13 +1246,13 @@ exports.updateObservationProcessedStatus = async (req, res) => {
             }],
             new: true
         });
-
+        
         if (!updatedContract) {
             return res.status(404).json({
                 message: 'Observation non trouvée.'
             });
         }
-
+        
         res.status(200).json(updatedContract);
     } catch (error) {
         res.status(500).json({
@@ -1216,9 +1272,9 @@ exports.updateIncidentProcessedStatus = async (req, res) => {
         } = req.body;
         console.log('Incident ID:', incidentId);
         console.log('Statut de traitement:', processed);
-
+        
         const incidentObjectId = new mongoose.Types.ObjectId(incidentId);
-
+        
         const updatedContract = await ContractModel.findOneAndUpdate({
             'incident._id': incidentObjectId
         }, {
@@ -1231,13 +1287,13 @@ exports.updateIncidentProcessedStatus = async (req, res) => {
             }],
             new: true
         });
-
+        
         if (!updatedContract) {
             return res.status(404).json({
                 message: 'Incident non trouvé.'
             });
         }
-
+        
         res.status(200).json(updatedContract);
     } catch (error) {
         res.status(500).json({
@@ -1255,7 +1311,7 @@ exports.getEmailSchedule = async (req, res) => {
         const emailTask = await EmailTask.findOne({
             contractId
         });
-
+        
         if (!emailTask) {
             return res.status(200).json({
                 message: 'Aucune planification des emails trouvée.',
@@ -1265,7 +1321,7 @@ exports.getEmailSchedule = async (req, res) => {
                 endDateCustomer: null
             });
         }
-
+        
         res.status(200).json({
             nextEmailDate: emailTask.scheduledDate,
             interval: emailTask.interval,
@@ -1290,17 +1346,17 @@ exports.updateEmailSchedule = async (req, res) => {
             interval,
             enabled
         } = req.body;
-
+        
         console.log('Mise à jour de la planification des emails pour le contrat', contractId);
         console.log('Données de mise à jour :', req.body);
-
+        
         const contract = await ContractModel.findById(contractId).populate('external_contributor');
         const contracts = await ContractModel.find({
             internal_number: contract.internal_number
         }).populate('external_contributor');
         console.log('Contrats trouvés pour le numéro interne:', contract.internal_number);
         console.log('Contrats trouvés:', contracts);
-
+        
         const replacements = {
             'contracts': await Promise.all(contracts.map(async c => ({
                 'internal_number': c.internal_number,
@@ -1313,9 +1369,9 @@ exports.updateEmailSchedule = async (req, res) => {
             }))),
             'CRM_URL': process.env.CRM_URL
         };
-
+        
         if (!enabled) {
-
+            
             const result = await EmailTask.findOneAndDelete({
                 contractId
             });
@@ -1329,9 +1385,9 @@ exports.updateEmailSchedule = async (req, res) => {
                 message: 'Planification des emails désactivée avec succès.'
             });
         }
-
+        
         let updateData;
-
+        
         if (isTestMode) {
             const currentDate = new Date();
             const currentDateUTC = new Date(
@@ -1345,7 +1401,7 @@ exports.updateEmailSchedule = async (req, res) => {
                 )
             );
             const currentDatePlusOneMinute = new Date(currentDateUTC.getTime() + 60000);
-
+            
             updateData = {
                 contractId: contractId,
                 scheduledDate: currentDatePlusOneMinute,
@@ -1362,32 +1418,32 @@ exports.updateEmailSchedule = async (req, res) => {
                 replacements: replacements
             };
         }
-
+        
         const emailTask = await EmailTask.findOneAndUpdate({
-                contractId
-            },
-            updateData, {
-                new: true,
-                upsert: true,
-                setDefaultsOnInsert: true
-            }
-        );
-
-        if (enabled) {
-            await scheduleRecurringEmails(contract.internal_number, updateData.scheduledDate, updateData.interval, replacements);
+            contractId
+        },
+        updateData, {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true
         }
-
-        console.log('Planification des emails après mise à jour:', emailTask);
-        res.status(200).json({
-            message: 'Planification des emails mise à jour.',
-            emailTask
-        });
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour de la planification des emails:', error);
-        res.status(500).json({
-            error: error.message
-        });
+    );
+    
+    if (enabled) {
+        await scheduleRecurringEmails(contract.internal_number, updateData.scheduledDate, updateData.interval, replacements);
     }
+    
+    console.log('Planification des emails après mise à jour:', emailTask);
+    res.status(200).json({
+        message: 'Planification des emails mise à jour.',
+        emailTask
+    });
+} catch (error) {
+    console.error('Erreur lors de la mise à jour de la planification des emails:', error);
+    res.status(500).json({
+        error: error.message
+    });
+}
 };
 
 exports.deleteEmailSchedule = async (req, res) => {
@@ -1396,17 +1452,17 @@ exports.deleteEmailSchedule = async (req, res) => {
             contractId
         } = req.params;
         console.log('Suppression de la planification des emails pour le contrat', contractId);
-
+        
         const result = await EmailTask.findOneAndDelete({
             contractId
         });
-
+        
         if (!result) {
             return res.status(404).json({
                 message: 'Planification des emails non trouvée.'
             });
         }
-
+        
         console.log('Planification des emails supprimée:', result);
         res.status(200).json({
             message: 'Planification des emails supprimée avec succès.'
