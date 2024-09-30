@@ -193,6 +193,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           icon: 'ri-dashboard-line',
           link: '/dashboard'
         },
+        {
+          id: 11,
+          label: 'Agenda',
+          icon: 'ri-calendar-2-line',
+          link: '/calendar'
+        },
         // {
         //   id: 10,
         //   label: 'Dashboard (fake)',

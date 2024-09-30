@@ -22,6 +22,7 @@ import { RoleGuard } from '../core/guards/role.guard';
 import { AuthGuard } from '../core/guards/auth.guard';
 import { RoleRedirectGuard } from '../core/guards/roleRedirect.guard';
 import { EndlessAscensionComponent } from './endless-ascension/endless-ascension.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 const routes: Routes = [
@@ -49,7 +50,8 @@ const routes: Routes = [
     // { path: '', component: DashboardComponent, data: { roles: ['Admin', 'superAdmin'] }},
     // { path: '', component: ManageOrdersComponent, data: { roles: ['subcontractor', 'coContractor', 'supermanager', 'comanager'] }},
     // { path: '', canActivate: [RoleRedirectGuard], pathMatch: 'full' },
-    { path: 'endless-ascension', component: EndlessAscensionComponent, canActivate: [AuthGuard] }
+    { path: 'endless-ascension', component: EndlessAscensionComponent, canActivate: [AuthGuard] },
+    { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'superAdmin'] } }
 ];
 
 @NgModule({

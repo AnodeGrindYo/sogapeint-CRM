@@ -59,6 +59,12 @@ import { FileSizePipe } from './dashboard/pipes/file-size.pipe';
 import { EndlessAscensionComponent } from './endless-ascension/endless-ascension.component';
 
 import { ContractEmailSchedulerComponent } from './contract-email-scheduler/contract-email-scheduler.component';
+import { CalendarComponent } from './calendar/calendar.component';
+
+// Importations nécessaires pour angular-calendar
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 
 
 
@@ -86,6 +92,7 @@ import { ContractEmailSchedulerComponent } from './contract-email-scheduler/cont
     FileSizePipe,
     EndlessAscensionComponent,
     ContractEmailSchedulerComponent,
+    CalendarComponent,
     // InvoicesManagementComponent,
     // DashboardComponent
     // LandingPageComponent
@@ -114,6 +121,10 @@ import { ContractEmailSchedulerComponent } from './contract-email-scheduler/cont
     ScrollingModule,
     InfiniteScrollModule,
     NgxDropzoneModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     
