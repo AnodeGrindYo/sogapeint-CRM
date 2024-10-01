@@ -23,21 +23,27 @@ export class LandingPageComponent implements OnInit{
     ) { }
   
     ngOnInit(): void {
-      this.currentUser = this.userProfileService.getCurrentUser();
+       const currentUser = this.userProfileService.getCurrentUser();
       console.log(this.currentUser);
       console.log(this.currentUser.role);
-      this.toastr.success('Bonjour ' + this.currentUser.firstName + ' !', 'Bienvenue');
+      this.toastr.success('Bonjour ' + currentUser.firstName + ' !', 'Bienvenue');
       // si le role de l'utilisateur est admin ou superAdmin, on le redirige vers /dashboard au bout de 15 secondes
-      const delay = 5000;
-      if(this.currentUser.role === 'admin' || this.currentUser.role === 'superAdmin'){
+      const delay = 3000;
+      if(currentUser && currentUser.role){
+        if(currentUser.role === 'admin' || currentUser.role === 'superAdmin'){
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, delay);
+        }
+        // sinon, on redirige vers /manageOrders
+        else{
+          setTimeout(() => {
+            this.router.navigate(['/manageOrders']);
+          }, delay);
+        }
+      } else {
         setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, delay);
-      }
-      // sinon, on redirige vers /manageOrders
-      else{
-        setTimeout(() => {
-          this.router.navigate(['/manageOrders']);
+          this.router.navigate(['/login']);
         }, delay);
       }
 

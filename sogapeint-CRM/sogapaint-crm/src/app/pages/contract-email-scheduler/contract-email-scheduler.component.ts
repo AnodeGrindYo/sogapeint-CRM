@@ -113,30 +113,6 @@ export class ContractEmailSchedulerComponent implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
 
-  // updateEmailSchedule(): void {
-  //   if (this.emailScheduleForm.invalid || !this.canScheduleEmails()) {
-  //     return;
-  //   }
-  //   this.isLoading = true;
-  //   console.log('Mise à jour du planning des emails:', this.emailScheduleForm.value);
-  //   this.emailSchedulerService.updateEmailSchedule(this.contractId, this.emailScheduleForm.value).subscribe(
-  //     (response) => {
-  //       console.log('Planning des emails mis à jour:', response);
-  //       this.successMessage = '';
-  //       this.errorMessage = '';
-  //       this.successMessage = 'Planning des emails mis à jour avec succès.';
-  //       this.infoMessage = !this.emailScheduleForm.value.enabled ? "Les emails récurrents sont désactivés pour cette commande." : null;
-  //       this.isLoading = false;
-  //     },
-  //     (error) => {
-  //       console.error('Erreur lors de la mise à jour du planning des emails:', error);
-  //       this.successMessage = '';
-  //       this.errorMessage = '';
-  //       this.errorMessage = 'Erreur lors de la mise à jour du planning des emails.';
-  //       this.isLoading = false;
-  //     }
-  //   );
-  // }
   updateEmailSchedule(): void {
     if (this.emailScheduleForm.invalid) {
         return;
