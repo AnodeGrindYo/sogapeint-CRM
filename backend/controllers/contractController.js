@@ -164,33 +164,6 @@ exports.getContractsByMonth = async (req, res) => {
     }
 };
 
-// exports.getContracts = async (req, res) => {
-    //     try {
-//         const period = parseInt(req.query.period) || 2;
-//         const startDate = new Date();
-//         startDate.setFullYear(startDate.getFullYear() - period);
-
-//         const contracts = await ContractModel.find({
-//             trash: false,
-//             dateAdd: { $gte: startDate },
-//         })
-//         .sort({ dateAdd: -1 })
-//         .populate('customer')
-//         .populate('contact')
-//         .populate('external_contributor')
-//         .populate('subcontractor');
-
-//         contracts.forEach(sanitizeContract);
-//         res.json(contracts);
-//     } catch (error) {
-//         console.error('Erreur lors de la récupération des contrats:', error);
-//         res.status(500).send({
-//             message: "Erreur lors de la récupération des contrats",
-//             error
-//         });
-//     }
-// };
-// contractController.js
 exports.getContracts = async (req, res) => {
     try {
         const period = parseInt(req.query.period) || 2; // Période en années
@@ -217,8 +190,6 @@ exports.getContracts = async (req, res) => {
         });
     }
 };
-
-
 
 exports.getOngoingContracts = async (req, res) => {
     try {
@@ -416,134 +387,6 @@ function groupByInternalNumber(contracts) {
     return groupedContracts;
 };
 
-// exports.addContract = async (req, res) => {
-    //     try {
-//         const {
-//             internal_number = '',
-//                 customer = null,
-//                 contact = null,
-//                 internal_contributor = null,
-//                 external_contributor = null,
-//                 external_contributor_amount = 0,
-//                 subcontractor = null,
-//                 subcontractor_amount = 0,
-//                 address = '',
-//                 appartment_number = '',
-//                 ss4 = false,
-//                 quote_number = '',
-//                 mail_sended = false,
-//                 invoice_number = '',
-//                 amount_ht = 0,
-//                 benefit_ht = 0,
-//                 execution_data_day = 0,
-//                 execution_data_hour = 0,
-//                 prevision_data_day = 0,
-//                 prevision_data_hour = 0,
-//                 benefit = '',
-//                 status = '',
-//                 occupied = false,
-//                 start_date_works = null,
-//                 end_date_works = null,
-//                 end_date_customer = null,
-//                 trash = false,
-//                 date_cde = null,
-//                 billing_amount = 0,
-//                 createdBy = null,
-//                 isLastContract = false
-//         } = req.body;
-
-//         const currentDate = new Date();
-//         const dateAdd = currentDate;
-//         const external_contributor_invoice_date = new Date();
-//         external_contributor_invoice_date.setDate(currentDate.getDate() + 2);
-
-//         const newContract = new ContractModel({
-//             internal_number: internal_number || 'Default-Number',
-//             customer: customer ? new mongoose.Types.ObjectId(customer) : null,
-//             contact: contact ? new mongoose.Types.ObjectId(contact) : null,
-//             internal_contributor: internal_contributor ? new mongoose.Types.ObjectId(internal_contributor) : null,
-//             external_contributor: external_contributor ? new mongoose.Types.ObjectId(external_contributor) : null,
-//             external_contributor_amount,
-//             subcontractor: subcontractor ? new mongoose.Types.ObjectId(subcontractor) : null,
-//             subcontractor_amount,
-//             address,
-//             appartment_number,
-//             ss4,
-//             quote_number,
-//             mail_sended,
-//             invoice_number,
-//             amount_ht,
-//             benefit_ht,
-//             execution_data_day,
-//             execution_data_hour,
-//             prevision_data_day,
-//             prevision_data_hour,
-//             benefit,
-//             status,
-//             occupied,
-//             start_date_works: start_date_works ? new Date(start_date_works) : null,
-//             end_date_works: end_date_works ? new Date(end_date_works) : null,
-//             end_date_customer: end_date_customer ? new Date(end_date_customer) : null,
-//             trash,
-//             date_cde: date_cde ? new Date(date_cde) : new Date(),
-//             billing_amount,
-//             dateAdd: dateAdd,
-//             external_contributor_invoice_date,
-//             createdBy: createdBy ? new mongoose.Types.ObjectId(internal_contributor) : null,
-//             isLastContract
-//         });
-
-//         await newContract.save();
-
-//         const replacements = await EmailUtils.getEmailReplacements(newContract);
-
-//         if (newContract.external_contributor) {
-//             const externalContributorEmail = newContract.external_contributor.email;
-//             await EmailService.sendEmail(externalContributorEmail, 'Notification de commande', replacements, 'orderNotificationTemplate');
-//         }
-//         if (newContract.subcontractor) {
-//             const subcontractorEmail = newContract.subcontractor.email;
-//             await EmailService.sendEmail(subcontractorEmail, 'Notification de commande', replacements, 'orderNotificationTemplate');
-//         }
-
-//         if (isLastContract) {
-//             const currentYear = new Date().getFullYear();
-//             const contracts = await ContractModel.find({
-//                 internal_number: internal_number,
-//                 dateAdd: {
-//                     $gte: new Date(currentYear, 0, 1),
-//                     $lt: new Date(currentYear + 1, 0, 1)
-//                 }
-//             }).populate('customer').populate('contact').populate('external_contributor').populate('subcontractor');
-
-//             const emailReplacements = {
-//                 contracts: contracts.map(contract => ({
-    //                     internal_number: contract.internal_number,
-//                     benefit: contract.benefit,
-//                     date_cde: formatDate(contract.date_cde),
-//                     status: translateStatus(contract.status),
-//                     address: contract.address,
-//                     appartment_number: contract.appartment_number,
-//                     occupied: contract.occupied ? 'Oui' : 'Non'
-//                 })),
-//                 CRM_URL: process.env.CRM_URL
-//             };
-
-//             await EmailService.sendEmail(newContract.customer.email, 'Résumé des commandes', emailReplacements, 'consolidatedOrderNotificationTemplate');
-//         }
-
-//         res.status(201).json({
-//             message: 'Contrat créé avec succès.',
-//             contractId: newContract._id,
-//             contract: newContract
-//         });
-//     } catch (error) {
-//         console.error('Erreur lors de l’ajout d’un nouveau contrat:', error);
-//         res.status(500).json({
-//             error: error.message
-//         });
-//     }
-// };
 exports.addContract = async (req, res) => {
     try {
         const {
@@ -721,8 +564,6 @@ exports.addContract = async (req, res) => {
     }
 };
 
-
-
 const sendFinalizedOrderSummaryEmail = async (customerEmail, contracts) => {
     const replacements = {
         'contracts': await Promise.all(contracts.map(async contract => ({
@@ -898,56 +739,6 @@ exports.getContractsInternalNumbers = async (req, res) => {
     }
 };
 
-// exports.addObservation = async (req, res) => {
-    //     console.log('Tentative d\'ajout d\'une observation à un contrat');
-//     try {
-//         const {
-//             contractId,
-//             dateAdd,
-//             user,
-//             comment
-//         } = req.body;
-//         const userObjectId = new mongoose.Types.ObjectId(user);
-
-//         const updatedContract = await ContractModel.findByIdAndUpdate(
-//             contractId, {
-//                 $push: {
-//                     observation: {
-//                         dateAdd: dateAdd,
-//                         user: userObjectId,
-//                         comment: comment,
-//                         _id: new mongoose.Types.ObjectId()
-//                     }
-//                 }
-//             }, {
-//                 new: true,
-//                 useFindAndModify: false
-//             }
-//         );
-
-//         if (!updatedContract) {
-//             console.log('Contrat non trouvé.');
-//             return res.status(404).json({
-//                 message: 'Contrat non trouvé.'
-//             });
-//         }
-
-//         console.log('Observation ajoutée avec succès.');
-//         res.status(200).json(updatedContract);
-
-//         const replacements = await EmailUtils.getEmailReplacements(updatedContract, {
-//             'observation.dateAdd': new Date(dateAdd).toISOString().split('T')[0],
-//             'observation.comment': comment || ''
-//         });
-
-//         await EmailService.sendEmail(updatedContract.customer.email, 'Nouvelle observation ajoutée', replacements, 'observationNotificationTemplate');
-//     } catch (error) {
-//         console.error('Erreur lors de l\'ajout de l\'observation:', error);
-//         res.status(500).json({
-//             error: error.message
-//         });
-//     }
-// };
 exports.addObservation = async (req, res) => {
     console.log('Tentative d\'ajout d\'une observation à un contrat');
     try {
@@ -1012,9 +803,6 @@ exports.addObservation = async (req, res) => {
         });
     }
 };
-
-
-
 
 exports.deleteObservation = async (req, res) => {
     try {

@@ -40,38 +40,6 @@ exports.getBenefits = async (req, res) => {
     }
 };
 
-// exports.addBenefit = async (req, res) => {
-//     try {
-
-//         const {
-//             name
-//         } = req.body;
-
-//         const normalized_name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-//         let service = await Benefit.findOne({
-//             normalized_name
-//         });
-//         if (service) {
-//             return res.status(400).json({
-//                 message: 'Un service avec ce nom existe déjà.'
-//             });
-//         }
-//         const newService = new benefit({
-//             name: normalized_name
-//         });
-//         await newService.save();
-
-//         res.status(201).json({
-//             message: 'Service créé avec succès.',
-//             benefit: newService
-//         });
-//     } catch (error) {
-//         console.error('Erreur lors de l’ajout d’un nouveau service:', error);
-//         res.status(500).json({
-//             error: error.message
-//         });
-//     }
-// };
 exports.addBenefit = async (req, res) => {
     try {
         const { name } = req.body;
@@ -94,8 +62,6 @@ exports.addBenefit = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
-
 
 exports.deleteBenefit = async (req, res) => {
     try {
@@ -202,26 +168,3 @@ exports.replaceBenefit = async (req, res) => {
         res.status(500).send(error);
     }
 };
-
-// exports.getBenefitNameById = async (req, res) => {
-//     try {
-
-//         const {
-//             benefitId
-//         } = req.params;
-
-//         const service = await Benefit.findById(benefitId);
-//         if (!service) {
-//             return res.status(404).json({
-//                 message: 'Service non trouvé.'
-//             });
-//         }
-//         console.log('Found service:', service);
-//         res.status(200).json(service.name);
-//     } catch (error) {
-//         console.error('Error retrieving service name:', error);
-//         res.status(500).json({
-//             error: error.message
-//         });
-//     }
-// };
