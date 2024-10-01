@@ -38,6 +38,8 @@ interface ClientWithColor {
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class CalendarComponent implements OnInit {
+  breadCrumbItems: Array<{ label: string; url?: string; active?: boolean }> = [];
+  pageTitle: string = 'Agenda des commandes';
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
